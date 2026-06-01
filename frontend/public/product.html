@@ -1095,7 +1095,7 @@ function renderProduct(p, related) {
     const newUrl = 'product.html?slug=' + encodeURIComponent(p.slug);
     history.replaceState({}, '', newUrl);
   }
-  document.getElementById('pg-canonical').href          = window.location.href;
+  const _pgCanon = document.getElementById('pg-canonical'); if(_pgCanon) _pgCanon.href = window.location.href;
   document.title = `${p.name} | SELA Kenya`;
 
   // Breadcrumb
@@ -1183,7 +1183,7 @@ function renderProduct(p, related) {
 
   // WA button
   const msg = encodeURIComponent(`Hi! I'm interested in: *${p.name}* (KES ${Number(p.price).toLocaleString('en-KE')}) at ${p.shop}. Is it still available?`);
-  document.getElementById('pWaBtn').href = `https://wa.me/${p.whatsapp||'254700000000'}?text=${msg}`;
+  const _waEl = document.getElementById('pWaBtn'); if(_waEl) _waEl.href = `https://wa.me/${p.whatsapp||'254700000000'}?text=${msg}`;
 
   // Admin bar
   document.getElementById('pAdminBar').classList.toggle('show', isAdmin());
@@ -2130,22 +2130,25 @@ async function checkVerifiedBuyer() {
 
 // ── Dynamic SEO ──────────────────────────────────────────────────────────────
 function updateProductSEO(p) {
-  const name  = p.name || p.title || 'Product';
-  const desc  = p.description ? p.description.slice(0,155) : ('Shop '+name+' on SELA Kenya marketplace.');
-  const image = p.images?.[0] || p.image || '';
-  const price = p.price || p.dealPrice || 0;
-  const url   = window.location.href;
-  document.title = name + ' — SELA Kenya';
-  const setMeta = (sel, val) => { const el = document.querySelector(sel); if(el) el.setAttribute('content',val); };
-  setMeta('meta[name="description"]', desc);
-  setMeta('meta[property="og:title"]', name + ' — SELA Kenya');
-  setMeta('meta[property="og:description"]', desc);
-  setMeta('meta[property="og:image"]', image);
-  setMeta('meta[property="og:url"]', url);
-  setMeta('meta[name="twitter:title"]', name + ' — SELA Kenya');
-  setMeta('meta[name="twitter:description"]', desc);
-  const canon = document.querySelector('link[rel="canonical"]');
-  if (canon) canon.setAttribute('href', url);
+  try {
+    const name  = p.name || p.title || 'Product';
+    const desc  = (p.description || ('Shop '+name+' on SELA Kenya marketplace.')).slice(0,155);
+    const image = p.images?.[0] || p.image || '';
+    const url   = window.location.href;
+    document.title = name + ' — SELA Kenya';
+    const setMeta = (sel, val) => { const el = document.querySelector(sel); if(el) el.setAttribute('content', val); };
+    setMeta('meta[name="description"]', desc);
+    setMeta('meta[property="og:title"]', name + ' — SELA Kenya');
+    setMeta('meta[property="og:description"]', desc);
+    if (image) setMeta('meta[property="og:image"]', image);
+    setMeta('meta[property="og:url"]', url);
+    setMeta('meta[name="twitter:title"]', name + ' — SELA Kenya');
+    setMeta('meta[name="twitter:description"]', desc);
+    // Update or create canonical
+    let canon = document.querySelector('link[rel="canonical"]');
+    if (!canon) { canon = document.createElement('link'); canon.rel = 'canonical'; document.head.appendChild(canon); }
+    canon.href = url;
+  } catch(e) { console.warn('SEO update failed:', e.message); }
 }
 </script>
 <script src="wishlist.js"></script>
