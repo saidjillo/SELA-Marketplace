@@ -4639,7 +4639,7 @@ async function openEdit(id) {
     document.getElementById('f-description').value = p.description;
     if (p.image) {
       const img = document.getElementById('preview-img');
-      img.src = `http://localhost:5000${p.image}`; img.style.display = 'block';
+      img.src = (window.SELA_API||'').replace('/api','') + p.image; img.style.display = 'block';
     }
     document.getElementById('modalTitle').textContent    = 'Edit Listing';
     document.getElementById('formSubmitBtn').textContent = 'Save Changes';

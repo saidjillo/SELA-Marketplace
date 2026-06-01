@@ -2476,7 +2476,7 @@ async function uploadImgFiles(files) {
     const j = await r.json().catch(()=>({}));
     if (j.success && j.urls) {
       j.urls.forEach(url => {
-        if (_productImages.length < 6) _productImages.push({ url: 'http://localhost:5000' + url, isLocal: false });
+        if (_productImages.length < 6) _productImages.push({ url: (window.SELA_API||'').replace('/api','') + url, isLocal: false });
       });
       updateImgPreview();
     } else {
@@ -3665,6 +3665,7 @@ async function generateCatalogue(){
   </div>
 
 
+
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -4229,15 +4230,6 @@ async function exportInventoryPDF(){
   </div>
 
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('SW registered'))
-          .catch(err => console.warn('SW failed:', err));
-      });
-    }
-  </script>
 </body></html>`;
     const win=window.open('','_blank');
     win.document.write(html); win.document.close();
@@ -5792,14 +5784,5 @@ function downloadInvoice(h) {
   </div>
 
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('SW registered'))
-          .catch(err => console.warn('SW failed:', err));
-      });
-    }
-  </script>
 </body>
 </html>

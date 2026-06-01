@@ -643,8 +643,9 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex}
     <div class="section-card"><div class="sc-head"><div class="sc-title">🔍 Top Search Keywords</div></div><div style="padding:0 1rem 1rem;display:flex;flex-wrap:wrap;gap:.4rem" id="aanTopSearches">Loading…</div></div>
   </div>
 
+<script src="config.js"></script>
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 let userFilter = 'all', shopFilter = 'all';
 let userPage = 1, shopPage = 1;
 
@@ -1084,11 +1085,11 @@ async function adminCreateUser() {
     }
 
     // Show credentials
-    const creds = `🌐 Platform: http://localhost:5000\n👤 Name: ${first} ${last}\n📧 Email: ${email}\n🔑 Username: ${username}\n🔒 Password: ${password}\n\n⚠️ Please change your password after first login.`;
+    const creds = `🌐 Platform: ${window.location.origin}\n👤 Name: ${first} ${last}\n📧 Email: ${email}\n🔑 Username: ${username}\n🔒 Password: ${password}\n\n⚠️ Please change your password after first login.`;
     lastCreatedCredentials = creds;
 
     document.getElementById('cuCredentials').innerHTML = 
-      `<div>🌐 <strong>Platform:</strong> <a href="http://localhost:5000" target="_blank" style="color:var(--accent)">http://localhost:5000</a></div>
+      `<div>🌐 <strong>Platform:</strong> <a href="/" target="_blank" style="color:var(--accent)">${window.location.origin}</a></div>
        <div>👤 <strong>Name:</strong> ${first} ${last}</div>
        <div>📧 <strong>Email:</strong> ${email}</div>
        <div>🔑 <strong>Username:</strong> ${username}</div>
