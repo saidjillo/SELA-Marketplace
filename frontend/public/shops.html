@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sell on SELA — Start Your Online Store in Minutes</title>
+  <meta name="description" content="Join Kenya's growing multi-vendor marketplace. List your products, manage orders, and grow your business with SELA."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <script src="wishlist.js"></script>
+  <script src="header.js" defer></script>
+  <style>
+    :root{
+      --bg:#0b0e14;--bg2:#131822;--bg3:#1a2030;
+      --card:#131822;--card2:#1a2030;
+      --border:rgba(255,255,255,.08);
+      --accent:#00d4ff;--accent2:#0099bb;
+      --orange:#f97316;--orange2:#fb923c;
+      --text:#e8eaf0;--text2:#9aa0b0;--text3:#5a6070;
+      --green:#16a34a;--red:#ef4444;--gold:#f59e0b;
+      --radius:12px;
+      --font-head:'Montserrat',sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:70px}
+
+    /* ── Hero ── */
+    .hero{
+      background:linear-gradient(135deg,#0b0e14 0%,#131828 50%,#0f1620 100%);
+      border-bottom:1px solid var(--border);
+      padding:5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden;
+    }
+    .hero::before{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(0,212,255,.12),transparent),
+                 radial-gradient(ellipse 40% 40% at 20% 80%,rgba(249,115,22,.07),transparent);
+      pointer-events:none;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:.4rem;
+      background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
+      color:var(--accent);padding:.3rem .85rem;border-radius:20px;
+      font-size:.75rem;font-weight:700;letter-spacing:.04em;margin-bottom:1.5rem;
+    }
+    .hero h1{font-family:var(--font-head);font-size:clamp(2rem,6vw,3.5rem);font-weight:900;line-height:1.2;margin-bottom:1.1rem}
+    .hero h1 span{color:var(--accent)}
+    .hero p{font-size:1.05rem;color:var(--text2);max-width:540px;margin:0 auto 2.25rem;line-height:1.7}
+    .hero-btns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap}
+    .btn-primary{padding:.7rem 1.75rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0e14;border:none;border-radius:10px;font-weight:800;font-size:.95rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:all .2s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.3)}
+    .btn-outline{padding:.7rem 1.75rem;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:all .2s}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* ── Stats bar ── */
+    .stats-bar{
+      display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;
+      padding:2rem 1.5rem;border-bottom:1px solid var(--border);
+      background:var(--bg2);
+    }
+    .stat-item{text-align:center}
+    .stat-num{font-family:var(--font-head);font-size:2rem;font-weight:900;color:var(--accent)}
+    .stat-lbl{font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:.15rem;font-weight:600}
+
+    /* ── Sections ── */
+    .section{padding:4rem 1.5rem;max-width:1100px;margin:0 auto}
+    .section-badge{display:inline-block;background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.2);padding:.25rem .75rem;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;margin-bottom:.85rem}
+    .section-title{font-family:var(--font-head);font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;margin-bottom:.75rem}
+    .section-sub{color:var(--text2);font-size:.95rem;max-width:520px;line-height:1.7}
+
+    /* ── Features ── */
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-top:3rem}
+    .feature-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:all .2s}
+    .feature-card:hover{border-color:rgba(0,212,255,.25);transform:translateY(-2px)}
+    .feature-icon{font-size:2rem;margin-bottom:.85rem}
+    .feature-title{font-family:var(--font-head);font-weight:800;font-size:.95rem;margin-bottom:.5rem}
+    .feature-desc{font-size:.82rem;color:var(--text2);line-height:1.65}
+
+    /* ── Pricing ── */
+    .pricing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;margin-top:3rem}
+    .pricing-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;position:relative;transition:all .2s}
+    .pricing-card.popular{border-color:var(--accent);background:linear-gradient(135deg,var(--card),rgba(0,212,255,.04))}
+    .pricing-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+    .popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#0b0e14;padding:.2rem .85rem;border-radius:20px;font-size:.7rem;font-weight:800;white-space:nowrap}
+    .pricing-name{font-family:var(--font-head);font-weight:900;font-size:1.1rem;margin-bottom:.4rem}
+    .pricing-price{font-family:var(--font-head);font-size:2.2rem;font-weight:900;margin-bottom:.25rem}
+    .pricing-price span{font-size:.85rem;font-weight:400;color:var(--text3)}
+    .pricing-annual{font-size:.72rem;color:var(--text3);margin-bottom:1.25rem}
+    .pricing-annual strong{color:var(--green)}
+    .pricing-list{list-style:none;margin-bottom:1.5rem}
+    .pricing-list li{font-size:.82rem;color:var(--text2);padding:.3rem 0;display:flex;align-items:center;gap:.5rem}
+    .pricing-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+    .pricing-list li.disabled{color:var(--text3)}
+    .pricing-list li.disabled::before{content:'✕';color:var(--text3)}
+    .btn-plan{width:100%;padding:.65rem;border:none;border-radius:9px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s}
+    .btn-plan-accent{background:var(--accent);color:#0b0e14}
+    .btn-plan-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+    .btn-plan-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* ── Directory ── */
+    .dir-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+    .dir-search{display:flex;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:9px;overflow:hidden;flex:1;max-width:340px}
+    .dir-search input{flex:1;padding:.55rem .85rem;background:transparent;border:none;outline:none;color:var(--text);font-size:.85rem}
+    .dir-search span{padding:.55rem .75rem;color:var(--text3)}
+    .shops-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+    .shop-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;cursor:pointer;transition:all .2s;text-decoration:none;color:inherit;display:block}
+    .shop-card:hover{border-color:rgba(0,212,255,.25);transform:translateY(-2px)}
+    .shop-card-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.75rem}
+    .shop-avatar{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#0b0e14;flex-shrink:0;font-family:var(--font-head)}
+    .shop-name{font-weight:700;font-size:.9rem;margin-bottom:.15rem}
+    .shop-cat{font-size:.72rem;color:var(--text3)}
+    .shop-meta{display:flex;gap:.6rem;font-size:.72rem;color:var(--text3);flex-wrap:wrap}
+    .shop-badge{padding:.1rem .45rem;background:rgba(22,163,74,.12);color:#16a34a;border-radius:4px;font-weight:700}
+    .loading-shops{text-align:center;padding:3rem;color:var(--text3);grid-column:1/-1}
+
+    /* ── CTA section ── */
+    .cta-section{background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(249,115,22,.05));border:1px solid rgba(0,212,255,.12);border-radius:20px;padding:3rem 2rem;text-align:center;margin:2rem 0}
+    .cta-section h2{font-family:var(--font-head);font-size:1.8rem;font-weight:900;margin-bottom:.85rem}
+    .cta-section p{color:var(--text2);margin-bottom:1.75rem;font-size:.95rem}
+
+    /* ── Footer ── */
+    .sela-footer{background:linear-gradient(135deg,#fff8f1,#fff3e8);border-top:1px solid #fcd9b0;padding:2.5rem 1.5rem 1.5rem}
+    .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:2rem;margin-bottom:1.5rem}
+    .footer-brand{font-family:var(--font-head);font-size:1.3rem;font-weight:900;color:#f97316;margin-bottom:.5rem}
+    .footer-desc{font-size:.78rem;color:#7c5c3a;line-height:1.65}
+    .footer-col h4{font-size:.78rem;font-weight:800;color:#f97316;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+    .footer-col a{display:block;font-size:.78rem;color:#7c5c3a;text-decoration:none;margin-bottom:.35rem;transition:color .15s}
+    .footer-col a:hover{color:#f97316}
+    .footer-bottom{border-top:1px solid #fcd9b0;padding-top:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.72rem;color:#7c5c3a}
+
+    @media(max-width:640px){
+      .hero{padding:3.5rem 1rem 3rem}
+      .stats-bar{gap:1.5rem}
+      .pricing-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Hero ─────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-badge">🇰🇪 Kenya's Growing Marketplace</div>
+  <h1>Sell More.<br/>Grow Faster on <span>SELA</span></h1>
+  <p>List your products, manage orders, track sales and reach customers across Kenya — all from one simple dashboard.</p>
+  <div class="hero-btns">
+    <a class="btn-primary" href="auth.html?mode=register&redirect=shop-create.html">🏪 Start Selling Free</a>
+    <a class="btn-outline" href="#directory">Browse Stores</a>
+  </div>
+</div>
+
+<!-- ── Stats bar ─────────────────────────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num" id="statShops">—</div><div class="stat-lbl">Active Stores</div></div>
+  <div class="stat-item"><div class="stat-num" id="statProducts">—</div><div class="stat-lbl">Products Listed</div></div>
+  <div class="stat-item"><div class="stat-num" id="statBranches">—</div><div class="stat-lbl">Branches</div></div>
+  <div class="stat-item"><div class="stat-num">🇰🇪</div><div class="stat-lbl">Made in Kenya</div></div>
+</div>
+
+<!-- ── Features ──────────────────────────────────────────────────────────── -->
+<section id="features" style="background:var(--bg)">
+  <div class="section">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="section-badge">Everything You Need</div>
+      <h2 class="section-title">Built for Kenyan Businesses</h2>
+      <p class="section-sub" style="margin:0 auto">Everything you need to run your shop online — from product listings to M-Pesa payments.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <div class="feature-title">Product Management</div>
+        <div class="feature-desc">Add unlimited products with images, variants, stock tracking and categories. Bulk upload via CSV on Pro plan.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <div class="feature-title">M-Pesa Payments</div>
+        <div class="feature-desc">Accept payments via M-Pesa STK Push. Customers pay instantly from their phone — no card needed.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Sales Analytics</div>
+        <div class="feature-desc">Track revenue, views, and top products. See daily charts, customer trends and search keywords.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏪</div>
+        <div class="feature-title">Multi-Branch</div>
+        <div class="feature-desc">Manage multiple pickup locations across different towns. Staff accounts per branch with role permissions.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔥</div>
+        <div class="feature-title">Hot Deals</div>
+        <div class="feature-desc">List used and refurbished items on SELA's Hot Deals marketplace. Attract deal-hunters across Kenya.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <div class="feature-title">WhatsApp Integration</div>
+        <div class="feature-desc">Customers can contact you on WhatsApp directly from your store. Every order includes a WhatsApp link.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <div class="feature-title">POS System</div>
+        <div class="feature-desc">Sell in-store with a built-in Point of Sale — cash, M-Pesa, print receipts and track daily sales.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">Order Tracking</div>
+        <div class="feature-desc">Customers track orders in real time. Update status from confirmed to out-for-delivery with one click.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <div class="feature-title">Staff Accounts</div>
+        <div class="feature-desc">Add cashiers, managers and inventory staff with custom permissions per role and branch.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pricing ────────────────────────────────────────────────────────────── -->
+<section id="pricing" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="section">
+    <div style="text-align:center;margin-bottom:1rem">
+      <div class="section-badge">Simple Pricing</div>
+      <h2 class="section-title">Plans for Every Stage</h2>
+      <p class="section-sub" style="margin:0 auto">Start small, scale as you grow. Pay monthly or save 2 months with annual billing.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- Starter -->
+      <div class="pricing-card">
+        <div class="pricing-name" style="color:#6366f1">Starter</div>
+        <div class="pricing-price" style="color:#6366f1">KES 500<span>/mo</span></div>
+        <div class="pricing-annual">or <strong>KES 5,000/yr</strong> — 2 months free</div>
+        <ul class="pricing-list">
+          <li>10 products</li>
+          <li>1 branch / location</li>
+          <li>WhatsApp ordering</li>
+          <li>Basic store page</li>
+          <li>7-day analytics</li>
+          <li>M-Pesa payments</li>
+          <li class="disabled">Hot Deals</li>
+          <li class="disabled">Staff accounts</li>
+          <li class="disabled">Multi-branch</li>
+        </ul>
+        <button class="btn-plan btn-plan-outline" onclick="requireLogin('shop-create.html?plan=starter')">Get Started</button>
+      </div>
+
+      <!-- Growth -->
+      <div class="pricing-card popular">
+        <div class="popular-badge">⭐ Most Popular</div>
+        <div class="pricing-name" style="color:var(--accent)">Growth</div>
+        <div class="pricing-price" style="color:var(--accent)">KES 1,000<span>/mo</span></div>
+        <div class="pricing-annual">or <strong>KES 10,000/yr</strong> — 2 months free</div>
+        <ul class="pricing-list">
+          <li>50 products</li>
+          <li>3 branches</li>
+          <li>WhatsApp + M-Pesa</li>
+          <li>Full store page</li>
+          <li>30-day analytics</li>
+          <li>🔥 Hot Deals access</li>
+          <li>3 staff accounts</li>
+          <li>Order tracking</li>
+          <li class="disabled">Unlimited everything</li>
+        </ul>
+        <button class="btn-plan btn-plan-accent" onclick="requireLogin('shop-create.html?plan=growth')">Start Growing</button>
+      </div>
+
+      <!-- Pro -->
+      <div class="pricing-card">
+        <div class="pricing-name" style="color:var(--orange)">Pro</div>
+        <div class="pricing-price" style="color:var(--orange)">KES 1,500<span>/mo</span></div>
+        <div class="pricing-annual">or <strong>KES 15,000/yr</strong> — 2 months free</div>
+        <ul class="pricing-list">
+          <li>✨ Unlimited products</li>
+          <li>✨ Unlimited branches</li>
+          <li>✨ Unlimited staff</li>
+          <li>90-day analytics</li>
+          <li>🔥 Hot Deals priority</li>
+          <li>CSV bulk upload</li>
+          <li>Export data</li>
+          <li>Priority listing</li>
+          <li>All features, no limits</li>
+        </ul>
+        <button class="btn-plan btn-plan-outline" style="border-color:var(--orange);color:var(--orange)" onclick="requireLogin('shop-create.html?plan=pro')">Go Pro</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Store Directory ───────────────────────────────────────────────────── -->
+<section id="directory" style="background:var(--bg)">
+  <div class="section">
+    <div class="dir-bar">
+      <div>
+        <div class="section-badge">Live Stores</div>
+        <h2 class="section-title" style="margin-bottom:0">Browse the Marketplace</h2>
+      </div>
+      <div class="dir-search">
+        <input type="text" id="shopSearch" placeholder="Search stores…" oninput="filterShops(this.value)"/>
+        <span>🔍</span>
+      </div>
+    </div>
+    <div class="shops-grid" id="shopsGrid">
+      <div class="loading-shops"><div style="font-size:2rem;margin-bottom:.5rem">🏪</div>Loading stores…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────────────────────── -->
+<div style="max-width:1100px;margin:0 auto;padding:0 1.5rem 4rem">
+  <div class="cta-section">
+    <h2>Ready to Start Selling?</h2>
+    <p>Join hundreds of Kenyan vendors already growing their business on SELA.</p>
+    <a class="btn-primary" href="auth.html?mode=register&redirect=shop-create.html">🚀 Create Your Store Now — Free</a>
+  </div>
+</div>
+
+<!-- ── Footer ───────────────────────────────────────────────────────────── -->
+<footer class="sela-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">SELA.</div>
+      <div class="footer-desc">Kenya's multi-vendor marketplace. Shop local, sell online.</div>
+      <div style="margin-top:.75rem;font-size:.72rem;color:#7c5c3a">🇰🇪 Made in Kenya</div>
+    </div>
+    <div class="footer-col">
+      <h4>Marketplace</h4>
+      <a href="index.html">Browse Products</a>
+      <a href="hotdeals.html">🔥 Hot Deals</a>
+      <a href="shops.html">All Stores</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>For Vendors</h4>
+      <a href="shops.html#pricing">Pricing</a>
+      <a href="auth.html?redirect=shop-create.html">Create a Store</a>
+      <a href="shop-dashboard.html">My Dashboard</a>
+      <a href="help.html">Help Center</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="https://wa.me/254700000000">💬 WhatsApp</a>
+      <a href="mailto:hello@sela.co.ke">hello@sela.co.ke</a>
+      <a href="help.html">Support Center</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SELA Platform · Mombasa, Kenya</span>
+    <span>Built with ❤️ for Kenyan businesses</span>
+  </div>
+</footer>
+
+<script>
+const API = 'http://localhost:5000/api';
+let allShops = [];
+
+function requireLogin(dest) {
+  const tok = localStorage.getItem('ac_user_token') || localStorage.getItem('td_token');
+  if (tok) { window.location.href = dest; return; }
+  sessionStorage.setItem('post_login_redirect', dest);
+  window.location.href = 'auth.html?redirect=' + encodeURIComponent(dest);
+}
+
+async function loadShops() {
+  try {
+    const r = await fetch(`${API}/shops?limit=50&active=true`);
+    const j = await r.json().catch(() => ({}));
+    allShops = j.data || [];
+    renderShops(allShops);
+    // Stats
+    animateCount('statShops', allShops.length);
+    // Fetch more stats
+    const rs = await fetch(`${API}/stats/platform`).catch(() => null);
+    if (rs?.ok) {
+      const js2 = await rs.json().catch(() => ({}));
+      if (js2.products) animateCount('statProducts', js2.products);
+      if (js2.branches) animateCount('statBranches', js2.branches);
+    } else {
+      // Estimate from shops data
+      animateCount('statProducts', allShops.length * 8);
+      animateCount('statBranches', allShops.length * 1.4);
+    }
+  } catch(e) {
+    document.getElementById('shopsGrid').innerHTML = '<div class="loading-shops">Could not load stores. <a href="#" onclick="loadShops()" style="color:var(--accent)">Retry</a></div>';
+  }
+}
+
+function renderShops(shops) {
+  const grid = document.getElementById('shopsGrid');
+  if (!shops.length) {
+    grid.innerHTML = '<div class="loading-shops"><div style="font-size:2rem;margin-bottom:.5rem">🔍</div>No stores found.</div>';
+    return;
+  }
+  grid.innerHTML = shops.map(s => {
+    const initial = (s.name || 'S').charAt(0).toUpperCase();
+    const slug    = s.slug || '';
+    const id      = s.id || s._id || '';
+    const url     = `shop-store.html?${slug ? 'slug='+slug+'&' : ''}id=${id}`;
+    const colors  = ['#00d4ff','#f97316','#6366f1','#16a34a','#f59e0b','#a855f7','#3b82f6'];
+    const color   = colors[(s.name||'').charCodeAt(0) % colors.length];
+    return `<a class="shop-card" href="${url}">
+      <div class="shop-card-head">
+        <div class="shop-avatar" style="background:linear-gradient(135deg,${color},${color}99)">${initial}</div>
+        <div>
+          <div class="shop-name">${s.name || 'Unnamed Store'}</div>
+          <div class="shop-cat">${s.category || s.categories?.[0] || 'General'}</div>
+        </div>
+      </div>
+      <div class="shop-meta">
+        ${s.location ? `<span>📍 ${s.location}</span>` : ''}
+        ${s.productCount > 0 ? `<span>📦 ${s.productCount} products</span>` : ''}
+        <span class="shop-badge">✅ Active</span>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+function filterShops(q) {
+  const query = q.toLowerCase().trim();
+  const filtered = !query ? allShops : allShops.filter(s =>
+    (s.name||'').toLowerCase().includes(query) ||
+    (s.category||'').toLowerCase().includes(query) ||
+    (s.location||'').toLowerCase().includes(query)
+  );
+  renderShops(filtered);
+}
+
+function animateCount(id, target) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  target = Math.round(target);
+  let cur = 0;
+  const step = Math.ceil(target / 40);
+  const t = setInterval(() => {
+    cur = Math.min(cur + step, target);
+    el.textContent = Number(cur).toLocaleString('en-KE');
+    if (cur >= target) clearInterval(t);
+  }, 30);
+}
+
+loadShops();
+</script>
+</body>
+</html>

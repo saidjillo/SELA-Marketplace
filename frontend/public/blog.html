@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Blog — SELA ICT Tips & Guides Kenya</title>
+<meta name="description" content="Expert ICT tips, guides, and tutorials from SELA Kenya. Learn about networking, cybersecurity, laptops, phones, Windows, and more."/>
+<meta name="keywords" content="ICT blog Kenya, tech tips Mombasa, networking guide Kenya, cybersecurity Kenya, laptop guide, SELA blog"/>
+<meta property="og:title" content="SELA Blog — ICT Tips & Guides"/>
+<meta property="og:description" content="Expert ICT articles from Kenya's trusted tech accessories provider."/>
+<meta property="og:type" content="website"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='12'>📝</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;
+  --card:#1a2035;--card2:#1f2740;--border:#252f47;
+  --accent:#00d4ff;--green:#00e676;--orange:#ff6b35;--red:#ff4757;--gold:#f59e0b;
+  --text:#e8edf5;--text2:#8a97b0;--text3:#5a6a8a;
+  --radius:14px;
+  --font-head:'Montserrat',sans-serif;--font-body:'Roboto',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-body)}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.4rem 1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:var(--text3)}
+.topbar a{color:var(--text3)}.topbar a:hover{color:var(--accent)}
+.topbar-wa{background:#25D366;color:#fff;padding:.2rem .75rem;border-radius:4px;font-size:.7rem;font-weight:700}
+
+/* ── HEADER ── */
+header{background:rgba(11,14,20,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 1.5rem}
+.header-inner{max-width:1400px;margin:0 auto;height:60px;display:flex;align-items:center;gap:1rem}
+.logo{font-family:var(--font-head);font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:.3rem}
+.logo-dot{color:var(--accent)}.logo-badge{font-size:.55rem;font-weight:700;background:var(--accent);color:var(--bg);padding:2px 5px;border-radius:3px;letter-spacing:.05em;align-self:flex-start;margin-top:4px}
+.header-search{flex:1;max-width:380px;display:flex;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s}
+.header-search:focus-within{border-color:var(--accent)}
+.header-search input{flex:1;padding:.5rem .9rem;background:none;border:none;outline:none;color:var(--text);font-size:.85rem}
+.header-search input::placeholder{color:var(--text3)}
+.header-search button{padding:.5rem .85rem;background:none;border:none;color:var(--text3)}.header-search button:hover{color:var(--accent)}
+.header-nav{display:flex;gap:.25rem;align-items:center;margin-left:auto}
+.hn-link{padding:.4rem .7rem;border-radius:6px;font-size:.72rem;font-weight:600;color:var(--text2);background:none;border:none;transition:all .15s;font-family:var(--font-head)}
+.hn-link:hover{color:var(--text);background:var(--card)}
+.hn-link.active{color:var(--accent);background:rgba(0,212,255,.08)}
+.btn-wa-hdr{background:#25D366;color:#fff;padding:.4rem .9rem;border-radius:6px;font-size:.72rem;font-weight:700}
+
+/* ── HERO ── */
+.blog-hero{position:relative;overflow:hidden;padding:3.5rem 1.5rem 3rem;background:linear-gradient(135deg,#0a0c14 0%,#0d1221 50%,#08100e 100%)}
+.blog-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);background-size:32px 32px;animation:gridScroll 20s linear infinite;pointer-events:none}
+@keyframes gridScroll{to{background-position:32px 32px}}
+.blog-hero-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.blog-hero-inner{max-width:1400px;margin:0 auto;position:relative;z-index:1;text-align:center}
+.blog-hero-tag{display:inline-flex;align-items:center;gap:.4rem;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:var(--accent);font-family:var(--font-head);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .85rem;border-radius:20px;margin-bottom:1rem}
+.blog-hero h1{font-family:var(--font-head);font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;line-height:1.1;margin-bottom:.75rem}
+.blog-hero h1 em{color:var(--accent);font-style:normal}
+.blog-hero-sub{font-size:.9rem;color:var(--text2);max-width:520px;margin:0 auto}
+.blog-stats{display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;margin-top:1.75rem}
+.blog-stat{text-align:center}
+.blog-stat-num{font-family:var(--font-head);font-size:1.4rem;font-weight:900;color:var(--accent)}
+.blog-stat-lbl{font-size:.7rem;color:var(--text3);margin-top:.15rem}
+.blog-stat-sep{width:1px;height:32px;background:var(--border)}
+
+/* ── FILTER BAR ── */
+.filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.6rem 1.5rem;position:sticky;top:0;z-index:80}
+.filter-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.cat-pill{padding:.3rem .8rem;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:.73rem;font-weight:600;font-family:var(--font-head);cursor:pointer;transition:all .2s;white-space:nowrap}
+.cat-pill:hover{border-color:var(--accent);color:var(--accent)}
+.cat-pill.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.filter-search{display:flex;align-items:center;gap:.4rem;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.3rem .75rem;margin-left:auto}
+.filter-search:focus-within{border-color:var(--accent)}
+.filter-search input{background:none;border:none;outline:none;color:var(--text);font-size:.8rem;width:170px}
+.filter-search input::placeholder{color:var(--text3)}
+.filter-sort{padding:.3rem .75rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:.78rem;outline:none;cursor:pointer}
+.filter-sort option{background:var(--bg3)}
+.filter-results{font-size:.72rem;color:var(--text3);white-space:nowrap}
+
+/* ── MAIN LAYOUT ── */
+.blog-main{max-width:1400px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:1fr 300px;gap:2rem;align-items:start}
+@media(max-width:900px){.blog-main{grid-template-columns:1fr}.blog-sidebar{display:none}}
+
+/* ── BLOG CARD ── */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .22s;display:flex;flex-direction:column;position:relative}
+.blog-card:hover{border-color:rgba(0,212,255,.3);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.blog-card.featured{border-color:rgba(0,212,255,.25);background:linear-gradient(135deg,var(--card),rgba(0,212,255,.04))}
+.blog-card-accent{height:3px;width:100%;flex-shrink:0}
+.blog-card-emoji-wrap{padding:1.25rem 1.25rem .5rem;font-size:2rem}
+.blog-card-body{padding:.5rem 1.25rem 1.25rem;flex:1;display:flex;flex-direction:column}
+.blog-card-top{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.blog-cat-badge{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:.18rem .6rem;border-radius:3px}
+.blog-featured-badge{font-size:.6rem;font-weight:700;text-transform:uppercase;background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.2);padding:.18rem .6rem;border-radius:3px}
+.blog-card-date{font-size:.68rem;color:var(--text3);margin-left:auto}
+.blog-card-title{font-family:var(--font-head);font-size:1rem;font-weight:800;line-height:1.35;color:var(--text);margin-bottom:.4rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.blog-card:hover .blog-card-title{color:var(--accent)}
+.blog-card-excerpt{font-size:.8rem;color:var(--text2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.6rem}
+.blog-card-meta{display:flex;align-items:center;gap:.85rem;font-size:.68rem;color:var(--text3);flex-wrap:wrap}
+.blog-card-meta-item{display:flex;align-items:center;gap:.25rem}
+.blog-card-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem}
+.blog-tag{font-size:.62rem;font-weight:600;color:var(--accent);background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);padding:.12rem .45rem;border-radius:3px;cursor:pointer;transition:all .15s}
+.blog-tag:hover{background:rgba(0,212,255,.14)}
+.blog-card-read-btn{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--accent);font-family:var(--font-head);background:none;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.blog-card-emoji{width:80px;min-width:80px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0}
+@media(max-width:600px){.blog-card-emoji{display:none}}
+
+/* Loading / empty */
+.blog-loading{text-align:center;padding:3rem;color:var(--text3)}
+.spinner{width:24px;height:24px;border:2.5px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto .75rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── SIDEBAR ── */
+.blog-sidebar{display:flex;flex-direction:column;gap:1rem;position:sticky;top:108px}
+.sidebar-widget{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.sw-head{background:var(--bg3);padding:.65rem 1rem;border-bottom:1px solid var(--border);font-family:var(--font-head);font-size:.72rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em}
+.sw-body{padding:.75rem 1rem}
+
+/* Popular posts */
+.popular-item{display:flex;align-items:flex-start;gap:.65rem;padding:.45rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .15s}
+.popular-item:last-child{border-bottom:none}
+.popular-item:hover .popular-title{color:var(--accent)}
+.popular-rank{font-family:var(--font-head);font-size:1rem;font-weight:900;color:var(--border);min-width:20px;line-height:1.4}
+.popular-title{font-family:var(--font-head);font-size:.75rem;font-weight:700;color:var(--text);line-height:1.35;flex:1}
+.popular-views{font-size:.65rem;color:var(--text3);white-space:nowrap;margin-top:.15rem}
+
+/* Tag cloud */
+.tag-cloud{display:flex;flex-wrap:wrap;gap:.35rem;padding:.75rem 1rem}
+.tag-cloud-btn{font-size:.65rem;font-weight:600;color:var(--text2);background:var(--bg3);border:1px solid var(--border);padding:.2rem .55rem;border-radius:4px;cursor:pointer;transition:all .15s}
+.tag-cloud-btn:hover,.tag-cloud-btn.active{background:rgba(0,212,255,.1);color:var(--accent);border-color:rgba(0,212,255,.2)}
+
+/* Categories widget */
+.cat-item{display:flex;align-items:center;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .15s}
+.cat-item:last-child{border-bottom:none}
+.cat-item:hover .cat-name{color:var(--accent)}
+.cat-name{font-size:.8rem;color:var(--text2);display:flex;align-items:center;gap:.4rem}
+.cat-count{font-size:.65rem;color:var(--text3);background:var(--bg3);padding:.1rem .4rem;border-radius:10px}
+
+/* Footer */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-size:.75rem;color:var(--text3);margin-top:3rem}
+@media(max-width:768px){.topbar{display:none}.header-nav{display:none}.blog-hero{padding:2rem 1rem 1.5rem}.blog-main{padding:1rem}}
+
+/* ── SELA Global Footer ─────────────────────────────────────────────── */
+.ac-footer{border-top:1px solid var(--border,#252f47);padding:2.5rem 2rem 0;margin-top:4rem;background:var(--bg2,#111520);font-family:'Roboto',sans-serif}
+.ac-footer-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.ac-footer-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text,#e8edf5);margin-bottom:.85rem}
+.ac-footer-dot{color:var(--accent,#00d4ff)}
+.ac-footer-brand p{font-size:.83rem;color:var(--text3,#5a6a8a);line-height:1.75;max-width:280px}
+.ac-footer-col h4{font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;color:var(--text,#e8edf5);margin-bottom:.9rem;letter-spacing:.03em}
+.ac-footer-col ul{list-style:none;padding:0;margin:0}
+.ac-footer-col ul li{margin-bottom:.5rem}
+.ac-footer-col ul li a{color:var(--text3,#5a6a8a);font-size:.81rem;text-decoration:none;transition:color .2s}
+.ac-footer-col ul li a:hover{color:var(--accent,#00d4ff)}
+.ac-footer-bottom{max-width:1300px;margin:0 auto;border-top:1px solid var(--border,#252f47);padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;color:var(--text3,#5a6a8a);font-size:.78rem;flex-wrap:wrap;gap:.5rem}
+@media(max-width:768px){.ac-footer-inner{grid-template-columns:1fr;gap:1.75rem}.ac-footer-brand p{max-width:100%}}
+
+/* ── header.js injects a sticky header — prevent content from hiding under it ── */
+body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(script):not(style):first-of-type {
+  scroll-margin-top: 180px;
+}
+
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+
+  <a href="https://wa.me/254700000000" class="topbar-wa" target="_blank">💬 WhatsApp</a>
+</div>
+
+<!-- Hero -->
+<section class="blog-hero">
+  <div class="blog-hero-grid"></div>
+  <div class="blog-hero-orb" style="width:300px;height:300px;background:#00d4ff;top:-100px;right:15%;opacity:.1"></div>
+  <div class="blog-hero-orb" style="width:200px;height:200px;background:#00e676;bottom:-60px;left:10%;opacity:.08"></div>
+  <div class="blog-hero-inner">
+    <div class="blog-hero-tag">✍️ SELA Knowledge Hub</div>
+    <h1>SELA <em>Blog</em></h1>
+    <p class="blog-hero-sub">Expert Market updates, how-to guides, and tech insights from Kenya's trusted accessories provider.</p>
+    <div class="blog-stats">
+      <div class="blog-stat"><div class="blog-stat-num" id="statPosts">16</div><div class="blog-stat-lbl">Articles</div></div>
+      <div class="blog-stat-sep"></div>
+      <div class="blog-stat"><div class="blog-stat-num" id="statViews">—</div><div class="blog-stat-lbl">Total reads</div></div>
+      <div class="blog-stat-sep"></div>
+      <div class="blog-stat"><div class="blog-stat-num" id="statCats">6</div><div class="blog-stat-lbl">Categories</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="cat-pill active" onclick="filterCat('All',this)">🗂️ All</button>
+    <div id="catPillsWrap"></div>
+    <select class="filter-sort" id="sortSelect" onchange="renderList()">
+      <option value="newest">📅 Newest</option>
+      <option value="popular">🔥 Most Viewed</option>
+      <option value="liked">❤️ Most Liked</option>
+      <option value="readtime">⏱️ Quick Reads</option>
+    </select>
+    <div class="filter-search">
+      <input type="text" id="searchBox" placeholder="Search…" oninput="handleSearch(this.value)"/>
+      <span style="color:var(--text3)">🔍</span>
+    </div>
+    <span class="filter-results" id="filterResults"></span>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="blog-main">
+  <div>
+    <div id="featuredHero" style="display:none"></div>
+    <div class="blog-grid" id="blogGrid">
+      <div class="blog-loading"><div class="spinner"></div>Loading articles…</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="blog-sidebar">
+    <!-- Popular posts -->
+    <div class="sidebar-widget">
+      <div class="sw-head">🔥 Most Popular</div>
+      <div class="sw-body" id="popularList" style="padding:.5rem 1rem"></div>
+    </div>
+    <!-- Categories -->
+    <div class="sidebar-widget">
+      <div class="sw-head">🗂️ Categories</div>
+      <div class="sw-body" id="catList"></div>
+    </div>
+    <!-- Tag cloud -->
+    <div class="sidebar-widget">
+      <div class="sw-head">🏷️ Tags</div>
+      <div class="tag-cloud" id="tagCloud"></div>
+    </div>
+  
+<div id="dwAblog"></div>
+<script>
+(function(){
+  var a=document.getElementById('dwAblog');
+  if(!a||a.dataset.m) return;
+  a.dataset.m='1';
+  if(!window._dwA) window._dwA={};
+  window._dwA.blog=100;
+  if(!document.getElementById('dw-css')){
+    var s=document.createElement('style');s.id='dw-css';
+    s.textContent='.dw-box{background:linear-gradient(160deg,#0d1a2e,#0f2744 60%,#0a1e38)!important;border-radius:16px!important;padding:1.25rem!important;overflow:hidden!important;box-shadow:0 8px 32px rgba(0,0,0,.25)!important;font-family:sans-serif!important;color:#e8edf5!important;margin-bottom:1rem!important}.dw-box *{box-sizing:border-box}.dw-ttl{font-size:.95rem!important;font-weight:800!important;color:#fff!important;margin:0 0 .2rem!important}.dw-sub{font-size:.7rem!important;color:rgba(255,255,255,.5)!important;margin:0 0 .9rem!important;line-height:1.5!important}.dw-lbl{font-size:.62rem!important;font-weight:700!important;color:rgba(255,255,255,.4)!important;text-transform:uppercase!important;letter-spacing:.1em!important;margin:0 0 .38rem!important;display:block!important}.dw-amts{display:grid!important;grid-template-columns:1fr 1fr!important;gap:.35rem!important;margin-bottom:.45rem!important}.dw-ab{background:rgba(255,255,255,.05)!important;border:1.5px solid rgba(255,255,255,.1)!important;border-radius:9px!important;padding:.5rem .35rem!important;cursor:pointer!important;text-align:center!important;width:100%!important}.dw-ab:hover{background:rgba(0,212,255,.07)!important;border-color:rgba(0,212,255,.3)!important}.dw-ab.on{background:rgba(0,212,255,.13)!important;border-color:#00d4ff!important}.dw-ab .an{font-size:.88rem!important;font-weight:800!important;color:#00d4ff!important;display:block!important}.dw-ab .at{font-size:.58rem!important;color:rgba(255,255,255,.38)!important;display:block!important}.dw-fld{display:flex!important;align-items:center!important;background:rgba(255,255,255,.05)!important;border:1.5px solid rgba(255,255,255,.1)!important;border-radius:8px!important;overflow:hidden!important;margin-bottom:.6rem!important}.dw-fld:focus-within{border-color:#00d4ff!important}.dw-fld.bad{border-color:rgba(255,71,87,.6)!important}.dw-fld .dp{padding:.55rem .6rem!important;font-size:.75rem!important;font-weight:700!important;color:rgba(255,255,255,.35)!important;border-right:1px solid rgba(255,255,255,.07)!important;flex-shrink:0!important}.dw-fld input{flex:1!important;padding:.55rem .5rem!important;background:transparent!important;border:none!important;outline:none!important;color:#fff!important;font-size:.82rem!important;min-width:0!important}.dw-fld input::placeholder{color:rgba(255,255,255,.22)!important}.dw-mpb{display:flex!important;gap:.55rem!important;background:rgba(0,161,76,.09)!important;border:1px solid rgba(0,161,76,.2)!important;border-radius:8px!important;padding:.6rem .75rem!important;margin-bottom:.75rem!important}.dw-mpb .ml{font-size:.75rem!important;font-weight:900!important;color:#00e676!important}.dw-mpb .md{font-size:.67rem!important;color:rgba(255,255,255,.5)!important;line-height:1.5!important}.dw-mpb .md strong{color:rgba(255,255,255,.75)!important}.dw-emsg{font-size:.68rem!important;color:#ff6b6b!important;padding:.3rem .6rem!important;background:rgba(255,71,87,.1)!important;border:1px solid rgba(255,71,87,.2)!important;border-radius:6px!important;margin-bottom:.55rem!important;display:none!important}.dw-emsg.on{display:block!important}.dw-dbtn{width:100%!important;padding:.75rem!important;background:linear-gradient(135deg,#00d4ff,#0099bb)!important;color:#0b0e14!important;border:none!important;border-radius:9px!important;font-size:.85rem!important;font-weight:900!important;cursor:pointer!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:.4rem!important;margin-bottom:.5rem!important}.dw-sec{text-align:center!important;font-size:.6rem!important;color:rgba(255,255,255,.28)!important;margin-bottom:.7rem!important}.dw-divr{border:none!important;border-top:1px solid rgba(255,255,255,.06)!important;margin:.75rem 0!important}.dw-impr{display:flex!important;gap:.5rem!important;margin-bottom:.45rem!important}.dw-impr .ic{width:22px!important;height:22px!important;border-radius:5px!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:.7rem!important;flex-shrink:0!important}.dw-impr strong{display:block!important;font-size:.7rem!important;font-weight:700!important;color:rgba(255,255,255,.75)!important}.dw-impr span{font-size:.62rem!important;color:rgba(255,255,255,.38)!important}.dw-okb{display:none;text-align:center;padding:.5rem 0}.dw-okb.show{display:block}.dw-okb button{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);border-radius:7px;padding:.35rem .85rem;font-size:.72rem;cursor:pointer}';
+    document.head.appendChild(s);
+  }
+  var box=document.createElement('div');
+  box.className='dw-box';
+  box.innerHTML=[
+    '<div id="dwFrmblog">',
+    '<div class="dw-ttl">&#10084;&#65039; Support SELA</div>',
+    '<div class="dw-sub">Help grow the SELA marketplace.</div>',
+    '<span class="dw-lbl">Choose amount (KES)</span>',
+    '<div class="dw-amts" id="dwAmtsblog">',
+    '<button class="dw-ab on" onclick="dwSel(&apos;blog&apos;,100,this)"><span class="an">100</span><span class="at">Small help</span></button>',
+    '<button class="dw-ab" onclick="dwSel(&apos;blog&apos;,250,this)"><span class="an">250</span><span class="at">You help us</span></button>',
+    '<button class="dw-ab" onclick="dwSel(&apos;blog&apos;,500,this)"><span class="an">500</span><span class="at">Bright futures</span></button>',
+    '<button class="dw-ab" onclick="dwSel(&apos;blog&apos;,1000,this)"><span class="an">1,000</span><span class="at">Lasting change</span></button>',
+    '</div>',
+    '<div class="dw-orr">or custom amount</div>',
+    '<div class="dw-fld" id="dwCFldblog"><span class="dp">KES</span>',
+    '<input type="number" id="dwCInblog" min="10" placeholder="Enter amount" oninput="dwCust(&apos;blog&apos;)"/></div>',
+    '<span class="dw-lbl">Your name</span>',
+    '<div class="dw-fld"><span class="dp">&#128100;</span>',
+    '<input type="text" id="dwNInblog" placeholder="Full name (optional)"/></div>',
+    '<span class="dw-lbl">M-Pesa number <span style="color:rgba(255,71,87,.8)">*</span></span>',
+    '<div class="dw-fld" id="dwPFldblog"><span class="dp">+254</span>',
+    '<input type="tel" id="dwPInblog" maxlength="9" placeholder="7XX XXX XXX" oninput="this.value=this.value.replace(/[^0-9]/g,&apos;&apos;)"/></div>',
+    '<div class="dw-mpb"><span class="ml">M-PESA</span>',
+    '<div class="md"><strong>M-Pesa STK Push</strong><br>You receive a prompt to enter your PIN.</div></div>',
+    '<div class="dw-emsg" id="dwErrblog"></div>',
+    '<button class="dw-dbtn" id="dwBtnblog" onclick="dwGive(&apos;blog&apos;)">&#128274; Donate Securely</button>',
+    '<div class="dw-sec">&#128737; Secure &amp; encrypted</div>',
+    '<hr class="dw-divr">',
+    '<span class="dw-lbl">Your impact</span>',
+    '<div class="dw-impr"><div class="ic" style="background:rgba(59,130,246,.12)">&#128218;</div><div><strong>Digital Education</strong><span>Digital skills for youth</span></div></div>',
+    '<div class="dw-impr"><div class="ic" style="background:rgba(16,185,129,.12)">&#127760;</div><div><strong>Connectivity</strong><span>Rural internet access</span></div></div>',
+    '<div class="dw-impr"><div class="ic" style="background:rgba(245,158,11,.12)">&#129309;</div><div><strong>Community</strong><span>Stronger communities</span></div></div>',
+    '</div>',
+    '<div class="dw-okb" id="dwOkblog">',
+    '<div style="font-size:2.5rem;margin-bottom:.5rem">&#127881;</div>',
+    '<div style="font-size:.95rem;font-weight:800;color:#00e676;margin-bottom:.3rem">Thank you!</div>',
+    '<div style="font-size:.72rem;color:rgba(255,255,255,.48);line-height:1.6;margin-bottom:.8rem" id="dwOkMsgblog">Prompt sent.</div>',
+    '<button onclick="dwBack(&apos;blog&apos;)">&#8592; Again</button>',
+    '</div>'
+  ].join('');
+  a.parentNode.replaceChild(box,a);
+  if(!window._dwL){window._dwL=1;window._dwA=window._dwA||{};
+    window.dwSel=function(id,amt,btn){window._dwA[id]=amt;document.getElementById('dwAmts'+id).querySelectorAll('.dw-ab').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');var ci=document.getElementById('dwCIn'+id);if(ci)ci.value='';};
+    window.dwCust=function(id){var ci=document.getElementById('dwCIn'+id);if(ci&&parseFloat(ci.value)>0){window._dwA[id]=null;document.getElementById('dwAmts'+id).querySelectorAll('.dw-ab').forEach(function(b){b.classList.remove('on')});}};
+    window.dwGive=function(id){var ci=document.getElementById('dwCIn'+id),pi=document.getElementById('dwPIn'+id),ni=document.getElementById('dwNIn'+id),btn=document.getElementById('dwBtn'+id),err=document.getElementById('dwErr'+id);if(err)err.classList.remove('on');var amt=window._dwA[id]||(ci&&parseFloat(ci.value));if(!amt||isNaN(amt)||amt<10){if(err){err.textContent='Select or enter amount (min KES 10).';err.classList.add('on');}return;}var ph=pi?pi.value.trim():'';if(!ph||ph.length<9||!/^[0-9]{9}$/.test(ph)){if(err){err.textContent='Enter valid M-Pesa number (9 digits).';err.classList.add('on');}var pf=document.getElementById('dwPFld'+id);if(pf)pf.classList.add('bad');return;}var name=ni?ni.value.trim():'',full='254'+ph,fmt='KES '+Number(amt).toLocaleString('en-KE');if(btn){btn.disabled=true;btn.textContent='Sending...';}setTimeout(function(){var frm=document.getElementById('dwFrm'+id),ok=document.getElementById('dwOk'+id),msg=document.getElementById('dwOkMsg'+id);if(frm)frm.style.display='none';if(ok)ok.classList.add('show');if(msg)msg.innerHTML='Prompt for <strong>'+fmt+'</strong> sent to <strong>+'+full+'</strong>.<br>Enter PIN.'+(name?'<br>Asante, <strong style="color:#00e676">'+name+'</strong>!':'<br>Asante sana!');if(btn){btn.disabled=false;btn.textContent='Donate Securely';}},2000);};
+    window.dwBack=function(id){var frm=document.getElementById('dwFrm'+id),ok=document.getElementById('dwOk'+id);if(frm)frm.style.display='';if(ok)ok.classList.remove('show');window._dwA[id]=100;document.getElementById('dwAmts'+id).querySelectorAll('.dw-ab').forEach(function(b,i){b.classList.toggle('on',i===0);});};
+  }
+})();
+</script>
+</aside>
+</div>
+
+<script src="blog-posts-data.js"></script>
+<script>
+const API = 'http://localhost:5000/api';
+let metaMap       = {};   // { postId: { views, likes, voteScore, ... } }
+let commentCounts = {};  // { postId: count }
+let activeTag    = 'All';
+let activeCat    = 'All';
+let activeSearch = '';
+
+// ── Load metrics from DB ──────────────────────────────────────────────────────
+async function loadMeta() {
+  try {
+    const r = await fetch(`${API}/blog/meta`, { signal: AbortSignal.timeout(5000) });
+    const j = await r.json();
+    if (j.success) metaMap = j.data;
+  } catch { /* offline — use post defaults */ }
+}
+
+async function loadCommentCounts() {
+  try {
+    const postIds = blogPosts.map(p => p.id);
+    const r = await fetch(`${API}/comments/counts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ postIds }),
+      signal: AbortSignal.timeout(5000)
+    });
+    const j = await r.json();
+    if (j.success) commentCounts = j.data;
+  } catch {}
+}
+
+function getMeta(postId) {
+  const m = metaMap[postId] || {};
+  const p = blogPosts.find(x => x.id === postId) || {};
+  return {
+    views:     m.views     ?? p.views     ?? 0,
+    likes:     m.likes     ?? p.likes     ?? 0,
+    voteScore: m.voteScore ?? 0,
+    voteCount: m.voteCount ?? 0,
+  };
+}
+
+// ── Category & tag helpers ────────────────────────────────────────────────────
+const CAT_COLORS = {
+  'How-To':'#00d4ff','Security':'#a855f7','Networking':'#00e676',
+  'Devices':'#ff6b35','Buying Guide':'#f59e0b','Tips':'#f59e0b',
+};
+function getCatColor(cat) { return CAT_COLORS[cat] || '#8a97b0'; }
+
+function getCatEmoji(cat) {
+  const m = {'How-To':'🔧','Security':'🛡️','Networking':'📡','Devices':'💻','Buying Guide':'🛍️','Tips':'💡'};
+  return m[cat] || '📝';
+}
+
+function getAllTags() {
+  const set = new Set();
+  blogPosts.forEach(p => { (p.tags || []).forEach(t => set.add(t)); });
+  return [...set].sort();
+}
+
+// ── Filtering & sorting ───────────────────────────────────────────────────────
+function getFiltered() {
+  return blogPosts.filter(p => {
+    if (activeCat !== 'All' && p.category !== activeCat) return false;
+    if (activeTag !== 'All' && !(p.tags||[]).includes(activeTag) && p.tag !== activeTag) return false;
+    if (activeSearch) {
+      const q = activeSearch;
+      return p.title.toLowerCase().includes(q) ||
+             p.excerpt.toLowerCase().includes(q) ||
+             p.category.toLowerCase().includes(q);
+    }
+    return true;
+  });
+}
+
+function getSorted(posts) {
+  const sort = document.getElementById('sortSelect')?.value || 'newest';
+  return [...posts].sort((a, b) => {
+    if (sort === 'newest')   return new Date(b.date) - new Date(a.date);
+    if (sort === 'popular')  return getMeta(b.id).views - getMeta(a.id).views;
+    if (sort === 'liked')    return getMeta(b.id).likes - getMeta(a.id).likes;
+    if (sort === 'readtime') {
+      const mins = p => parseInt(p.readTime) || 99;
+      return mins(a) - mins(b);
+    }
+    return 0;
+  });
+}
+
+function filterCat(cat, btn) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderList();
+}
+
+function filterTag(tag) {
+  activeTag = activeTag === tag ? 'All' : tag;
+  document.querySelectorAll('.tag-cloud-btn').forEach(b => b.classList.toggle('active', b.dataset.tag === activeTag));
+  renderList();
+}
+
+window.handleSearch = function handleSearch(val) {
+  activeSearch = val.toLowerCase().trim();
+  renderList();
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function timeAgo(date) {
+  const s = Math.floor((Date.now() - new Date(date)) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s/60) + ' min ago';
+  if (s < 86400) return Math.floor(s/3600) + ' hr ago';
+  if (s < 604800) return Math.floor(s/86400) + ' day' + (Math.floor(s/86400)>1?'s':'') + ' ago';
+  return new Date(date).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function renderList() {
+  const filtered = getSorted(getFiltered());
+  document.getElementById('filterResults').textContent = `${filtered.length} article${filtered.length!==1?'s':''}`;
+
+  const grid = document.getElementById('blogGrid');
+  if (!filtered.length) {
+    grid.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--text3)">
+      <div style="font-size:3rem;margin-bottom:.75rem">🔍</div>
+      <p>No articles found${activeSearch?' for "'+activeSearch+'"':''}.</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => {
+    const meta  = getMeta(p.id);
+    const color = getCatColor(p.category);
+    const tags  = (p.tags || []).slice(0, 4);
+    return `<article class="blog-card${p.featured?' featured':''}" onclick="openPost('${p.id}')">
+      <div class="blog-card-accent" style="background:${color}"></div>
+      <div class="blog-card-emoji-wrap">${p.emoji}</div>
+      <div class="blog-card-body">
+        <div class="blog-card-top" style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem">
+          <span class="blog-cat-badge" style="background:${color}20;color:${color};border:1px solid ${color}40;padding:.18rem .55rem;border-radius:20px;font-size:.7rem;font-weight:700">${getCatEmoji(p.category)} ${p.category}</span>
+          ${p.featured?'<span style="background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3);padding:.18rem .55rem;border-radius:20px;font-size:.7rem;font-weight:700">⭐ Featured</span>':''}
+          <span style="font-size:.7rem;color:var(--text3);margin-left:auto">${timeAgo(p.date)}</span>
+        </div>
+        <div class="blog-card-title" style="font-family:var(--font-head);font-size:.95rem;font-weight:800;color:var(--text);line-height:1.4;margin-bottom:.4rem">${p.title}</div>
+        <div class="blog-card-excerpt" style="font-size:.78rem;color:var(--text2);line-height:1.6;margin-bottom:.75rem;flex:1">${p.excerpt||''}</div>
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;font-size:.72rem;color:var(--text3);margin-bottom:.5rem">
+          <span>⏱️ ${p.readTime}</span>
+          <span>💬 ${commentCounts[p.id] || 0}</span>
+          <span>👁️ ${Number(meta.views||0).toLocaleString()}</span>
+          <span>❤️ ${meta.likes||0}</span>
+          <button class="blog-card-read-btn" onclick="event.stopPropagation();openPost('${p.id}')" style="margin-left:auto;padding:.28rem .85rem;background:var(--accent);color:var(--bg);border:none;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer">Read →</button>
+        </div>
+        ${tags.length?`<div style="display:flex;flex-wrap:wrap;gap:.3rem">${tags.map(t=>`<span style="padding:.15rem .5rem;background:rgba(255,255,255,.06);border-radius:4px;font-size:.68rem;color:var(--text3);cursor:pointer" onclick="event.stopPropagation();filterTag('${t}')">#${t}</span>`).join('')}</div>`:''}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function openPost(id) {
+  window.location.href = `blog-post.html?id=${id}`;
+}
+
+// ── Sidebar ───────────────────────────────────────────────────────────────────
+function renderSidebar() {
+  // Popular posts
+  const byViews = [...blogPosts].sort((a,b) => getMeta(b.id).views - getMeta(a.id).views).slice(0,5);
+  document.getElementById('popularList').innerHTML = byViews.map((p,i) =>
+    `<div class="popular-item" onclick="openPost('${p.id}')">
+      <div class="popular-rank">${i+1}</div>
+      <div>
+        <div class="popular-title">${p.title}</div>
+        <div class="popular-views">👁️ ${Number(getMeta(p.id).views).toLocaleString()} views · ${p.readTime}</div>
+      </div>
+    </div>`
+  ).join('');
+
+  // Categories
+  const cats = [...new Set(blogPosts.map(p => p.category))].sort();
+  document.getElementById('catList').innerHTML = cats.map(cat => {
+    const count = blogPosts.filter(p => p.category === cat).length;
+    const color = getCatColor(cat);
+    return `<div class="cat-item" onclick="filterCatFromSidebar('${cat}')">
+      <div class="cat-name" style="color:${activeCat===cat?color:''}">
+        ${getCatEmoji(cat)} ${cat}
+      </div>
+      <span class="cat-count">${count}</span>
+    </div>`;
+  }).join('');
+
+  // Tag cloud
+  const tags = getAllTags();
+  document.getElementById('tagCloud').innerHTML = tags.map(t =>
+    `<button class="tag-cloud-btn${activeTag===t?' active':''}" data-tag="${t}" onclick="filterTag('${t}')">${t}</button>`
+  ).join('');
+
+  // Category pills in filter bar
+  const wrap = document.getElementById('catPillsWrap');
+  wrap.innerHTML = cats.map(cat =>
+    `<button class="cat-pill${activeCat===cat?' active':''}" onclick="filterCat('${cat}',this)">${getCatEmoji(cat)} ${cat}</button>`
+  ).join('');
+}
+
+function filterCatFromSidebar(cat) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+  const matchBtn = [...document.querySelectorAll('.cat-pill')].find(b => b.textContent.trim().includes(cat));
+  if (matchBtn) matchBtn.classList.add('active');
+  renderList();
+  renderSidebar();
+}
+
+// ── Hero stats ────────────────────────────────────────────────────────────────
+function updateHeroStats() {
+  const totalViews = blogPosts.reduce((sum, p) => sum + getMeta(p.id).views, 0);
+  document.getElementById('statViews').textContent =
+    totalViews > 1000 ? (totalViews/1000).toFixed(1) + 'k' : totalViews || '—';
+  document.getElementById('statPosts').textContent = blogPosts.length;
+  document.getElementById('statCats').textContent  = new Set(blogPosts.map(p => p.category)).size;
+}
+
+// ── URL tag filter ────────────────────────────────────────────────────────────
+function checkURL() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.get('tag')) { activeTag = p.get('tag'); renderSidebar(); }
+  if (p.get('cat')) { activeCat = p.get('cat'); }
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+(async () => {
+  checkURL(); buildCatPills(); renderFeaturedHero();
+  await loadMeta();
+  await loadCommentCounts();
+  updateHeroStats();
+  renderSidebar();
+  renderList();
+})();
+
+function buildCatPills() {
+  const wrap = document.getElementById('catPillsWrap');
+  if (!wrap) return;
+  const cats = [...new Set(blogPosts.map(p => p.category).filter(Boolean))].sort();
+  const catEmoji = {
+    'How-To':'🔧','Guide':'📖','Tips':'💡','Review':'⭐','News':'📰',
+    'Security':'🔐','Software':'💻','Hardware':'🖥️','Mobile':'📱',
+    'Business':'💼','Tutorial':'🎓','Opinion':'💬','Feature':'✨'
+  };
+  wrap.innerHTML = cats.map(cat =>
+    `<button class="cat-pill" onclick="filterCat('${cat}',this)">${catEmoji[cat]||'📂'} ${cat}</button>`
+  ).join('');
+}
+
+function renderFeaturedHero() {
+  const featured = blogPosts.find(p => p.featured);
+  if (!featured) return;
+  const meta  = getMeta(featured.id);
+  const color = getCatColor(featured.category);
+  const hero  = document.getElementById('featuredHero');
+  if (!hero) return;
+  hero.style.display = '';
+  hero.innerHTML = `
+    <div class="featured-hero-card" onclick="openPost('${featured.id}')" style="background:linear-gradient(135deg,var(--card),${color}12);border:1px solid ${color}30;border-radius:16px;padding:2rem;cursor:pointer;display:flex;gap:2rem;align-items:center;transition:all .2s;margin-bottom:1.5rem">
+      <div style="font-size:4rem;flex-shrink:0">${featured.emoji}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;flex-wrap:wrap">
+          <span style="background:${color}20;color:${color};border:1px solid ${color}40;padding:.2rem .6rem;border-radius:20px;font-size:.72rem;font-weight:700">${getCatEmoji(featured.category)} ${featured.category}</span>
+          <span style="background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3);padding:.2rem .6rem;border-radius:20px;font-size:.72rem;font-weight:700">⭐ Featured</span>
+          <span style="font-size:.72rem;color:var(--text3);margin-left:auto">⏱️ ${featured.readTime}</span>
+        </div>
+        <div style="font-family:var(--font-head);font-size:1.35rem;font-weight:900;color:var(--text);line-height:1.35;margin-bottom:.5rem">${featured.title}</div>
+        <div style="font-size:.82rem;color:var(--text2);line-height:1.65;margin-bottom:.85rem">${featured.excerpt||''}</div>
+        <div style="display:flex;align-items:center;gap:.75rem;font-size:.75rem;color:var(--text3)">
+          <span>💬 ${commentCounts[featured.id]||0} comments</span>
+          <span>👁️ ${Number(meta.views||0).toLocaleString()} views</span>
+          <span>❤️ ${meta.likes||0}</span>
+          <button onclick="event.stopPropagation();openPost('${featured.id}')" style="margin-left:auto;padding:.4rem 1.25rem;background:${color};color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer">Read Article →</button>
+        </div>
+      </div>
+    </div>`;
+}
+</script>
+<script src="auth.js"></script>
+<script src="notif-bell.js"></script>
+<footer class="ac-footer">
+  <div class="ac-footer-inner">
+    <div class="ac-footer-brand">
+      <div class="ac-footer-logo">SELA<span class="ac-footer-dot">.</span>Solutions</div>
+      <p>SELA — ICT accessories, digital transformation, printing, online services &amp; more. 6 branches across Kenya.</p>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Our Branches</h4>
+      <ul>
+        <li><a href="shop.html">SELA – Bamburi</a></li>
+        <li><a href="shop.html">SELA – Mwembe Tayari</a></li>
+        <li><a href="shop.html">SELA – Nakuru Town</a></li>
+        <li><a href="shop.html">SELA – Eldoret</a></li>
+        <li><a href="shop.html">SELA – Eastleigh Nairobi</a></li>
+        <li><a href="shop.html">SELA – Westlands</a></li>
+      </ul>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+        <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+        <li><a href="mailto:admin@sela.co.ke">✉️ admin@sela.co.ke</a></li>
+        <li><a href="https://wa.me/254700000000" target="_blank">💬 WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ac-footer-bottom">
+    <span>© 2025 SELA · admin@sela.co.ke</span>
+    <span>Mombasa, Kenya 🇰🇪</span>
+  </div>
+</footer>
+<script src="header.js"></script>
+</body>
+</html>

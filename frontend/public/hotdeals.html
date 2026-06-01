@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Hot Deals — SELA Kenya</title>
+<meta name="description" content="Exclusive hot deals on ICT accessories at SELA Kenya. Huge discounts on phones, laptops, cables, networking gear and more across all branches."/>
+<meta name="keywords" content="hot deals Kenya, ICT accessories discount, cheap phones Mombasa, laptop deals Kenya, SELA offers"/>
+<meta property="og:title" content="Hot Deals — SELA"/>
+<meta property="og:description" content="Exclusive discounts on ICT accessories across Kenya. Limited stock — grab your deal today!"/>
+<meta property="og:type" content="website"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ff6b35'/><text y='.9em' font-size='72' x='12'>🔥</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;
+  --card:#1a2035;--card2:#1f2740;--border:#252f47;
+  --orange:#ff6b35;--orange2:#ff8c5a;--orange3:#ff5010;
+  --orange-bg:rgba(255,107,53,.08);--orange-border:rgba(255,107,53,.25);
+  --green:#00e676;--accent:#00d4ff;--red:#ff4757;--gold:#f59e0b;
+  --text:#e8edf5;--text2:#8a97b0;--text3:#5a6a8a;
+  --radius:14px;
+  --font-head:'Montserrat',sans-serif;--font-body:'Roboto',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-body)}
+img{max-width:100%;height:auto}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.4rem 1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:var(--text3)}
+.topbar a{color:var(--text3)}.topbar a:hover{color:var(--orange)}
+.topbar-wa{background:#25D366;color:#fff;padding:.2rem .75rem;border-radius:4px;font-size:.7rem;font-weight:700}
+
+/* ── HEADER ── */
+header{background:rgba(11,14,20,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 1.5rem}
+.header-inner{max-width:1400px;margin:0 auto;height:60px;display:flex;align-items:center;gap:1rem}
+.logo{font-family:var(--font-head);font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:.3rem}
+.logo-dot{color:var(--orange)}
+.logo-badge{font-size:.55rem;font-weight:700;background:var(--orange);color:#fff;padding:2px 5px;border-radius:3px;letter-spacing:.05em;align-self:flex-start;margin-top:4px}
+.header-search{flex:1;max-width:380px;display:flex;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s}
+.header-search:focus-within{border-color:var(--orange)}
+.header-search input{flex:1;padding:.5rem .9rem;background:none;border:none;outline:none;color:var(--text);font-size:.85rem}
+.header-search input::placeholder{color:var(--text3)}
+.header-search button{padding:.5rem .85rem;background:none;border:none;color:var(--text3);font-size:.9rem}.header-search button:hover{color:var(--orange)}
+.header-nav{display:flex;gap:.25rem;align-items:center;margin-left:auto}
+.hn-link{padding:.4rem .7rem;border-radius:6px;font-size:.72rem;font-weight:600;color:var(--text2);background:none;border:none;transition:all .15s;font-family:var(--font-head)}
+.hn-link:hover{color:var(--text);background:var(--card)}
+.hn-link.active{color:var(--orange);background:rgba(255,107,53,.1)}
+.btn-wa-hdr{background:#25D366;color:#fff;padding:.4rem .9rem;border-radius:6px;font-size:.72rem;font-weight:700}
+
+/* ══ HERO ══ */
+.hd-hero{position:relative;overflow:hidden;padding:3.5rem 1.5rem 3rem;background:linear-gradient(135deg,#0e0a07 0%,#16100a 50%,#0a0d14 100%)}
+.hd-hero-bg{position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 24px,rgba(255,107,53,.015) 24px,rgba(255,107,53,.015) 48px);pointer-events:none}
+.hd-hero-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.hd-hero-inner{max-width:1400px;margin:0 auto;position:relative;z-index:1;text-align:center}
+.hd-hero-tag{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.3);color:var(--orange);font-family:var(--font-head);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .9rem;border-radius:20px;margin-bottom:1rem}
+.hd-hero h1{font-family:var(--font-head);font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;margin-bottom:.75rem}
+.hd-hero h1 em{color:var(--orange);font-style:normal}
+.hd-hero-sub{font-size:.95rem;color:var(--text2);max-width:520px;margin:0 auto 1.5rem;line-height:1.7}
+.hd-stats{display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;margin-top:1.5rem}
+.hd-stat{text-align:center}
+.hd-stat-num{font-family:var(--font-head);font-size:1.5rem;font-weight:900;color:var(--orange)}
+.hd-stat-lbl{font-size:.72rem;color:var(--text3);margin-top:.15rem}
+.hd-stat-sep{width:1px;height:36px;background:var(--border)}
+
+/* ══ FILTERS ══ */
+.hd-filter-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.65rem 1.5rem;position:sticky;top:0;z-index:80}
+.hd-filter-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.hd-cat-pill{padding:.32rem .85rem;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:.75rem;font-weight:600;font-family:var(--font-head);transition:all .2s;cursor:pointer}
+.hd-cat-pill:hover{border-color:var(--orange);color:var(--orange)}
+.hd-cat-pill.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+.hd-search{display:flex;align-items:center;gap:.4rem;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.32rem .75rem;margin-left:auto}
+.hd-search:focus-within{border-color:var(--orange)}
+.hd-search input{background:none;border:none;outline:none;color:var(--text);font-size:.8rem;width:180px}
+.hd-search input::placeholder{color:var(--text3)}
+.hd-results{font-size:.75rem;color:var(--text3);white-space:nowrap}
+
+/* ══ MAIN GRID ══ */
+.hd-main{max-width:1400px;margin:0 auto;padding:1.5rem}
+.hd-section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+.hd-section-title{font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--text)}
+.hd-section-line{flex:1;height:1px;background:var(--border)}
+
+/* Deal cards grid */
+.hd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+
+/* ── DEAL CARD ── */
+.deal-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .25s;position:relative;display:flex;flex-direction:column}
+.deal-card:hover{border-color:var(--orange-border);transform:translateY(-4px);box-shadow:0 12px 36px rgba(255,107,53,.15)}
+.deal-card.featured{border-color:rgba(255,107,53,.35)}
+
+/* Image carousel inside card */
+.deal-img-wrap{position:relative;height:200px;overflow:hidden;background:var(--bg3);flex-shrink:0}
+.deal-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.deal-card:hover .deal-img-wrap img{transform:scale(1.05)}
+.deal-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--text3)}
+.deal-img-dots{position:absolute;bottom:.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.3rem;z-index:2}
+.deal-img-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:all .2s}
+.deal-img-dot.active{background:#fff;width:16px;border-radius:3px}
+.deal-img-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:.75rem;display:flex;align-items:center;justify-content:center;transition:all .2s;opacity:0}
+.deal-card:hover .deal-img-nav{opacity:1}
+.deal-img-nav:hover{background:rgba(255,107,53,.7)}
+.deal-img-prev{left:.4rem}.deal-img-next{right:.4rem}
+
+/* Badges */
+.deal-badge-wrap{position:absolute;top:.65rem;left:.65rem;display:flex;flex-direction:column;gap:.3rem;z-index:3}
+.deal-badge{font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border-radius:3px}
+.deal-badge.hot{background:#ff4757;color:#fff}
+.deal-badge.featured{background:var(--orange);color:#fff}
+.deal-badge.pct{background:rgba(0,0,0,.7);backdrop-filter:blur(4px);color:#fff;border:1px solid rgba(255,107,53,.4)}
+.deal-badge.new{background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.25)}
+.deal-badge.limited{background:rgba(255,71,87,.12);color:var(--red);border:1px solid rgba(255,71,87,.25)}
+
+/* Card body */
+.deal-body{padding:1rem 1rem .5rem;flex:1;display:flex;flex-direction:column;gap:.4rem}
+.deal-cat{font-size:.62rem;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase}
+.deal-title{font-family:var(--font-head);font-size:.92rem;font-weight:800;line-height:1.3;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.deal-shop{font-size:.68rem;color:var(--text3);display:flex;align-items:center;gap:.25rem;margin-top:.1rem}
+.deal-desc{font-size:.78rem;color:var(--text2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:.25rem}
+
+/* Pricing */
+.deal-pricing{display:flex;align-items:flex-end;justify-content:space-between;padding:.65rem 1rem;border-top:1px solid var(--border);margin-top:auto}
+.deal-price-col{}
+.deal-original{font-size:.72rem;color:var(--text3);text-decoration:line-through;line-height:1}
+.deal-price{font-family:var(--font-head);font-size:1.15rem;font-weight:900;color:var(--orange);line-height:1.2}
+.deal-savings{font-size:.68rem;color:var(--green);font-weight:600;margin-top:.15rem}
+.deal-stock{font-size:.65rem;color:var(--red);font-weight:600}
+
+/* Card actions */
+.deal-actions{display:flex;gap:.5rem;padding:.5rem 1rem .85rem}
+.deal-btn-detail{flex:1;padding:.55rem;background:var(--orange);color:#fff;border:none;border-radius:7px;font-family:var(--font-head);font-size:.78rem;font-weight:700;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.deal-btn-detail:hover{background:var(--orange3);transform:translateY(-1px)}
+.deal-btn-wa{padding:.55rem .7rem;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:#25D366;border-radius:7px;font-size:.82rem;transition:all .2s}
+.deal-btn-wa:hover{background:#25D366;color:#fff}
+
+/* ══ EMPTY / LOADING STATES ══ */
+.hd-loading,.hd-empty{text-align:center;padding:4rem 1rem;color:var(--text3);grid-column:1/-1}
+.hd-loading-spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem}
+.hd-empty-icon{font-size:3.5rem;margin-bottom:1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ══ DEAL DETAIL OVERLAY ══ */
+.hdl-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:1.5rem 1rem}
+.hdl-overlay.open{display:flex;animation:hdlFade .2s ease}
+@keyframes hdlFade{from{opacity:0}to{opacity:1}}
+.hdl-modal{background:var(--bg2);border:1px solid var(--border);border-radius:18px;width:100%;max-width:980px;margin:auto;overflow:hidden;animation:hdlUp .28s cubic-bezier(.4,0,.2,1)}
+@keyframes hdlUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.hdl-close{position:absolute;top:1rem;right:1rem;z-index:10;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--border);color:var(--text2);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.hdl-close:hover{background:rgba(255,71,87,.15);color:var(--red)}
+
+/* Detail: image gallery */
+.hdl-gallery{position:relative;background:var(--bg3)}
+.hdl-gallery-main{height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.hdl-gallery-main img{width:100%;height:100%;object-fit:contain;transition:opacity .3s}
+.hdl-gallery-placeholder{font-size:8rem;color:var(--text3)}
+.hdl-gallery-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.hdl-gallery-nav:hover{background:rgba(255,107,53,.7);border-color:var(--orange)}
+.hdl-gallery-prev{left:.75rem}.hdl-gallery-next{right:.75rem}
+.hdl-thumbs{display:flex;gap:.4rem;padding:.65rem .75rem;overflow-x:auto;border-top:1px solid var(--border);scrollbar-width:none}
+.hdl-thumbs::-webkit-scrollbar{display:none}
+.hdl-thumb{width:64px;height:64px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;flex-shrink:0;transition:all .2s}
+.hdl-thumb.active{border-color:var(--orange)}
+.hdl-thumb img{width:100%;height:100%;object-fit:cover}
+
+/* Detail: 2-col body */
+.hdl-body{display:grid;grid-template-columns:1fr 340px;gap:0}
+@media(max-width:720px){.hdl-body{grid-template-columns:1fr}}
+
+/* Info col */
+.hdl-info{padding:1.75rem 2rem}
+.hdl-badge-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem}
+.hdl-cat{font-size:.68rem;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.hdl-title{font-family:var(--font-head);font-size:1.4rem;font-weight:900;line-height:1.2;margin-bottom:.75rem}
+.hdl-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.hdl-meta-tag{font-size:.72rem;color:var(--text2);background:var(--bg3);padding:.22rem .65rem;border-radius:20px;border:1px solid var(--border);display:flex;align-items:center;gap:.25rem}
+
+/* Pricing block */
+.hdl-price-block{background:linear-gradient(135deg,rgba(255,107,53,.06),rgba(255,107,53,.02));border:1px solid var(--orange-border);border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:1.25rem}
+.hdl-original-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.35rem}
+.hdl-original-price{font-size:.88rem;color:var(--text3);text-decoration:line-through}
+.hdl-discount-badge{background:rgba(255,71,87,.15);color:var(--red);font-size:.65rem;font-weight:800;padding:.18rem .55rem;border-radius:4px;letter-spacing:.08em}
+.hdl-deal-price{font-family:var(--font-head);font-size:2rem;font-weight:900;color:var(--orange);line-height:1}
+.hdl-savings-row{display:flex;align-items:center;gap:.5rem;margin-top:.4rem}
+.hdl-savings{font-size:.8rem;color:var(--green);font-weight:600}
+
+.hdl-section-title{font-family:var(--font-head);font-size:.78rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin:.1.25rem 0 .6rem}
+.hdl-desc{font-size:.88rem;color:var(--text2);line-height:1.8;margin-bottom:1.25rem}
+
+/* Tags */
+.hdl-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.25rem}
+.hdl-tag{font-size:.65rem;font-weight:600;color:var(--orange);background:rgba(255,107,53,.08);border:1px solid var(--orange-border);padding:.18rem .55rem;border-radius:4px}
+
+/* Quick share */
+.hdl-share-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.hdl-share-label{font-size:.72rem;color:var(--text3)}
+.hdl-share-btn{padding:.3rem .65rem;border-radius:5px;border:none;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:var(--font-head)}
+.hdl-share-btn:hover{transform:translateY(-1px)}
+
+/* Order panel */
+.hdl-order-panel{border-left:1px solid var(--border);padding:1.75rem 1.5rem;background:var(--bg3);display:flex;flex-direction:column;gap:.9rem}
+@media(max-width:720px){.hdl-order-panel{border-left:none;border-top:1px solid var(--border)}}
+.hdl-order-title{font-family:var(--font-head);font-size:.9rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:.4rem}
+.hdl-form-group{display:flex;flex-direction:column;gap:.28rem}
+.hdl-label{font-size:.72rem;font-weight:600;color:var(--text2)}
+.hdl-label span{color:var(--red)}
+.hdl-input{padding:.6rem .85rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:.84rem;outline:none;transition:border-color .2s;width:100%}
+.hdl-input:focus{border-color:var(--orange)}
+.hdl-input.err{border-color:var(--red)}
+.hdl-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a97b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;background-color:var(--bg2)}
+.hdl-select option{background:var(--bg3)}
+.hdl-stepper{display:flex;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;width:fit-content}
+.hdl-step-btn{width:36px;height:36px;background:none;border:none;color:var(--text2);font-size:1.1rem;cursor:pointer;transition:all .2s}
+.hdl-step-btn:hover{background:var(--card2);color:var(--orange)}
+.hdl-step-btn:disabled{opacity:.3;cursor:not-allowed}
+.hdl-qty-val{width:44px;text-align:center;font-family:var(--font-head);font-size:1rem;font-weight:700;border:none;background:none;color:var(--text)}
+.hdl-qty-row{display:flex;align-items:center;gap:.75rem}
+.hdl-total{font-family:var(--font-head);font-size:.9rem;font-weight:700;color:var(--orange)}
+.hdl-submit{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--orange),var(--orange3));color:#fff;border:none;border-radius:10px;font-family:var(--font-head);font-size:.88rem;font-weight:800;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.hdl-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,53,.4)}
+.hdl-submit:disabled{background:var(--bg3);color:var(--text3);cursor:not-allowed}
+.hdl-wa-order{display:flex;align-items:center;justify-content:center;gap:.4rem;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:#25D366;border-radius:9px;padding:.65rem;font-size:.8rem;font-weight:700;font-family:var(--font-head);text-decoration:none;transition:all .2s;text-align:center}
+.hdl-wa-order:hover{background:#25D366;color:#fff}
+.hdl-note{font-size:.68rem;color:var(--text3);text-align:center;line-height:1.6}
+
+/* Order success */
+.hdl-success{display:none;text-align:center;padding:1.5rem}
+.hdl-success.show{display:block}
+.hdl-success-icon{font-size:2.5rem;margin-bottom:.5rem}
+.hdl-success-title{font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--green);margin-bottom:.4rem}
+.hdl-success-desc{font-size:.78rem;color:var(--text2);line-height:1.7;margin-bottom:1rem}
+
+/* Related section */
+.hdl-related{padding:1.25rem 2rem 1.75rem;border-top:1px solid var(--border)}
+.hdl-related-title{font-family:var(--font-head);font-size:.8rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.85rem}
+.hdl-related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.65rem}
+.hdl-related-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .2s}
+.hdl-related-card:hover{border-color:var(--orange-border);transform:translateY(-2px)}
+.hdl-related-img{height:100px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden}
+.hdl-related-img img{width:100%;height:100%;object-fit:cover}
+.hdl-related-body{padding:.6rem .75rem}
+.hdl-related-name{font-family:var(--font-head);font-size:.72rem;font-weight:700;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hdl-related-price{font-family:var(--font-head);font-size:.78rem;font-weight:800;color:var(--orange);margin-top:.2rem}
+
+/* ══ ADMIN PANEL ══ */
+.admin-panel{background:var(--bg2);border:1px solid var(--orange-border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;display:none}
+.admin-panel.show{display:block}
+.admin-panel-title{font-family:var(--font-head);font-size:.95rem;font-weight:800;color:var(--orange);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
+.admin-form{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+@media(max-width:640px){.admin-form{grid-template-columns:1fr}}
+.admin-form .full{grid-column:1/-1}
+.admin-input{width:100%;padding:.6rem .85rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:.84rem;outline:none;transition:border-color .2s}
+.admin-input:focus{border-color:var(--orange)}
+.admin-input.err{border-color:var(--red)}
+.admin-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a97b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;background-color:var(--bg3)}
+.admin-select option{background:var(--bg3)}
+.admin-label{font-size:.72rem;font-weight:600;color:var(--text2);margin-bottom:.25rem;display:block}
+.admin-label span{color:var(--red)}
+.admin-form-group{display:flex;flex-direction:column}
+.admin-img-preview{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem}
+.admin-img-thumb{position:relative;width:64px;height:64px;border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+.admin-img-thumb img{width:100%;height:100%;object-fit:cover}
+.admin-img-del{position:absolute;top:1px;right:1px;width:18px;height:18px;background:rgba(255,71,87,.85);color:#fff;border:none;border-radius:50%;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.admin-btn-row{display:flex;gap:.6rem;grid-column:1/-1;flex-wrap:wrap}
+.admin-btn-save{padding:.65rem 1.5rem;background:var(--orange);color:#fff;border:none;border-radius:8px;font-family:var(--font-head);font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+.admin-btn-save:hover{background:var(--orange3)}
+.admin-btn-cancel{padding:.65rem 1.25rem;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
+.admin-btn-cancel:hover{border-color:var(--red);color:var(--red)}
+.admin-note{font-size:.68rem;color:var(--text3);grid-column:1/-1}
+
+/* Card admin controls */
+.deal-admin-bar{display:none;position:absolute;top:.5rem;right:.5rem;z-index:5;gap:.3rem}
+.deal-admin-bar.show{display:flex}
+.deal-edit-btn,.deal-del-btn{width:28px;height:28px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:all .2s}
+.deal-edit-btn{background:rgba(0,212,255,.15);color:var(--accent)}.deal-edit-btn:hover{background:var(--accent);color:var(--bg)}
+.deal-del-btn{background:rgba(255,71,87,.15);color:var(--red)}.deal-del-btn:hover{background:var(--red);color:#fff}
+
+/* Toast */
+.hd-toast{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);background:var(--green);color:var(--bg);padding:.5rem 1.25rem;border-radius:20px;font-size:.8rem;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;white-space:nowrap}
+.hd-toast.show{opacity:1}
+.hd-toast.error{background:var(--red);color:#fff}
+
+/* Footer */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;margin-top:3rem;text-align:center;font-size:.78rem;color:var(--text3)}
+
+@media(max-width:768px){
+  .topbar{display:none}.header-nav{display:none}
+  .hd-hero{padding:2.5rem 1rem 2rem}
+  .hd-main{padding:1rem}
+  .hdl-gallery-main{height:220px}
+  .hdl-info{padding:1.25rem}
+  .hdl-related{padding:.75rem 1.25rem 1.25rem}
+}
+
+/* ── SELA Global Footer ─────────────────────────────────────────────── */
+.ac-footer{border-top:1px solid var(--border,#252f47);padding:2.5rem 2rem 0;margin-top:4rem;background:var(--bg2,#111520);font-family:'Roboto',sans-serif}
+.ac-footer-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.ac-footer-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text,#e8edf5);margin-bottom:.85rem}
+.ac-footer-dot{color:var(--accent,#00d4ff)}
+.ac-footer-brand p{font-size:.83rem;color:var(--text3,#5a6a8a);line-height:1.75;max-width:280px}
+.ac-footer-col h4{font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;color:var(--text,#e8edf5);margin-bottom:.9rem;letter-spacing:.03em}
+.ac-footer-col ul{list-style:none;padding:0;margin:0}
+.ac-footer-col ul li{margin-bottom:.5rem}
+.ac-footer-col ul li a{color:var(--text3,#5a6a8a);font-size:.81rem;text-decoration:none;transition:color .2s}
+.ac-footer-col ul li a:hover{color:var(--accent,#00d4ff)}
+.ac-footer-bottom{max-width:1300px;margin:0 auto;border-top:1px solid var(--border,#252f47);padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;color:var(--text3,#5a6a8a);font-size:.78rem;flex-wrap:wrap;gap:.5rem}
+@media(max-width:768px){.ac-footer-inner{grid-template-columns:1fr;gap:1.75rem}.ac-footer-brand p{max-width:100%}}
+
+/* ── header.js injects a sticky header — prevent content from hiding under it ── */
+body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(script):not(style):first-of-type {
+  scroll-margin-top: 180px;
+}
+
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+
+  <a href="https://wa.me/254700000000" class="topbar-wa" target="_blank">💬 WhatsApp</a>
+</div>
+
+<!-- ════ HERO ════ -->
+<section class="hd-hero">
+  <div class="hd-hero-bg"></div>
+  <div class="hd-hero-orb" style="width:400px;height:400px;background:#ff6b35;top:-150px;right:10%;opacity:.12"></div>
+  <div class="hd-hero-orb" style="width:250px;height:250px;background:#ff4757;bottom:-80px;left:5%;opacity:.1"></div>
+  <div class="hd-hero-inner">
+    <div class="hd-hero-tag">🔥 Limited Time Offers</div>
+    <h1>SELA <em>Hot Deals</em></h1>
+    <p class="hd-hero-sub">Huge discounts on ICT accessories — phones, laptops, cables, networking gear and more. First come, first served.</p>
+    <div class="hd-stats">
+      <div class="hd-stat"><div class="hd-stat-num" id="statDeals">—</div><div class="hd-stat-lbl">Active deals</div></div>
+      <div class="hd-stat-sep"></div>
+      <div class="hd-stat"><div class="hd-stat-num" id="statSavings">Up to 70%</div><div class="hd-stat-lbl">Max savings</div></div>
+      <div class="hd-stat-sep"></div>
+      <div class="hd-stat"><div class="hd-stat-num">10</div><div class="hd-stat-lbl">Branches</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ ADMIN ADD BUTTON + FORM ════ -->
+<div style="max-width:1400px;margin:.75rem auto 0;padding:0 1.5rem" id="adminAddWrap" style="display:none">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+    <div id="adminBadge" style="display:none;background:rgba(255,107,53,.1);border:1px solid var(--orange-border);border-radius:6px;padding:.3rem .85rem;font-size:.72rem;font-weight:700;color:var(--orange)">🔑 Admin Mode</div>
+    <div style="display:flex;gap:.5rem;margin-left:auto" id="adminBtnsRow">
+      <button id="addDealBtn" style="display:none;padding:.5rem 1.1rem;background:var(--orange);color:#fff;border:none;border-radius:7px;font-family:var(--font-head);font-size:.78rem;font-weight:700;cursor:pointer" onclick="openAddForm()">+ Add Deal</button>
+      <button id="logoutBtn" style="display:none;padding:.5rem 1rem;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:7px;font-size:.78rem;cursor:pointer" onclick="doLogout()">Logout</button>
+      <button id="loginBtn" style="padding:.5rem 1rem;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:7px;font-size:.78rem;cursor:pointer" onclick="showLoginModal()">Admin Login</button>
+    </div>
+  </div>
+
+  <!-- Admin form -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-panel-title"><span id="adminFormTitle">🔥 Add New Hot Deal</span></div>
+    <div class="admin-form">
+      <div class="admin-form-group">
+        <label class="admin-label">Title <span>*</span></label>
+        <input class="admin-input" id="af-title" placeholder="e.g. Samsung Galaxy Buds Pro"/>
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Category <span>*</span></label>
+        <select class="admin-input admin-select" id="af-category"><option value="">Loading…</option></select>
+        <div style="font-size:.7rem;color:var(--text3);margin-top:.2rem">Not listed? <a href="shop-dashboard.html" target="_blank" style="color:var(--accent)">Add in Dashboard →</a></div>
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Brand</label>
+        <input class="admin-input" id="af-brand" placeholder="e.g. Samsung"/>
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Condition</label>
+        <select class="admin-input admin-select" id="af-condition">
+          <option value="New">New</option>
+          <option value="Used">Used</option>
+          <option value="Refurbished">Refurbished</option>
+        </select>
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Original Price (KES) <span>*</span></label>
+        <input class="admin-input" id="af-original" type="number" placeholder="e.g. 5000"/>
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Deal Price (KES) <span>*</span></label>
+        <input class="admin-input" id="af-deal" type="number" placeholder="e.g. 3200"/>
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Stock Quantity</label>
+        <input class="admin-input" id="af-stock" type="number" placeholder="e.g. 5" value="1"/>
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Branch <span>*</span></label>
+        <select class="admin-input admin-select" id="af-shop"><option value="">Loading branches…</option></select>
+        <div style="font-size:.7rem;color:var(--text3);margin-top:.2rem">Don't see your branch? <a href="shop-dashboard.html" target="_blank" style="color:var(--accent)">Add it in Dashboard →</a></div>
+      </div>
+      <div class="admin-form-group full">
+        <label class="admin-label">Description <span>*</span></label>
+        <textarea class="admin-input" id="af-desc" rows="3" placeholder="Full product description, condition details, what's included…"></textarea>
+      </div>
+      <div class="admin-form-group full">
+        <label class="admin-label">Tags (comma-separated)</label>
+        <input class="admin-input" id="af-tags" placeholder="e.g. wireless, earbuds, noise-cancelling"/>
+      </div>
+      <div class="admin-form-group full">
+        <label class="admin-label">Images (up to 6) <span id="afImgCount" style="color:var(--text3)">(0 selected)</span></label>
+        <input class="admin-input" id="af-images" type="file" accept="image/jpeg,image/png,image/webp" multiple onchange="previewImages(this)"/>
+        <div class="admin-img-preview" id="afImgPreview"></div>
+      </div>
+      <div class="admin-form-group" style="flex-direction:row;align-items:center;gap:1rem">
+        <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer;font-size:.82rem;color:var(--text2)">
+          <input type="checkbox" id="af-featured"/> Featured deal
+        </label>
+        <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer;font-size:.82rem;color:var(--text2)">
+          <input type="checkbox" id="af-active" checked/> Active
+        </label>
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Expires (optional)</label>
+        <input class="admin-input" id="af-expires" type="datetime-local"/>
+      </div>
+      <div class="admin-field-row">
+        <div class="admin-field">
+          <label class="admin-label">📍 Location</label>
+          <input class="admin-input" id="af-location" placeholder="e.g. Mombasa CBD, Nyali"/>
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">🛡️ Warranty</label>
+          <input class="admin-input" id="af-warranty" placeholder="e.g. 3 months, No warranty"/>
+        </div>
+      </div>
+      <div class="admin-btn-row">
+        <button class="admin-btn-save" onclick="submitDeal()" id="afSubmitBtn">🔥 Publish Deal</button>
+        <button class="admin-btn-cancel" onclick="closeAdminForm()">Cancel</button>
+        <span class="admin-note" id="afError"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ FILTER BAR ════ -->
+<div class="hd-filter-bar">
+  <div class="hd-filter-inner">
+    <button class="hd-cat-pill active" onclick="filterCat('All',this)">🔥 All Deals</button>
+    <div id="catPills"></div>
+    <div class="hd-search">
+      <input type="text" id="searchBox" placeholder="Search deals…" oninput="handleSearch(this.value)"/>
+      <span style="font-size:.9rem;color:var(--text3)">🔍</span>
+    </div>
+    <span class="hd-results" id="resultsCount"></span>
+  </div>
+</div>
+
+<!-- ════ DEALS GRID ════ -->
+<div class="hd-main">
+  <!-- Featured section -->
+  <div id="featuredSection" style="display:none">
+    <div class="hd-section-head">
+      <span style="font-size:1.1rem">⭐</span>
+      <div class="hd-section-title">Featured Deals</div>
+      <div class="hd-section-line"></div>
+    </div>
+    <div class="hd-grid" id="featuredGrid" style="margin-bottom:2rem"></div>
+  </div>
+
+  <!-- All deals section -->
+  <div class="hd-section-head">
+    <span style="font-size:1.1rem">🔥</span>
+    <div class="hd-section-title">All Hot Deals</div>
+    <div class="hd-section-line"></div>
+  </div>
+  <div class="hd-grid" id="dealsGrid">
+    <div class="hd-loading">
+      <div class="hd-loading-spinner"></div>
+      <p>Loading deals…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════ DEAL DETAIL OVERLAY ════ -->
+<div class="hdl-overlay" id="hdlOverlay" onclick="handleOverlayBg(event)">
+  <div class="hdl-modal" id="hdlModal" style="position:relative">
+    <button class="hdl-close" onclick="closeDetail()">✕</button>
+
+    <!-- Gallery -->
+    <div class="hdl-gallery">
+      <div class="hdl-gallery-main" id="hdlGalleryMain">
+        <div class="hdl-gallery-placeholder">🔥</div>
+      </div>
+      <button class="hdl-gallery-nav hdl-gallery-prev" onclick="galleryNav(-1)">&#8592;</button>
+      <button class="hdl-gallery-nav hdl-gallery-next" onclick="galleryNav(1)">&#8594;</button>
+      <div class="hdl-thumbs" id="hdlThumbs"></div>
+    </div>
+
+    <!-- Body -->
+    <div class="hdl-body">
+      <!-- Info -->
+      <div class="hdl-info">
+        <div class="hdl-badge-row" id="hdlBadgeRow"></div>
+        <div class="hdl-cat" id="hdlCat"></div>
+        <div class="hdl-title" id="hdlTitle">Deal Title</div>
+        <div class="hdl-meta" id="hdlMeta"></div>
+
+        <!-- Price block -->
+        <div class="hdl-price-block">
+          <div class="hdl-original-row">
+            <span class="hdl-original-price" id="hdlOriginal"></span>
+            <span class="hdl-discount-badge" id="hdlPct"></span>
+          </div>
+          <div class="hdl-deal-price" id="hdlDealPrice"></div>
+          <div class="hdl-savings-row">
+            <span class="hdl-savings" id="hdlSavings"></span>
+          </div>
+        </div>
+
+        <div style="font-family:var(--font-head);font-size:.78rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.55rem">Description</div>
+        <div class="hdl-desc" id="hdlDesc"></div>
+
+        <div class="hdl-tags" id="hdlTags"></div>
+
+        <!-- Share -->
+        <div class="hdl-share-row">
+          <span class="hdl-share-label">Share:</span>
+          <button class="hdl-share-btn" style="background:#25D366;color:#fff" onclick="shareDeal('whatsapp')">💬 WA</button>
+          <button class="hdl-share-btn" style="background:#1877F2;color:#fff" onclick="shareDeal('facebook')">FB</button>
+          <button class="hdl-share-btn" style="background:#0A66C2;color:#fff" onclick="shareDeal('linkedin')">LI</button>
+          <button class="hdl-share-btn" style="background:#E60023;color:#fff" onclick="shareDeal('pinterest')">Pin</button>
+          <button class="hdl-share-btn" style="background:#010101;color:#fff;border:1px solid #333" onclick="shareDeal('tiktok')">TT</button>
+          <button class="hdl-share-btn" style="background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);color:#fff" onclick="shareDeal('instagram')">IG</button>
+          <button class="hdl-share-btn" style="background:var(--card);border:1px solid var(--border);color:var(--text2)" onclick="shareDeal('copy')">🔗</button>
+        </div>
+      </div>
+
+      <!-- Order panel -->
+      <div class="hdl-order-panel">
+        <div id="hdlOrderForm">
+          <div class="hdl-order-title">🛒 Grab This Deal</div>
+
+          <div class="hdl-qty-row">
+            <span style="font-size:.75rem;color:var(--text3)">Qty:</span>
+            <div class="hdl-stepper">
+              <button class="hdl-step-btn" id="hdlMinus" onclick="hdlChangeQty(-1)" disabled>−</button>
+              <input class="hdl-qty-val" id="hdlQty" type="number" value="1" min="1" max="99" readonly/>
+              <button class="hdl-step-btn" id="hdlPlus" onclick="hdlChangeQty(1)">+</button>
+            </div>
+            <div class="hdl-total" id="hdlTotal"></div>
+          </div>
+
+          <div class="hdl-form-group">
+            <label class="hdl-label">Pickup Branch <span>*</span></label>
+            <select class="hdl-input hdl-select" id="hdlBranch" onchange="hdlUpdateWA()">
+              <option value="">— Select branch or delivery —</option>
+              <optgroup label="📍 Mombasa">
+                <option>SELA – Bamburi</option>
+                <option>SELA – Mwembe Tayari</option>
+                <option>SELA – Mishomoroni</option>
+                <option>SELA – Likoni</option>
+                <option>SELA – Kipini</option>
+              </optgroup>
+              <optgroup label="📍 Nairobi">
+                <option>SELA – Eastleigh Nairobi</option>
+                <option>SELA – Westlands</option>
+              </optgroup>
+              <optgroup label="📍 Upcountry">
+                <option>SELA – Nakuru Town</option>
+                <option>SELA – Eldoret</option>
+              </optgroup>
+              <option value="delivery">🚚 Delivery to Me</option>
+            </select>
+          </div>
+          <div class="hdl-form-group" id="hdlAddrGroup" style="display:none">
+            <label class="hdl-label">Delivery Address <span>*</span></label>
+            <input class="hdl-input" id="hdlAddr" type="text" placeholder="e.g. Tom Mboya St, Nairobi" oninput="hdlUpdateWA()"/>
+          </div>
+          <div class="hdl-form-group">
+            <label class="hdl-label">Full Name <span>*</span></label>
+            <input class="hdl-input" id="hdlCustName" type="text" placeholder="e.g. Amina Hassan" oninput="hdlUpdateWA()"/>
+          </div>
+          <div class="hdl-form-group">
+            <label class="hdl-label">Phone Number <span>*</span></label>
+            <input class="hdl-input" id="hdlCustPhone" type="tel" placeholder="e.g. 0712 345 678" oninput="hdlUpdateWA()"/>
+          </div>
+          <div class="hdl-form-group">
+            <label class="hdl-label">Email <span>*</span></label>
+            <input class="hdl-input" id="hdlCustEmail" type="email" placeholder="e.g. amina@gmail.com"/>
+          </div>
+          <div class="hdl-form-group">
+            <label class="hdl-label">Notes (optional)</label>
+            <input class="hdl-input" id="hdlCustNotes" type="text" placeholder="Any special requests…"/>
+          </div>
+
+          <div class="hdl-note">⚠️ Pickup is free. Delivery cost depends on your location.</div>
+          <button class="hdl-submit" id="hdlSubmitBtn" onclick="hdlSubmitOrder()">
+            <span id="hdlSubmitText">🔥 Confirm Order</span>
+          </button>
+          <a class="hdl-wa-order" id="hdlWaOrderBtn" href="#" target="_blank">💬 Order via WhatsApp Instead</a>
+        </div>
+
+        <!-- Success -->
+        <div class="hdl-success" id="hdlSuccess">
+          <div class="hdl-success-icon">🎉</div>
+          <div class="hdl-success-title">Order Sent!</div>
+          <p class="hdl-success-desc">Thank you, <strong id="hdlSuccName">—</strong>!<br/>Your order for <strong id="hdlSuccProd">—</strong> has been placed.<br/>We'll confirm via WhatsApp shortly (Mon–Sat 8am–7pm).</p>
+          <a id="hdlSuccWa" href="#" class="hdl-wa-order" target="_blank">💬 Follow up on WhatsApp</a>
+          <br/><br/>
+          <button onclick="hdlResetForm()" style="background:none;border:1px solid var(--border);color:var(--text2);padding:.45rem 1rem;border-radius:7px;cursor:pointer;font-size:.78rem">Order Another</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related deals -->
+    <div class="hdl-related">
+      <div class="hdl-related-title">More Hot Deals</div>
+      <div class="hdl-related-grid" id="hdlRelated"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Login modal -->
+<div id="loginModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:600;display:none;align-items:center;justify-content:center">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2rem;width:340px;max-width:90vw">
+    <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:800;margin-bottom:1rem;color:var(--text)">🔑 Admin Login</h3>
+    <div style="display:flex;flex-direction:column;gap:.75rem">
+      <input class="admin-input" id="lUsername" type="text" placeholder="Username" autocomplete="username"/>
+      <input class="admin-input" id="lPassword" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <p id="lError" style="display:none;color:var(--red);font-size:.78rem"></p>
+      <button onclick="doLogin()" style="padding:.65rem;background:var(--orange);color:#fff;border:none;border-radius:8px;font-family:var(--font-head);font-size:.85rem;font-weight:700;cursor:pointer" id="lBtn">Sign In</button>
+      <button onclick="closeLoginModal()" style="padding:.55rem;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:8px;font-size:.82rem;cursor:pointer">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="hd-toast" id="hdToast"></div>
+
+<script>
+const API = 'http://localhost:5000/api';
+let allDeals = [];
+let activeCategory = 'All';
+let activeSearch   = '';
+let currentDeal    = null;
+let galleryIdx     = 0;
+let editingId      = null;
+let hdlQty         = 1;
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+function getToken()  { return localStorage.getItem('ac_user_token') || localStorage.getItem('td_token') || null; }
+function isAdmin() {
+  try {
+    const t=getToken(); if(!t) return false;
+    const p=JSON.parse(atob(t.split('.')[1]));
+    return p.role==='admin';
+  } catch{return false;}
+}
+function isVendor() {
+  try {
+    const t=getToken(); if(!t) return false;
+    const p=JSON.parse(atob(t.split('.')[1]));
+    return p.role==='vendor' || p.role==='user' || !!p.id;
+  } catch{return false;}
+}
+function getVendorId() {
+  try { const t=getToken();if(!t)return '';const p=JSON.parse(atob(t.split('.')[1]));return p.id||p.sub||''; } catch{return '';}
+}
+
+function setAuthUI(admin) {
+  const canPost = admin || isVendor();
+  document.getElementById('adminBadge').style.display  = admin ? 'inline-flex' : 'none';
+  document.getElementById('addDealBtn').style.display  = canPost ? 'inline-flex' : 'none';
+  document.getElementById('logoutBtn').style.display   = canPost ? 'inline-flex' : 'none';
+  document.getElementById('loginBtn').style.display    = canPost ? 'none' : 'inline-flex';
+  document.querySelectorAll('.deal-admin-bar').forEach(el => el.classList.toggle('show', canPost));
+}
+
+async function verifyToken() {
+  const token = getToken();
+  if (!token) { setAuthUI(false); return; }
+  try {
+    const r = await fetch(`${API}/auth/verify`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})});
+    const j = await r.json();
+    setAuthUI(j.valid);
+    if (!j.valid) localStorage.removeItem('td_token');
+  } catch { setAuthUI(false); }
+}
+
+function showLoginModal() {
+  document.getElementById('loginModal').style.display = 'flex';
+  document.getElementById('lError').style.display = 'none';
+  setTimeout(()=>document.getElementById('lUsername').focus(), 100);
+}
+function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
+
+async function doLogin() {
+  const username = document.getElementById('lUsername').value.trim();
+  const password = document.getElementById('lPassword').value;
+  const btn = document.getElementById('lBtn');
+  if (!username||!password) return;
+  btn.textContent = 'Signing in…'; btn.disabled = true;
+  try {
+    const r = await fetch(`${API}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
+    const j = await r.json();
+    if (j.success) {
+      localStorage.setItem('td_token', j.token);
+      closeLoginModal();
+      setAuthUI(true);
+      renderCards();
+      showToast('Welcome back, Admin!');
+    } else {
+      const el = document.getElementById('lError');
+      el.textContent = j.message || 'Invalid credentials';
+      el.style.display = 'block';
+    }
+  } catch {
+    const el = document.getElementById('lError');
+    el.textContent = 'Cannot connect to server';
+    el.style.display = 'block';
+  } finally {
+    btn.textContent = 'Sign In'; btn.disabled = false;
+  }
+}
+
+function doLogout() {
+  localStorage.removeItem('td_token');
+  setAuthUI(false);
+  closeAdminForm();
+  renderCards();
+  showToast('Logged out');
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, type='success') {
+  const el = document.getElementById('hdToast');
+  el.textContent = msg;
+  el.className = 'hd-toast show' + (type==='error'?' error':'');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>el.classList.remove('show'), 2600);
+}
+
+// ── Load deals ────────────────────────────────────────────────────────────────
+async function loadDeals() {
+  try {
+    const url = isAdmin() ? `${API}/admin/hotdeals` : `${API}/hotdeals?limit=100`;
+    const r = await fetch(url, {headers: isAdmin()?{Authorization:`Bearer ${getToken()}`}:{}});
+    const j = await r.json();
+    allDeals = j.data || [];
+    document.getElementById('statDeals').textContent = allDeals.filter(d=>d.active).length;
+    buildCatPills();
+    renderCards();
+  } catch {
+    document.getElementById('dealsGrid').innerHTML =
+      `<div class="hd-empty" style="grid-column:1/-1"><div class="hd-empty-icon">📡</div><p>Backend not running.<br/><code>cd backend && npm start</code></p></div>`;
+  }
+}
+
+function buildCatPills() {
+  const cats = [...new Set(allDeals.map(d=>d.category))].sort();
+  const wrap = document.getElementById('catPills');
+  wrap.innerHTML = cats.map(c=>
+    `<button class="hd-cat-pill" onclick="filterCat('${c.replace(/'/g,"\\'")}',this)">${c}</button>`
+  ).join('');
+}
+
+function filterCat(cat, btn) {
+  activeCategory = cat;
+  document.querySelectorAll('.hd-cat-pill').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderCards();
+}
+
+window.handleSearch = function handleSearch(val) {
+  activeSearch = val.toLowerCase().trim();
+  renderCards();
+}
+
+function getFiltered() {
+  return allDeals.filter(d => {
+    if (!isAdmin() && !d.active) return false;
+    if (activeCategory !== 'All' && d.category !== activeCategory) return false;
+    if (activeSearch) {
+      const q = activeSearch;
+      return d.title.toLowerCase().includes(q) ||
+             (d.description||'').toLowerCase().includes(q) ||
+             d.category.toLowerCase().includes(q) ||
+             (d.brand||'').toLowerCase().includes(q);
+    }
+    return true;
+  });
+}
+
+function renderCards() {
+  const admin = isAdmin();
+  const filtered = getFiltered();
+  const featured = filtered.filter(d => d.featured);
+  const all      = filtered;
+
+  document.getElementById('resultsCount').textContent = `${all.length} deal${all.length!==1?'s':''}`;
+
+  const featSec = document.getElementById('featuredSection');
+  if (featured.length && !activeSearch && activeCategory==='All') {
+    featSec.style.display = '';
+    document.getElementById('featuredGrid').innerHTML = featured.map(d=>dealCardHTML(d,admin,true)).join('');
+  } else {
+    featSec.style.display = 'none';
+  }
+
+  const grid = document.getElementById('dealsGrid');
+  if (!all.length) {
+    grid.innerHTML = `<div class="hd-empty"><div class="hd-empty-icon">🔍</div><p>No deals found${activeSearch?` for "${activeSearch}"`:''}.</p></div>`;
+  } else {
+    grid.innerHTML = all.map(d=>dealCardHTML(d,admin,false)).join('');
+  }
+}
+
+function dealCardHTML(d, admin, inFeatured) {
+  const savings  = d.originalPrice - d.dealPrice;
+  const pct      = Math.round((1 - d.dealPrice/d.originalPrice)*100);
+  const fmt      = n => 'KES ' + Number(n).toLocaleString('en-KE');
+  const firstImg = d.images && d.images.length ? d.images[0] : null;
+  const imgCount = d.images ? d.images.length : 0;
+
+  const imgHTML = firstImg
+    ? `<img src="${firstImg}" alt="${d.title}" loading="lazy"/>`
+    : `<div class="deal-img-placeholder">🔥</div>`;
+
+  const dotsHTML = imgCount > 1
+    ? d.images.map((_,i)=>`<span class="deal-img-dot${i===0?' active':''}" onclick="event.stopPropagation();cardImgNav('${d.id}',${i})"></span>`).join('')
+    : '';
+
+  return `<article class="deal-card${d.featured?' featured':''}" id="dc-${d.id}" onclick="hdOpenDeal('${d.id||d._id}','${d.slug||''}')">
+    ${admin?`<div class="deal-admin-bar show">
+      <button class="deal-edit-btn" title="Edit" onclick="event.stopPropagation();openEditForm('${d.id}')">✏️</button>
+      <button class="deal-del-btn" title="Delete" onclick="event.stopPropagation();deleteDeal('${d.id}')">🗑️</button>
+    </div>`:''}
+    <div class="deal-img-wrap" id="dwrap-${d.id}">
+      ${imgHTML}
+      ${imgCount>1?`<button class="deal-img-nav deal-img-prev" onclick="event.stopPropagation();cardImgNav('${d.id}',-1,'rel')">&#8592;</button>
+      <button class="deal-img-nav deal-img-next" onclick="event.stopPropagation();cardImgNav('${d.id}',1,'rel')">&#8594;</button>`:''}
+      <div class="deal-badge-wrap">
+        ${d.featured?'<span class="deal-badge featured">Featured</span>':''}
+        <span class="deal-badge pct">-${pct}% OFF</span>
+        ${d.stock<=3&&d.stock>0?`<span class="deal-badge limited">Only ${d.stock} left</span>`:''}
+        ${!d.active?'<span class="deal-badge" style="background:var(--text3);color:var(--bg)">Inactive</span>':''}
+      </div>
+      ${imgCount>1?`<div class="deal-img-dots">${dotsHTML}</div>`:''}
+    </div>
+    <div class="deal-body">
+      <div class="deal-cat">${d.category}</div>
+      <div class="deal-title">${d.title}</div>
+      <div class="deal-shop">📍 ${(d.shop||'').replace('SELA – ','')}</div>
+      <div class="deal-desc">${d.description||''}</div>
+    </div>
+    <div class="deal-pricing">
+      <div class="deal-price-col">
+        <div class="deal-original">${fmt(d.originalPrice)}</div>
+        <div class="deal-price">${fmt(d.dealPrice)}</div>
+        <div class="deal-savings">You save ${fmt(savings)}</div>
+        ${d.stock>0?`<div class="deal-stock">${d.stock<=5?`Only ${d.stock} left!`:''}</div>`:'<div class="deal-stock">Out of stock</div>'}
+      </div>
+    </div>
+    <div class="deal-actions">
+      <button class="deal-btn-detail" onclick="event.stopPropagation();hdOpenDeal('${d.id||d._id}','${d.slug||''}')">🔥 View Deal →</button>
+      <button class="deal-btn-wa" onclick="event.stopPropagation();quickWA('${d.id}')" title="WhatsApp">💬</button>
+    </div>
+  </article>`;
+}
+
+// Card image navigation
+const cardImgState = {};
+function cardImgNav(id, val, mode) {
+  const deal = allDeals.find(d=>d.id===id);
+  if (!deal||!deal.images||deal.images.length<2) return;
+  const wrap = document.getElementById('dwrap-'+id);
+  if (!wrap) return;
+  cardImgState[id] = cardImgState[id]||0;
+  if (mode==='rel') cardImgState[id] = (cardImgState[id]+val+deal.images.length)%deal.images.length;
+  else cardImgState[id] = val;
+  wrap.querySelector('img').src = deal.images[cardImgState[id]];
+  wrap.querySelectorAll('.deal-img-dot').forEach((d,i)=>d.classList.toggle('active',i===cardImgState[id]));
+}
+
+// Quick WhatsApp inquiry
+function quickWA(id) {
+  const d = allDeals.find(x=>x.id===id);
+  if (!d) return;
+  const fmt = n => 'KES '+Number(n).toLocaleString('en-KE');
+  const msg = encodeURIComponent(`Hi! I'm interested in the 🔥 *Hot Deal: ${d.title}*\n\nDeal Price: ${fmt(d.dealPrice)} (was ${fmt(d.originalPrice)})\nBranch: ${(d.shop||'').replace('SELA – ','')}\n\nIs this still available?`);
+  window.open(`https://wa.me/${d.whatsapp||'254700000000'}?text=${msg}`, '_blank');
+}
+
+// ── Detail overlay ────────────────────────────────────────────────────────────
+function openDetail(id) {
+  const d = allDeals.find(x=>x.id===id);
+  if (!d) return;
+  currentDeal = d;
+  galleryIdx  = 0;
+  hdlQty      = 1;
+
+  // Gallery
+  renderGallery(d);
+
+  // Info
+  const fmt = n => 'KES '+Number(n).toLocaleString('en-KE');
+  const savings = d.originalPrice - d.dealPrice;
+  const pct     = Math.round((1-d.dealPrice/d.originalPrice)*100);
+
+  document.getElementById('hdlCat').textContent   = d.category;
+  document.getElementById('hdlTitle').textContent = d.title;
+  document.getElementById('hdlOriginal').textContent = fmt(d.originalPrice);
+  document.getElementById('hdlPct').textContent   = `-${pct}% OFF`;
+  document.getElementById('hdlDealPrice').textContent = fmt(d.dealPrice);
+  document.getElementById('hdlSavings').textContent   = `You save ${fmt(savings)}`;
+  document.getElementById('hdlDesc').textContent  = d.description||'';
+
+  // Badges
+  const br = document.getElementById('hdlBadgeRow');
+  br.innerHTML = [
+    d.featured ? '<span class="deal-badge featured">⭐ Featured</span>' : '',
+    d.condition ? `<span class="deal-badge new">${d.condition}</span>` : '',
+    d.stock <= 3 && d.stock > 0 ? `<span class="deal-badge limited">Only ${d.stock} left</span>` : '',
+    !d.active ? '<span class="deal-badge" style="background:var(--text3);color:var(--bg)">Inactive</span>' : '',
+  ].join('');
+
+  // Meta tags
+  document.getElementById('hdlMeta').innerHTML = [
+    d.brand ? `<span class="hdl-meta-tag">🏷️ ${d.brand}</span>` : '',
+    `<span class="hdl-meta-tag">📍 ${(d.shop||'').replace('SELA – ','')}</span>`,
+    d.stock > 0 ? `<span class="hdl-meta-tag">📦 ${d.stock} in stock</span>` : `<span class="hdl-meta-tag" style="color:var(--red)">❌ Out of stock</span>`,
+  ].join('');
+
+  // Tags
+  const tagsEl = document.getElementById('hdlTags');
+  tagsEl.innerHTML = d.tags && d.tags.length ? d.tags.map(t=>`<span class="hdl-tag">#${t}</span>`).join('') : '';
+
+  // Order panel reset
+  document.getElementById('hdlQty').value = 1;
+  document.getElementById('hdlMinus').disabled = true;
+  document.getElementById('hdlPlus').disabled  = false;
+  document.getElementById('hdlTotal').textContent = fmt(d.dealPrice);
+  ['hdlCustName','hdlCustPhone','hdlCustEmail','hdlCustNotes','hdlAddr'].forEach(id=>{
+    const el=document.getElementById(id);if(el){el.value='';el.classList.remove('err');}
+  });
+  const br2 = document.getElementById('hdlBranch');
+  for(let i=0;i<br2.options.length;i++){
+    if(br2.options[i].value===d.shop||br2.options[i].text===d.shop){br2.selectedIndex=i;break;}
+  }
+  document.getElementById('hdlAddrGroup').style.display='none';
+  document.getElementById('hdlOrderForm').style.display='';
+  document.getElementById('hdlSuccess').classList.remove('show');
+  document.getElementById('hdlSubmitBtn').disabled = !d.active || d.stock<=0;
+  document.getElementById('hdlSubmitText').textContent = d.stock<=0?'Out of Stock':'🔥 Confirm Order';
+  hdlUpdateWA();
+
+  // Related deals
+  const related = allDeals.filter(x=>x.id!==id && x.category===d.category && x.active).slice(0,4);
+  document.getElementById('hdlRelated').innerHTML = related.length
+    ? related.map(r=>{
+        const fmt2=n=>'KES '+Number(n).toLocaleString('en-KE');
+        const img=r.images&&r.images.length?`<img src="${r.images[0]}" alt="${r.title}"/>`:`<div style="font-size:2.5rem">🔥</div>`;
+        return `<div class="hdl-related-card" onclick="openDetail('${r.id}')">
+          <div class="hdl-related-img">${img}</div>
+          <div class="hdl-related-body">
+            <div class="hdl-related-name">${r.title}</div>
+            <div class="hdl-related-price">${fmt2(r.dealPrice)}</div>
+          </div>
+        </div>`;
+      }).join('')
+    : '<p style="font-size:.78rem;color:var(--text3)">No related deals.</p>';
+
+  // Open
+  history.pushState({},'',`hotdeals.html?deal=${d.id}`);
+  document.getElementById('hdlOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeDetail() {
+  document.getElementById('hdlOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  history.pushState({},'','hotdeals.html');
+}
+function handleOverlayBg(e){if(e.target.id==='hdlOverlay')closeDetail();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail();});
+
+// Gallery
+function renderGallery(d) {
+  const main   = document.getElementById('hdlGalleryMain');
+  const thumbs = document.getElementById('hdlThumbs');
+  if (!d.images || !d.images.length) {
+    main.innerHTML = '<div class="hdl-gallery-placeholder">🔥</div>';
+    thumbs.innerHTML = ''; return;
+  }
+  main.innerHTML = `<img src="${d.images[0]}" id="hdlMainImg" alt="${d.title}"/>`;
+  thumbs.innerHTML = d.images.map((img,i)=>
+    `<div class="hdl-thumb${i===0?' active':''}" onclick="setGallery(${i})">
+      <img src="${img}" alt="image ${i+1}" loading="lazy"/>
+    </div>`
+  ).join('');
+}
+
+function setGallery(idx) {
+  if (!currentDeal||!currentDeal.images) return;
+  galleryIdx = idx;
+  const img = document.getElementById('hdlMainImg');
+  if (img) { img.style.opacity='.5'; img.src=currentDeal.images[idx]; img.onload=()=>{img.style.opacity='1'}; }
+  document.querySelectorAll('.hdl-thumb').forEach((t,i)=>t.classList.toggle('active',i===idx));
+}
+
+function galleryNav(dir) {
+  if (!currentDeal||!currentDeal.images) return;
+  setGallery((galleryIdx+dir+currentDeal.images.length)%currentDeal.images.length);
+}
+
+// ── Order ─────────────────────────────────────────────────────────────────────
+document.getElementById('hdlBranch').addEventListener('change', function(){
+  document.getElementById('hdlAddrGroup').style.display=this.value==='delivery'?'':'none';
+  hdlUpdateWA();
+});
+
+function hdlChangeQty(delta) {
+  const nq=hdlQty+delta;
+  if(nq<1||nq>99)return;
+  hdlQty=nq;
+  document.getElementById('hdlQty').value=hdlQty;
+  document.getElementById('hdlMinus').disabled=hdlQty<=1;
+  document.getElementById('hdlPlus').disabled=hdlQty>=99;
+  if(currentDeal){
+    document.getElementById('hdlTotal').textContent='KES '+Number(currentDeal.dealPrice*hdlQty).toLocaleString('en-KE');
+  }
+  hdlUpdateWA();
+}
+
+function hdlUpdateWA() {
+  if (!currentDeal) return;
+  const fmt=n=>'KES '+Number(n).toLocaleString('en-KE');
+  const name  = document.getElementById('hdlCustName')?.value.trim()||'';
+  const phone = document.getElementById('hdlCustPhone')?.value.trim()||'';
+  const branch= document.getElementById('hdlBranch')?.value||'';
+  const addr  = document.getElementById('hdlAddr')?.value.trim()||'';
+  const total = fmt(currentDeal.dealPrice*hdlQty);
+  const loc   = branch==='delivery'?`Delivery to: ${addr||'TBD'}`:branch||'TBD';
+  const msg   = encodeURIComponent(
+    `🔥 *HOT DEAL ORDER — SELA*\n\n` +
+    `*${currentDeal.title}*\n` +
+    `Deal Price: ${fmt(currentDeal.dealPrice)} × ${hdlQty} = *${total}*\n` +
+    `(Was: ${fmt(currentDeal.originalPrice)})\n` +
+    `📍 ${loc}\n` +
+    (name?`👤 ${name}\n`:'') + (phone?`📞 ${phone}\n`:'') +
+    `\n_SELA Hot Deals_`
+  );
+  const waNum = currentDeal.whatsapp||'254700000000';
+  document.getElementById('hdlWaOrderBtn').href = `https://wa.me/${waNum}?text=${msg}`;
+}
+
+async function hdlSubmitOrder() {
+  if (!currentDeal) return;
+  const name  = document.getElementById('hdlCustName').value.trim();
+  const phone = document.getElementById('hdlCustPhone').value.trim();
+  const email = document.getElementById('hdlCustEmail').value.trim();
+  const branch= document.getElementById('hdlBranch').value;
+  const addr  = document.getElementById('hdlAddr').value.trim();
+  const notes = document.getElementById('hdlCustNotes').value.trim();
+  let valid=true;
+  [['hdlCustName',name],['hdlCustPhone',phone],['hdlCustEmail',email]].forEach(([id,val])=>{
+    const el=document.getElementById(id);
+    if(!val){el.classList.add('err');valid=false;}else el.classList.remove('err');
+  });
+  if(!branch){document.getElementById('hdlBranch').classList.add('err');valid=false;}
+  else document.getElementById('hdlBranch').classList.remove('err');
+  if(branch==='delivery'&&!addr){document.getElementById('hdlAddr').classList.add('err');valid=false;}
+  if(!email.includes('@')){document.getElementById('hdlCustEmail').classList.add('err');valid=false;}
+  if(!valid) return;
+
+  const btn=document.getElementById('hdlSubmitBtn');
+  btn.disabled=true;
+  document.getElementById('hdlSubmitText').textContent='⏳ Sending…';
+
+  const fmt=n=>'KES '+Number(n).toLocaleString('en-KE');
+  const total=fmt(currentDeal.dealPrice*hdlQty);
+  const loc=branch==='delivery'?`Delivery to: ${addr}`:branch;
+
+  // Email order
+  const subj=encodeURIComponent(`🔥 Hot Deal Order: ${currentDeal.title} × ${hdlQty} — ${name}`);
+  const body=encodeURIComponent(
+    `HOT DEAL ORDER — SELA\n${'═'.repeat(40)}\n\n`+
+    `Deal:     ${currentDeal.title}\n`+
+    `Category: ${currentDeal.category}\n`+
+    `Deal Price: ${fmt(currentDeal.dealPrice)} × ${hdlQty} = ${total}\n`+
+    `Original:   ${fmt(currentDeal.originalPrice)}\n`+
+    `Location: ${loc}\n\n`+
+    `CUSTOMER\n${'─'.repeat(20)}\n`+
+    `Name:  ${name}\nPhone: ${phone}\nEmail: ${email}\n`+
+    (notes?`Notes: ${notes}\n`:'')+
+    `\n${'═'.repeat(40)}\nSent from SELA Hot Deals page`
+  );
+  window.open(`mailto:admin@sela.co.ke?subject=${subj}&body=${body}`);
+
+  // WhatsApp
+  const waMsg=encodeURIComponent(
+    `🔥 *HOT DEAL ORDER CONFIRMED*\n\n`+
+    `*${currentDeal.title}* × ${hdlQty}\n`+
+    `Deal: ${fmt(currentDeal.dealPrice)} × ${hdlQty} = *${total}*\n`+
+    `Was: ${fmt(currentDeal.originalPrice)}\n`+
+    `📍 ${loc}\n\n`+
+    `👤 ${name} · 📞 ${phone} · ✉️ ${email}\n`+
+    (notes?`📝 ${notes}\n`:'')+
+    `\n_Please confirm this order_`
+  );
+  setTimeout(()=>window.open(`https://wa.me/${currentDeal.whatsapp||'254700000000'}?text=${waMsg}`,'_blank'),700);
+
+  await new Promise(r=>setTimeout(r,900));
+  document.getElementById('hdlOrderForm').style.display='none';
+  document.getElementById('hdlSuccess').classList.add('show');
+  document.getElementById('hdlSuccName').textContent=name;
+  document.getElementById('hdlSuccProd').textContent=`${currentDeal.title} × ${hdlQty}`;
+  document.getElementById('hdlSuccWa').href=`https://wa.me/${currentDeal.whatsapp||'254700000000'}?text=${waMsg}`;
+}
+
+function hdlResetForm() {
+  document.getElementById('hdlOrderForm').style.display='';
+  document.getElementById('hdlSuccess').classList.remove('show');
+  document.getElementById('hdlSubmitBtn').disabled=false;
+  document.getElementById('hdlSubmitText').textContent='🔥 Confirm Order';
+  hdlQty=1;document.getElementById('hdlQty').value=1;
+  document.getElementById('hdlMinus').disabled=true;
+  document.getElementById('hdlTotal').textContent='KES '+Number(currentDeal?.dealPrice||0).toLocaleString('en-KE');
+}
+
+// ── Social sharing ────────────────────────────────────────────────────────────
+function shareDeal(platform) {
+  if (!currentDeal) return;
+  const pageUrl = window.location.origin+window.location.pathname+'?deal='+currentDeal.id;
+  const fmt=n=>'KES '+Number(n).toLocaleString('en-KE');
+  const pct=Math.round((1-currentDeal.dealPrice/currentDeal.originalPrice)*100);
+  const msgs={
+    whatsapp:`🔥 *HOT DEAL: ${currentDeal.title}*\n\nNow ${fmt(currentDeal.dealPrice)} (was ${fmt(currentDeal.originalPrice)}) — ${pct}% OFF!\n\nAvailable at SELA ${(currentDeal.shop||'').replace('SELA – ','')}\n\nGrab it: ${pageUrl}`,
+    facebook:pageUrl,
+    linkedin:`Hot Deal: ${currentDeal.title} at ${fmt(currentDeal.dealPrice)} — ${pct}% off at SELA Kenya. ${pageUrl}`,
+    pinterest:`${currentDeal.title} | ${fmt(currentDeal.dealPrice)} — ${pct}% OFF at SELA Kenya. ${pageUrl}`,
+    tiktok:`${currentDeal.title} at ${fmt(currentDeal.dealPrice)}! ${pct}% OFF 🔥 @aircoastsolutions ${pageUrl}`,
+    instagram:`${currentDeal.title}\n${fmt(currentDeal.dealPrice)} (was ${fmt(currentDeal.originalPrice)})\n${pct}% OFF 🔥\n\nSELA Kenya\n🔗 ${pageUrl}`,
+  };
+  const enc=t=>encodeURIComponent(t);
+  const urls={
+    whatsapp:`https://wa.me/?text=${enc(msgs.whatsapp)}`,
+    facebook:`https://www.facebook.com/sharer/sharer.php?u=${enc(pageUrl)}`,
+    linkedin:`https://www.linkedin.com/sharing/share-offsite/?url=${enc(pageUrl)}`,
+    pinterest:`https://pinterest.com/pin/create/button/?url=${enc(pageUrl)}&description=${enc(msgs.pinterest)}`,
+  };
+  if(platform==='tiktok'){navigator.clipboard.writeText(msgs.tiktok).then(()=>showToast('TikTok caption copied! Open the app and paste.'));return;}
+  if(platform==='instagram'){navigator.clipboard.writeText(msgs.instagram).then(()=>showToast('Instagram caption copied! Open the app to post.'));return;}
+  if(platform==='copy'){navigator.clipboard.writeText(pageUrl).then(()=>showToast('Link copied!'));return;}
+  if(urls[platform])window.open(urls[platform],'_blank','noopener,width=600,height=520');
+}
+
+// ── Admin: add / edit ─────────────────────────────────────────────────────────
+function openAddForm() {
+  editingId = null;
+  loadVendorShopData(); // populate categories + branches
+  document.getElementById('adminFormTitle').textContent = '🔥 Add New Hot Deal';
+  document.getElementById('afSubmitBtn').textContent = '🔥 Publish Deal';
+  ['af-title','af-category','af-brand','af-desc','af-tags','af-expires'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('af-original').value='';
+  document.getElementById('af-deal').value='';
+  document.getElementById('af-stock').value='1';
+  document.getElementById('af-condition').value='New';
+  document.getElementById('af-shop').value='';
+  document.getElementById('af-featured').checked=false;
+  document.getElementById('af-active').checked=true;
+  document.getElementById('af-images').value='';
+  document.getElementById('afImgPreview').innerHTML='';
+  document.getElementById('afImgCount').textContent='(0 selected)';
+  document.getElementById('afError').textContent='';
+  document.getElementById('adminPanel').classList.add('show');
+  document.getElementById('adminPanel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function openEditForm(id) {
+  const d = allDeals.find(x=>x.id===id);
+  if (!d) return;
+  editingId = id;
+  loadVendorShopData().then(function() {
+    const catSel = document.getElementById('af-category');
+    if (catSel && d.category) catSel.value = d.category;
+    const shopSel = document.getElementById('af-shop');
+    if (shopSel && d.shop) shopSel.value = d.shop;
+  });
+  // Load vendor categories and branches first, then fill in current values
+  loadVendorShopData().then(() => {
+    const catSel = document.getElementById('af-category');
+    if (catSel && d.category) catSel.value = d.category;
+    const shopSel = document.getElementById('af-shop');
+    if (shopSel && d.shop) shopSel.value = d.shop;
+  });
+  document.getElementById('adminFormTitle').textContent = '✏️ Edit Deal';
+  document.getElementById('afSubmitBtn').textContent = '💾 Save Changes';
+  document.getElementById('af-title').value=d.title||'';
+  document.getElementById('af-category').value=d.category||'';
+  document.getElementById('af-brand').value=d.brand||'';
+  document.getElementById('af-desc').value=d.description||'';
+  document.getElementById('af-tags').value=(d.tags||[]).join(', ');
+  document.getElementById('af-original').value=d.originalPrice||'';
+  document.getElementById('af-deal').value=d.dealPrice||'';
+  document.getElementById('af-stock').value=d.stock||1;
+  document.getElementById('af-condition').value=d.condition||'New';
+  document.getElementById('af-shop').value=d.shop||'';
+  document.getElementById('af-featured').checked=!!d.featured;
+  document.getElementById('af-active').checked=d.active!==false;
+  document.getElementById('af-expires').value=d.expiresAt?d.expiresAt.substring(0,16):'';
+  document.getElementById('af-images').value='';
+  document.getElementById('afError').textContent='';
+  // Show existing images
+  const prev=document.getElementById('afImgPreview');
+  prev.innerHTML=(d.images||[]).map(img=>
+    `<div class="admin-img-thumb">
+      <img src="${img}" alt=""/>
+      <button class="admin-img-del" onclick="removeExistingImg('${id}','${img}')" title="Remove">✕</button>
+    </div>`
+  ).join('');
+  document.getElementById('afImgCount').textContent=`(${(d.images||[]).length} current)`;
+  document.getElementById('adminPanel').classList.add('show');
+  document.getElementById('adminPanel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+async function removeExistingImg(dealId, imgUrl) {
+  if (!confirm('Remove this image?')) return;
+  try {
+    const r = await fetch(`${API}/hotdeals/${dealId}/image`,{
+      method:'DELETE',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${getToken()}`},
+      body:JSON.stringify({imageUrl:imgUrl})
+    });
+    const j = await r.json();
+    if (j.success) {
+      const idx = allDeals.findIndex(d=>d.id===dealId);
+      if (idx>-1) allDeals[idx]=j.data;
+      showToast('Image removed');
+      openEditForm(dealId); // refresh form
+    }
+  } catch { showToast('Error removing image','error'); }
+}
+
+function closeAdminForm() {
+  document.getElementById('adminPanel').classList.remove('show');
+  editingId=null;
+}
+
+function previewImages(input) {
+  const files=Array.from(input.files).slice(0,6);
+  document.getElementById('afImgCount').textContent=`(${files.length} selected)`;
+  const prev=document.getElementById('afImgPreview');
+  const existing=prev.querySelectorAll('.admin-img-thumb');
+  // Remove only the new-file previews (ones without del buttons for existing)
+  prev.querySelectorAll('.admin-img-thumb[data-new]').forEach(el=>el.remove());
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const d=document.createElement('div');
+      d.className='admin-img-thumb';d.dataset.new='1';
+      d.innerHTML=`<img src="${e.target.result}" alt="preview"/>`;
+      prev.appendChild(d);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function submitDeal() {
+  const title=document.getElementById('af-title').value.trim();
+  const category=document.getElementById('af-category').value.trim();
+  const desc=document.getElementById('af-desc').value.trim();
+  const original=document.getElementById('af-original').value;
+  const deal=document.getElementById('af-deal').value;
+  const shop=document.getElementById('af-shop').value;
+  const err=document.getElementById('afError');
+  err.textContent='';
+
+  if(!title||!category||!desc||!original||!deal||!shop){
+    err.textContent='Please fill in all required fields.';return;
+  }
+  if(parseFloat(deal)>=parseFloat(original)){
+    err.textContent='Deal price must be lower than original price.';return;
+  }
+
+  const btn=document.getElementById('afSubmitBtn');
+  btn.disabled=true;btn.textContent='Saving…';
+
+  const fd=new FormData();
+  fd.append('title',title);fd.append('category',category);
+  fd.append('brand',document.getElementById('af-brand').value.trim());
+  fd.append('description',desc);
+  fd.append('originalPrice',original);fd.append('dealPrice',deal);
+  fd.append('stock',document.getElementById('af-stock').value||1);
+  fd.append('condition',document.getElementById('af-condition').value);
+  fd.append('shop',shop);
+  fd.append('location', document.getElementById('af-location')?.value?.trim()||'');
+  fd.append('warranty', document.getElementById('af-warranty')?.value?.trim()||'');
+      fd.append('vendorId', getVendorId());
+  fd.append('whatsapp','254700000000');
+  fd.append('tags',document.getElementById('af-tags').value);
+  fd.append('featured',document.getElementById('af-featured').checked);
+    fd.append('active',document.getElementById('af-active').checked);
+  fd.append('expiresAt',document.getElementById('af-expires').value||'');
+  if(editingId)fd.append('keepImages','true');
+
+  const imgInput=document.getElementById('af-images');
+  if(imgInput.files.length){
+    Array.from(imgInput.files).slice(0,6).forEach(f=>fd.append('images',f));
+  }
+
+  const url=editingId?`${API}/hotdeals/${editingId}`:`${API}/hotdeals`;
+  const method=editingId?'PUT':'POST';
+
+  try {
+    const r=await fetch(url,{method,headers:{Authorization:`Bearer ${getToken()}`},body:fd});
+    const j=await r.json();
+    if(j.success){
+      closeAdminForm();
+      showToast(editingId?'Deal updated!':'Deal published!');
+      await loadDeals();
+    } else if(r.status===401){
+      showToast('Session expired. Please log in again.','error');doLogout();
+    } else {
+      err.textContent=j.message||'Error saving deal';
+    }
+  } catch{ err.textContent='Cannot connect to server'; }
+  finally{ btn.disabled=false;btn.textContent=editingId?'💾 Save Changes':'🔥 Publish Deal'; }
+}
+
+async function deleteDeal(id) {
+  if(!confirm('Delete this deal permanently?'))return;
+  try {
+    const r=await fetch(`${API}/hotdeals/${id}`,{method:'DELETE',headers:{Authorization:`Bearer ${getToken()}`}});
+    const j=await r.json();
+    if(j.success){
+      allDeals=allDeals.filter(d=>d.id!==id);
+      renderCards();
+      showToast('Deal deleted');
+    } else showToast(j.message||'Error','error');
+  } catch{ showToast('Cannot connect to server','error'); }
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+(async ()=>{
+  await verifyToken();
+// Auto-open edit form if ?edit=ID in URL
+(function() {
+  const editId = new URLSearchParams(window.location.search).get('edit');
+  if (editId) {
+    // Wait for deals to load then open edit form
+    const _checkEdit = setInterval(() => {
+      const deal = allDeals.find(d => d.id === editId || d._id === editId);
+      if (deal) { clearInterval(_checkEdit); openEditForm(editId); }
+    }, 300);
+    setTimeout(() => clearInterval(_checkEdit), 5000);
+  }
+})();
+  await loadDeals();
+  // Open deal from URL
+  const pid=new URLSearchParams(window.location.search).get('deal');
+  if(pid){const d=allDeals.find(x=>x.id===pid);if(d)openDetail(pid);}
+})();
+
+// Load vendor's categories and branches for the deal form
+async function loadVendorShopData() {
+  const token = getToken();
+  if (!token) return;
+  try {
+    const r = await fetch(API + '/vendor/shop-data', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!j.success) return;
+
+    // Populate categories
+    const catSel = document.getElementById('af-category');
+    if (catSel) {
+      catSel.innerHTML = '<option value="">— Select category —</option>' +
+        (j.categories.length
+          ? j.categories.map(c => `<option value="${c.name}">${c.icon||'📦'} ${c.name}</option>`).join('')
+          : '<option value="" disabled>No categories yet — add in Dashboard</option>');
+    }
+
+    // Populate branches
+    const shopSel = document.getElementById('af-shop');
+    if (shopSel) {
+      const opts = [];
+      // Group by shop
+      j.shops.forEach(shop => {
+        const shopBranches = j.branches.filter(b => b.shopId === shop.id);
+        if (shopBranches.length) {
+          opts.push(`<optgroup label="${shop.name}">`);
+          shopBranches.forEach(b => {
+            const label = b.isMain ? b.name + ' (Main)' : b.name;
+            const val   = b.location ? b.name + ' — ' + b.location : b.name;
+            opts.push(`<option value="${val}">${label}${b.location?' · '+b.location:''}</option>`);
+          });
+          opts.push('</optgroup>');
+        } else {
+          // No branches — use shop name as option
+          opts.push(`<option value="${shop.name}">${shop.name}</option>`);
+        }
+      });
+      if (!opts.length) {
+        shopSel.innerHTML = '<option value="" disabled>No shops/branches found — add in Dashboard</option>';
+      } else {
+        shopSel.innerHTML = '<option value="">— Select branch —</option>' + opts.join('');
+      }
+    }
+  } catch(e) { console.error('loadVendorShopData:', e); }
+}
+
+function hdOpenDeal(id, slug) {
+  window.location.href = 'product.html?id=' + encodeURIComponent(id) + (slug ? '&slug=' + encodeURIComponent(slug) : '');
+}
+</script>
+<script src="notif-bell.js"></script>
+<footer class="ac-footer">
+  <div class="ac-footer-inner">
+    <div class="ac-footer-brand">
+      <div class="ac-footer-logo">SELA<span class="ac-footer-dot">.</span>Solutions</div>
+      <p>SELA — ICT accessories, digital transformation, printing, online services &amp; more. 6 branches across Kenya.</p>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Our Branches</h4>
+      <ul>
+        <li><a href="shop.html">SELA – Bamburi</a></li>
+        <li><a href="shop.html">SELA – Mwembe Tayari</a></li>
+        <li><a href="shop.html">SELA – Nakuru Town</a></li>
+        <li><a href="shop.html">SELA – Eldoret</a></li>
+        <li><a href="shop.html">SELA – Eastleigh Nairobi</a></li>
+        <li><a href="shop.html">SELA – Westlands</a></li>
+      </ul>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+        <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+        <li><a href="mailto:admin@sela.co.ke">✉️ admin@sela.co.ke</a></li>
+        <li><a href="https://wa.me/254700000000" target="_blank">💬 WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ac-footer-bottom">
+    <span>© 2025 SELA · admin@sela.co.ke</span>
+    <span>Mombasa, Kenya 🇰🇪</span>
+  </div>
+</footer>
+<script src="wishlist.js"></script>
+<script src="header.js"></script>
+</body>
+</html>

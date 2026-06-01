@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Settings & Profile — SELA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8fafc;--card:#fff;--border:#e2e8f0;--accent:#6366f1;--accent2:#4f46e5;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--green:#22c55e;--red:#ef4444;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-lg:0 8px 32px rgba(0,0,0,.1)}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:inherit}
+
+.page-wrap{max-width:780px;margin:0 auto;padding:2rem 1.5rem 5rem}
+
+/* Avatar hero */
+.profile-hero{background:linear-gradient(135deg,#312e81,#4c1d95);border-radius:20px;padding:2.5rem;margin-bottom:2rem;color:#fff;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.avatar-circle{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;color:#fff;flex-shrink:0;position:relative;cursor:pointer}
+.avatar-edit{position:absolute;bottom:0;right:0;width:26px;height:26px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#6366f1}
+.profile-info{flex:1;min-width:0}
+.profile-name{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.25rem}
+.profile-email{font-size:.85rem;color:rgba(255,255,255,.65);margin-bottom:.5rem}
+.profile-badges{display:flex;gap:.5rem;flex-wrap:wrap}
+.profile-badge{font-size:.65rem;font-weight:700;padding:.2rem .65rem;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);letter-spacing:.04em;text-transform:uppercase}
+.profile-badge.verified{background:rgba(34,197,94,.15);color:#86efac}
+
+/* Section cards */
+.settings-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1.25rem;overflow:hidden;box-shadow:var(--shadow)}
+.section-head{padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem;background:#f8fafc}
+.section-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.section-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:var(--text)}
+.section-body{padding:1.25rem 1.5rem}
+
+/* Form */
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.73rem;font-weight:700;color:var(--text2);margin-bottom:.35rem;letter-spacing:.03em}
+.fg input{width:100%;padding:.7rem 1rem;background:#f8fafc;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:.88rem;color:var(--text);outline:none;transition:all .2s}
+.fg input:focus{border-color:var(--accent);background:#fff}
+.fg input:disabled{color:var(--text3);cursor:not-allowed}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+@media(max-width:520px){.fg-row{grid-template-columns:1fr}}
+.fg-hint{font-size:.68rem;color:var(--text3);margin-top:.3rem}
+
+/* Password input */
+.pwd-wrap{position:relative}
+.pwd-wrap input{padding-right:3rem}
+.pwd-eye{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;display:flex;align-items:center}
+.pwd-eye:hover{color:var(--accent)}
+
+/* Strength */
+.strength-track{height:4px;background:var(--border);border-radius:2px;margin:.45rem 0 .3rem;overflow:hidden}
+.strength-bar{height:100%;border-radius:2px;transition:all .3s;width:0}
+.strength-reqs{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
+.req{display:flex;align-items:center;gap:.35rem;font-size:.67rem;color:var(--text3)}
+.req::before{content:'○';flex-shrink:0}
+.req.met{color:var(--green)}.req.met::before{content:'✓';color:var(--green)}
+
+/* Buttons */
+.btn-primary{padding:.72rem 1.5rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(99,102,241,.3)}
+.btn-primary:disabled{background:#cbd5e1;cursor:not-allowed;transform:none}
+.btn-outline{padding:.72rem 1.5rem;background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-outline:hover{background:#ede9fe}
+.btn-danger{padding:.72rem 1.5rem;background:#fef2f2;color:var(--red);border:2px solid #fca5a5;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-danger:hover{background:#fee2e2}
+.btn-row{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;margin-top:.5rem}
+
+/* Msg */
+.msg{padding:.6rem 1rem;border-radius:8px;font-size:.8rem;margin-bottom:.85rem;display:none;line-height:1.5}
+.msg.show{display:block}
+.msg.success{background:#f0fdf4;border:1px solid #86efac;color:#15803d}
+.msg.error{background:#fef2f2;border:1px solid #fca5a5;color:#dc2626}
+.msg.info{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}
+
+/* Danger zone */
+.danger-zone{background:#fef2f2;border:1px solid #fca5a5;border-radius:var(--radius);padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.danger-zone-text strong{display:block;font-weight:700;color:var(--red);font-size:.88rem;margin-bottom:.2rem}
+.danger-zone-text p{font-size:.78rem;color:var(--text2)}
+
+/* Store CTA */
+.store-cta{background:linear-gradient(135deg,#0f0c29,#24243e);border-radius:var(--radius);padding:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.store-cta-left{display:flex;align-items:center;gap:.85rem}
+.store-cta-icon{font-size:1.8rem}
+.store-cta-title{font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:800;color:#fff;margin-bottom:.2rem}
+.store-cta-sub{font-size:.75rem;color:rgba(255,255,255,.55)}
+.btn-cta{padding:.65rem 1.35rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-cta:hover{transform:translateY(-1px)}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);padding:.55rem 1.35rem;border-radius:20px;font-size:.82rem;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;color:#fff;white-space:nowrap}
+.toast.show{opacity:1}
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+<script src="auth.js"></script>
+<script src="header.js"></script>
+
+<div class="page-wrap">
+  <div style="margin-bottom:1.5rem;font-size:.8rem">
+    <a href="index.html" style="color:var(--accent);font-weight:600">← Back to Marketplace</a>
+  </div>
+
+  <!-- Profile hero -->
+  <div class="profile-hero">
+    <div class="avatar-circle" id="userAvatar" onclick="document.getElementById('avatarInput').click()">
+      <span id="avatarInitial">?</span>
+      <div class="avatar-edit">✏️</div>
+    </div>
+    <div class="profile-info">
+      <div class="profile-name" id="profileName">Loading…</div>
+      <div class="profile-email" id="profileEmail"></div>
+      <div class="profile-badges">
+        <span class="profile-badge verified" id="verifiedBadge" style="display:none">✓ Verified</span>
+        <span class="profile-badge" id="storeBadge" style="display:none">🏪 Vendor</span>
+        <span class="profile-badge" id="adminBadge" style="display:none">🛡️ Admin</span>
+        <span class="profile-badge" id="localBadge" style="display:none">⚡ Local Account</span>
+      </div>
+    </div>
+  </div>
+  <input type="file" id="avatarInput" accept="image/*" style="display:none"/>
+
+  <!-- Personal info -->
+  <div class="settings-section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#ede9fe">👤</div>
+      <div class="section-title">Personal Information</div>
+    </div>
+    <div class="section-body">
+      <div class="msg" id="infoMsg"></div>
+      <div class="fg-row">
+        <div class="fg"><label>First Name</label><input id="setFirst" type="text" placeholder="First name"/></div>
+        <div class="fg"><label>Last Name</label><input id="setLast" type="text" placeholder="Last name"/></div>
+      </div>
+      <div class="fg"><label>Username</label><input id="setUsername" type="text" placeholder="username"/><div class="fg-hint">Letters, numbers and _ only. Min 3 characters.</div></div>
+      <div class="fg"><label>Email Address</label><input id="setEmail" type="email" placeholder="your@email.com"/></div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="saveInfo()">💾 Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change password -->
+  <div class="settings-section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#fef3c7">🔑</div>
+      <div class="section-title">Change Password</div>
+    </div>
+    <div class="section-body">
+      <div class="msg" id="pwdMsg"></div>
+      <div class="fg">
+        <label>Current Password</label>
+        <div class="pwd-wrap">
+          <input id="currentPwd" type="password" placeholder="Enter your current password"/>
+          <button class="pwd-eye" onclick="toggleEye('currentPwd',this)" type="button">👁</button>
+        </div>
+      </div>
+      <div class="fg">
+        <label>New Password</label>
+        <div class="pwd-wrap">
+          <input id="newPwd" type="password" placeholder="Min 8 characters" oninput="checkStr(this.value)"/>
+          <button class="pwd-eye" onclick="toggleEye('newPwd',this)" type="button">👁</button>
+        </div>
+        <div class="strength-track"><div class="strength-bar" id="strBar"></div></div>
+        <div class="strength-reqs">
+          <div class="req" id="sr0">At least 8 characters</div>
+          <div class="req" id="sr1">Lowercase letter</div>
+          <div class="req" id="sr2">Uppercase letter</div>
+          <div class="req" id="sr3">Number</div>
+          <div class="req" id="sr4">Special character</div>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Confirm New Password</label>
+        <div class="pwd-wrap">
+          <input id="confirmPwd" type="password" placeholder="Re-enter new password"/>
+          <button class="pwd-eye" onclick="toggleEye('confirmPwd',this)" type="button">👁</button>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="changePwd()">🔐 Update Password</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Store -->
+  <div class="settings-section" id="storeSection">
+    <div class="section-head">
+      <div class="section-icon" style="background:#dcfce7">🏪</div>
+      <div class="section-title">My Store</div>
+    </div>
+    <div class="section-body" id="storeBody">
+      <div style="text-align:center;padding:1rem;color:var(--text3);font-size:.85rem">Loading…</div>
+    </div>
+  </div>
+
+  <!-- Logout -->
+  <div class="settings-section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#fef2f2">🚪</div>
+      <div class="section-title">Session</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:.84rem;color:var(--text2);margin-bottom:1rem;line-height:1.6">You are currently logged in. Log out to end your session on this device.</p>
+      <button class="btn-danger" onclick="doLogout()">🚪 Log Out</button>
+    </div>
+  </div>
+
+  <!-- Danger zone -->
+  <div class="danger-zone" id="dangerZone" style="display:none">
+    <div class="danger-zone-text">
+      <strong>⚠️ Delete Account</strong>
+      <p>Permanently delete your SELA account. This cannot be undone.</p>
+    </div>
+    <button class="btn-danger" onclick="confirmDelete()">Delete Account</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:5000/api';
+
+// ── Auth helpers ─────────────────────────────────────────────────────────────
+function getToken() { return localStorage.getItem('td_token') || localStorage.getItem('ac_user_token') || null; }
+function getUser()  {
+  try { return JSON.parse(localStorage.getItem('ac_user') || '{}'); } catch { return {}; }
+}
+function isAdmin()  { return !!localStorage.getItem('td_token'); }
+function isLocal()  { const u=getUser(); return !!u.isLocal; }
+
+async function apiFetch(url, opts={}, ms=5000) {
+  const ctrl = new AbortController();
+  const tid  = setTimeout(() => ctrl.abort(), ms);
+  return fetch(url, { ...opts, signal: ctrl.signal })
+    .then(r => { clearTimeout(tid); return r; })
+    .catch(() => { clearTimeout(tid); return null; });
+}
+
+// ── Toast / msg ──────────────────────────────────────────────────────────────
+let _tt;
+function toast(msg, type='success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.style.background = type==='error' ? '#ef4444' : type==='info' ? '#6366f1' : '#22c55e';
+  el.classList.add('show'); clearTimeout(_tt); _tt = setTimeout(() => el.classList.remove('show'), 2800);
+}
+function showMsg(id, msg, type='error') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg; el.className = 'msg show ' + type; el.style.display = 'block';
+}
+function hideMsg(id) { const el=document.getElementById(id); if(el){el.style.display='none';} }
+
+// ── Load profile ─────────────────────────────────────────────────────────────
+async function loadProfile() {
+  const u = getUser();
+  if (!u || !u.email) { window.location.href = 'auth.html'; return; }
+
+  // Populate hero
+  const name = u.firstName || u.name || u.email;
+  const initial = name[0].toUpperCase();
+  document.getElementById('userAvatar').querySelector('#avatarInitial').textContent = initial;
+  document.getElementById('profileName').textContent = (u.firstName && u.lastName) ? u.firstName + ' ' + u.lastName : (u.name || u.email);
+  document.getElementById('profileEmail').textContent = u.email;
+
+  // Badges
+  if (u.isVerified) document.getElementById('verifiedBadge').style.display = '';
+  if (isAdmin())    document.getElementById('adminBadge').style.display    = '';
+  if (u.isLocal)    document.getElementById('localBadge').style.display    = '';
+
+  // Form fields
+  document.getElementById('setFirst').value    = u.firstName || '';
+  document.getElementById('setLast').value     = u.lastName  || '';
+  document.getElementById('setUsername').value = u.username  || '';
+  document.getElementById('setEmail').value    = u.email     || '';
+
+  // Local accounts: grey out email (no backend to validate uniqueness)
+  if (u.isLocal) {
+    showMsg('infoMsg', '⚡ Your account is stored locally. Changes are saved in this browser.', 'info');
+  }
+
+  // Load store info
+  await loadStoreInfo();
+
+  // Show danger zone for non-local accounts (admin can delete users)
+  if (!isAdmin()) document.getElementById('dangerZone').style.display = '';
+}
+
+// ── Store info ────────────────────────────────────────────────────────────────
+async function loadStoreInfo() {
+  const body = document.getElementById('storeBody');
+  const tok  = getToken();
+
+  if (!tok) { body.innerHTML = '<p style="color:var(--text3);font-size:.84rem">Log in to manage your store.</p>'; return; }
+
+  // Try API
+  const r = await apiFetch(`${API}/shops/mine`, { headers:{'Authorization':'Bearer '+tok} });
+  if (r && r.ok) {
+    const j = await r.json();
+    if (j.data && j.data.length > 0) {
+      const shop = j.data[0];
+      document.getElementById('storeBadge').style.display = '';
+      body.innerHTML = `
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+          <div style="width:52px;height:52px;border-radius:12px;background:${shop.themeColor||'#6366f1'}22;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;border:1px solid ${shop.themeColor||'#6366f1'}33">🏪</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem">${shop.name}</div>
+            <div style="font-size:.75rem;color:var(--text2);margin-top:.2rem">📍 ${shop.location||'Kenya'} · <span style="color:${shop.status==='active'?'var(--green)':'var(--red)'}">●</span> ${shop.status}</div>
+          </div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+            <a href="shop-dashboard.html?id=${shop.id}" style="padding:.5rem 1rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-weight:700;font-size:.78rem;text-decoration:none;white-space:nowrap">📊 Open Dashboard</a>
+            <a href="shop-store.html?slug=${shop.slug}" target="_blank" style="padding:.5rem 1rem;background:#f1f5f9;color:var(--text2);border:1px solid var(--border);border-radius:8px;font-weight:700;font-size:.78rem;text-decoration:none;white-space:nowrap">🔗 View Store</a>
+          </div>
+        </div>`;
+      return;
+    }
+  }
+
+  // No store yet — show CTA
+  body.innerHTML = `
+    <div class="store-cta">
+      <div class="store-cta-left">
+        <div class="store-cta-icon">🏪</div>
+        <div>
+          <div class="store-cta-title">You don't have a store yet</div>
+          <div class="store-cta-sub">Open your vendor store on SELA and start selling to thousands of buyers</div>
+        </div>
+      </div>
+      <button class="btn-cta" onclick="window.location.href='shop-create.html'">Create Your Store →</button>
+    </div>`;
+}
+
+// ── Save personal info ────────────────────────────────────────────────────────
+async function saveInfo() {
+  const first    = document.getElementById('setFirst').value.trim();
+  const last     = document.getElementById('setLast').value.trim();
+  const username = document.getElementById('setUsername').value.trim();
+  const email    = document.getElementById('setEmail').value.trim();
+  hideMsg('infoMsg');
+
+  if (!first || !last)    { showMsg('infoMsg','Enter your first and last name'); return; }
+  if (!username || username.length < 3 || !/^[a-zA-Z0-9_]+$/.test(username)) {
+    showMsg('infoMsg','Username: letters, numbers and _ only. Min 3 chars.'); return;
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showMsg('infoMsg','Enter a valid email address'); return;
+  }
+
+  const u = getUser();
+
+  // Local account → update localStorage
+  if (u.isLocal || isLocal()) {
+    const updated = { ...u, firstName:first, lastName:last, username, email, name:first+' '+last };
+    localStorage.setItem('ac_user', JSON.stringify(updated));
+    // Also update in local store
+    const users = JSON.parse(localStorage.getItem('_sela_users')||'[]');
+    const idx   = users.findIndex(x => x.id === u.id || x.email === u.email);
+    if (idx >= 0) { users[idx] = { ...users[idx], ...updated }; localStorage.setItem('_sela_users', JSON.stringify(users)); }
+    document.getElementById('profileName').textContent = first + ' ' + last;
+    document.getElementById('userAvatar').querySelector('#avatarInitial').textContent = first[0].toUpperCase();
+    showMsg('infoMsg', '✅ Profile updated!', 'success');
+    toast('Profile saved ✅');
+    return;
+  }
+
+  // Real account → try API
+  const tok = getToken();
+  const r = await apiFetch(`${API}/users/profile`, {
+    method:'PATCH', headers:{'Content-Type':'application/json','Authorization':'Bearer '+tok},
+    body: JSON.stringify({ firstName:first, lastName:last, username, email })
+  });
+  if (r) {
+    const j = await r.json().catch(() => ({}));
+    if (j.success) {
+      localStorage.setItem('ac_user', JSON.stringify({ ...u, ...j.user }));
+      showMsg('infoMsg', '✅ Profile updated!', 'success');
+      toast('Profile saved ✅');
+    } else { showMsg('infoMsg', j.message || 'Update failed'); }
+  } else {
+    // Offline — update locally anyway
+    localStorage.setItem('ac_user', JSON.stringify({ ...u, firstName:first, lastName:last, username, email, name:first+' '+last }));
+    showMsg('infoMsg', '✅ Saved locally (backend offline)', 'success');
+    toast('Saved locally ✅');
+  }
+}
+
+// ── Password strength ─────────────────────────────────────────────────────────
+function checkStr(p) {
+  const tests = [/.{8,}/, /[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/];
+  let score = 0;
+  tests.forEach((t,i) => {
+    const ok = t.test(p); if (ok) score++;
+    const el = document.getElementById('sr'+i);
+    if (el) el.classList.toggle('met', ok);
+  });
+  const bar = document.getElementById('strBar');
+  const c = ['','#ef4444','#f59e0b','#eab308','#22c55e','#22c55e'][score];
+  if (bar) { bar.style.width=(score*20)+'%'; bar.style.background=c; }
+}
+
+function toggleEye(id, btn) {
+  const inp = document.getElementById(id); if (!inp) return;
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+
+// ── Change password ───────────────────────────────────────────────────────────
+async function changePwd() {
+  const current = document.getElementById('currentPwd').value;
+  const newPwd  = document.getElementById('newPwd').value;
+  const confirm = document.getElementById('confirmPwd').value;
+  hideMsg('pwdMsg');
+
+  if (!current)           { showMsg('pwdMsg','Enter your current password'); return; }
+  if (newPwd.length < 8)  { showMsg('pwdMsg','New password must be at least 8 characters'); return; }
+  if (newPwd !== confirm)  { showMsg('pwdMsg','New passwords do not match'); return; }
+
+  const u = getUser();
+
+  // Local account → verify and update in localStorage
+  if (u.isLocal || isLocal()) {
+    if (u.password !== current) { showMsg('pwdMsg','Current password is incorrect'); return; }
+    const updated = { ...u, password: newPwd };
+    localStorage.setItem('ac_user', JSON.stringify(updated));
+    const users = JSON.parse(localStorage.getItem('_sela_users')||'[]');
+    const idx   = users.findIndex(x => x.id === u.id || x.email === u.email);
+    if (idx >= 0) { users[idx] = { ...users[idx], password:newPwd }; localStorage.setItem('_sela_users', JSON.stringify(users)); }
+    showMsg('pwdMsg', '✅ Password updated!', 'success');
+    document.getElementById('currentPwd').value = '';
+    document.getElementById('newPwd').value = '';
+    document.getElementById('confirmPwd').value = '';
+    toast('Password changed ✅');
+    return;
+  }
+
+  // Real account → API
+  const tok = getToken();
+  const r = await apiFetch(`${API}/users/change-password`, {
+    method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+tok},
+    body: JSON.stringify({ currentPassword:current, newPassword:newPwd })
+  });
+  if (r) {
+    const j = await r.json().catch(() => ({}));
+    if (j.success) {
+      showMsg('pwdMsg', '✅ Password updated! You may need to log in again.', 'success');
+      document.getElementById('currentPwd').value = '';
+      document.getElementById('newPwd').value = '';
+      document.getElementById('confirmPwd').value = '';
+      toast('Password changed ✅');
+    } else { showMsg('pwdMsg', j.message || 'Password update failed'); }
+  } else {
+    showMsg('pwdMsg', '⚡ Backend offline. For local accounts, your password was updated locally.');
+    // Update locally anyway for local accounts
+    if (u.password) {
+      if (u.password !== current) { showMsg('pwdMsg','Current password is incorrect'); return; }
+      localStorage.setItem('ac_user', JSON.stringify({ ...u, password:newPwd }));
+      showMsg('pwdMsg', '✅ Password updated locally', 'success');
+    }
+  }
+}
+
+// ── Logout ────────────────────────────────────────────────────────────────────
+function doLogout() {
+  if (!confirm('Log out of your SELA account?')) return;
+  localStorage.removeItem('td_token');
+  localStorage.removeItem('ac_user_token');
+  localStorage.removeItem('ac_user');
+  window.location.href = 'index.html';
+}
+
+// ── Delete account ────────────────────────────────────────────────────────────
+function confirmDelete() {
+  if (!confirm('⚠️ Are you sure? This will permanently delete your account and cannot be undone.')) return;
+  const u = getUser();
+  if (u.isLocal) {
+    // Remove from local store
+    const users = JSON.parse(localStorage.getItem('_sela_users')||'[]').filter(x => x.id !== u.id && x.email !== u.email);
+    localStorage.setItem('_sela_users', JSON.stringify(users));
+  }
+  localStorage.removeItem('td_token');
+  localStorage.removeItem('ac_user_token');
+  localStorage.removeItem('ac_user');
+  toast('Account deleted', 'error');
+  setTimeout(() => window.location.href = 'index.html', 1000);
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+loadProfile();
+</script>
+</body>
+</html>

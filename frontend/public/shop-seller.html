@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Seller Profile — SELA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8fafc;--card:#fff;--border:#e2e8f0;--accent:#6366f1;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--radius:14px;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-lg:0 10px 40px rgba(0,0,0,.1)}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:inherit}
+.page-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 4rem}
+/* Profile header */
+.profile-header{background:linear-gradient(135deg,var(--accent),#8b5cf6);border-radius:20px;padding:3rem;margin-bottom:2rem;position:relative;overflow:hidden;color:#fff}
+.profile-header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.07)}
+.profile-header::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
+.profile-inner{position:relative;z-index:1;display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap}
+.profile-logo{width:96px;height:96px;border-radius:20px;border:4px solid rgba(255,255,255,.3);object-fit:contain;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0}
+.profile-logo img{width:100%;height:100%;border-radius:16px;object-fit:contain}
+.profile-info{flex:1;min-width:0}
+.profile-name{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;margin-bottom:.3rem}
+.profile-tagline{font-size:.95rem;color:rgba(255,255,255,.7);margin-bottom:1rem;line-height:1.6}
+.profile-stats{display:flex;gap:2rem;flex-wrap:wrap}
+.ps-item{text-align:left}
+.ps-num{font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:900}
+.ps-label{font-size:.7rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.08em}
+.profile-actions{display:flex;gap:.65rem;margin-top:1.5rem;flex-wrap:wrap}
+.btn-wa{display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.5rem;background:#22c55e;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s}
+.btn-wa:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(34,197,94,.35)}
+.btn-call{display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.5rem;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;backdrop-filter:blur(8px)}
+.btn-call:hover{background:rgba(255,255,255,.25)}
+/* Layout */
+.content-grid{display:grid;grid-template-columns:300px 1fr;gap:2rem;align-items:start}
+@media(max-width:860px){.content-grid{grid-template-columns:1fr}}
+/* Info cards */
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.info-card-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.info-row{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.75rem;font-size:.86rem}
+.info-row:last-child{margin-bottom:0}
+.info-icon{flex-shrink:0;width:22px;text-align:center;margin-top:.05rem}
+.info-val{color:var(--text2);line-height:1.5}
+.info-val a{color:var(--accent);font-weight:600}
+/* Social links */
+.social-link{display:flex;align-items:center;gap:.65rem;padding:.55rem .75rem;border-radius:8px;font-size:.82rem;font-weight:600;color:var(--text2);transition:all .18s;text-decoration:none;border:1px solid var(--border);margin-bottom:.45rem}
+.social-link:hover{border-color:var(--accent);color:var(--accent);background:#ede9fe}
+/* Rating stars */
+.rating-stars{display:flex;gap:.2rem;font-size:1.1rem;margin:.4rem 0}
+.rating-num{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;color:var(--accent)}
+/* Branch card */
+.branch-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:.75rem;box-shadow:var(--shadow)}
+.branch-name{font-weight:700;margin-bottom:.5rem}
+/* Product grid */
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.85rem}
+.mini-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:all .2s}
+.mini-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.mini-img{height:130px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:2rem;overflow:hidden}
+.mini-img img{width:100%;height:100%;object-fit:cover}
+.mini-body{padding:.75rem}
+.mini-name{font-size:.8rem;font-weight:700;margin-bottom:.25rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mini-price{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:800;color:var(--accent)}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+
+<div id="pageContent">
+  <div style="display:flex;align-items:center;justify-content:center;min-height:60vh">
+    <div style="text-align:center"><div style="width:36px;height:36px;border:3px solid #e2e8f0;border-top-color:#6366f1;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem"></div>Loading seller profile…</div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:5000/api';
+const slug = new URLSearchParams(location.search).get('slug');
+
+async function init(){
+  if(!slug){ document.getElementById('pageContent').innerHTML='<div style="text-align:center;padding:4rem">No shop specified. <a href="shops.html">← Browse Shops</a></div>'; return; }
+  try{
+    const sj = await fetch(`${API}/shops/${slug}`).then(r=>r.json());
+    if(!sj.success) throw new Error('Shop not found');
+    const shop=sj.data;
+    const [pj,bj] = await Promise.all([
+      fetch(`${API}/shops/${shop.id}/products?limit=20&featured=true`).then(r=>r.json()).catch(()=>({data:[]})),
+      fetch(`${API}/shops/${shop.id}/branches`).then(r=>r.json()).catch(()=>({data:[]}))
+    ]);
+    const products=pj.data||[];
+    const branches=bj.data||[];
+    document.title = `${shop.name} — Seller Profile`;
+    document.documentElement.style.setProperty('--accent', shop.themeColor||'#6366f1');
+    const social=shop.social||{};
+    const rating=shop.rating||4.2;
+    document.getElementById('pageContent').innerHTML=`
+      <div class="page-wrap">
+        <div style="margin-bottom:1.25rem;font-size:.82rem"><a href="shop-store.html?slug=${slug}" style="color:var(--accent);font-weight:600">← Back to Shop</a></div>
+        <!-- Profile header -->
+        <div class="profile-header" style="background:linear-gradient(135deg,${shop.themeColor||'#6366f1'},#8b5cf6)">
+          <div class="profile-inner">
+            <div class="profile-logo">
+              ${shop.logo?`<img src="${shop.logo}" alt="${shop.name}" onerror="this.outerHTML='🏪'"/>`:'🏪'}
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">${shop.name}</div>
+              <div class="profile-tagline">${shop.description||'Quality products, great service.'}</div>
+              <div class="profile-stats">
+                <div class="ps-item"><div class="ps-num">${shop.totalSales||0}</div><div class="ps-label">Total Sales</div></div>
+                <div class="ps-item"><div class="ps-num">${branches.length}</div><div class="ps-label">Branches</div></div>
+                <div class="ps-item"><div class="ps-num">${rating.toFixed(1)}⭐</div><div class="ps-label">Rating</div></div>
+                <div class="ps-item"><div class="ps-num">${new Date(shop.createdAt).getFullYear()}</div><div class="ps-label">Since</div></div>
+              </div>
+              <div class="profile-actions">
+                ${shop.whatsapp?`<button class="btn-wa" onclick="window.open('https://wa.me/${shop.whatsapp.replace(/[^0-9]/g,'')}?text=Hi! I saw your shop on SELA','_blank')">💬 Chat on WhatsApp</button>`:''}
+                ${shop.phone?`<button class="btn-call" onclick="window.open('tel:${shop.phone}')">📞 ${shop.phone}</button>`:''}
+                ${shop.email?`<button class="btn-call" onclick="window.open('mailto:${shop.email}')">✉️ Email</button>`:''}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Content grid -->
+        <div class="content-grid">
+          <!-- Left sidebar -->
+          <aside>
+            <div class="info-card">
+              <div class="info-card-title">Shop Details</div>
+              ${shop.location?`<div class="info-row"><span class="info-icon">📍</span><div class="info-val">${shop.location}</div></div>`:''}
+              ${shop.phone?`<div class="info-row"><span class="info-icon">📞</span><div class="info-val"><a href="tel:${shop.phone}">${shop.phone}</a></div></div>`:''}
+              ${shop.whatsapp?`<div class="info-row"><span class="info-icon">💬</span><div class="info-val"><a href="https://wa.me/${shop.whatsapp.replace(/[^0-9]/g,'')}" target="_blank">${shop.whatsapp}</a></div></div>`:''}
+              ${shop.email?`<div class="info-row"><span class="info-icon">✉️</span><div class="info-val"><a href="mailto:${shop.email}">${shop.email}</a></div></div>`:''}
+              <div class="info-row"><span class="info-icon">📅</span><div class="info-val">Member since ${new Date(shop.createdAt).toLocaleDateString('en-KE',{month:'long',year:'numeric'})}</div></div>
+              <div class="info-row"><span class="info-icon">✅</span><div class="info-val" style="font-weight:700;color:${shop.status==='active'?'#22c55e':'#ef4444'}">${shop.status==='active'?'Verified Active Shop':'Inactive'}</div></div>
+            </div>
+            ${[social.facebook,social.instagram,social.twitter,social.tiktok,social.youtube].some(Boolean)?`
+            <div class="info-card">
+              <div class="info-card-title">Follow Us</div>
+              ${social.facebook?`<a href="${social.facebook}" target="_blank" class="social-link">📘 Facebook</a>`:''}
+              ${social.instagram?`<a href="${social.instagram}" target="_blank" class="social-link">📸 Instagram</a>`:''}
+              ${social.twitter?`<a href="${social.twitter}" target="_blank" class="social-link">🐦 Twitter / X</a>`:''}
+              ${social.tiktok?`<a href="${social.tiktok}" target="_blank" class="social-link">🎵 TikTok</a>`:''}
+              ${social.youtube?`<a href="${social.youtube}" target="_blank" class="social-link">▶️ YouTube</a>`:''}
+            </div>`:''}
+            <div class="info-card">
+              <div class="info-card-title">Seller Rating</div>
+              <div class="rating-num">${rating.toFixed(1)}</div>
+              <div class="rating-stars">${'⭐'.repeat(Math.round(rating))}${'☆'.repeat(5-Math.round(rating))}</div>
+              <div style="font-size:.78rem;color:var(--text3)">Based on customer feedback</div>
+            </div>
+          </aside>
+          <!-- Main content -->
+          <div>
+            ${branches.length?`
+            <div style="margin-bottom:1.75rem">
+              <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:1rem">🏪 Our Branches (${branches.length})</h3>
+              ${branches.map(b=>`<div class="branch-card">
+                <div class="branch-name">${b.isMain?'🏠':''} ${b.name}</div>
+                ${b.location?`<div style="font-size:.8rem;color:var(--text2);margin-bottom:.25rem">📍 ${b.location}</div>`:''}
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.5rem">
+                  ${b.phone?`<a href="tel:${b.phone}" style="font-size:.78rem;color:var(--accent);font-weight:600">📞 ${b.phone}</a>`:''}
+                  ${b.whatsapp?`<a href="https://wa.me/${b.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="font-size:.78rem;color:#22c55e;font-weight:600">💬 WhatsApp</a>`:''}
+                  ${b.hours?`<span style="font-size:.75rem;color:var(--text3)">🕐 ${b.hours}</span>`:''}
+                </div>
+              </div>`).join('')}
+            </div>`:''}
+            ${products.length?`
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem">
+                <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem">⭐ Featured Products</h3>
+                <a href="shop-store.html?slug=${slug}" style="font-size:.8rem;color:var(--accent);font-weight:600">View all →</a>
+              </div>
+              <div class="mini-grid">
+                ${products.map(p=>`
+                  <div class="mini-card" onclick="window.location.href='shop-store.html?slug=${slug}'">
+                    <div class="mini-img">${p.images?.[0]?`<img src="${p.images[0]}" alt="${p.name}" onerror="this.outerHTML='<div style=font-size:2rem>📦</div>'"/>`:'📦'}</div>
+                    <div class="mini-body">
+                      <div class="mini-name">${p.name}</div>
+                      <div class="mini-price" style="color:${shop.themeColor||'#6366f1'}">KES ${p.price?.toLocaleString()}</div>
+                    </div>
+                  </div>`).join('')}
+              </div>
+            </div>`:`<div style="text-align:center;padding:3rem;color:var(--text3)">No featured products yet.</div>`}
+          </div>
+        </div>
+      </div>`;
+  }catch(err){
+    document.getElementById('pageContent').innerHTML=`<div style="text-align:center;padding:4rem;font-family:sans-serif"><h2>Shop not found</h2><p style="color:#64748b;margin:.75rem 0">${err.message}</p><a href="shops.html" style="color:#6366f1">← Browse Shops</a></div>`;
+  }
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Track Your Order — SELA</title>
+  <script src="header.js" defer></script>
+  <style>
+    :root{--bg:#0b0e14;--card:#131822;--border:rgba(255,255,255,.08);--accent:#00d4ff;--text:#e8eaf0;--text2:#9aa0b0;--text3:#5a6070;--green:#16a34a;--orange:#f97316;--red:#ef4444;--radius:12px;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;padding-top:80px}
+    .page{max-width:560px;margin:0 auto;padding:2rem 1rem 4rem}
+    h1{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:900;margin-bottom:.25rem}
+    .sub{color:var(--text2);font-size:.85rem;margin-bottom:2rem}
+
+    /* Search box */
+    .search-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+    .search-box h2{font-size:.9rem;font-weight:700;margin-bottom:1rem}
+    .input-row{display:flex;gap:.75rem;flex-wrap:wrap}
+    .track-input{flex:1;min-width:140px;padding:.6rem .85rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem}
+    .track-input:focus{outline:none;border-color:var(--accent)}
+    .track-btn{padding:.6rem 1.5rem;background:var(--accent);color:#0b0e14;border:none;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer}
+
+    /* Order card */
+    .order-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1.5rem}
+    .order-header{padding:1.25rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem}
+    .order-no{font-weight:900;font-size:1rem}
+    .shop-name{color:var(--text2);font-size:.78rem;margin-top:.15rem}
+    .status-pill{padding:.3rem .85rem;border-radius:20px;font-size:.75rem;font-weight:700}
+
+    /* Timeline */
+    .timeline{padding:1.25rem}
+    .timeline-item{display:flex;gap:1rem;position:relative;padding-bottom:1.5rem}
+    .timeline-item:last-child{padding-bottom:0}
+    .timeline-item:not(:last-child)::after{content:'';position:absolute;left:17px;top:36px;bottom:0;width:2px;background:var(--border)}
+    .t-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:2px solid var(--border)}
+    .t-icon.done{background:rgba(22,163,74,.15);border-color:#16a34a}
+    .t-icon.active{background:rgba(0,212,255,.15);border-color:var(--accent)}
+    .t-icon.pending{background:var(--bg);border-color:var(--border);opacity:.5}
+    .t-label{font-weight:700;font-size:.85rem}
+    .t-msg{color:var(--text2);font-size:.75rem;margin-top:.1rem}
+    .t-time{color:var(--text3);font-size:.68rem;margin-top:.1rem}
+
+    /* Items */
+    .items-section{padding:1.25rem;border-top:1px solid var(--border)}
+    .items-title{font-size:.78rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.75rem}
+    .order-item{display:flex;align-items:center;gap:.75rem;padding:.4rem 0}
+    .item-img{width:40px;height:40px;border-radius:6px;object-fit:cover;background:var(--bg);flex-shrink:0}
+    .item-name{font-size:.82rem;flex:1}
+    .item-total{font-size:.82rem;font-weight:700;color:var(--accent)}
+
+    /* Total + actions */
+    .order-footer{padding:1.25rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .total{font-weight:900;font-size:1rem}
+    .wa-btn{padding:.4rem 1rem;background:rgba(37,211,102,.15);color:#25d366;border:1px solid rgba(37,211,102,.3);border-radius:8px;font-size:.78rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
+
+    .error-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:1.25rem;text-align:center;color:#fca5a5;font-size:.85rem}
+    .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>📦 Track Your Order</h1>
+  <p class="sub">Enter your order number to see the latest status.</p>
+
+  <div class="search-box">
+    <h2>Order Lookup</h2>
+    <div class="input-row">
+      <input class="track-input" id="trackOrderNo" placeholder="Order number e.g. ORD-0042" />
+      <input class="track-input" id="trackPhone" placeholder="Your phone number" />
+      <button class="track-btn" onclick="trackOrder()">Track →</button>
+    </div>
+  </div>
+
+  <div id="trackResult"></div>
+</div>
+
+<script>
+const API = 'http://localhost:5000/api';
+
+const STEPS = [
+  { key:'pending',          icon:'🕐', label:'Order Received' },
+  { key:'confirmed',        icon:'✅', label:'Confirmed' },
+  { key:'ready',            icon:'📦', label:'Ready for Pickup' },
+  { key:'out_for_delivery', icon:'🚚', label:'Out for Delivery' },
+  { key:'delivered',        icon:'🎉', label:'Delivered' },
+];
+
+const STATUS_COLOR = {
+  pending:'rgba(245,158,11,.15)', confirmed:'rgba(22,163,74,.15)',
+  ready:'rgba(0,212,255,.15)', out_for_delivery:'rgba(99,102,241,.15)',
+  delivered:'rgba(22,163,74,.2)', cancelled:'rgba(239,68,68,.15)'
+};
+const STATUS_TEXT = {
+  pending:'#f59e0b', confirmed:'#16a34a', ready:'#00d4ff',
+  out_for_delivery:'#a5b4fc', delivered:'#16a34a', cancelled:'#ef4444'
+};
+
+// Auto-track from URL params
+(function(){
+  const p = new URLSearchParams(window.location.search);
+  const no = p.get('order') || p.get('orderNo');
+  const ph = p.get('phone');
+  if (no) {
+    document.getElementById('trackOrderNo').value = no;
+    if (ph) document.getElementById('trackPhone').value = ph;
+    trackOrder();
+  }
+})();
+
+async function trackOrder() {
+  const orderNo = document.getElementById('trackOrderNo').value.trim();
+  const phone   = document.getElementById('trackPhone').value.trim();
+  const result  = document.getElementById('trackResult');
+  if (!orderNo) { result.innerHTML = '<div class="error-box">Please enter an order number</div>'; return; }
+  result.innerHTML = '<div style="text-align:center;padding:2rem"><div class="spinner"></div></div>';
+  try {
+    const r = await fetch(API+'/orders/track/'+encodeURIComponent(orderNo));
+    const j = await r.json().catch(()=>({}));
+    if (!j.success) { result.innerHTML = '<div class="error-box">'+( j.message||'Order not found')+'</div>'; return; }
+    result.innerHTML = renderOrder(j.data);
+  } catch(e) { result.innerHTML = '<div class="error-box">Could not reach server. Try again.</div>'; }
+}
+
+function renderOrder(o) {
+  const currentIdx = STEPS.findIndex(s => s.key === o.status);
+  const isCancelled = o.status === 'cancelled';
+
+  // Timeline
+  const steps = isCancelled
+    ? [{key:'cancelled', icon:'❌', label:'Cancelled'}]
+    : STEPS;
+
+  const timeline = steps.map((step, idx) => {
+    const isDone   = !isCancelled && idx < currentIdx;
+    const isActive = step.key === o.status;
+    const isPending= !isDone && !isActive;
+    const histEntry = (o.statusHistory||[]).slice().reverse().find(h => h.status === step.key);
+    const cls = isDone?'done':isActive?'active':'pending';
+    return `<div class="timeline-item">
+      <div class="t-icon ${cls}">${step.icon}</div>
+      <div>
+        <div class="t-label" style="color:${isActive?'var(--accent)':isDone?'#16a34a':'var(--text3)'}">${step.label}</div>
+        ${histEntry ? '<div class="t-msg">'+histEntry.message+'</div>' : ''}
+        ${histEntry ? '<div class="t-time">'+new Date(histEntry.timestamp).toLocaleString('en-KE')+'</div>' : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Items
+  const items = (o.items||[]).map(i =>
+    `<div class="order-item">
+      ${i.image ? '<img class="item-img" src="'+i.image+'" />' : '<div class="item-img" style="background:var(--bg3);display:flex;align-items:center;justify-content:center">📦</div>'}
+      <div class="item-name">${i.name} <span style="color:var(--text3)">×${i.qty||1}</span></div>
+      <div class="item-total">KES ${Number(i.total||0).toLocaleString('en-KE')}</div>
+    </div>`
+  ).join('');
+
+  const statusBg   = STATUS_COLOR[o.status] || STATUS_COLOR.pending;
+  const statusColor= STATUS_TEXT[o.status]  || STATUS_TEXT.pending;
+  const statusLabel= STEPS.find(s=>s.key===o.status)?.label || o.status;
+
+  return `<div class="order-card">
+    <div class="order-header">
+      <div>
+        <div class="order-no">${o.orderNo}</div>
+        <div class="shop-name">🏪 ${o.shopName}</div>
+        ${o.type==='delivery'?'<div class="shop-name" style="margin-top:.2rem">🚚 Delivery to: '+o.branch+'</div>':'<div class="shop-name" style="margin-top:.2rem">📍 Pickup: '+o.branch+'</div>'}
+      </div>
+      <span class="status-pill" style="background:${statusBg};color:${statusColor}">${statusLabel}</span>
+    </div>
+    <div class="timeline">${timeline}</div>
+    ${o.estimatedTime ? '<div style="padding:.75rem 1.25rem;background:rgba(0,212,255,.05);font-size:.78rem;color:var(--accent)">⏱️ Estimated: '+o.estimatedTime+'</div>' : ''}
+    <div class="items-section">
+      <div class="items-title">Items</div>
+      ${items || '<div style="color:var(--text3);font-size:.8rem">No items</div>'}
+    </div>
+    <div class="order-footer">
+      <div class="total">Total: KES ${Number(o.total||0).toLocaleString('en-KE')}</div>
+      ${o.shopPhone ? '<a class="wa-btn" href="https://wa.me/'+o.shopPhone.replace(/[^0-9]/g,'')+'" target="_blank">💬 WhatsApp Shop</a>' : ''}
+    </div>
+  </div>`;
+}
+
+document.getElementById('trackOrderNo')?.addEventListener('keydown', e => { if(e.key==='Enter') trackOrder(); });
+document.getElementById('trackPhone')?.addEventListener('keydown', e => { if(e.key==='Enter') trackOrder(); });
+</script>
+</body>
+</html>

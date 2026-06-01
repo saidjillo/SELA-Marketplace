@@ -1,0 +1,296 @@
+/**
+ * theme.css — SELA Platform Light Theme
+ * A clean, warm light theme. Not too white — uses gentle greys and warm tones.
+ * Inject on every page: <link rel="stylesheet" href="theme.css"/>
+ */
+
+/* ── Base palette ─────────────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds — layered warm whites */
+  --bg:    #f0f2f5;   /* page background — soft grey-blue */
+  --bg2:   #e8eaed;   /* slightly deeper grey */
+  --bg3:   #dde0e5;   /* section dividers */
+
+  /* Cards & surfaces */
+  --card:  #ffffff;   /* pure white card */
+  --card2: #f5f7fa;   /* secondary card */
+
+  /* Borders */
+  --border:  #d1d5db; /* subtle border */
+  --border2: #b8bec8; /* stronger border */
+
+  /* Text */
+  --text:  #1a1d23;   /* near-black */
+  --text2: #4b5563;   /* secondary text */
+  --text3: #9ca3af;   /* muted/placeholder */
+
+  /* Brand accent — keep vibrant but slightly deeper for light bg */
+  --accent:  #0ea5e9;  /* sky blue */
+  --accent2: #0284c7;  /* darker blue */
+
+  /* Status */
+  --green:  #16a34a;
+  --red:    #dc2626;
+  --orange: #ea580c;
+  --gold:   #b45309;
+  --purple: #7c3aed;
+
+  /* Shadows — softer on light bg */
+  --shadow:    0 1px 4px rgba(0,0,0,.08);
+  --shadow-lg: 0 6px 24px rgba(0,0,0,.12);
+
+  /* Radii */
+  --radius:    12px;
+  --radius-lg: 18px;
+
+  /* Sidebar width */
+  --sidebar: 240px;
+
+  /* Fonts */
+  --font-head: 'Montserrat', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ── Global resets ────────────────────────────────────────────────────────── */
+body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* ── Header overrides ─────────────────────────────────────────────────────── */
+.ac-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: 0 1px 6px rgba(0,0,0,.08) !important;
+}
+.ac-topbar {
+  background: #f8fafc !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.ac-topbar-right a, .ac-topbar-right span { color: #6b7280 !important; }
+.ac-topbar-right a:hover { color: var(--accent) !important; }
+.ac-logo { color: #1a1d23 !important; }
+.ac-logo-dot { color: var(--accent) !important; }
+.ac-logo-badge { background: var(--accent) !important; color: #fff !important; }
+
+.ac-search {
+  background: var(--bg) !important;
+  border: 1.5px solid var(--border) !important;
+}
+.ac-search:focus-within { border-color: var(--accent) !important; }
+.ac-search input { color: var(--text) !important; }
+.ac-search input::placeholder { color: var(--text3) !important; }
+.ac-search-context { background: var(--bg2) !important; color: var(--accent) !important; border-right-color: var(--border) !important; }
+.ac-search-btn { color: var(--text3) !important; }
+.ac-search-btn:hover { color: var(--accent) !important; }
+
+.ac-nav-link { color: #4b5563 !important; }
+.ac-nav-link:hover { background: var(--bg) !important; color: var(--text) !important; }
+.ac-nav-link.active { color: var(--accent) !important; background: rgba(14,165,233,.08) !important; }
+
+.ac-login-btn {
+  background: var(--bg) !important;
+  border: 1.5px solid var(--border) !important;
+  color: var(--text) !important;
+}
+.ac-login-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; background: rgba(14,165,233,.06) !important; }
+
+.ac-account-btn {
+  background: rgba(14,165,233,.08) !important;
+  border-color: rgba(14,165,233,.25) !important;
+  color: #0369a1 !important;
+}
+
+.ac-dropdown {
+  background: #fff !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12) !important;
+}
+.ac-dd-head { background: #f8fafc !important; border-bottom-color: var(--border) !important; }
+.ac-dd-name { color: var(--text) !important; }
+.ac-dd-email { color: var(--text3) !important; }
+.ac-dd-item { color: var(--text2) !important; }
+.ac-dd-item:hover { background: var(--bg) !important; color: var(--text) !important; }
+.ac-dd-sep { background: var(--border) !important; }
+.ac-dd-item.danger { color: var(--red) !important; }
+.ac-dd-item.danger:hover { background: #fef2f2 !important; }
+
+/* ── Cards ────────────────────────────────────────────────────────────────── */
+.product-card, .prod-card, .mh-store, .mh-prod,
+.store-card, .ls-widget, .sidebar-widget,
+[class*="-card"]:not(.mh-cta):not(.vendor-cta):not(.store-cta):not(.slide-btn) {
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow) !important;
+}
+.product-card:hover, .prod-card:hover, .mh-store:hover, .mh-prod:hover, .store-card:hover {
+  box-shadow: var(--shadow-lg) !important;
+  border-color: var(--accent) !important;
+}
+
+/* Product name / text in cards */
+.product-title, .prod-name, .mh-prod-name,
+.store-card-name, .mh-store-name,
+[class*="-name"]:not(.ac-dd-name):not(.mh-cta-h) {
+  color: var(--text) !important;
+}
+.product-category, .prod-cat, .mh-cat-name { color: var(--accent) !important; }
+.product-price, .prod-price, .mh-prod-price { color: var(--green) !important; }
+.product-desc, .prod-desc { color: var(--text2) !important; }
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+.shop-sidebar, .left-sidebar, .right-sidebar-col { background: transparent !important; }
+.sidebar-widget, .ls-widget {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+}
+.sw-header, .ls-head {
+  background: var(--bg2) !important;
+  border-bottom-color: var(--border) !important;
+  color: var(--text2) !important;
+}
+.sw-title { color: var(--text2) !important; }
+.sw-item:hover, .sw-item.active { background: rgba(14,165,233,.06) !important; }
+.sw-item.active { border-left-color: var(--accent) !important; }
+.sw-item.active .sw-item-left { color: var(--accent) !important; }
+
+/* ── Stats bar & metrics ──────────────────────────────────────────────────── */
+.mh-stats-bar { background: #fff !important; border-bottom: 1px solid var(--border) !important; }
+.mh-stat { border-right-color: var(--border) !important; }
+.mh-stat-num { color: var(--text) !important; }
+.mh-stat-lbl { color: var(--text3) !important; }
+.mh-stat-sub { color: var(--green) !important; }
+
+.mh-metrics-grid, .stats-widget-grid { background: transparent !important; }
+.mh-mc, .stat-widget-item {
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+}
+.mh-mc-num, .swi-num { color: var(--text) !important; }
+.mh-mc-lbl, .swi-label { color: var(--text3) !important; }
+.mh-mc-sub { color: var(--text2) !important; border-top-color: var(--border) !important; }
+
+/* ── Forms ────────────────────────────────────────────────────────────────── */
+.form-input, .filter-select, input:not([type=checkbox]):not([type=radio]), select, textarea {
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+.form-input:focus, input:focus, select:focus, textarea:focus {
+  border-color: var(--accent) !important;
+}
+input::placeholder, textarea::placeholder { color: var(--text3) !important; }
+
+/* ── Filter bar ───────────────────────────────────────────────────────────── */
+.filter-bar-wrap { background: var(--card) !important; border-bottom-color: var(--border) !important; }
+
+/* ── Stats strip ──────────────────────────────────────────────────────────── */
+.stats-strip { background: var(--card) !important; border-bottom-color: var(--border) !important; }
+.stat-chip { color: var(--text2) !important; }
+.stat-chip strong { color: var(--accent) !important; }
+.stat-sep { background: var(--border) !important; }
+
+/* ── Ticker ───────────────────────────────────────────────────────────────── */
+.mh-ticker { background: var(--bg2) !important; border-bottom-color: var(--border) !important; }
+.mh-tick-item { color: #6b7280 !important; }
+.mh-tick-item strong { color: var(--accent) !important; }
+
+/* ── Categories ───────────────────────────────────────────────────────────── */
+.mh-cat, .mh-catgrid .mh-cat {
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+}
+.mh-cat:hover { background: var(--bg2) !important; }
+.mh-cat-name { color: var(--text2) !important; }
+.mh-cat:hover .mh-cat-name { color: var(--text) !important; }
+.mh-cat-count { color: var(--text3) !important; }
+
+/* ── Activity feed ────────────────────────────────────────────────────────── */
+.mh-act-item { background: var(--card) !important; border-color: var(--border) !important; }
+.mh-act-text { color: var(--text2) !important; }
+.mh-act-text strong { color: var(--text) !important; }
+.mh-act-time { color: var(--text3) !important; }
+
+/* ── Hero slider (keep dark — contrast needed for overlaid text) ──────────── */
+.shop-hero, .ac-header .hero, .shop-hero-slide { /* keep dark */ }
+
+/* ── Vendor banner ────────────────────────────────────────────────────────── */
+.vendor-banner {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7) !important;
+  border-color: #fde68a !important;
+}
+.vendor-banner-title { color: #92400e !important; }
+.vendor-banner-sub { color: #78350f !important; }
+
+/* ── Shop store page (already light) ─────────────────────────────────────── */
+.store-hero .slide-overlay { /* keep */ }
+
+/* ── Auth page ────────────────────────────────────────────────────────────── */
+.auth-form-panel { background: var(--bg) !important; }
+.auth-tabs { background: var(--bg2) !important; border-color: var(--border) !important; }
+.auth-tab.active { background: var(--card) !important; color: var(--text) !important; }
+.auth-tab { color: var(--text2) !important; }
+.auth-heading { color: var(--text) !important; }
+.auth-sub { color: var(--text2) !important; }
+.auth-box { background: var(--card) !important; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+.auth-btn { /* keep gradient */ }
+.auth-alt { color: var(--text3) !important; }
+.auth-link { color: var(--accent) !important; }
+.otp-input {
+  background: var(--bg) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* ── Product detail ───────────────────────────────────────────────────────── */
+.product-layout { background: transparent !important; }
+.p-card { background: var(--card) !important; border-color: var(--border) !important; }
+.p-title { color: var(--text) !important; }
+.p-price { color: var(--green) !important; }
+.p-desc, .p-spec-label { color: var(--text2) !important; }
+.p-spec-value { color: var(--text) !important; }
+.p-spec-item { border-bottom-color: var(--border) !important; }
+.tag { background: var(--bg2) !important; color: var(--text2) !important; border-color: var(--border) !important; }
+
+/* ── Dashboard ────────────────────────────────────────────────────────────── */
+.sidebar { background: #1e293b !important; } /* keep sidebar dark for contrast */
+.main { background: var(--bg) !important; }
+.main-card { background: var(--card) !important; border-color: var(--border) !important; }
+.card-header { background: var(--bg2) !important; border-bottom-color: var(--border) !important; color: var(--text) !important; }
+.data-table th { background: var(--bg2) !important; color: var(--text2) !important; }
+.data-table td { color: var(--text) !important; border-bottom-color: var(--border) !important; }
+.data-table tr:hover td { background: var(--bg) !important; }
+
+/* ── Section headers ──────────────────────────────────────────────────────── */
+.section-title, .mh-hd-left, .mh-section-title { color: var(--text) !important; }
+.mh-badge { background: rgba(14,165,233,.1) !important; color: var(--accent) !important; border-color: rgba(14,165,233,.2) !important; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+footer, .footer, .site-footer {
+  background: #1e293b !important; /* keep footer dark */
+  color: #94a3b8 !important;
+}
+
+/* ── Dividers ─────────────────────────────────────────────────────────────── */
+.mh-divider { background: linear-gradient(90deg, transparent, var(--border) 15%, var(--border) 85%, transparent) !important; }
+.section-divider { background: var(--border) !important; }
+
+/* ── Quick stats sidebar ──────────────────────────────────────────────────── */
+.qs-item { border-bottom-color: var(--border) !important; }
+.qs-label { color: var(--text3) !important; }
+.qs-value { color: var(--text) !important; }
+
+/* ── ls-cat-pill (product page sidebar) ──────────────────────────────────── */
+.ls-cat-pill { color: var(--text2) !important; border-bottom-color: var(--border) !important; }
+.ls-cat-pill:hover { background: var(--bg2) !important; color: var(--accent) !important; }
+
+/* ── Other stores sidebar ─────────────────────────────────────────────────── */
+.os-item { border-bottom-color: var(--border) !important; }
+.os-item:hover { background: var(--bg2) !important; }
+.os-name { color: var(--text2) !important; }
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }

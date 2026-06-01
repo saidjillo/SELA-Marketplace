@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>My Wishlist — SELA</title>
+  <script src="wishlist.js"></script>
+  <script src="header.js" defer></script>
+  <style>
+    :root{--bg:#0b0e14;--card:#131822;--card2:#1a2030;--border:rgba(255,255,255,.08);--accent:#00d4ff;--text:#e8eaf0;--text2:#9aa0b0;--text3:#5a6070;--radius:12px;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;padding-top:80px}
+    .page{max-width:900px;margin:0 auto;padding:2rem 1rem 4rem}
+    .page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+    h1{font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:900}
+    .clear-btn{padding:.4rem 1rem;background:rgba(220,38,38,.1);color:#fca5a5;border:1px solid rgba(220,38,38,.2);border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
+    .wl-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .2s;cursor:pointer}
+    .wl-card:hover{border-color:rgba(0,212,255,.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+    .wl-img{width:100%;height:160px;object-fit:cover;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+    .wl-img img{width:100%;height:100%;object-fit:cover}
+    .wl-body{padding:.85rem}
+    .wl-name{font-weight:700;font-size:.88rem;margin-bottom:.3rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .wl-shop{font-size:.72rem;color:var(--text3);margin-bottom:.5rem}
+    .wl-price{font-weight:900;color:var(--accent);font-size:1rem;margin-bottom:.75rem}
+    .wl-actions{display:flex;gap:.4rem}
+    .wl-order-btn{flex:1;padding:.4rem .6rem;background:var(--accent);color:#0b0e14;border:none;border-radius:7px;font-size:.72rem;font-weight:700;cursor:pointer}
+    .wl-remove-btn{padding:.4rem .7rem;background:rgba(220,38,38,.1);color:#fca5a5;border:1px solid rgba(220,38,38,.2);border-radius:7px;font-size:.72rem;font-weight:700;cursor:pointer}
+    .wl-badge-hotdeal{display:inline-block;background:rgba(249,115,22,.15);color:#f97316;padding:.1rem .45rem;border-radius:4px;font-size:.65rem;font-weight:700;margin-bottom:.35rem}
+    .empty{text-align:center;padding:4rem 1rem;color:var(--text3)}
+    .empty-icon{font-size:3.5rem;margin-bottom:1rem}
+    .shop-btn{display:inline-block;margin-top:1.25rem;padding:.55rem 1.5rem;background:var(--accent);color:#0b0e14;border-radius:9px;font-weight:700;font-size:.85rem;text-decoration:none}
+    .added-ago{font-size:.65rem;color:var(--text3);margin-top:.3rem}
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="page-head">
+    <div>
+      <h1>❤️ My Wishlist</h1>
+      <p style="font-size:.82rem;color:var(--text2);margin-top:.2rem" id="wlCount"></p>
+    </div>
+    <button class="clear-btn" onclick="clearAll()">🗑️ Clear All</button>
+  </div>
+  <div class="grid" id="wlGrid"></div>
+</div>
+
+<script>
+function timeAgo(ts) {
+  const diff = Date.now() - ts;
+  const m = Math.floor(diff/60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return m+'m ago';
+  const h = Math.floor(m/60);
+  if (h < 24) return h+'h ago';
+  return Math.floor(h/24)+'d ago';
+}
+
+function render() {
+  const items = window.Wishlist.getAll();
+  const grid  = document.getElementById('wlGrid');
+  const count = document.getElementById('wlCount');
+  count.textContent = items.length
+    ? items.length + ' saved item' + (items.length!==1?'s':'')
+    : '';
+
+  if (!items.length) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <div class="empty-icon">🤍</div>
+      <div style="font-weight:700;font-size:1rem;margin-bottom:.4rem">Your wishlist is empty</div>
+      <div style="font-size:.82rem">Save products you love and find them here.</div>
+      <a class="shop-btn" href="index.html">Browse Marketplace →</a>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map(p => {
+    const url = p.type === 'hotdeal'
+      ? 'product.html?id='+p.id+(p.slug?'&slug='+encodeURIComponent(p.slug):'')
+      : 'product.html?id='+p.id+(p.slug?'&slug='+encodeURIComponent(p.slug):'');
+    const orderUrl = 'order.html?id='+p.id+(p.slug?'&slug='+encodeURIComponent(p.slug):'');
+    return `<div class="wl-card">
+      <div class="wl-img" onclick="location.href='${url}'">
+        ${p.image ? '<img src="'+p.image+'" alt="'+p.name+'"/>' : '📦'}
+      </div>
+      <div class="wl-body">
+        ${p.type==='hotdeal' ? '<span class="wl-badge-hotdeal">🔥 Hot Deal</span>' : ''}
+        <div class="wl-name" onclick="location.href='${url}'">${p.name}</div>
+        <div class="wl-shop">🏪 ${p.shopName||'SELA'}</div>
+        <div class="wl-price">KES ${Number(p.price||0).toLocaleString('en-KE')}</div>
+        <div class="wl-actions">
+          <button class="wl-order-btn" onclick="location.href='${orderUrl}'">🛒 Order</button>
+          <button class="wl-remove-btn" onclick="removeItem('${p.id}')">🗑️</button>
+        </div>
+        <div class="added-ago">Saved ${timeAgo(p.addedAt)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function removeItem(id) {
+  window.Wishlist.remove(id);
+  render();
+}
+
+function clearAll() {
+  if (!confirm('Clear your entire wishlist?')) return;
+  localStorage.removeItem('sela_wishlist');
+  window.Wishlist.getAll(); // reinit
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

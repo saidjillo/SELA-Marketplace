@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Try SELA — Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8fafc;--card:#fff;--border:#e2e8f0;--accent:#6366f1;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-lg:0 10px 40px rgba(0,0,0,.1)}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text)}
+a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:3rem 1.5rem 5rem}
+.hero{text-align:center;margin-bottom:3.5rem;padding:3rem 2rem;background:linear-gradient(135deg,#0f0c29,#302b63 50%,#24243e);border-radius:20px;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%239C92AC' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero h1{font-family:'Montserrat',sans-serif;font-size:2.4rem;font-weight:900;margin-bottom:.75rem;position:relative}
+.hero h1 span{background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1rem;color:rgba(255,255,255,.7);margin-bottom:2rem;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.75;position:relative}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.85rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,.4)}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.85rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;backdrop-filter:blur(8px)}
+.btn-outline:hover{background:rgba(255,255,255,.2)}
+.section-title{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:1.25rem}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;margin-bottom:3rem}
+.option-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:1.75rem;transition:all .2s;cursor:pointer}
+.option-card:hover{border-color:#a5b4fc;transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.option-card.highlight{border-color:#6366f1;background:linear-gradient(160deg,#f5f3ff,#ede9fe)}
+.option-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.1rem}
+.option-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;margin-bottom:.4rem}
+.option-desc{font-size:.84rem;color:var(--text2);line-height:1.65;margin-bottom:1.25rem}
+.option-btn{width:100%;padding:.72rem;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;border:none;cursor:pointer;transition:all .18s}
+.creds-box{background:#0f172a;border-radius:12px;padding:1.25rem;margin-top:1.25rem;font-family:'JetBrains Mono','Courier New',monospace;font-size:.78rem;color:#e2e8f0}
+.cred-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.cred-row:last-child{border-bottom:none}
+.cred-label{color:#94a3b8;font-size:.72rem}
+.cred-val{color:#818cf8;font-weight:700;letter-spacing:.02em}
+.copy-btn{background:rgba(99,102,241,.15);border:none;color:#a5b4fc;font-size:.65rem;padding:.18rem .55rem;border-radius:4px;cursor:pointer;font-family:inherit}
+.copy-btn:hover{background:rgba(99,102,241,.3)}
+.demo-badge{display:inline-flex;align-items:center;gap:.35rem;background:rgba(99,102,241,.15);color:#818cf8;font-size:.7rem;font-weight:700;padding:.25rem .75rem;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.65rem}
+.features-list{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.features-list li{display:flex;align-items:center;gap:.5rem;font-size:.83rem;color:var(--text2)}
+.features-list li::before{content:'✓';color:#22c55e;font-weight:800;flex-shrink:0}
+.note{background:#fef9c3;border:1px solid #fde68a;border-radius:10px;padding:.85rem 1.1rem;font-size:.8rem;color:#92400e;margin-top:1.25rem}
+.store-preview{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.store-preview-header{padding:1.25rem 1.5rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;display:flex;align-items:center;gap:.85rem}
+.store-preview-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.85rem;padding:1.25rem}
+.mini-prod{background:var(--bg);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.mini-prod-img{height:100px;background:#e0e7ff;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.mini-prod-body{padding:.65rem .75rem;font-size:.78rem}
+.mini-prod-name{font-weight:700;margin-bottom:.2rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-prod-price{color:#6366f1;font-weight:800;font-family:'Montserrat',sans-serif;font-size:.82rem}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);padding:.55rem 1.35rem;border-radius:20px;font-size:.82rem;font-weight:700;background:#22c55e;color:#fff;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<script src="header.js"></script>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Try SELA Marketplace <span>for Free</span></h1>
+    <p>No payment required. Launch a fully functional demo store instantly, or browse as a demo customer — no backend connection needed.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="launchDemoStore()">🚀 Open Demo Store</button>
+      <button class="btn-outline" onclick="loginAsDemo()">👤 Demo Account Login</button>
+    </div>
+  </div>
+
+  <div class="section-title">Choose how to explore</div>
+  <div class="options-grid">
+
+    <!-- Option 1: Demo Store Preview -->
+    <div class="option-card highlight">
+      <div class="demo-badge">✨ No backend needed</div>
+      <div class="option-icon" style="background:#ede9fe">🏪</div>
+      <div class="option-title">Browse Demo Store</div>
+      <div class="option-desc">Explore TechZone Nairobi — a fully populated sample store with 20 products, 3 branches, and all features. Opens directly in your browser.</div>
+      <ul class="features-list" style="margin-bottom:1.25rem">
+        <li>Products, categories & branches</li>
+        <li>WhatsApp ordering buttons</li>
+        <li>Seller profile page</li>
+        <li>Social sharing</li>
+      </ul>
+      <button class="option-btn" onclick="launchDemoStore()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff">🏪 Open Demo Store →</button>
+    </div>
+
+    <!-- Option 2: Demo Dashboard -->
+    <div class="option-card">
+      <div class="option-icon" style="background:#dcfce7">📊</div>
+      <div class="option-title">Demo Shop Dashboard</div>
+      <div class="option-desc">See the full owner dashboard — manage products, inventory, branches, staff, and settings. Requires backend to be running.</div>
+      <ul class="features-list" style="margin-bottom:1.25rem">
+        <li>Full product CRUD</li>
+        <li>Inventory & PDF export</li>
+        <li>Branch & staff management</li>
+        <li>Subscription panel</li>
+      </ul>
+      <button class="option-btn" onclick="loginAsDemo()" style="background:#0f172a;color:#e2e8f0">📊 Login & Open Dashboard →</button>
+      <div class="creds-box">
+        <div class="cred-row"><span class="cred-label">Email</span><span class="cred-val">demo@sela.co.ke</span><button class="copy-btn" onclick="cp('demo@sela.co.ke')">Copy</button></div>
+        <div class="cred-row"><span class="cred-label">Password</span><span class="cred-val">Demo@2025!</span><button class="copy-btn" onclick="cp('Demo@2025!')">Copy</button></div>
+      </div>
+    </div>
+
+    <!-- Option 3: Admin -->
+    <div class="option-card">
+      <div class="option-icon" style="background:#fef9c3">🛡️</div>
+      <div class="option-title">Admin Dashboard</div>
+      <div class="option-desc">Access the SELA admin panel to manage listings, orders, hot deals, blog posts, and more. Requires backend.</div>
+      <ul class="features-list" style="margin-bottom:1.25rem">
+        <li>Post & manage products</li>
+        <li>Manage orders & requests</li>
+        <li>Hot deals management</li>
+        <li>Blog & help center</li>
+      </ul>
+      <button class="option-btn" onclick="loginAsAdmin()" style="background:#92400e;color:#fff">🛡️ Login as Admin →</button>
+      <div class="creds-box">
+        <div class="cred-row"><span class="cred-label">Username</span><span class="cred-val">admin</span><button class="copy-btn" onclick="cp('admin')">Copy</button></div>
+        <div class="cred-row"><span class="cred-label">Password</span><span class="cred-val">TechDeals@2025!</span><button class="copy-btn" onclick="cp('TechDeals@2025!')">Copy</button></div>
+      </div>
+    </div>
+
+    <!-- Option 4: Create Your Own -->
+    <div class="option-card">
+      <div class="option-icon" style="background:#fce7f3">✨</div>
+      <div class="option-title">Create Your Own Shop</div>
+      <div class="option-desc">Set up your own store from scratch in 4 steps. Use demo mode to publish instantly without paying — perfect for testing.</div>
+      <ul class="features-list" style="margin-bottom:1.25rem">
+        <li>Custom name, logo & theme</li>
+        <li>Multiple branches</li>
+        <li>Publish free in demo mode</li>
+        <li>Upgrade to paid anytime</li>
+      </ul>
+      <button class="option-btn" onclick="window.location.href='shop-create.html'" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff">✨ Create Free Shop →</button>
+    </div>
+  </div>
+
+  <!-- Store Preview -->
+  <div class="section-title">Preview: TechZone Nairobi — SELA Vendor Demo</div>
+  <div class="store-preview">
+    <div class="store-preview-header">
+      <div style="width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">💻</div>
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.1rem">TechZone Nairobi</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.7);margin-top:.2rem">📍 Nairobi, Kenya · 3 Branches · 20 Products · ⭐ 4.7</div>
+      </div>
+      <button onclick="launchDemoStore()" style="margin-left:auto;padding:.55rem 1.25rem;background:#fff;color:#6366f1;border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer">Open Full Store →</button>
+    </div>
+    <div class="store-preview-products" id="previewGrid"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Demo store data (no backend needed) ───────────────────────────────────────
+const DEMO_PRODUCTS = [
+  { name:'MacBook Pro 14-inch M3', price:185000, sale:172000, onSale:true, cat:'Laptops', img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=70', emoji:'💻' },
+  { name:'iPhone 15 Pro 128GB', price:165000, cat:'Phones', img:'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&q=70', emoji:'📱' },
+  { name:'Samsung Galaxy S24 Ultra', price:155000, sale:139000, onSale:true, cat:'Phones', img:'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&q=70', emoji:'📱' },
+  { name:'Sony WH-1000XM5 Headphones', price:38000, sale:32999, onSale:true, cat:'Accessories', img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=70', emoji:'🎧' },
+  { name:'PlayStation 5 Disc Edition', price:78000, cat:'Gaming', img:'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&q=70', emoji:'🎮' },
+  { name:'Apple Watch Series 9', price:52000, sale:47500, onSale:true, cat:'Smart Devices', img:'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&q=70', emoji:'⌚' },
+  { name:'Dell XPS 15 OLED', price:145000, cat:'Laptops', img:'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&q=70', emoji:'💻' },
+  { name:'Apple AirPods Pro 2nd Gen', price:28000, cat:'Accessories', img:'https://images.unsplash.com/photo-1603351154351-5e2d0600bb77?w=400&q=70', emoji:'🎧' },
+];
+
+const DEMO_SHOP = {
+  slug: 'techzone-nairobi',
+  name: 'TechZone Nairobi',
+  themeColor: '#6366f1',
+  whatsapp: '254712345678',
+  phone: '+254 712 345 678',
+  email: 'info@techzone.co.ke',
+  location: 'Nairobi, Kenya',
+  description: "Kenya's premier ICT accessories store.",
+  branches: [
+    { name:'Moi Avenue (Main)', location:'Moi Avenue, CBD', phone:'+254 712 345 678', hours:'Mon-Sat 8am-7pm' },
+    { name:'Tom Mboya Branch', location:'Tom Mboya Street', phone:'+254 722 111 222', hours:'Mon-Sat 8:30am-6:30pm' },
+    { name:'Westlands — Sarit Centre', location:'Westlands, Nairobi', phone:'+254 733 444 555', hours:'Mon-Sun 9am-8pm' },
+  ],
+  categories: ['Laptops & Computers','Phones & Tablets','Accessories','Gaming','Networking','Smart Devices'],
+  products: DEMO_PRODUCTS,
+};
+
+// Store demo data in sessionStorage so shop-store.html can read it
+function saveDemoToSession() {
+  sessionStorage.setItem('demoShop', JSON.stringify(DEMO_SHOP));
+}
+
+// ── Preview grid ──────────────────────────────────────────────────────────────
+function renderPreview() {
+  const grid = document.getElementById('previewGrid');
+  grid.innerHTML = DEMO_PRODUCTS.slice(0,8).map(p => `
+    <div class="mini-prod" onclick="launchDemoStore()" style="cursor:pointer">
+      <div class="mini-prod-img">
+        <img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover" onerror="this.outerHTML='${p.emoji}'"/>
+      </div>
+      <div class="mini-prod-body">
+        <div class="mini-prod-name" title="${p.name}">${p.name}</div>
+        <div class="mini-prod-price">KES ${(p.onSale ? p.sale : p.price).toLocaleString()}</div>
+        ${p.onSale ? `<div style="font-size:.65rem;color:#ef4444;font-weight:700">Was KES ${p.price.toLocaleString()}</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+// ── Actions ───────────────────────────────────────────────────────────────────
+function launchDemoStore() {
+  saveDemoToSession();
+  window.location.href = 'shop-store.html?slug=techzone-nairobi&demo=1';
+}
+
+function loginAsDemo() {
+  // Set demo user in localStorage — works without backend
+  const demoUser = {
+    id: 'demo-user-001',
+    firstName: 'Demo',
+    lastName: 'Owner',
+    name: 'Demo Owner',
+    email: 'demo@sela.co.ke',
+    phone: '+254712345678',
+    isVerified: true,
+  };
+  localStorage.setItem('ac_user_token', 'demo-token-' + Date.now());
+  localStorage.setItem('ac_user', JSON.stringify(demoUser));
+  toast('Demo account activated! Redirecting…');
+  setTimeout(() => {
+    // Try to go to dashboard; if backend offline it will show a friendly message
+    window.location.href = 'shop-dashboard.html';
+  }, 800);
+}
+
+function loginAsAdmin() {
+  window.location.href = 'auth.html?tab=login&hint=admin';
+}
+
+let _tt;
+function toast(msg, type='success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.background = type === 'error' ? '#ef4444' : '#22c55e';
+  el.classList.add('show');
+  clearTimeout(_tt);
+  _tt = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+function cp(text) {
+  navigator.clipboard.writeText(text).then(() => toast('Copied: ' + text));
+}
+
+renderPreview();
+</script>
+</body>
+</html>

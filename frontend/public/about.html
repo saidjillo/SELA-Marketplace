@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>About Us — SELA Kenya</title>
+<meta name="description" content="Learn about SELA — Kenya's trusted ICT accessories and digital transformation provider. 10 branches across Kenya serving businesses and individuals."/>
+<meta name="keywords" content="SELA Kenya, ICT company Mombasa, about us, digital transformation Kenya, tech accessories Kenya"/>
+<meta property="og:title" content="About SELA — Kenya's ICT Experts"/>
+<meta property="og:description" content="Dedicated to making the impossible possible. End-to-end digital solutions bridging innovation and operational excellence across Kenya."/>
+<meta property="og:type" content="website"/>
+<link rel="canonical" href="about.html"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='10'>🌐</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;
+  --card:#1a2035;--card2:#1f2740;--border:#252f47;
+  --accent:#00d4ff;--green:#00e676;--orange:#ff6b35;--red:#ff4757;--gold:#f59e0b;
+  --text:#e8edf5;--text2:#8a97b0;--text3:#5a6a8a;
+  --font-head:'Montserrat',sans-serif;--font-body:'Roboto',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-body)}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.4rem 1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:var(--text3)}
+.topbar a{color:var(--text3)}.topbar a:hover{color:var(--accent)}
+.topbar-wa{background:#25D366;color:#fff;padding:.2rem .75rem;border-radius:4px;font-size:.7rem;font-weight:700}
+
+/* ── HEADER ── */
+header{background:rgba(11,14,20,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 1.5rem}
+.header-inner{max-width:1300px;margin:0 auto;height:60px;display:flex;align-items:center;gap:1rem}
+.logo{font-family:var(--font-head);font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:.3rem}
+.logo-dot{color:var(--accent)}
+.logo-badge{font-size:.55rem;font-weight:700;background:var(--accent);color:var(--bg);padding:2px 5px;border-radius:3px;letter-spacing:.05em;align-self:flex-start;margin-top:4px}
+.header-nav{display:flex;gap:.25rem;align-items:center;margin-left:auto}
+.hn-link{padding:.4rem .7rem;border-radius:6px;font-size:.72rem;font-weight:600;color:var(--text2);background:none;border:none;transition:all .15s;font-family:var(--font-head)}
+.hn-link:hover{color:var(--text);background:var(--card)}
+.hn-link.active{color:var(--accent);background:rgba(0,212,255,.08)}
+.btn-wa-hdr{background:#25D366;color:#fff;padding:.4rem .9rem;border-radius:6px;font-size:.72rem;font-weight:700}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{background:var(--bg2);border-bottom:1px solid var(--border);padding:.5rem 1.5rem;font-size:.73rem;color:var(--text3)}
+.breadcrumb a{color:var(--text2);text-decoration:none}.breadcrumb a:hover{color:var(--accent)}
+
+/* ── ABOUT CSS (extracted from index.html) ── */
+    /* ══════════════════ ABOUT US PAGE ══════════════════ */
+    .about-hero{position:relative;overflow:hidden;padding:5rem 2rem 4rem;background:linear-gradient(135deg,#0b0e14 0%,#0d1520 40%,#111d2e 100%)}
+    .about-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(0,212,255,.07) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 10% 30%,rgba(0,230,118,.05) 0%,transparent 55%)}
+    .about-hero::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+    .about-hero-inner{max-width:1100px;margin:0 auto;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .about-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);padding:.3rem .85rem;border-radius:20px;margin-bottom:1.25rem}
+    .about-hero h1{font-family:var(--font-head);font-size:clamp(2rem,4vw,3.4rem);font-weight:800;line-height:1.08;margin-bottom:1.25rem}
+    .about-hero h1 em{font-style:normal;color:var(--accent)}
+    .about-hero-desc{font-size:1rem;line-height:1.8;color:var(--text2);margin-bottom:2rem}
+    .about-hero-cta{display:flex;gap:.75rem;flex-wrap:wrap}
+    .about-hero-visual{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .about-stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem;text-align:center;transition:all .3s}
+    .about-stat-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .about-stat-card:nth-child(2){margin-top:1.5rem}
+    .about-stat-card:nth-child(4){margin-top:1.5rem}
+    .asc-num{font-family:var(--font-head);font-size:2rem;font-weight:800;color:var(--accent);display:block;margin-bottom:.2rem}
+    .asc-label{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
+    .mission-strip{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 2rem}
+    .mission-strip-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1.25rem}
+    .mission-icon{font-size:2rem;flex-shrink:0}
+    .mission-text{font-size:1rem;line-height:1.8;color:var(--text2);font-style:italic}
+    .mission-text strong{color:var(--text);font-style:normal;font-weight:600}
+    .about-section{padding:4rem 2rem}
+    .about-section-inner{max-width:1100px;margin:0 auto}
+    .section-head{text-align:center;margin-bottom:3rem}
+    .section-label{display:inline-block;font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem}
+    .section-title{font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;line-height:1.2}
+    .section-sub{font-size:.93rem;color:var(--text2);margin-top:.75rem;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .value-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:all .3s;position:relative;overflow:hidden}
+    .value-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--green));opacity:0;transition:opacity .3s}
+    .value-card:hover{border-color:rgba(0,212,255,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+    .value-card:hover::before{opacity:1}
+    .value-icon{font-size:2.2rem;margin-bottom:1rem}
+    .value-name{font-family:var(--font-head);font-size:1.05rem;font-weight:700;margin-bottom:.6rem}
+    .value-desc{font-size:.85rem;color:var(--text2);line-height:1.7}
+    .solutions-bg{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .solutions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+    .solution-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:all .3s}
+    .solution-card:hover{border-color:rgba(0,212,255,.3);box-shadow:0 12px 32px rgba(0,0,0,.25);transform:translateY(-3px)}
+    .solution-header{display:flex;align-items:center;gap:.9rem;margin-bottom:1rem}
+    .solution-icon-wrap{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+    .solution-name{font-family:var(--font-head);font-size:1rem;font-weight:700}
+    .solution-desc{font-size:.83rem;color:var(--text2);line-height:1.7;margin-bottom:1rem}
+    .solution-bullets{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+    .solution-bullets li{font-size:.8rem;color:var(--text3);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
+    .solution-bullets li::before{content:'→';color:var(--accent);flex-shrink:0;font-size:.75rem;margin-top:.05rem}
+    .ic-blue{background:rgba(0,212,255,.12)}.ic-green{background:rgba(0,230,118,.12)}
+    .ic-orange{background:rgba(255,107,53,.12)}.ic-purple{background:rgba(168,85,247,.12)}
+    .ic-teal{background:rgba(20,184,166,.12)}.ic-rose{background:rgba(251,113,133,.12)}
+    .ic-amber{background:rgba(251,191,36,.12)}.ic-sky{background:rgba(56,189,248,.12)}
+    .contact-section{padding:4rem 2rem}
+    .contact-section-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+    .contact-big-title{font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:1rem}
+    .contact-big-title em{font-style:normal;color:var(--accent)}
+    .contact-intro{font-size:.95rem;color:var(--text2);line-height:1.8;margin-bottom:2rem}
+    .contact-detail-list{display:flex;flex-direction:column;gap:1.25rem}
+    .contact-detail-item{display:flex;align-items:flex-start;gap:1rem}
+    .cdi-icon{width:44px;height:44px;border-radius:10px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+    .cdi-label{font-size:.72rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem}
+    .cdi-value{font-size:.92rem;color:var(--text)}
+    .cdi-value a{color:var(--accent);text-decoration:none}.cdi-value a:hover{text-decoration:underline}
+    .contact-cta-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:2.5rem;position:relative;overflow:hidden}
+    .contact-cta-box::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(0,212,255,.08),transparent 70%);border-radius:50%}
+    .cta-box-title{font-family:var(--font-head);font-size:1.3rem;font-weight:700;margin-bottom:.75rem}
+    .cta-box-desc{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:1.75rem}
+    .cta-box-actions{display:flex;flex-direction:column;gap:.75rem}
+    .cta-link{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.25rem;border-radius:10px;text-decoration:none;font-weight:600;font-size:.9rem;transition:all .2s}
+    .cta-link:hover{transform:translateY(-1px)}
+    .cta-wa-btn{background:#25D366;color:#fff}.cta-wa-btn:hover{background:#1da851}
+    .cta-email-btn{background:var(--card2);color:var(--text2);border:1px solid var(--border)}.cta-email-btn:hover{border-color:var(--accent);color:var(--text)}
+    .cta-call-btn{background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.2)}.cta-call-btn:hover{background:rgba(0,212,255,.18)}
+    .pride-banner{background:linear-gradient(135deg,rgba(0,212,255,.05),rgba(0,230,118,.04));border-top:1px solid var(--border);padding:3rem 2rem;text-align:center}
+    .pride-banner-inner{max-width:600px;margin:0 auto}
+    .pride-flag{font-size:2.5rem;margin-bottom:.75rem}
+    .pride-text{font-family:var(--font-head);font-size:1.3rem;font-weight:800;margin-bottom:.6rem}
+    .pride-sub{font-size:.9rem;color:var(--text2);line-height:1.75}
+    @media(max-width:900px){
+      .about-hero-inner{grid-template-columns:1fr}
+      .about-hero-visual{grid-template-columns:repeat(4,1fr)}
+      .about-stat-card:nth-child(2),.about-stat-card:nth-child(4){margin-top:0}
+      .contact-section-inner{grid-template-columns:1fr}
+      .values-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:580px){
+      .values-grid{grid-template-columns:1fr}
+      .about-hero-visual{grid-template-columns:1fr 1fr}
+      .mission-strip-inner{flex-direction:column;text-align:center}
+    }
+
+/* ── Global shared buttons ── */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.5rem;border-radius:9px;font-family:var(--font-head);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .22s;border:none;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#0099bb);color:var(--bg)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,.3)}
+.btn-ghost{background:var(--card);border:1px solid var(--border);color:var(--text2)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── Global footer ── */
+.ac-footer{border-top:1px solid var(--border);padding:2.5rem 2rem 0;margin-top:4rem;background:var(--bg2)}
+.ac-footer-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.ac-footer-logo{font-family:var(--font-head);font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:.85rem}
+.ac-footer-dot{color:var(--accent)}
+.ac-footer-brand p{font-size:.83rem;color:var(--text3);line-height:1.75;max-width:280px}
+.ac-footer-col h4{font-family:var(--font-head);font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.9rem}
+.ac-footer-col ul{list-style:none;padding:0;margin:0}
+.ac-footer-col ul li{margin-bottom:.5rem}
+.ac-footer-col ul li a{color:var(--text3);font-size:.81rem;text-decoration:none;transition:color .2s}
+.ac-footer-col ul li a:hover{color:var(--accent)}
+.ac-footer-bottom{max-width:1300px;margin:0 auto;border-top:1px solid var(--border);padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;color:var(--text3);font-size:.78rem;flex-wrap:wrap;gap:.5rem}
+@media(max-width:768px){.topbar{display:none}.header-nav{display:none}.ac-footer-inner{grid-template-columns:1fr;gap:1.75rem}}
+
+/* ── header.js injects a sticky header — prevent content from hiding under it ── */
+body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(script):not(style):first-of-type {
+  scroll-margin-top: 180px;
+}
+
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+
+  <a href="https://wa.me/254700000000" class="topbar-wa" target="_blank">💬 WhatsApp</a>
+</div>
+
+<div class="breadcrumb">
+  <a href="index.html">🏠 Home</a> › <span style="color:var(--text)">About Us</span>
+</div>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="about-hero-inner">
+      <div>
+        <div class="about-eyebrow">🌍 Proudly African · Est. Mombasa, Kenya</div>
+        <h1>Enriching Communities<br/>Through <em>Technology</em></h1>
+        <p class="about-hero-desc">At SELA, we are dedicated to making the impossible possible. Our mission is to empower stakeholders with end-to-end digital solutions that bridge innovation and operational excellence — bringing our customers confidently into the future.</p>
+        <div class="about-hero-cta">
+          <a href="tel:+254700000000" class="btn btn-primary">📞 Call Us Now</a>
+          <button class="btn btn-ghost" onclick="document.getElementById('about-contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+        </div>
+      </div>
+      <div class="about-hero-visual">
+        <div class="about-stat-card">
+          <span class="asc-num">6+</span>
+          <span class="asc-label">Branches</span>
+        </div>
+        <div class="about-stat-card">
+          <span class="asc-num">8</span>
+          <span class="asc-label">Solution Areas</span>
+        </div>
+        <div class="about-stat-card">
+          <span class="asc-num">24/7</span>
+          <span class="asc-label">SOC Monitoring</span>
+        </div>
+        <div class="about-stat-card">
+          <span class="asc-num">100%</span>
+          <span class="asc-label">African Focus</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION STRIP -->
+  <div class="mission-strip">
+    <div class="mission-strip-inner">
+      <div class="mission-icon">🎯</div>
+      <p class="mission-text">"Our winning strategy is built on a foundation of <strong>operational excellence</strong>, <strong>customer insights</strong>, and <strong>next-generation talent</strong> — leveraging integrated ICT capabilities to drive transformation across strategic markets."</p>
+    </div>
+  </div>
+
+  <!-- VALUES -->
+  <section class="about-section">
+    <div class="about-section-inner">
+      <div class="section-head">
+        <div class="section-label">What Drives Us</div>
+        <h2 class="section-title">Our Core Values</h2>
+        <p class="section-sub">Three principles guide every decision, every product, and every partnership we make.</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">🤝</div>
+          <div class="value-name">Collaborative Innovation</div>
+          <p class="value-desc">We believe the best solutions emerge from working closely with our clients and partners — turning shared challenges into breakthrough opportunities through co-creation.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">⚡</div>
+          <div class="value-name">Agile Execution</div>
+          <p class="value-desc">We move fast without breaking things. Our agile approach means we adapt quickly to change, delivering reliable outcomes at pace — from ideation to deployment.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🏆</div>
+          <div class="value-name">Service Excellence</div>
+          <p class="value-desc">We hold ourselves to the highest standard of service. Every interaction — from helpdesk to boardroom — reflects our commitment to lasting value for our stakeholder communities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTIONS -->
+  <section class="about-section solutions-bg">
+    <div class="about-section-inner">
+      <div class="section-head">
+        <div class="section-label">What We Offer</div>
+        <h2 class="section-title">Our Solutions</h2>
+        <p class="section-sub">End-to-end digital capabilities designed to transform your business — from infrastructure to intelligence.</p>
+      </div>
+      <div class="solutions-grid">
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon-wrap ic-blue">🔄</div>
+            <div class="solution-name">Digital Transformation</div>
+          </div>
+          <p class="solution-desc">Using digital technologies to reimagine business processes, culture, and customer experiences to meet changing market requirements.</p>
+          <ul class="solution-bullets">
+            <li>Automation of Core Operations — minimal human intervention</li>
+            <li>Engineered Interactive Solutions (UI/UX) — intuitive design</li>
+            <li>Applied Intelligence & Analytics (BI) — data mining & benchmarking</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon-wrap ic-red">🛡️</div>
+            <div class="solution-name">Cyber Security</div>
+          </div>
+          <p class="solution-desc">Integrating, educating, and implementing security solutions from devices to software — with an effective 24/7 SOC to monitor threats.</p>
+          <ul class="solution-bullets">
+            <li>Threat Detection & Triage — real-time threat hunting</li>
+            <li>Log Management & Monitoring — post-incident forensics</li>
+            <li>Incident Response Services — structured reaction procedures</li>
+            <li>Malware Analysis & Forensics — targeted attack investigations</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon-wrap ic-orange">💻</div>
+            <div class="solution-name">Devices</div>
+          </div>
+          <p class="solution-desc">Supply, installation, and maintenance of a comprehensive range of technology hardware for any scale of operation.</p>
+          <ul class="solution-bullets">
+            <li>Handheld devices & computing hardware</li>
+            <li>Printing & imaging equipment</li>
+            <li>Networking, routing & switching devices</li>
+            <li>Security & authentication systems</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon-wrap ic-teal">📡</div>
+            <div class="solution-name">Network Connectivity</div>
+          </div>
+          <p class="solution-desc">Reliable connectivity between homes, offices, and beyond — connecting every part of your network with precision and security.</p>
+          <ul class="solution-bullets">
+            <li>Local Area Network (LAN) — close-proximity networking</li>
+            <li>Dial-Up Networks — TCP/IP over telephone lines</li>
+            <li>Virtual Private Network (VPN) — secure public tunneling</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon-wrap ic-purple">🏗️</div>
+            <div class="solution-name">Converged Infrastructure</div>
+          </div>
+          <p class="solution-desc">Computing, storage, networking, and virtualization brought together into a single, optimised solution for your organisation.</p>
+          <ul class="solution-bullets">
+            <li>Seamless LAN, WAN & wireless connectivity</li>
+            <li>Dial-up and VPN access options</li>
+            <li>Integrated storage & robust backup solutions</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon-wrap ic-green">📱</div>
+            <div class="solution-name">Software Applications</div>
+          </div>
+          <p class="solution-desc">Designing, deploying, and supporting custom software solutions — from idea validation through prototype, development, and testing.</p>
+          <ul class="solution-bullets">
+            <li>SaaS — custom-built platforms & Zoho integration</li>
+            <li>ERP — unified financials, supply chain, HR & operations</li>
+            <li>Agile processes ensuring perfect workflow fit</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon-wrap ic-amber">⚙️</div>
+            <div class="solution-name">Managed Services</div>
+          </div>
+          <p class="solution-desc">End-to-end IT operations outsourcing so you can focus on your core business while we handle the infrastructure.</p>
+          <ul class="solution-bullets">
+            <li>System monitoring & patch management</li>
+            <li>Helpdesk support — optimal uptime assured</li>
+            <li>Proactive performance management</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon-wrap ic-sky">☁️</div>
+            <div class="solution-name">Cloud Solutions</div>
+          </div>
+          <p class="solution-desc">From cloud strategy consulting to architecture design and migration — helping you leverage cloud to improve agility and accelerate innovation.</p>
+          <ul class="solution-bullets">
+            <li>Cloud strategy consulting & roadmapping</li>
+            <li>Architecture design & platform migration</li>
+            <li>Cost optimisation & continuous improvement</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="about-contact">
+    <div class="contact-section-inner">
+      <div>
+        <div class="section-label">Get In Touch</div>
+        <h2 class="contact-big-title">Ready to Transform<br/>Your <em>Business?</em></h2>
+        <p class="contact-intro">Whether you're looking for ICT accessories, enterprise solutions, or a strategic digital partnership — our team in Mombasa is ready to help. Reach out through any channel that works for you.</p>
+        <div class="contact-detail-list">
+          <div class="contact-detail-item">
+            <div class="cdi-icon">🏢</div>
+            <div>
+              <div class="cdi-label">Company</div>
+              <div class="cdi-value">SELA</div>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="cdi-icon">📍</div>
+            <div>
+              <div class="cdi-label">Location</div>
+              <div class="cdi-value">Mombasa, Kenya</div>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="cdi-icon">📞</div>
+            <div>
+              <div class="cdi-label">Phone</div>
+              <div class="cdi-value">
+                <a href="tel:+254700000000">+254 700 000 000</a><br/>
+                <a href="tel:+254700000000">+254 700 000 000</a>
+              </div>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="cdi-icon">✉️</div>
+            <div>
+              <div class="cdi-label">Email</div>
+              <div class="cdi-value"><a href="mailto:admin@sela.co.ke">admin@sela.co.ke</a></div>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="cdi-icon">🌐</div>
+            <div>
+              <div class="cdi-label">Expertise</div>
+              <div class="cdi-value">Digital Transformation & ICT Solutions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-cta-box">
+        <div class="cta-box-title">Let's Start a Conversation</div>
+        <p class="cta-box-desc">Our experts are available Mon–Sat, 8am–7pm. Send us a WhatsApp message, email us, or call directly — we respond fast.</p>
+        <div class="cta-box-actions">
+          <a href="https://wa.me/254700000000?text=Hello%20SELA%20Solutions!%20I%20would%20like%20to%20learn%20more%20about%20your%20services." class="cta-link cta-wa-btn" target="_blank">💬 Chat on WhatsApp</a>
+          <a href="mailto:admin@sela.co.ke" class="cta-link cta-email-btn">✉️ Send an Email</a>
+          <a href="tel:+254700000000" class="cta-link cta-call-btn">📞 Call +254 700 000 000</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFRICAN PRIDE BANNER -->
+  <div class="pride-banner">
+    <div class="pride-banner-inner">
+      <div class="pride-flag">🌍🇰🇪</div>
+      <div class="pride-text">Proudly African. Boldly Digital.</div>
+      <p class="pride-sub">We are focused on expanding our regional footprint across Africa — through integrated networks, infrastructure solutions, and a growing partnership ecosystem.</p>
+    </div>
+  </div>
+
+  <!-- Reuse the same footer from home -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo" onclick="showHome()" style="cursor:pointer">SELA<span class="logo-dot">.</span>Solutions</div>
+        <p>SELA — ICT accessories, digital transformation, printing, online services &amp; more. 6 branches across Kenya.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Our Branches</h4>
+        <ul>
+          <li><a href="#">SELA – Bamburi</a></li>
+          <li><a href="#">SELA – Mwembe Tayari</a></li>
+          <li><a href="#">SELA – Nakuru Town</a></li>
+          <li><a href="#">SELA – Eldoret</a></li>
+          <li><a href="#">SELA – Eastleigh Nairobi</a></li>
+          <li><a href="#">SELA – Westlands</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+          <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+          <li><a href="mailto:admin@sela.co.ke">✉️ admin@sela.co.ke</a></li>
+          <li><a href="https://wa.me/254700000000" target="_blank">💬 WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-inner" style="margin-bottom:0">
+      <div class="footer-bottom" style="grid-column:1/-1">
+        <span>© 2025 SELA · admin@sela.co.ke</span>
+        <span>Mombasa, Kenya 🇰🇪</span>
+      </div>
+    </div>
+  </footer>
+
+<footer class="ac-footer">
+  <div class="ac-footer-inner">
+    <div class="ac-footer-brand">
+      <div class="ac-footer-logo">SELA<span class="ac-footer-dot">.</span>Solutions</div>
+      <p>SELA — ICT accessories, digital transformation, printing, online services &amp; more. 10 branches across Kenya.</p>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Our Branches</h4>
+      <ul>
+        <li><a href="shop.html">SELA – Bamburi</a></li>
+        <li><a href="shop.html">SELA – Mwembe Tayari</a></li>
+        <li><a href="shop.html">SELA – Nakuru Town</a></li>
+        <li><a href="shop.html">SELA – Eldoret</a></li>
+        <li><a href="shop.html">SELA – Eastleigh Nairobi</a></li>
+        <li><a href="shop.html">SELA – Westlands</a></li>
+      </ul>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+        <li><a href="mailto:admin@sela.co.ke">✉️ admin@sela.co.ke</a></li>
+        <li><a href="https://wa.me/254700000000" target="_blank">💬 WhatsApp</a></li>
+        <li><a href="about.html">🏢 About Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ac-footer-bottom">
+    <span>© 2025 SELA · admin@sela.co.ke</span>
+    <span>Mombasa, Kenya 🇰🇪</span>
+  </div>
+</footer>
+
+<script src="notif-bell.js"></script>
+<script src="header.js"></script>
+</body>
+</html>

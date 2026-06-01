@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Services & Pricing — TechDeals KE · Aircoast Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;
+      --card:#1a2035;--card2:#1f2740;--border:#252f47;
+      --accent:#00d4ff;--green:#00e676;--orange:#ff6b35;--red:#ff4757;
+      --yellow:#f59e0b;--purple:#a855f7;--teal:#14b8a6;--rose:#fb7185;
+      --text:#e8edf5;--text2:#8a97b0;--text3:#5a6a8a;
+      --radius:14px;
+      --font-head:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+    /* ── Shared ── */
+    .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.1rem;border-radius:8px;font-family:var(--font-body);font-size:.88rem;font-weight:500;cursor:pointer;transition:all .2s;text-decoration:none;border:none}
+    .btn-primary{background:var(--accent);color:var(--bg)}.btn-primary:hover{background:#33ddff;transform:translateY(-1px)}
+    .btn-ghost{background:var(--card);color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--card2);color:var(--text)}
+    .section-label{display:inline-block;font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem}
+    .section-title{font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;line-height:1.2}
+
+    /* ── Header ── */
+    header{position:sticky;top:0;z-index:100;background:rgba(11,14,20,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
+    .header-inner{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px;gap:1.5rem}
+    .logo{font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:.5rem;text-decoration:none;cursor:pointer}
+    .logo-dot{color:var(--accent)}
+    .logo-badge{font-size:.6rem;font-weight:600;background:var(--accent);color:var(--bg);padding:2px 6px;border-radius:4px;letter-spacing:.05em;align-self:flex-start;margin-top:4px}
+    .nav-links{display:flex;align-items:center;gap:.5rem}
+    .nav-link{padding:.4rem .85rem;border-radius:7px;font-size:.84rem;font-weight:500;color:var(--text2);text-decoration:none;cursor:pointer;transition:all .2s;border:none;background:none;font-family:var(--font-body)}
+    .nav-link:hover{color:var(--text);background:var(--card)}
+    .nav-link.active{background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.2)}
+
+    /* ── Hero ── */
+    .page-hero{background:linear-gradient(135deg,#090c12,#0d1220,#0f1a2e);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem;position:relative;overflow:hidden;text-align:center}
+    .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(0,212,255,.06) 0%,transparent 60%)}
+    .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);padding:.3rem .85rem;border-radius:20px;margin-bottom:1.25rem}
+    .page-hero h1{font-family:var(--font-head);font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.1;margin-bottom:1rem;position:relative}
+    .page-hero h1 em{font-style:normal;color:var(--accent)}
+    .page-hero p{color:var(--text2);font-size:1rem;line-height:1.75;max-width:600px;margin:0 auto 2rem;position:relative}
+    .hero-cta-row{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;position:relative}
+
+    /* ── Layout ── */
+    .page-section{padding:4rem 2rem}
+    .page-inner{max-width:1200px;margin:0 auto}
+    .section-head{margin-bottom:2.5rem}
+    .section-sub{font-size:.93rem;color:var(--text2);margin-top:.5rem;line-height:1.7}
+
+    /* ── Service Category Tabs ── */
+    .service-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+    .svc-tab{padding:.4rem 1.1rem;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:var(--font-body)}
+    .svc-tab:hover{border-color:var(--accent);color:var(--accent)}
+    .svc-tab.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+
+    /* ── Services Grid ── */
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
+    .service-category-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .3s}
+    .service-category-card:hover{border-color:rgba(0,212,255,.3);box-shadow:0 10px 35px rgba(0,0,0,.3)}
+    .scc-header{padding:1.5rem 1.5rem 1rem;display:flex;align-items:center;gap:1rem;border-bottom:1px solid var(--border)}
+    .scc-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+    .scc-title{font-family:var(--font-head);font-size:1.05rem;font-weight:800}
+    .scc-sub{font-size:.75rem;color:var(--text3);margin-top:.15rem}
+    .scc-body{padding:1.25rem 1.5rem 1.5rem}
+    .scc-items{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .scc-item{display:flex;align-items:center;justify-content:space-between;padding:.55rem .75rem;border-radius:8px;background:var(--bg3);transition:background .2s}
+    .scc-item:hover{background:var(--card2)}
+    .scc-item-name{display:flex;align-items:center;gap:.6rem;font-size:.87rem;color:var(--text)}
+    .scc-item-icon{font-size:.95rem}
+    .scc-item-price{font-size:.78rem;font-weight:600;color:var(--accent);background:rgba(0,212,255,.08);padding:.18rem .55rem;border-radius:4px;white-space:nowrap;flex-shrink:0}
+    .scc-item-price.free{color:var(--green);background:rgba(0,230,118,.08)}
+    .scc-item-price.varies{color:var(--yellow);background:rgba(245,158,11,.08)}
+
+    /* Online Services special card with logos */
+    .online-logos{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+    .online-logo{width:44px;height:44px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:all .2s;cursor:default}
+    .online-logo:hover{border-color:var(--accent);transform:scale(1.05)}
+    .online-logo-label{font-size:.5rem;color:var(--text3);text-align:center;margin-top:.2rem;font-weight:600;letter-spacing:.03em}
+    .online-logo-wrap{display:flex;flex-direction:column;align-items:center;gap:.1rem}
+
+    /* ── Pricing Table ── */
+    .pricing-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .pricing-table-wrap{overflow-x:auto;margin-top:1.5rem}
+    .pricing-table{width:100%;border-collapse:collapse;font-size:.88rem}
+    .pricing-table th{background:var(--card2);padding:.85rem 1.25rem;text-align:left;font-family:var(--font-head);font-size:.78rem;font-weight:700;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;border-bottom:2px solid var(--border)}
+    .pricing-table td{padding:.85rem 1.25rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle}
+    .pricing-table tr:last-child td{border-bottom:none}
+    .pricing-table tr:hover td{background:rgba(0,212,255,.03)}
+    .pt-service{color:var(--text);font-weight:500}
+    .pt-category-badge{font-size:.65rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.18rem .5rem;border-radius:3px}
+    .pt-price{font-family:var(--font-head);font-size:.95rem;font-weight:700;color:var(--accent)}
+    .pt-price.cheap{color:var(--green)}
+    .pt-note{font-size:.75rem;color:var(--text3)}
+    .pricing-table tr.section-row td{background:var(--bg3);font-family:var(--font-head);font-size:.78rem;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.25rem;border-top:2px solid var(--border)}
+
+    /* ── Request Form ── */
+    .request-section{background:var(--bg)}
+    .request-grid{display:grid;grid-template-columns:1fr 400px;gap:3rem;align-items:start}
+    .request-intro h2{font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:.75rem}
+    .request-intro h2 em{font-style:normal;color:var(--accent)}
+    .request-intro p{font-size:.92rem;color:var(--text2);line-height:1.8;margin-bottom:1.5rem}
+    .request-features{list-style:none;display:flex;flex-direction:column;gap:.75rem}
+    .rf-item{display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:var(--text2)}
+    .rf-dot{width:24px;height:24px;border-radius:6px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+
+    /* Contact shortcuts */
+    .contact-shortcuts{margin-top:2rem;display:flex;flex-direction:column;gap:.75rem}
+    .contact-shortcut{display:flex;align-items:center;gap:.85rem;padding:1rem 1.25rem;background:var(--card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:all .2s}
+    .contact-shortcut:hover{border-color:var(--accent);transform:translateX(4px)}
+    .cs-icon{font-size:1.4rem}
+    .cs-label{font-size:.72rem;color:var(--text3);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+    .cs-value{font-size:.9rem;color:var(--text);font-weight:500}
+
+    /* Form card */
+    .request-form-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;position:sticky;top:90px}
+    .rfc-header{background:var(--bg3);padding:1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+    .rfc-header-icon{font-size:1.5rem}
+    .rfc-header h3{font-family:var(--font-head);font-size:1rem;font-weight:700}
+    .rfc-header p{font-size:.75rem;color:var(--text3);margin-top:.15rem}
+    .rfc-body{padding:1.5rem}
+    .form-group{margin-bottom:1rem}
+    .form-group label{display:block;font-size:.78rem;font-weight:500;color:var(--text2);margin-bottom:.35rem}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:.65rem .85rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:.88rem;outline:none;transition:border-color .2s}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+    .form-group textarea{resize:vertical;min-height:80px}
+    select option{background:var(--bg3)}
+    .form-group input[type=file]{padding:.5rem .75rem;cursor:pointer;font-size:.8rem;color:var(--text3)}
+    .form-group input[type=file]::file-selector-button{background:var(--card2);border:1px solid var(--border);color:var(--text2);padding:.3rem .7rem;border-radius:5px;font-size:.75rem;cursor:pointer;margin-right:.5rem;font-family:var(--font-body);transition:all .2s}
+    .form-group input[type=file]::file-selector-button:hover{border-color:var(--accent);color:var(--accent)}
+    .file-hint{font-size:.7rem;color:var(--text3);margin-top:.3rem}
+    .submit-btn{width:100%;padding:.85rem;font-size:.95rem;font-weight:700;border-radius:10px;cursor:pointer;border:none;font-family:var(--font-head);display:flex;align-items:center;justify-content:center;gap:.5rem;transition:all .25s;background:linear-gradient(135deg,var(--accent),#0099cc);color:var(--bg)}
+    .submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.3)}
+    .submit-btn:disabled{background:var(--bg3);color:var(--text3);cursor:not-allowed}
+    .form-success{display:none;text-align:center;padding:1.5rem}
+    .form-success.show{display:block}
+    .form-success-icon{font-size:3rem;margin-bottom:.75rem}
+    .form-success h4{font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:.5rem;color:var(--green)}
+    .form-success p{font-size:.85rem;color:var(--text2);line-height:1.7}
+
+    /* ── Footer ── */
+    footer{border-top:1px solid var(--border);padding:2.5rem 2rem;background:var(--bg2)}
+    .footer-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+    .footer-brand .logo{margin-bottom:1rem}
+    .footer-brand p{font-size:.85rem;color:var(--text3);line-height:1.7}
+    .footer-col h4{font-family:var(--font-head);font-size:.9rem;font-weight:700;margin-bottom:1rem}
+    .footer-col ul{list-style:none}
+    .footer-col ul li{margin-bottom:.5rem}
+    .footer-col ul li a{color:var(--text3);font-size:.82rem;text-decoration:none;transition:color .2s}.footer-col ul li a:hover{color:var(--accent)}
+    .footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;color:var(--text3);font-size:.8rem;max-width:1300px;margin:0 auto}
+
+    /* Toast */
+    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.5rem;font-size:.88rem;color:var(--text);z-index:999;transform:translateY(100px);opacity:0;transition:all .3s;display:flex;align-items:center;gap:.6rem;max-width:360px}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.success{border-left:3px solid var(--green)}
+    .toast.error{border-left:3px solid var(--red)}
+
+    /* Mobile menu toggle */
+    .menu-toggle{display:none;background:var(--card);border:1px solid var(--border);color:var(--text2);width:38px;height:38px;border-radius:8px;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem}
+
+    @media(max-width:1000px){
+      .request-grid{grid-template-columns:1fr}
+      .request-form-card{position:static}
+    }
+    @media(max-width:768px){
+      .services-grid{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr;gap:2rem}
+      .nav-links{display:none}
+      .menu-toggle{display:flex}
+      .nav-links.open{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:1rem 2rem;z-index:99}
+    }
+  
+/* ── Aircoast Global Footer ─────────────────────────────────────────────── */
+.ac-footer{border-top:1px solid var(--border,#252f47);padding:2.5rem 2rem 0;margin-top:4rem;background:var(--bg2,#111520);font-family:'Roboto',sans-serif}
+.ac-footer-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.ac-footer-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text,#e8edf5);margin-bottom:.85rem}
+.ac-footer-dot{color:var(--accent,#00d4ff)}
+.ac-footer-brand p{font-size:.83rem;color:var(--text3,#5a6a8a);line-height:1.75;max-width:280px}
+.ac-footer-col h4{font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;color:var(--text,#e8edf5);margin-bottom:.9rem;letter-spacing:.03em}
+.ac-footer-col ul{list-style:none;padding:0;margin:0}
+.ac-footer-col ul li{margin-bottom:.5rem}
+.ac-footer-col ul li a{color:var(--text3,#5a6a8a);font-size:.81rem;text-decoration:none;transition:color .2s}
+.ac-footer-col ul li a:hover{color:var(--accent,#00d4ff)}
+.ac-footer-bottom{max-width:1300px;margin:0 auto;border-top:1px solid var(--border,#252f47);padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;color:var(--text3,#5a6a8a);font-size:.78rem;flex-wrap:wrap;gap:.5rem}
+@media(max-width:768px){.ac-footer-inner{grid-template-columns:1fr;gap:1.75rem}.ac-footer-brand p{max-width:100%}}
+
+/* ── header.js injects a sticky header — prevent content from hiding under it ── */
+body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(script):not(style):first-of-type {
+  scroll-margin-top: 180px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ════════ HEADER ════════ -->
+
+<!-- ════════ HERO ════════ -->
+<section class="page-hero">
+  <div style="position:relative;max-width:700px;margin:0 auto">
+    <div class="hero-eyebrow">⚙️ Professional ICT Services</div>
+    <h1>Everything Your Business<br/>Needs — <em>One Place</em></h1>
+    <p>Printing, scanning, online government services, CV writing, software installation, networking setup and more. Quality service, fair prices, fast turnaround — right here in Mombasa.</p>
+    <div class="hero-cta-row">
+      <a href="#request-form" class="btn btn-primary">📋 Request a Service</a>
+      <a href="#pricing" class="btn btn-ghost">💰 View Pricing</a>
+      <a href="https://wa.me/254740169448?text=Hello!%20I%20need%20a%20service%20from%20TechDeals." target="_blank" class="btn btn-ghost" style="background:#25D366;color:#fff;border-color:#25D366">💬 WhatsApp Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SERVICES ════════ -->
+<section class="page-section" id="services">
+  <div class="page-inner">
+    <div class="section-head">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-sub">Click any service category to jump to pricing, or scroll down to book a service directly.</p>
+    </div>
+
+    <div class="service-tabs">
+      <button class="svc-tab active" onclick="filterServices('all',this)">🗂️ All Services</button>
+      <button class="svc-tab" onclick="filterServices('print',this)">🖨️ Printing</button>
+      <button class="svc-tab" onclick="filterServices('online',this)">🌐 Online Services</button>
+      <button class="svc-tab" onclick="filterServices('cv',this)">📄 CV & Jobs</button>
+      <button class="svc-tab" onclick="filterServices('ict',this)">💻 ICT Support</button>
+      <button class="svc-tab" onclick="filterServices('net',this)">📡 Networking</button>
+    </div>
+
+    <div class="services-grid" id="servicesGrid">
+
+      <!-- PRINTING & SCANNING -->
+      <div class="service-category-card" data-cat="print">
+        <div class="scc-header">
+          <div class="scc-icon-wrap" style="background:rgba(0,212,255,.12)">🖨️</div>
+          <div>
+            <div class="scc-title">Printing & Scanning</div>
+            <div class="scc-sub">Fast, quality print services</div>
+          </div>
+        </div>
+        <div class="scc-body">
+          <ul class="scc-items">
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">⬛</span> Black &amp; White Printing</span>
+              <span class="scc-item-price cheap">KES 10/page</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🎨</span> Coloured Printing</span>
+              <span class="scc-item-price">KES 20/page</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">📋</span> Photocopying</span>
+              <span class="scc-item-price cheap">KES 10/page</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🔍</span> Document Scanning</span>
+              <span class="scc-item-price cheap">KES 20/doc</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">📸</span> Passport Photo Printing</span>
+              <span class="scc-item-price">KES 100 (6 pcs)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ONLINE SERVICES -->
+      <div class="service-category-card" data-cat="online">
+        <div class="scc-header">
+          <div class="scc-icon-wrap" style="background:rgba(0,230,118,.12)">🌐</div>
+          <div>
+            <div class="scc-title">Online Government Services</div>
+            <div class="scc-sub">Professionally assisted e-services</div>
+          </div>
+        </div>
+        <div class="scc-body">
+          <!-- Logos row -->
+          <div class="online-logos">
+            <div class="online-logo-wrap"><div class="online-logo" title="Kenya Revenue Authority">🏛️</div><div class="online-logo-label">KRA</div></div>
+            <div class="online-logo-wrap"><div class="online-logo" title="eCitizen Portal">🇰🇪</div><div class="online-logo-label">eCitizen</div></div>
+            <div class="online-logo-wrap"><div class="online-logo" title="Higher Education Loans Board">🎓</div><div class="online-logo-label">HELB</div></div>
+            <div class="online-logo-wrap"><div class="online-logo" title="National Transport & Safety Authority">🚗</div><div class="online-logo-label">NTSA</div></div>
+            <div class="online-logo-wrap"><div class="online-logo" title="Immigration Department">✈️</div><div class="online-logo-label">Passport</div></div>
+            <div class="online-logo-wrap"><div class="online-logo" title="Kenya Universities & Colleges Placement">📚</div><div class="online-logo-label">KUCCPS</div></div>
+          </div>
+          <ul class="scc-items">
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🏛️</span> KRA PIN Registration &amp; Returns</span>
+              <span class="scc-item-price varies">From KES 300</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🇰🇪</span> eCitizen Services</span>
+              <span class="scc-item-price varies">From KES 200</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🎓</span> HELB Application</span>
+              <span class="scc-item-price varies">From KES 300</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🚗</span> NTSA Services</span>
+              <span class="scc-item-price varies">From KES 200</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">✈️</span> Passport Application</span>
+              <span class="scc-item-price varies">From KES 500</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">📚</span> KUCCPS Revision</span>
+              <span class="scc-item-price varies">From KES 300</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CV & JOB SERVICES -->
+      <div class="service-category-card" data-cat="cv">
+        <div class="scc-header">
+          <div class="scc-icon-wrap" style="background:rgba(168,85,247,.12)">📄</div>
+          <div>
+            <div class="scc-title">CV &amp; Job Services</div>
+            <div class="scc-sub">Professional career documents</div>
+          </div>
+        </div>
+        <div class="scc-body">
+          <ul class="scc-items">
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">✍️</span> Professional CV Writing</span>
+              <span class="scc-item-price varies">From KES 500</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">📝</span> Cover Letter Writing</span>
+              <span class="scc-item-price varies">From KES 300</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">📊</span> Attachment / Internship Report</span>
+              <span class="scc-item-price varies">From KES 500</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">⌨️</span> Typing &amp; Formatting</span>
+              <span class="scc-item-price cheap">KES 30/page</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🏅</span> Certificate Editing</span>
+              <span class="scc-item-price varies">From KES 200</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ICT SERVICES -->
+      <div class="service-category-card" data-cat="ict">
+        <div class="scc-header">
+          <div class="scc-icon-wrap" style="background:rgba(255,107,53,.12)">💻</div>
+          <div>
+            <div class="scc-title">ICT Support Services</div>
+            <div class="scc-sub">Hardware, software &amp; device repair</div>
+          </div>
+        </div>
+        <div class="scc-body">
+          <ul class="scc-items">
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">⚙️</span> Software Installation</span>
+              <span class="scc-item-price cheap">From KES 200</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🪟</span> Windows Installation</span>
+              <span class="scc-item-price">From KES 500</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🦠</span> Virus &amp; Malware Removal</span>
+              <span class="scc-item-price">From KES 500</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🖥️</span> Laptop Formatting</span>
+              <span class="scc-item-price">From KES 800</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">📱</span> Phone Flashing / FRP Removal</span>
+              <span class="scc-item-price varies">From KES 500</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- NETWORKING -->
+      <div class="service-category-card" data-cat="net">
+        <div class="scc-header">
+          <div class="scc-icon-wrap" style="background:rgba(20,184,166,.12)">📡</div>
+          <div>
+            <div class="scc-title">Internet &amp; Networking</div>
+            <div class="scc-sub">WiFi, hotspot, CCTV &amp; more</div>
+          </div>
+        </div>
+        <div class="scc-body">
+          <ul class="scc-items">
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">📶</span> WiFi Installation &amp; Setup</span>
+              <span class="scc-item-price varies">From KES 1,500</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🔧</span> Router Configuration</span>
+              <span class="scc-item-price">From KES 500</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🔥</span> MikroTik Hotspot Setup</span>
+              <span class="scc-item-price varies">From KES 2,000</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">📹</span> CCTV Installation</span>
+              <span class="scc-item-price varies">From KES 5,000</span>
+            </li>
+            <li class="scc-item">
+              <span class="scc-item-name"><span class="scc-item-icon">🌐</span> LAN / Office Network Setup</span>
+              <span class="scc-item-price varies">Quote on request</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- end services-grid -->
+  </div>
+</section>
+
+<!-- ════════ PRICING TABLE ════════ -->
+<section class="page-section pricing-section" id="pricing">
+  <div class="page-inner">
+    <div class="section-head">
+      <div class="section-label">Transparent Pricing</div>
+      <h2 class="section-title">Complete Price List</h2>
+      <p class="section-sub">All prices are in Kenyan Shillings (KES). Prices may vary based on complexity and urgency. Contact us for a custom quote.</p>
+    </div>
+    <div class="pricing-table-wrap">
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Category</th>
+            <th>Price (KES)</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="section-row"><td colspan="4">🖨️ PRINTING & SCANNING</td></tr>
+          <tr><td class="pt-service">Black &amp; White Printing</td><td><span class="pt-category-badge" style="background:rgba(0,212,255,.1);color:var(--accent)">Printing</span></td><td class="pt-price cheap">10/page</td><td class="pt-note">A4 size</td></tr>
+          <tr><td class="pt-service">Coloured Printing</td><td><span class="pt-category-badge" style="background:rgba(0,212,255,.1);color:var(--accent)">Printing</span></td><td class="pt-price">20/page</td><td class="pt-note">A4 size, full colour</td></tr>
+          <tr><td class="pt-service">Photocopying</td><td><span class="pt-category-badge" style="background:rgba(0,212,255,.1);color:var(--accent)">Printing</span></td><td class="pt-price cheap">10/page</td><td class="pt-note">B&amp;W only</td></tr>
+          <tr><td class="pt-service">Document Scanning</td><td><span class="pt-category-badge" style="background:rgba(0,212,255,.1);color:var(--accent)">Printing</span></td><td class="pt-price cheap">20/doc</td><td class="pt-note">Emailed as PDF</td></tr>
+          <tr><td class="pt-service">Passport Photo Printing</td><td><span class="pt-category-badge" style="background:rgba(0,212,255,.1);color:var(--accent)">Printing</span></td><td class="pt-price">100</td><td class="pt-note">6 passport-size prints</td></tr>
+
+          <tr class="section-row"><td colspan="4">🌐 ONLINE GOVERNMENT SERVICES</td></tr>
+          <tr><td class="pt-service">KRA PIN Registration</td><td><span class="pt-category-badge" style="background:rgba(0,230,118,.1);color:var(--green)">Online</span></td><td class="pt-price">300</td><td class="pt-note">New PIN only</td></tr>
+          <tr><td class="pt-service">KRA Tax Returns (iTax)</td><td><span class="pt-category-badge" style="background:rgba(0,230,118,.1);color:var(--green)">Online</span></td><td class="pt-price">500</td><td class="pt-note">Nil or employment returns</td></tr>
+          <tr><td class="pt-service">eCitizen Services</td><td><span class="pt-category-badge" style="background:rgba(0,230,118,.1);color:var(--green)">Online</span></td><td class="pt-price">200+</td><td class="pt-note">Varies by service type</td></tr>
+          <tr><td class="pt-service">HELB Application</td><td><span class="pt-category-badge" style="background:rgba(0,230,118,.1);color:var(--green)">Online</span></td><td class="pt-price">300</td><td class="pt-note">New &amp; continuing</td></tr>
+          <tr><td class="pt-service">NTSA Services (DL, PSV, etc.)</td><td><span class="pt-category-badge" style="background:rgba(0,230,118,.1);color:var(--green)">Online</span></td><td class="pt-price">200+</td><td class="pt-note">Varies by service</td></tr>
+          <tr><td class="pt-service">Passport Application / Renewal</td><td><span class="pt-category-badge" style="background:rgba(0,230,118,.1);color:var(--green)">Online</span></td><td class="pt-price">500</td><td class="pt-note">Form filling &amp; submission</td></tr>
+          <tr><td class="pt-service">KUCCPS Course Revision</td><td><span class="pt-category-badge" style="background:rgba(0,230,118,.1);color:var(--green)">Online</span></td><td class="pt-price">300</td><td class="pt-note">Per revision window</td></tr>
+
+          <tr class="section-row"><td colspan="4">📄 CV & JOB SERVICES</td></tr>
+          <tr><td class="pt-service">Professional CV Writing</td><td><span class="pt-category-badge" style="background:rgba(168,85,247,.1);color:var(--purple)">CV</span></td><td class="pt-price">500 – 1,500</td><td class="pt-note">Based on experience level</td></tr>
+          <tr><td class="pt-service">Cover Letter Writing</td><td><span class="pt-category-badge" style="background:rgba(168,85,247,.1);color:var(--purple)">CV</span></td><td class="pt-price">300</td><td class="pt-note">Tailored per job</td></tr>
+          <tr><td class="pt-service">Attachment / Internship Report</td><td><span class="pt-category-badge" style="background:rgba(168,85,247,.1);color:var(--purple)">CV</span></td><td class="pt-price">500+</td><td class="pt-note">Based on pages</td></tr>
+          <tr><td class="pt-service">Typing &amp; Formatting</td><td><span class="pt-category-badge" style="background:rgba(168,85,247,.1);color:var(--purple)">CV</span></td><td class="pt-price cheap">30/page</td><td class="pt-note">Handwritten or rough draft</td></tr>
+          <tr><td class="pt-service">Certificate Editing</td><td><span class="pt-category-badge" style="background:rgba(168,85,247,.1);color:var(--purple)">CV</span></td><td class="pt-price">200+</td><td class="pt-note">Design &amp; text corrections</td></tr>
+
+          <tr class="section-row"><td colspan="4">💻 ICT SUPPORT SERVICES</td></tr>
+          <tr><td class="pt-service">Software Installation</td><td><span class="pt-category-badge" style="background:rgba(255,107,53,.1);color:var(--orange)">ICT</span></td><td class="pt-price cheap">200+</td><td class="pt-note">Per software title</td></tr>
+          <tr><td class="pt-service">Windows OS Installation</td><td><span class="pt-category-badge" style="background:rgba(255,107,53,.1);color:var(--orange)">ICT</span></td><td class="pt-price">500 – 800</td><td class="pt-note">Windows 10 / 11</td></tr>
+          <tr><td class="pt-service">Virus &amp; Malware Removal</td><td><span class="pt-category-badge" style="background:rgba(255,107,53,.1);color:var(--orange)">ICT</span></td><td class="pt-price">500</td><td class="pt-note">Full system scan &amp; clean</td></tr>
+          <tr><td class="pt-service">Laptop Formatting</td><td><span class="pt-category-badge" style="background:rgba(255,107,53,.1);color:var(--orange)">ICT</span></td><td class="pt-price">800</td><td class="pt-note">Includes driver setup</td></tr>
+          <tr><td class="pt-service">Phone Flashing / FRP Removal</td><td><span class="pt-category-badge" style="background:rgba(255,107,53,.1);color:var(--orange)">ICT</span></td><td class="pt-price">500+</td><td class="pt-note">Depends on phone model</td></tr>
+
+          <tr class="section-row"><td colspan="4">📡 INTERNET & NETWORKING</td></tr>
+          <tr><td class="pt-service">WiFi Installation &amp; Setup</td><td><span class="pt-category-badge" style="background:rgba(20,184,166,.1);color:var(--teal)">Network</span></td><td class="pt-price">1,500+</td><td class="pt-note">Router + cable + config</td></tr>
+          <tr><td class="pt-service">Router Configuration</td><td><span class="pt-category-badge" style="background:rgba(20,184,166,.1);color:var(--teal)">Network</span></td><td class="pt-price">500</td><td class="pt-note">Any router brand</td></tr>
+          <tr><td class="pt-service">MikroTik Hotspot Setup</td><td><span class="pt-category-badge" style="background:rgba(20,184,166,.1);color:var(--teal)">Network</span></td><td class="pt-price">2,000+</td><td class="pt-note">Business hotspot with billing</td></tr>
+          <tr><td class="pt-service">CCTV Installation</td><td><span class="pt-category-badge" style="background:rgba(20,184,166,.1);color:var(--teal)">Network</span></td><td class="pt-price">5,000+</td><td class="pt-note">Per camera, includes cabling</td></tr>
+          <tr><td class="pt-service">LAN / Office Network</td><td><span class="pt-category-badge" style="background:rgba(20,184,166,.1);color:var(--teal)">Network</span></td><td class="pt-price">Quote</td><td class="pt-note">Contact us for survey</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ REQUEST FORM ════════ -->
+<section class="page-section request-section" id="request-form">
+  <div class="page-inner">
+    <div class="request-grid">
+      <!-- Left info -->
+      <div class="request-intro">
+        <div class="section-label">Book a Service</div>
+        <h2>Request a Service<br/>or <em>Upload Documents</em></h2>
+        <p>Fill in the form and we'll get back to you within 30 minutes during business hours. You can also upload documents for CV writing, printing, or online service processing — they'll be sent directly to our team.</p>
+        <ul class="request-features">
+          <li class="rf-item"><div class="rf-dot">⚡</div>Fast response — usually under 30 minutes</li>
+          <li class="rf-item"><div class="rf-dot">📎</div>Upload documents directly for processing</li>
+          <li class="rf-item"><div class="rf-dot">💬</div>We follow up via WhatsApp or call</li>
+          <li class="rf-item"><div class="rf-dot">🔒</div>Your files are handled with full confidentiality</li>
+          <li class="rf-item"><div class="rf-dot">🏪</div>Walk-in also welcome at any branch</li>
+        </ul>
+        <div class="contact-shortcuts">
+          <a href="https://wa.me/254740169448?text=Hello!%20I%20need%20a%20service." target="_blank" class="contact-shortcut">
+            <span class="cs-icon">💬</span>
+            <div><div class="cs-label">WhatsApp (Fastest)</div><div class="cs-value">+254 740 169 448</div></div>
+          </a>
+          <a href="tel:+254740169448" class="contact-shortcut">
+            <span class="cs-icon">📞</span>
+            <div><div class="cs-label">Call Us</div><div class="cs-value">+254 740 169 448 · +254 713 991 164</div></div>
+          </a>
+          <a href="mailto:umurjillo@gmail.com" class="contact-shortcut">
+            <span class="cs-icon">✉️</span>
+            <div><div class="cs-label">Email</div><div class="cs-value">umurjillo@gmail.com</div></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right form -->
+      <div class="request-form-card">
+        <div class="rfc-header">
+          <span class="rfc-header-icon">📋</span>
+          <div>
+            <h3>Service Request Form</h3>
+            <p>We'll contact you within 30 mins</p>
+          </div>
+        </div>
+        <div class="rfc-body">
+          <!-- Success message (hidden by default) -->
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">🎉</div>
+            <h4>Request Sent!</h4>
+            <p>We've received your request and will contact you via WhatsApp or phone within 30 minutes. Thank you!</p>
+            <button class="btn btn-ghost" style="margin-top:1rem;width:100%;justify-content:center" onclick="resetServiceForm()">Submit Another Request</button>
+          </div>
+
+          <!-- Form (shown by default) -->
+          <form id="serviceForm" onsubmit="submitServiceRequest(event)">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="sf-name" placeholder="e.g. John Otieno" required/>
+            </div>
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input type="tel" id="sf-phone" placeholder="e.g. 0712 345 678" required/>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="sf-email" placeholder="e.g. john@gmail.com"/>
+            </div>
+            <div class="form-group">
+              <label>Service Needed *</label>
+              <select id="sf-service" required>
+                <option value="">Select a service…</option>
+                <optgroup label="🖨️ Printing & Scanning">
+                  <option>Black &amp; White Printing</option>
+                  <option>Coloured Printing</option>
+                  <option>Photocopying</option>
+                  <option>Document Scanning</option>
+                  <option>Passport Photo Printing</option>
+                </optgroup>
+                <optgroup label="🌐 Online Government Services">
+                  <option>KRA PIN Registration</option>
+                  <option>KRA Tax Returns (iTax)</option>
+                  <option>eCitizen Services</option>
+                  <option>HELB Application</option>
+                  <option>NTSA Services</option>
+                  <option>Passport Application / Renewal</option>
+                  <option>KUCCPS Course Revision</option>
+                </optgroup>
+                <optgroup label="📄 CV & Job Services">
+                  <option>Professional CV Writing</option>
+                  <option>Cover Letter Writing</option>
+                  <option>Attachment / Internship Report</option>
+                  <option>Typing &amp; Formatting</option>
+                  <option>Certificate Editing</option>
+                </optgroup>
+                <optgroup label="💻 ICT Support">
+                  <option>Software Installation</option>
+                  <option>Windows OS Installation</option>
+                  <option>Virus &amp; Malware Removal</option>
+                  <option>Laptop Formatting</option>
+                  <option>Phone Flashing / FRP Removal</option>
+                </optgroup>
+                <optgroup label="📡 Networking">
+                  <option>WiFi Installation &amp; Setup</option>
+                  <option>Router Configuration</option>
+                  <option>MikroTik Hotspot Setup</option>
+                  <option>CCTV Installation</option>
+                  <option>LAN / Office Network Setup</option>
+                </optgroup>
+                <option value="Other / General Inquiry">Other / General Inquiry</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message / Details</label>
+              <textarea id="sf-message" placeholder="Describe what you need, e.g. 'I need a professional CV for an IT job application' or 'I need to file KRA returns for 2023'…"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Attach Document (optional)</label>
+              <input type="file" id="sf-file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt" onchange="handleFormFile(event)"/>
+              <div class="file-hint">PDF, Word, JPG or PNG · Max 10MB. Your file will be sent directly to our team via email.</div>
+              <div id="sf-file-preview" style="display:none;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:6px;font-size:.78rem;color:var(--green)"></div>
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span id="submitBtnText">📤 Send Request</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Service category filter ──
+function filterServices(cat, btn) {
+  document.querySelectorAll('.svc-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.service-category-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// ── File preview ──
+function handleFormFile(e) {
+  const file = e.target.files[0];
+  const preview = document.getElementById('sf-file-preview');
+  if (file) {
+    const sizeMB = (file.size / (1024*1024)).toFixed(2);
+    if (file.size > 10 * 1024 * 1024) {
+      showToast('❌ File too large — max 10MB', 'error');
+      e.target.value = '';
+      preview.style.display = 'none';
+      return;
+    }
+    preview.textContent = `📎 ${file.name} (${sizeMB} MB) — ready to send`;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+// ── Form submission ──
+// Sends a WhatsApp message AND opens email compose with the details.
+// The attached file is included in the email via mailto (file attach not supported by mailto,
+// so we send the details to email and note that file was attached separately via WhatsApp).
+async function submitServiceRequest(e) {
+  e.preventDefault();
+
+  const name    = document.getElementById('sf-name').value.trim();
+  const phone   = document.getElementById('sf-phone').value.trim();
+  const email   = document.getElementById('sf-email').value.trim();
+  const service = document.getElementById('sf-service').value;
+  const message = document.getElementById('sf-message').value.trim();
+  const fileEl  = document.getElementById('sf-file');
+  const file    = fileEl.files[0];
+
+  if (!name || !phone || !service) {
+    showToast('⚠️ Please fill in Name, Phone and Service', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  const btnText = document.getElementById('submitBtnText');
+  btn.disabled = true;
+  btnText.textContent = '⏳ Sending…';
+
+  // Build message strings
+  const waMsg = encodeURIComponent(
+    `🔔 *New Service Request — TechDeals KE*\n\n` +
+    `👤 *Name:* ${name}\n` +
+    `📞 *Phone:* ${phone}\n` +
+    `✉️ *Email:* ${email || 'Not provided'}\n` +
+    `⚙️ *Service:* ${service}\n` +
+    `📝 *Details:* ${message || 'No additional details'}\n` +
+    `📎 *File:* ${file ? file.name + ' (check email)' : 'None'}\n\n` +
+    `_Sent via TechDeals KE website_`
+  );
+
+  const emailSubject = encodeURIComponent(`Service Request: ${service} — ${name}`);
+  const emailBody = encodeURIComponent(
+    `New service request from TechDeals KE website\n\n` +
+    `Name: ${name}\n` +
+    `Phone: ${phone}\n` +
+    `Email: ${email || 'Not provided'}\n` +
+    `Service Needed: ${service}\n` +
+    `Details: ${message || 'No additional details'}\n` +
+    (file ? `Attached File: ${file.name} (${(file.size/1024).toFixed(0)} KB)\n` : '') +
+    `\nSent via TechDeals KE Services Page`
+  );
+
+  // Step 1: Open WhatsApp with message (primary contact)
+  window.open(`https://wa.me/254740169448?text=${waMsg}`, '_blank');
+
+  // Step 2: If there's a file, also open email client so file can be attached
+  if (file) {
+    setTimeout(() => {
+      window.location.href = `mailto:umurjillo@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+    }, 1200);
+  } else {
+    // Also open email for a copy
+    setTimeout(() => {
+      window.location.href = `mailto:umurjillo@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+    }, 1200);
+  }
+
+  // Show success
+  setTimeout(() => {
+    document.getElementById('serviceForm').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+    btn.disabled = false;
+    btnText.textContent = '📤 Send Request';
+  }, 800);
+}
+
+function resetServiceForm() {
+  document.getElementById('serviceForm').reset();
+  document.getElementById('serviceForm').style.display = 'block';
+  document.getElementById('formSuccess').classList.remove('show');
+  document.getElementById('sf-file-preview').style.display = 'none';
+}
+
+// ── Toast ──
+let toastTimer;
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+<script src="notif-bell.js"></script>
+<footer class="ac-footer">
+  <div class="ac-footer-inner">
+    <div class="ac-footer-brand">
+      <div class="ac-footer-logo">Aircoast<span class="ac-footer-dot">.</span>Solutions</div>
+      <p>Aircoast Solutions — ICT accessories, digital transformation, printing, online services &amp; more. 6 branches across Kenya.</p>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Our Branches</h4>
+      <ul>
+        <li><a href="shop.html">Aircoast Solutions – Bamburi</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Mwembe Tayari</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Nakuru Town</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Eldoret</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Eastleigh Nairobi</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Westlands</a></li>
+      </ul>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+254740169448">📞 +254 740 169 448</a></li>
+        <li><a href="tel:+254740169448">📞 +254 740 169 448</a></li>
+        <li><a href="mailto:umurjillo@gmail.com">✉️ umurjillo@gmail.com</a></li>
+        <li><a href="https://wa.me/254740169448" target="_blank">💬 WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ac-footer-bottom">
+    <span>© 2025 Aircoast Solutions · umurjillo@gmail.com</span>
+    <span>Mombasa, Kenya 🇰🇪</span>
+  </div>
+</footer>
+<script src="header.js"></script>
+</body>
+</html>

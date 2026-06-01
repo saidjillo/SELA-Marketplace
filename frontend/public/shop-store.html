@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title id="pageTitle">Shop — SELA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--accent:#6366f1;--bg:#f8fafc;--card:#fff;--border:#e2e8f0;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--radius:14px;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-lg:0 10px 40px rgba(0,0,0,.1)}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:inherit}
+/* Store nav */
+.store-nav{background:#fff;border-bottom:1px solid var(--border);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.store-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.1rem;display:flex;align-items:center;gap:.65rem}
+.store-logo img{height:36px;border-radius:6px;object-fit:contain}
+.store-nav-links{display:flex;gap:1.25rem;align-items:center}
+.store-nav-link{font-size:.82rem;font-weight:600;color:var(--text2);cursor:pointer;transition:color .18s}
+.store-nav-link:hover,.store-nav-link.active{color:var(--accent)}
+.store-nav-btn{padding:.45rem 1.1rem;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:700;transition:all .2s}
+.store-nav-btn:hover{transform:translateY(-1px)}
+/* Hero */
+.store-hero{min-height:380px;display:flex;align-items:flex-end;padding:0 2rem 2.5rem;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--accent),#8b5cf6)}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-image:none}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65),rgba(0,0,0,.2))}
+.hero-content{position:relative;z-index:1;max-width:1200px;margin:0 auto;width:100%}
+.hero-logo{width:72px;height:72px;border-radius:16px;border:3px solid #fff;object-fit:contain;background:#fff;margin-bottom:.85rem;display:block}
+.hero-name{font-family:'Montserrat',sans-serif;font-size:2.5rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:.35rem}
+.hero-desc{font-size:.92rem;color:rgba(255,255,255,.75);max-width:520px;line-height:1.65;margin-bottom:1rem}
+.hero-meta{display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center}
+.hero-meta-item{display:flex;align-items:center;gap:.35rem;font-size:.8rem;color:rgba(255,255,255,.75)}
+.social-btns{display:flex;gap:.5rem;flex-wrap:wrap}
+.social-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.4rem .85rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:8px;color:#fff;font-size:.76rem;font-weight:600;cursor:pointer;backdrop-filter:blur(8px);transition:all .18s;text-decoration:none}
+.social-btn:hover{background:rgba(255,255,255,.25)}
+/* Main layout */
+.store-wrap{max-width:1200px;margin:0 auto;padding:2rem 1.5rem 4rem;display:grid;grid-template-columns:240px 1fr;gap:2rem;align-items:start}
+@media(max-width:900px){.store-wrap{grid-template-columns:1fr}}
+/* Sidebar */
+.store-sidebar{position:sticky;top:80px}
+.sidebar-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.sb-title{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:.65rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.sb-cat-item{display:flex;align-items:center;gap:.55rem;padding:.45rem .55rem;border-radius:8px;font-size:.83rem;font-weight:600;color:var(--text2);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .18s}
+.sb-cat-item:hover{background:var(--bg);color:var(--text)}
+.sb-cat-item.active{background:#ede9fe;color:var(--accent)}
+.sb-cat-count{margin-left:auto;font-size:.68rem;background:var(--bg);padding:.12rem .45rem;border-radius:10px;color:var(--text3);font-weight:700}
+/* Branches in sidebar */
+.branch-item{padding:.65rem 0;border-bottom:1px solid var(--border);font-size:.8rem}
+.branch-item:last-child{border-bottom:none}
+.branch-name{font-weight:700;color:var(--text);margin-bottom:.2rem}
+.branch-detail{color:var(--text3);display:flex;align-items:center;gap:.3rem;margin-top:.18rem}
+/* Products */
+.products-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:all .2s;cursor:pointer}
+.product-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.product-img{height:180px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden;position:relative}
+.product-img img{width:100%;height:100%;object-fit:cover}
+.sale-badge{position:absolute;top:.65rem;left:.65rem;background:#ef4444;color:#fff;font-size:.6rem;font-weight:800;padding:.2rem .55rem;border-radius:20px;text-transform:uppercase;letter-spacing:.06em}
+.featured-badge{position:absolute;top:.65rem;right:.65rem;background:#f59e0b;color:#fff;font-size:.6rem;font-weight:800;padding:.2rem .55rem;border-radius:20px}
+.product-body{padding:.9rem}
+.product-name{font-weight:700;font-size:.88rem;margin-bottom:.4rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
+.product-cat{font-size:.68rem;color:var(--accent);font-weight:700;margin-bottom:.45rem}
+.product-price{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;color:var(--text)}
+.product-sale-price{font-size:.8rem;color:#ef4444;font-weight:700;margin-left:.4rem}
+.product-orig-price{font-size:.78rem;color:var(--text3);text-decoration:line-through}
+.product-actions{padding:.85rem;border-top:1px solid var(--border);display:flex;gap:.5rem}
+.btn-contact{flex:1;padding:.55rem;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;transition:all .2s}
+.btn-contact:hover{opacity:.9}
+.btn-wa{flex:1;padding:.55rem;background:#22c55e;color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;transition:all .2s}
+.btn-wa:hover{opacity:.9}
+/* Product detail modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem}
+.modal-overlay.open{display:flex}
+.prod-modal{background:var(--card);border-radius:20px;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.prod-modal-imgs{position:relative;height:300px;background:#f1f5f9;border-radius:20px 20px 0 0;overflow:hidden}
+.prod-modal-imgs img{width:100%;height:100%;object-fit:cover}
+.img-nav{position:absolute;bottom:.75rem;left:50%;transform:translateX(-50%);display:flex;gap:.35rem}
+.img-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;border:none;transition:all .18s}
+.img-dot.active{background:#fff;transform:scale(1.2)}
+.prod-modal-body{padding:1.5rem}
+.prod-modal-name{font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:.5rem}
+.prod-modal-price{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:900;color:var(--accent);margin:.75rem 0}
+.prod-modal-desc{font-size:.88rem;color:var(--text2);line-height:1.75;margin-bottom:1.25rem}
+/* Seller section */
+.seller-section{background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-top:1.25rem}
+.seller-section-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:.85rem}
+/* Share bar */
+.share-bar{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;box-shadow:var(--shadow)}
+.share-label{font-size:.78rem;font-weight:700;color:var(--text2)}
+/* Search */
+.search-box{display:flex;align-items:center;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s;box-shadow:var(--shadow);width:260px}
+.search-box:focus-within{border-color:var(--accent)}
+.search-box input{flex:1;padding:.6rem .85rem;background:none;border:none;outline:none;font-family:inherit;font-size:.85rem;color:var(--text)}
+.search-box button{padding:.6rem .85rem;background:var(--accent);color:#fff;border:none;font-size:.82rem;font-weight:700;cursor:pointer}
+/* Toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);padding:.55rem 1.35rem;border-radius:20px;font-size:.82rem;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;color:#fff;white-space:nowrap}
+.toast.show{opacity:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+.review-sort{padding:.28rem .7rem;border-radius:5px;font-size:.72rem;font-weight:700;cursor:pointer;border:1px solid var(--border,#e2e8f0);background:var(--bg,#f8fafc);color:var(--text2,#475569);transition:all .15s}
+.review-sort:hover{border-color:var(--accent,#6366f1);color:var(--accent,#6366f1)}
+.active-rs{border:2px solid var(--accent,#6366f1)!important;background:rgba(99,102,241,.08)!important;color:var(--accent,#6366f1)!important}
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+<script src="auth.js">
+// ══════════════════════════════════════════════════════════════════════════════
+// ORDER FORM
+// ══════════════════════════════════════════════════════════════════════════════
+let _orderProduct = null;
+let _orderQty = 1;
+let _orderType = 'pickup';
+
+function openOrderForm(p) {
+  _orderProduct = p;
+  _orderQty = 1;
+  _orderType = 'pickup';
+
+  // Fill product summary
+  const imgEl = document.getElementById('orderProductImg');
+  const emojiEl = document.getElementById('orderProductEmoji');
+  if (p.image) {
+    imgEl.src = p.image; imgEl.style.display = ''; emojiEl.style.display = 'none';
+  } else {
+    imgEl.style.display = 'none'; emojiEl.style.display = '';
+  }
+  document.getElementById('orderProductName').textContent = p.name;
+  document.getElementById('orderProductPrice').textContent = 'KES ' + Number(p.price).toLocaleString('en-KE');
+  document.getElementById('orderQtyDisplay').textContent = '1';
+  document.getElementById('orderFormShopName').textContent = shop?.name || '';
+  document.getElementById('orderAddress').value = '';
+  document.getElementById('orderName').value = '';
+  document.getElementById('orderPhone').value = '';
+  document.getElementById('orderNote').value = '';
+  updateOrderTotal();
+  setOrderType('pickup');
+  document.getElementById('orderFormOverlay').style.display = 'flex';
+}
+
+function closeOrderForm() {
+  document.getElementById('orderFormOverlay').style.display = 'none';
+}
+
+function setOrderType(type) {
+  _orderType = type;
+  const pickup   = document.getElementById('typePickup');
+  const delivery = document.getElementById('typeDelivery');
+  const addrWrap = document.getElementById('deliveryAddressWrap');
+  const theme    = shop?.themeColor || '#6366f1';
+  if (type === 'pickup') {
+    pickup.style.border   = '2px solid ' + theme; pickup.style.background   = 'rgba(99,102,241,.08)'; pickup.style.color   = theme;
+    delivery.style.border = '1px solid var(--border,#e2e8f0)'; delivery.style.background = 'var(--bg,#fff)'; delivery.style.color = 'var(--text2,#64748b)';
+    addrWrap.style.display = 'none';
+  } else {
+    delivery.style.border  = '2px solid ' + theme; delivery.style.background  = 'rgba(99,102,241,.08)'; delivery.style.color  = theme;
+    pickup.style.border    = '1px solid var(--border,#e2e8f0)'; pickup.style.background = 'var(--bg,#fff)'; pickup.style.color = 'var(--text2,#64748b)';
+    addrWrap.style.display = '';
+  }
+}
+
+function changeOrderQty(d) {
+  const max = _orderProduct?.stock || 999;
+  _orderQty = Math.max(1, Math.min(max, _orderQty + d));
+  document.getElementById('orderQtyDisplay').textContent = _orderQty;
+  updateOrderTotal();
+}
+
+function updateOrderTotal() {
+  const total = (_orderProduct?.price || 0) * _orderQty;
+  document.getElementById('orderTotalDisplay').textContent = 'KES ' + total.toLocaleString('en-KE');
+}
+
+async function submitOrder() {
+  const name  = document.getElementById('orderName').value.trim();
+  const phone = document.getElementById('orderPhone').value.trim();
+  const addr  = document.getElementById('orderAddress').value.trim();
+  const note  = document.getElementById('orderNote').value.trim();
+  const btn   = document.getElementById('orderSubmitBtn');
+
+  if (!name)  { alert('Please enter your name'); return; }
+  if (!phone) { alert('Please enter your phone number'); return; }
+  if (_orderType === 'delivery' && !addr) { alert('Please enter your delivery address'); return; }
+
+  btn.disabled = true; btn.textContent = '⏳ Placing order…';
+
+  try {
+    const shopId = shop?.id || shop?._id;
+    const r = await fetch(`${API}/shops/${shopId}/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: [{ productId: _orderProduct.id, name: _orderProduct.name, price: _orderProduct.price, qty: _orderQty, total: _orderProduct.price * _orderQty, image: _orderProduct.image || '' }],
+        customer: { name, phone, notes: note },
+        type: _orderType,
+        address: addr,
+      })
+    });
+    const j = await r.json().catch(() => ({}));
+    if (j.success) {
+      closeOrderForm();
+      showOrderConfirmation(j.data, name, phone);
+    } else {
+      alert(j.message || 'Failed to place order. Please try again.');
+    }
+  } catch {
+    alert('Cannot reach the store right now. Please try again.');
+  } finally {
+    btn.disabled = false; btn.textContent = '✅ Place Order';
+  }
+}
+
+function showOrderConfirmation(order, name, phone) {
+  document.getElementById('confirmOrderNo').textContent = 'Order #' + order.orderNo;
+  const typeMsg = _orderType === 'delivery' ? 'Your order will be delivered to your address.' : 'Your order will be ready for pickup at ' + (shop?.name || 'the store') + '.';
+  document.getElementById('confirmOrderMsg').innerHTML =
+    '<div style="margin-bottom:.4rem">👤 <strong>' + name + '</strong> · 📞 ' + phone + '</div>' +
+    '<div style="margin-bottom:.4rem">📦 ' + _orderProduct.name + ' × ' + _orderQty + ' — KES ' + (_orderProduct.price * _orderQty).toLocaleString('en-KE') + '</div>' +
+    '<div style="margin-bottom:.4rem">💳 Payment on ' + (_orderType === 'delivery' ? 'delivery' : 'pickup') + '</div>' +
+    '<div style="color:#16a34a;font-weight:700">✅ ' + typeMsg + '</div>';
+
+  // WhatsApp self-confirmation
+  const selfMsg = 'Hi, I just placed Order ' + order.orderNo + ' at ' + (shop?.name || 'the store') + '.
+
+Items: ' + _orderProduct.name + ' x' + _orderQty + '
+Total: KES ' + (_orderProduct.price * _orderQty).toLocaleString('en-KE') + '
+Type: ' + (_orderType === 'delivery' ? 'Delivery' : 'Pickup') + '
+
+Please confirm my order. Thank you!';
+  const waLinkEl = document.getElementById('confirmWaLink');
+  const waBtnEl  = document.getElementById('confirmWaBtn');
+  if (shop?.whatsapp) {
+    waLinkEl.href = 'https://wa.me/' + shop.whatsapp.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent(selfMsg);
+    waBtnEl.style.display = '';
+  } else {
+    waBtnEl.style.display = 'none';
+  }
+
+  document.getElementById('orderConfirmOverlay').style.display = 'flex';
+}
+
+function closeOrderConfirm() {
+  document.getElementById('orderConfirmOverlay').style.display = 'none';
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+// REVIEWS
+// ══════════════════════════════════════════════════════════════════════════════
+let _rvSort = 'newest';
+let _rvPage = 1;
+let _rvOrderId = null;
+let _rvOrderNo = null;
+let _rvRating  = 0;
+
+const RATING_LABELS = ['','Terrible','Poor','Average','Good','Excellent'];
+
+function starsHTML(rating, size='1rem') {
+  return [1,2,3,4,5].map(n =>
+    `<span style="font-size:${size};color:${n<=rating?'#f59e0b':'#cbd5e1'}">${n<=rating?'★':'☆'}</span>`
+  ).join('');
+}
+
+async function loadReviewsSummary() {
+  if (!shop) return;
+  const shopId = shop.id || shop._id;
+  try {
+    const r = await fetch(`${API}/shops/${shopId}/reviews/summary`);
+    const j = await r.json().catch(() => ({}));
+    if (!j.success) return;
+    const d = j.data;
+    const sumEl = document.getElementById('reviewsSummary');
+    const subEl = document.getElementById('reviewsSub');
+    if (subEl) subEl.textContent = d.total ? `${d.avg} ★ · ${d.total} review${d.total!==1?'s':''}` : 'No reviews yet — be the first!';
+    if (!d.total) return;
+    if (sumEl) sumEl.style.display = 'flex';
+    const avgEl = document.getElementById('avgRating');
+    const starsEl = document.getElementById('starsDisplay');
+    const totalEl = document.getElementById('totalReviews');
+    const bdEl   = document.getElementById('ratingBreakdown');
+    if (avgEl)   avgEl.textContent = d.avg.toFixed(1);
+    if (starsEl) starsEl.innerHTML = starsHTML(Math.round(d.avg), '1.2rem');
+    if (totalEl) totalEl.textContent = d.total + ' review' + (d.total!==1?'s':'');
+    if (bdEl) {
+      bdEl.innerHTML = [5,4,3,2,1].map(n => {
+        const cnt = d.breakdown[n] || 0;
+        const pct = d.total ? Math.round(cnt/d.total*100) : 0;
+        return `<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem;font-size:.78rem">
+          <span style="width:32px;text-align:right;color:var(--text3,#94a3b8)">${n}★</span>
+          <div style="flex:1;height:6px;background:var(--border,#e2e8f0);border-radius:3px;overflow:hidden">
+            <div style="height:100%;width:${pct}%;background:#f59e0b;border-radius:3px;transition:width .4s"></div>
+          </div>
+          <span style="width:28px;color:var(--text3,#94a3b8)">${cnt}</span>
+        </div>`;
+      }).join('');
+    }
+  } catch(e) { console.error('Reviews summary error:', e); }
+}
+
+async function loadReviews(sort) {
+  if (sort) {
+    _rvSort = sort; _rvPage = 1;
+    ['newest','highest','lowest'].forEach(s => {
+      const btn = document.getElementById('rs-'+s);
+      if (btn) { btn.classList.remove('active-rs'); }
+    });
+    const btn = document.getElementById('rs-'+sort);
+    if (btn) btn.classList.add('active-rs');
+  }
+  const shopId = shop?.id || shop?._id;
+  if (!shopId) return;
+  try {
+    const r = await fetch(`${API}/shops/${shopId}/reviews?page=${_rvPage}&limit=5&sort=${_rvSort}`);
+    const j = await r.json().catch(() => ({}));
+    if (!j.success) return;
+    renderReviews(j.data || []);
+    renderReviewsPagination(j.total||0, j.pages||1);
+  } catch(e) { console.error('Load reviews error:', e); }
+}
+
+function renderReviews(reviews) {
+  const list = document.getElementById('reviewsList');
+  if (!list) return;
+  if (!reviews.length) {
+    list.innerHTML = '<div style="text-align:center;padding:2.5rem;color:var(--text3,#94a3b8)"><div style="font-size:2rem;margin-bottom:.5rem">⭐</div><div style="font-weight:700;margin-bottom:.25rem">No reviews yet</div><div style="font-size:.82rem">Be the first to review this shop!</div></div>';
+    return;
+  }
+  list.innerHTML = reviews.map(rv => `
+    <div style="background:var(--card,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;padding:1.1rem 1.25rem">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">
+        <div>
+          <div style="font-weight:700;font-size:.9rem">${rv.customer?.name || 'Customer'}</div>
+          <div style="font-size:.75rem;color:var(--text3,#94a3b8)">${new Date(rv.createdAt).toLocaleDateString('en-KE',{dateStyle:'medium'})} · Order ${rv.orderNo}</div>
+        </div>
+        <div style="display:flex;gap:.1rem">${starsHTML(rv.rating, '1rem')}</div>
+      </div>
+      <p style="font-size:.85rem;color:var(--text2,#475569);line-height:1.65;margin:0 0 .65rem">${rv.comment}</p>
+      ${rv.vendorReply ? `
+        <div style="background:rgba(99,102,241,.04);border-left:3px solid var(--accent,#6366f1);padding:.6rem .85rem;border-radius:0 8px 8px 0;margin-top:.5rem">
+          <div style="font-size:.7rem;font-weight:700;color:var(--accent,#6366f1);margin-bottom:.25rem">🏪 Shop Reply</div>
+          <div style="font-size:.82rem;color:var(--text2,#475569);line-height:1.5">${rv.vendorReply}</div>
+          <div style="font-size:.68rem;color:var(--text3,#94a3b8);margin-top:.25rem">${new Date(rv.repliedAt).toLocaleDateString('en-KE',{dateStyle:'medium'})}</div>
+        </div>` : ''}
+    </div>`).join('');
+}
+
+function renderReviewsPagination(total, pages) {
+  const el = document.getElementById('reviewsPagination');
+  if (!el || pages <= 1) { if(el) el.innerHTML=''; return; }
+  el.innerHTML = Array.from({length:pages},(_,i)=>i+1).map(p =>
+    `<button onclick="_rvPage=${p};loadReviews()" style="padding:.3rem .65rem;border-radius:5px;border:1px solid ${p===_rvPage?'var(--accent,#6366f1)':'var(--border,#e2e8f0)'};background:${p===_rvPage?'rgba(99,102,241,.1)':'var(--bg,#f8fafc)'};color:${p===_rvPage?'var(--accent,#6366f1)':'var(--text2,#475569)'};cursor:pointer;font-size:.8rem">${p}</button>`
+  ).join('');
+}
+
+// ── Review form ───────────────────────────────────────────────────────────────
+function openReviewForm() {
+  _rvOrderId = null; _rvOrderNo = null; _rvRating = 0;
+  const el = id => document.getElementById(id);
+  el('rvOrderNo').value   = '';
+  el('rvPhone').value     = '';
+  el('rvComment').value   = '';
+  el('rvCharCount').textContent = '0/1000';
+  el('rvVerifyMsg').style.display = 'none';
+  el('reviewStep1').style.display = '';
+  el('reviewStep2').style.display = 'none';
+  el('reviewStep3').style.display = 'none';
+  renderStars();
+  el('reviewFormOverlay').style.display = 'flex';
+}
+function closeReviewForm() { document.getElementById('reviewFormOverlay').style.display = 'none'; }
+
+function setReviewRating(n) { _rvRating = n; renderStars(); }
+function hoverStars(n) {
+  [1,2,3,4,5].forEach(i => {
+    const btn = document.getElementById('rstar'+i);
+    if (btn) btn.textContent = i<=n ? '★' : '☆';
+  });
+  const lbl = document.getElementById('ratingLabel');
+  if (lbl) lbl.textContent = RATING_LABELS[n] || '';
+}
+function renderStars() {
+  [1,2,3,4,5].forEach(i => {
+    const btn = document.getElementById('rstar'+i);
+    if (btn) { btn.textContent = i<=_rvRating ? '★' : '☆'; btn.style.color = i<=_rvRating ? '#f59e0b' : '#cbd5e1'; }
+  });
+  const lbl = document.getElementById('ratingLabel');
+  if (lbl) lbl.textContent = _rvRating ? RATING_LABELS[_rvRating] : 'Click to rate';
+  document.getElementById('rvRating').value = _rvRating;
+}
+
+async function verifyOrderForReview() {
+  const orderNo = document.getElementById('rvOrderNo').value.trim().toUpperCase();
+  const phone   = document.getElementById('rvPhone').value.trim();
+  const msgEl   = document.getElementById('rvVerifyMsg');
+  const btn     = document.getElementById('rvVerifyBtn');
+  if (!orderNo || !phone) { alert('Please enter order number and phone'); return; }
+  btn.disabled = true; btn.textContent = '⏳ Verifying…';
+  try {
+    const shopId = shop?.id || shop?._id;
+    const r = await fetch(`${API}/shops/${shopId}/reviews/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderNo, phone })
+    });
+    const j = await r.json().catch(() => ({}));
+    if (j.success) {
+      _rvOrderId = j.data.orderId;
+      _rvOrderNo = j.data.orderNo;
+      document.getElementById('rvOrderConfirmed').textContent = '✅ Order ' + j.data.orderNo + ' verified — Hi, ' + j.data.customerName + '!';
+      document.getElementById('reviewStep1').style.display = 'none';
+      document.getElementById('reviewStep2').style.display = '';
+      renderStars();
+    } else {
+      msgEl.style.display = '';
+      msgEl.style.background = 'rgba(220,38,38,.06)';
+      msgEl.style.border = '1px solid rgba(220,38,38,.2)';
+      msgEl.style.color = '#dc2626';
+      msgEl.textContent = j.message || 'Verification failed';
+    }
+  } catch { alert('Cannot reach server'); }
+  finally { btn.disabled = false; btn.textContent = '🔍 Verify Order'; }
+}
+
+async function submitReview() {
+  const rating  = parseInt(document.getElementById('rvRating').value) || 0;
+  const comment = document.getElementById('rvComment').value.trim();
+  const btn     = document.getElementById('rvSubmitBtn');
+  if (!rating)   { alert('Please select a star rating'); return; }
+  if (!comment)  { alert('Please write a comment'); return; }
+  if (comment.length < 10) { alert('Review must be at least 10 characters'); return; }
+  btn.disabled = true; btn.textContent = '⏳ Submitting…';
+  try {
+    const shopId = shop?.id || shop?._id;
+    const r = await fetch(`${API}/shops/${shopId}/reviews`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId: _rvOrderId, orderNo: _rvOrderNo, rating, comment })
+    });
+    const j = await r.json().catch(() => ({}));
+    if (j.success) {
+      document.getElementById('reviewStep2').style.display = 'none';
+      document.getElementById('reviewStep3').style.display = '';
+      loadReviewsSummary();
+    } else alert(j.message || 'Failed to submit review');
+  } catch { alert('Cannot reach server'); }
+  finally { btn.disabled = false; btn.textContent = '⭐ Submit Review'; }
+}
+
+</script>
+<script src="header.js"></script>
+
+<nav class="store-nav" id="storeNav">
+  <div class="store-logo" id="storeNavLogo">🏪 Loading…</div>
+  <div class="store-nav-links">
+    <span class="store-nav-link active" onclick="scrollToProducts()">Products</span>
+    <span class="store-nav-link" onclick="document.getElementById('branchesSection').scrollIntoView({behavior:'smooth'})">Branches</span>
+    <span class="store-nav-link" onclick="window.location.href='shop-seller.html?slug='+slug">About Seller</span>
+  </div>
+  <button class="store-nav-btn" id="storeContactBtn">📞 Contact</button>
+</nav>
+
+<!-- Hero -->
+<!-- Back bar -->
+<div style="background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:.5rem 1.5rem;display:flex;align-items:center;gap:.75rem;font-size:.78rem;flex-wrap:wrap">
+  <a href="shop.html" style="display:flex;align-items:center;gap:.35rem;color:#6366f1;font-weight:600;text-decoration:none">
+    ← Browse All Stores
+  </a>
+  <span style="color:#cbd5e1">·</span>
+  <span id="breadcrumbShopName" style="color:#64748b;font-weight:600"></span>
+  <div style="margin-left:auto;display:flex;gap:.5rem" id="heroQuickLinks"></div>
+</div>
+
+<div class="store-hero" id="storeHero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content" style="max-width:1200px;margin:0 auto;width:100%;padding:0">
+    <img class="hero-logo" id="heroLogo" src="" alt="" style="display:none"/>
+    <div class="hero-name" id="heroName">Loading…</div>
+    <div class="hero-desc" id="heroDesc"></div>
+    <div class="hero-meta" id="heroMeta"></div>
+    <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
+      <div class="social-btns" id="socialBtns"></div>
+      <button onclick="shareStore()" class="social-btn" style="display:flex;align-items:center;gap:.35rem">🔗 Share Store</button>
+    </div>
+  </div>
+</div>
+
+<!-- M-Pesa + stats banner -->
+<div id="shopInfoBar" style="display:none;background:#fff;border-bottom:2px solid var(--border)">
+  <div style="max-width:1200px;margin:0 auto;padding:.65rem 1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+    <div id="shopMpesaBadge" style="display:none;align-items:center;gap:.5rem;background:rgba(22,163,74,.06);border:1px solid rgba(22,163,74,.2);border-radius:8px;padding:.4rem .85rem">
+      <span style="font-size:.85rem">📱</span>
+      <div>
+        <div id="shopMpesaType" style="font-size:.58rem;font-weight:800;text-transform:uppercase;color:#16a34a;letter-spacing:.06em">TILL NUMBER</div>
+        <div id="shopMpesaCode" style="font-size:.88rem;font-weight:900;color:#16a34a;line-height:1.2">—</div>
+        <div id="shopMpesaName" style="font-size:.65rem;color:#64748b;font-weight:600">—</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap" id="shopStatBadges"></div>
+    <div style="margin-left:auto;display:flex;gap:.5rem" id="shopQuickBtns"></div>
+  </div>
+</div>
+
+<!-- Category summary strip -->
+<div id="catStrip" style="background:#fff;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none">
+  <div id="catStripInner" style="display:flex;gap:0;min-width:max-content;padding:.5rem 2rem"></div>
+</div>
+
+<!-- Featured strip (hidden until products load) -->
+<div id="featuredStrip" style="display:none;background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:.85rem 1.5rem">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+      <div style="font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:800;color:#0f172a">⭐ Featured Products</div>
+      <button onclick="scrollToProducts()" style="font-size:.72rem;color:#6366f1;font-weight:600;background:none;border:none;cursor:pointer">View all →</button>
+    </div>
+    <div id="featuredRow" style="display:flex;gap:.75rem;overflow-x:auto;scrollbar-width:none;padding-bottom:.25rem"></div>
+  </div>
+</div>
+
+<div class="store-wrap">
+  <!-- Sidebar -->
+  <aside class="store-sidebar" id="storeSidebar">
+    <div class="sidebar-card">
+      <div class="sb-title">Categories</div>
+      <button class="sb-cat-item active" onclick="filterCat('',this)" id="catAll">All Products <span class="sb-cat-count" id="catAllCount">—</span></button>
+      <div id="catList"></div>
+    </div>
+    <div class="sidebar-card" id="branchesSection">
+      <div class="sb-title">Our Branches</div>
+      <div id="branchList"><div style="font-size:.8rem;color:var(--text3)">Loading…</div></div>
+    </div>
+    <div class="sidebar-card">
+      <div class="sb-title">Contact Seller</div>
+      <div id="contactInfo"></div>
+    </div>
+
+    <!-- About Store -->
+    <div id="aboutStore" style="display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <div style="padding:.75rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border);font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em">About This Store</div>
+      <div id="aboutStoreBody" style="padding:1rem;font-size:.82rem;color:var(--text2);line-height:1.65"></div>
+    </div>
+
+    <!-- Seller profile link -->
+    <div id="sellerLinkWrap" style="display:none;margin-top:.25rem">
+      <a id="sellerProfileLink" href="#" style="display:flex;align-items:center;justify-content:center;gap:.45rem;padding:.65rem;background:linear-gradient(135deg,var(--accent),#0099bb);color:#0b0e14;border-radius:var(--radius);font-weight:700;font-size:.8rem;text-decoration:none;transition:opacity .18s">
+        👤 View Seller Profile
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- Products -->
+  <main>
+    <!-- Share bar -->
+    <div class="share-bar">
+      <span class="share-label">📢 Share this shop:</span>
+      <div id="shareButtons"></div>
+    </div>
+
+    <div class="products-header">
+      <div>
+        <h2 id="feedTitle" style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem">All Products</h2>
+        <div style="font-size:.75rem;color:var(--text3)" id="productCount">—</div>
+      </div>
+      <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search products…" oninput="debSearch(this.value)"/>
+          <button onclick="doSearch(document.getElementById('searchInput').value)">🔍</button>
+        </div>
+        <select id="sortSel" onchange="sortProducts(this.value)" style="padding:.55rem .75rem;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:.8rem;outline:none;background:#fff">
+          <option value="newest">Newest</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem">
+        <div style="width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem"></div>
+        Loading products…
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Product Detail Modal -->
+<div class="modal-overlay" id="productModal" onclick="if(event.target===this)closeModal()">
+  <div class="prod-modal" id="prodModalBox">
+    <div style="padding:1.25rem;display:flex;justify-content:flex-end;position:sticky;top:0;background:var(--card);z-index:1;border-bottom:1px solid var(--border)">
+      <button onclick="closeModal()" style="background:var(--bg);border:none;width:32px;height:32px;border-radius:8px;font-size:1rem;cursor:pointer;color:var(--text3)">✕</button>
+    </div>
+    <div id="prodModalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:5000/api';
+const slug = new URLSearchParams(location.search).get('slug');
+const shopIdParam = new URLSearchParams(location.search).get('id');
+let shop = null, branches = [], categories = [], allProducts = [], products = [];
+let currentCat = '', currentSearch = '', searchTimer;
+
+if(!slug && !shopIdParam){ document.body.innerHTML='<div style="text-align:center;padding:4rem"><h2>Shop not found</h2><a href="shops.html">← Browse Shops</a></div>'; }
+
+let _tt;
+function toast(msg, type='success'){const el=document.getElementById('toast');el.textContent=msg;el.style.background=type==='error'?'#ef4444':'#22c55e';el.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2800);}
+
+
+// ── Hardcoded offline demo store ──────────────────────────────────────────────
+const OFFLINE_DEMO = {
+  shop: {
+    id:'demo-001', slug:'techzone-nairobi', name:'TechZone Nairobi',
+    description:"Kenya's premier ICT accessories store. We stock the best laptops, phones, accessories, and gadgets at unbeatable prices. Visit any of our 3 branches across Nairobi.",
+    email:'info@techzone.co.ke', phone:'+254 712 345 678', whatsapp:'254712345678',
+    location:'Nairobi, Kenya', themeColor:'#6366f1',
+    logo:'https://ui-avatars.com/api/?name=TechZone&background=6366f1&color=fff&size=128&bold=true',
+    banner:'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80',
+    social:{ facebook:'https://facebook.com', instagram:'https://instagram.com', twitter:'https://twitter.com', whatsapp:'https://wa.me/254712345678' },
+    status:'active', published:true, rating:4.7, totalSales:342,
+  },
+  branches: [
+    { id:'db0', name:'Moi Avenue (Main)', location:'Moi Avenue, CBD, Nairobi', phone:'+254 712 345 678', email:'cbd@techzone.co.ke', whatsapp:'254712345678', hours:'Mon-Sat 8am-7pm, Sun 10am-5pm', isMain:true },
+    { id:'db1', name:'Tom Mboya Branch',  location:'Tom Mboya Street, CBD', phone:'+254 722 111 222', email:'tom@techzone.co.ke', whatsapp:'254722111222', hours:'Mon-Sat 8:30am-6:30pm' },
+    { id:'db2', name:'Westlands — Sarit Centre', location:'Sarit Centre, Westlands', phone:'+254 733 444 555', email:'westlands@techzone.co.ke', whatsapp:'254733444555', hours:'Mon-Sun 9am-8pm' },
+  ],
+  categories: [
+    { id:'dc0', name:'Laptops & Computers', icon:'💻', color:'#6366f1' },
+    { id:'dc1', name:'Phones & Tablets',    icon:'📱', color:'#ec4899' },
+    { id:'dc2', name:'Accessories',         icon:'🎧', color:'#f59e0b' },
+    { id:'dc3', name:'Gaming',              icon:'🎮', color:'#ef4444' },
+    { id:'dc4', name:'Networking',          icon:'📡', color:'#22c55e' },
+    { id:'dc5', name:'Smart Devices',       icon:'⌚', color:'#0ea5e9' },
+  ],
+  products: [
+    { id:'dp0',  name:'MacBook Pro 14-inch M3',       description:'Apple MacBook Pro with M3 chip, 8GB RAM, 512GB SSD. Liquid Retina XDR display, 18-hour battery life.',       price:185000, salePrice:172000, onSale:true,  discountPct:7,  images:['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&q=80'], stock:8,  sold:24,  unit:'pcs', categoryName:'Laptops & Computers', featured:true,  active:true, createdAt:new Date(Date.now()-1*86400000).toISOString() },
+    { id:'dp1',  name:'Dell XPS 15 OLED Display',     description:'Dell XPS 15 with Intel Core i7-13700H, 16GB RAM, 512GB SSD. Stunning 15.6-inch OLED InfinityEdge display.',   price:145000, salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&q=80'], stock:5,  sold:12,  unit:'pcs', categoryName:'Laptops & Computers', featured:true,  active:true, createdAt:new Date(Date.now()-2*86400000).toISOString() },
+    { id:'dp2',  name:'HP Pavilion 15 i5 11th Gen',   description:'HP Pavilion 15 with Intel Core i5-1135G7, 8GB RAM, 256GB SSD. Great everyday laptop for students and work.',   price:68000,  salePrice:59999,  onSale:true,  discountPct:12, images:['https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600&q=80'], stock:14, sold:38,  unit:'pcs', categoryName:'Laptops & Computers', featured:false, active:true, createdAt:new Date(Date.now()-3*86400000).toISOString() },
+    { id:'dp3',  name:'Lenovo ThinkPad E15 Business', description:'Lenovo ThinkPad E15 with AMD Ryzen 5 5600U, 16GB RAM, 512GB SSD. MIL-SPEC durability rating.',               price:89000,  salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&q=80'], stock:7,  sold:19,  unit:'pcs', categoryName:'Laptops & Computers', featured:false, active:true, createdAt:new Date(Date.now()-4*86400000).toISOString() },
+    { id:'dp4',  name:'Samsung Galaxy S24 Ultra',     description:'Samsung flagship with S Pen, 200MP camera, AI features, titanium frame. 6.8-inch Dynamic AMOLED 2X display.',  price:155000, salePrice:139000, onSale:true,  discountPct:10, images:['https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&q=80'], stock:12, sold:67,  unit:'pcs', categoryName:'Phones & Tablets',    featured:true,  active:true, createdAt:new Date(Date.now()-1*86400000).toISOString() },
+    { id:'dp5',  name:'iPhone 15 Pro 128GB Titanium', description:'Apple iPhone 15 Pro with A17 Pro chip, 48MP triple camera, Action Button, USB-C connector.',                   price:165000, salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&q=80'], stock:9,  sold:43,  unit:'pcs', categoryName:'Phones & Tablets',    featured:true,  active:true, createdAt:new Date(Date.now()-2*86400000).toISOString() },
+    { id:'dp6',  name:'Tecno Spark 20 Pro 256GB',     description:'Tecno Spark 20 Pro with Helio G99, 8GB RAM. 6.78-inch FHD+ display, 50MP camera, 5000mAh battery.',           price:28500,  salePrice:24999,  onSale:true,  discountPct:12, images:['https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=600&q=80'], stock:28, sold:156, unit:'pcs', categoryName:'Phones & Tablets',    featured:false, active:true, createdAt:new Date(Date.now()-5*86400000).toISOString() },
+    { id:'dp7',  name:'iPad Pro 11-inch M4 WiFi',     description:'Apple iPad Pro 11-inch with M4 chip, Ultra Retina XDR display, Apple Pencil Pro support.',                    price:125000, salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&q=80'], stock:6,  sold:18,  unit:'pcs', categoryName:'Phones & Tablets',    featured:false, active:true, createdAt:new Date(Date.now()-6*86400000).toISOString() },
+    { id:'dp8',  name:'Sony WH-1000XM5 Headphones',  description:'Industry-leading noise cancellation, 30-hour battery, multipoint connection. Foldable design with carry case.', price:38000,  salePrice:32999,  onSale:true,  discountPct:13, images:['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80'], stock:15, sold:89,  unit:'pcs', categoryName:'Accessories',         featured:true,  active:true, createdAt:new Date(Date.now()-2*86400000).toISOString() },
+    { id:'dp9',  name:'Anker PowerCore 20000mAh',     description:'20W USB-C PD and 18W Quick Charge 3.0. Charge 2 devices at once. Includes carry pouch and USB-C cable.',       price:4500,   salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=600&q=80'], stock:45, sold:234, unit:'pcs', categoryName:'Accessories',         featured:false, active:true, createdAt:new Date(Date.now()-7*86400000).toISOString() },
+    { id:'dp10', name:'Logitech MX Master 3S Mouse',  description:'MagSpeed electromagnetic scrolling, 8K DPI sensor, quiet clicks. Works on any surface. 70-day battery.',       price:12500,  salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=600&q=80'], stock:22, sold:67,  unit:'pcs', categoryName:'Accessories',         featured:false, active:true, createdAt:new Date(Date.now()-8*86400000).toISOString() },
+    { id:'dp11', name:'65W GaN Charger 4-Port USB',   description:'Compact 65W GaN charger with 2x USB-C and 2x USB-A ports. Charge laptop, phone, tablet simultaneously.',       price:3200,   salePrice:2799,   onSale:true,  discountPct:13, images:['https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80'], stock:60, sold:312, unit:'pcs', categoryName:'Accessories',         featured:false, active:true, createdAt:new Date(Date.now()-9*86400000).toISOString() },
+    { id:'dp12', name:'Apple AirPods Pro 2nd Gen',    description:'H2 chip, Adaptive Audio, Active Noise Cancellation. 6-hour listening time, 30 hours with case. MagSafe.',      price:28000,  salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1603351154351-5e2d0600bb77?w=600&q=80'], stock:11, sold:45,  unit:'pcs', categoryName:'Accessories',         featured:true,  active:true, createdAt:new Date(Date.now()-3*86400000).toISOString() },
+    { id:'dp13', name:'PlayStation 5 Disc Edition',   description:'Sony PS5 with DualSense wireless controller. 825GB SSD, 4K gaming, 120fps support, ray tracing.',              price:78000,  salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=600&q=80'], stock:4,  sold:28,  unit:'pcs', categoryName:'Gaming',              featured:true,  active:true, createdAt:new Date(Date.now()-4*86400000).toISOString() },
+    { id:'dp14', name:'Xbox Controller Carbon Black',  description:'Official Xbox Wireless Controller. Textured grip, hybrid D-pad, 40-hour battery. Xbox, PC, and mobile.',       price:8500,   salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=600&q=80'], stock:18, sold:92,  unit:'pcs', categoryName:'Gaming',              featured:false, active:true, createdAt:new Date(Date.now()-5*86400000).toISOString() },
+    { id:'dp15', name:'ASUS ROG Strix Gaming Chair',  description:'Lumbar support, 4D armrests, reclining 90-180 degrees, breathable fabric with PU leather accents.',            price:42000,  salePrice:37500,  onSale:true,  discountPct:11, images:['https://images.unsplash.com/photo-1598550487031-0898b4852123?w=600&q=80'], stock:3,  sold:9,   unit:'pcs', categoryName:'Gaming',              featured:false, active:true, createdAt:new Date(Date.now()-6*86400000).toISOString() },
+    { id:'dp16', name:'TP-Link Deco XE75 WiFi 6E',   description:'Whole-home mesh WiFi 6E system, tri-band AXE5400. Covers 7200 sq ft. Works with Alexa and IFTTT.',             price:28000,  salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80'], stock:9,  sold:34,  unit:'pcs', categoryName:'Networking',          featured:false, active:true, createdAt:new Date(Date.now()-7*86400000).toISOString() },
+    { id:'dp17', name:'4G LTE MiFi Portable Router',  description:'Portable WiFi hotspot supporting up to 10 devices, 3000mAh battery. Works with any Kenyan SIM card.',          price:3800,   salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80'], stock:35, sold:178, unit:'pcs', categoryName:'Networking',          featured:false, active:true, createdAt:new Date(Date.now()-8*86400000).toISOString() },
+    { id:'dp18', name:'Apple Watch Series 9 41mm GPS','description':'S9 chip, brighter Always-On display, double tap gesture, crash detection. 18-hour battery life.',            price:52000,  salePrice:47500,  onSale:true,  discountPct:9,  images:['https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80'], stock:7,  sold:31,  unit:'pcs', categoryName:'Smart Devices',       featured:true,  active:true, createdAt:new Date(Date.now()-1*86400000).toISOString() },
+    { id:'dp19', name:'Samsung Galaxy Watch 6 Classic','description':'Rotating bezel, 1.5-inch Super AMOLED, BioActive sensor for heart rate, body composition, sleep tracking.',  price:38000,  salePrice:null,   onSale:false, discountPct:0,  images:['https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80'], stock:8,  sold:22,  unit:'pcs', categoryName:'Smart Devices',       featured:false, active:true, createdAt:new Date(Date.now()-2*86400000).toISOString() },
+  ]
+};
+
+
+function loadOfflineDemo() {
+  shop       = OFFLINE_DEMO.shop;
+  branches   = OFFLINE_DEMO.branches;
+  categories = OFFLINE_DEMO.categories;
+  allProducts= OFFLINE_DEMO.products;
+  products   = allProducts;
+  document.getElementById('pageTitle').textContent = shop.name;
+  document.documentElement.style.setProperty('--accent', shop.themeColor||'#6366f1');
+  renderNav(); renderHero(); renderCatStrip(); renderSidebar(); renderProducts(products); renderShareButtons(); renderFeatured(); fetch(API+'/analytics/pageview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({shopId:shop.id||shop._id,page:'shop',ref:document.referrer})}).catch(()=>{});
+  // Demo banner
+  const bn = document.createElement('div');
+  bn.style.cssText = 'background:#fef9c3;border-bottom:1px solid #fde68a;padding:.5rem 1.5rem;text-align:center;font-size:.8rem;font-weight:600;color:#92400e';
+  bn.innerHTML = '🎯 Demo Store &nbsp;·&nbsp; <a href="shop.html" style="color:#6366f1;font-weight:700">← Browse Stores</a> &nbsp;·&nbsp; <a href="shop-create.html" style="color:#6366f1;font-weight:700">Open a Store</a>';
+  const nav = document.getElementById('storeNav');
+  if (nav && nav.nextSibling) nav.parentNode.insertBefore(bn, nav.nextSibling);
+}
+
+async function init(){
+  if(!slug && !shopIdParam){
+    document.body.innerHTML='<div style="text-align:center;padding:4rem;font-family:sans-serif"><h2>Shop not found</h2><a href="shop.html" style="color:#6366f1">← Browse Stores</a></div>';
+    return;
+  }
+
+  // ── Offline demo ──────────────────────────────────────────────────────────
+  // demo removed
+
+  // ── Fetch shop data ───────────────────────────────────────────────────────
+  async function fetchShop() {
+    // Try by ID first (most reliable — public route, no auth needed)
+    if (shopIdParam) {
+      try {
+        const r = await fetch(`${API}/shops/id/${encodeURIComponent(shopIdParam)}`);
+        if (r.ok) {
+          const j = await r.json().catch(() => ({}));
+          if (j.success && j.data) return j.data;
+        }
+      } catch {}
+    }
+    // Try by slug
+    if (slug) {
+      try {
+        const r = await fetch(`${API}/shops/${encodeURIComponent(slug)}`);
+        if (r.ok) {
+          const j = await r.json().catch(() => ({}));
+          if (j.success && j.data) return j.data;
+        }
+      } catch {}
+    }
+    return null;
+  }
+
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 6000);
+    const shopData = await fetchShop();
+    clearTimeout(timer);
+
+    if (!shopData) throw new Error('Shop not found');
+    shop = shopData;
+
+    const [pj, bj, cj] = await Promise.all([
+      fetch(`${API}/shops/${shop.id||shop._id}/products?limit=500`).then(r=>r.json()).catch(()=>({data:[]})),
+      fetch(`${API}/shops/${shop.id||shop._id}/branches`).then(r=>r.json()).catch(()=>({data:[]})),
+      fetch(`${API}/shops/${shop.id||shop._id}/categories`).then(r=>r.json()).catch(()=>({data:[]}))
+    ]);
+
+    allProducts = pj.data || [];
+    products    = allProducts;
+    branches    = bj.data || [];
+    categories  = cj.data || [];
+
+    document.getElementById('pageTitle').textContent = shop.name;
+    document.documentElement.style.setProperty('--accent', shop.themeColor||'#6366f1');
+    renderNav(); renderHero(); renderCatStrip(); renderSidebar(); renderProducts(products); renderShareButtons(); renderFeatured(); fetch(API+'/analytics/pageview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({shopId:shop.id||shop._id,page:'shop',ref:document.referrer})}).catch(()=>{});
+
+  } catch(err) {
+    document.body.innerHTML = `<div style="text-align:center;padding:4rem;font-family:sans-serif;max-width:500px;margin:0 auto">
+      <div style="font-size:3rem;margin-bottom:1rem">🏪</div>
+      <h2 style="font-family:'Montserrat',sans-serif;margin-bottom:.5rem;color:#1a1d23">Store not available</h2>
+      <p style="color:#64748b;font-size:.88rem;margin-bottom:.75rem">The store could not be loaded.</p>
+      <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:.65rem 1rem;font-size:.75rem;color:#64748b;margin-bottom:1.25rem">
+        ${err.message || 'Unknown error'} · slug: ${slug} · id: ${shopIdParam}
+      </div>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <a href="shop.html" style="padding:.6rem 1.25rem;background:#6366f1;color:#fff;border-radius:8px;font-weight:700;text-decoration:none">← Browse Stores</a>
+        <button onclick="window.location.reload()" style="padding:.6rem 1.25rem;background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;border-radius:8px;font-weight:700;cursor:pointer">🔄 Retry</button>
+      </div>
+    </div>`;
+  }
+}
+
+function renderNav(){
+  const logo = document.getElementById('storeNavLogo');
+  logo.innerHTML = shop.logo ? `<img src="${shop.logo}" alt="${shop.name}" onerror="this.style.display='none'"/>${shop.name}` : shop.name;
+  logo.style.color = shop.themeColor||'var(--text)';
+  document.getElementById('storeContactBtn').onclick = ()=>{ if(shop.whatsapp) window.open(`https://wa.me/${shop.whatsapp.replace(/[^0-9]/g,'')}?text=Hi, I found your shop online!`,'_blank'); else if(shop.phone) window.open(`tel:${shop.phone}`); };
+  document.getElementById('pageTitle').textContent = shop.name;
+  document.documentElement.style.setProperty('--accent', shop.themeColor||'#6366f1');
+}
+
+function renderHero(){
+  const theme = shop.themeColor || '#6366f1';
+  document.documentElement.style.setProperty('--accent', theme);
+  if(shop.banner) document.getElementById('heroBg').style.backgroundImage=`url(${shop.banner})`;
+  if(shop.logo){ const img=document.getElementById('heroLogo'); img.src=shop.logo; img.alt=shop.name; img.style.display='block'; img.onerror=()=>img.style.display='none'; }
+  document.getElementById('heroName').textContent = shop.name;
+  document.getElementById('heroDesc').textContent = shop.description||'';
+  const meta=document.getElementById('heroMeta');
+  const items=[];
+  if(shop.location) items.push(`📍 ${shop.location}`);
+  if(shop.phone)    items.push(`📞 ${shop.phone}`);
+  if(shop.email)    items.push(`✉️ ${shop.email}`);
+  meta.textContent = items.join('  ·  ');
+
+  // Breadcrumb
+  const bn = document.getElementById('breadcrumbShopName');
+  if(bn) bn.textContent = shop.name;
+
+  // Social buttons
+  const sb = document.getElementById('socialBtns');
+  if(sb){
+    const links = [];
+    if(shop.whatsapp) links.push(`<a href="https://wa.me/${shop.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" class="social-btn" style="background:#22c55e;color:#fff">💬 WhatsApp</a>`);
+    if(shop.social?.facebook) links.push(`<a href="${shop.social.facebook}" target="_blank" class="social-btn">Facebook</a>`);
+    if(shop.social?.instagram) links.push(`<a href="${shop.social.instagram}" target="_blank" class="social-btn">Instagram</a>`);
+    sb.innerHTML = links.join('');
+  }
+
+  // Info bar — M-Pesa + stats
+  const bar = document.getElementById('shopInfoBar');
+  if(bar){
+    bar.style.display = '';
+    // M-Pesa badge
+    if(shop.mpesa?.enabled && shop.mpesa?.shortCode){
+      const badge = document.getElementById('shopMpesaBadge');
+      if(badge){
+        badge.style.display='flex';
+        document.getElementById('shopMpesaType').textContent = shop.mpesa.type==='till' ? 'TILL NUMBER' : 'PAYBILL';
+        document.getElementById('shopMpesaCode').textContent = shop.mpesa.shortCode;
+        document.getElementById('shopMpesaName').textContent = shop.mpesa.accountName||'';
+      }
+    }
+    // Stat badges
+    const stats = document.getElementById('shopStatBadges');
+    if(stats){
+      const items2 = [];
+      if(allProducts.length) items2.push(`<div style="text-align:center"><div style="font-size:.95rem;font-weight:800;color:var(--accent)">${allProducts.length}</div><div style="font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Products</div></div>`);
+      if(branches.length>1) items2.push(`<div style="text-align:center"><div style="font-size:.95rem;font-weight:800;color:var(--accent)">${branches.length}</div><div style="font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Branches</div></div>`);
+      stats.innerHTML = items2.join('<div style="width:1px;height:28px;background:var(--border)"></div>');
+    }
+    // Quick buttons
+    const qb = document.getElementById('shopQuickBtns');
+    if(qb && shop.whatsapp){
+      qb.innerHTML = `<a href="https://wa.me/${shop.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="display:flex;align-items:center;gap:.35rem;padding:.45rem 1rem;background:#22c55e;color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;text-decoration:none">💬 Contact on WhatsApp</a>`;
+    }
+  }
+}
+
+function renderShareButtons(){
+  const url = encodeURIComponent(location.href);
+  const text = encodeURIComponent(`Check out ${shop.name} on SELA!`);
+  document.getElementById('shareButtons').innerHTML=`
+    <a href="https://wa.me/?text=${text}%20${url}" target="_blank" class="social-btn">💬 WhatsApp</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=${url}" target="_blank" class="social-btn">📘 Facebook</a>
+    <a href="https://twitter.com/intent/tweet?url=${url}&text=${text}" target="_blank" class="social-btn">🐦 Twitter</a>
+    <button onclick="copyLink()" class="social-btn">🔗 Copy Link</button>`;
+}
+
+function copyLink(){ navigator.clipboard.writeText(location.href).then(()=>toast('Link copied!')); }
+
+function renderCatStrip(){
+  const strip=document.getElementById('catStripInner');
+  const cats=[{name:'All',count:allProducts.length},...categories.map(c=>({name:c.name,icon:c.icon,count:allProducts.filter(p=>p.categoryId===c.id||p.categoryName===c.name).length}))];
+  strip.innerHTML=cats.map((c,i)=>`<button onclick="filterCatStrip('${i===0?'':c.name}')" style="padding:.65rem 1.25rem;background:none;border:none;border-bottom:2.5px solid transparent;font-size:.82rem;font-weight:700;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .18s" class="strip-btn ${i===0?'strip-active':''}">${c.icon||'📦'} ${c.name} (${c.count})</button>`).join('');
+}
+
+function renderSidebar(){
+  // Categories
+  const catList=document.getElementById('catList');
+  catList.innerHTML=categories.map(c=>`<button class="sb-cat-item" onclick="filterCat('${c.name}',this)">${c.icon} ${c.name} <span class="sb-cat-count">${allProducts.filter(p=>p.categoryName===c.name).length}</span></button>`).join('');
+  document.getElementById('catAllCount').textContent=allProducts.length;
+  // Branches
+  const brList=document.getElementById('branchList');
+  brList.innerHTML=branches.map(b=>`<div class="branch-item">
+    <div class="branch-name">${b.isMain?'🏠':''} ${b.name}</div>
+    ${b.location?`<div class="branch-detail">📍 ${b.location}</div>`:''}
+    ${b.phone?`<div class="branch-detail">📞 <a href="tel:${b.phone}" style="color:var(--accent)">${b.phone}</a></div>`:''}
+    ${b.whatsapp?`<div class="branch-detail">💬 <a href="https://wa.me/${b.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="color:#22c55e">WhatsApp</a></div>`:''}
+    ${b.hours?`<div class="branch-detail">🕐 ${b.hours}</div>`:''}
+  </div>`).join('');
+  // Contact
+  document.getElementById('contactInfo').innerHTML=`
+    ${shop.phone?`<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.55rem"><span>📞</span><a href="tel:${shop.phone}" style="color:var(--accent);font-weight:600;font-size:.82rem">${shop.phone}</a></div>`:''}
+    ${shop.email?`<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.55rem"><span>✉️</span><a href="mailto:${shop.email}" style="color:var(--accent);font-weight:600;font-size:.82rem">${shop.email}</a></div>`:''}
+    ${shop.whatsapp?`<a href="https://wa.me/${shop.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem;background:#22c55e;color:#fff;border-radius:8px;font-weight:700;font-size:.82rem;margin-top:.5rem">💬 Message on WhatsApp</a>`:''}`;
+}
+
+function renderProducts(list){
+  const grid=document.getElementById('productsGrid');
+  document.getElementById('productCount').textContent=`${list.length} product${list.length!==1?'s':''}`;
+  if(!list.length){ grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text3)"><div style="font-size:2.5rem;margin-bottom:.75rem">🔍</div><div style="font-weight:700;margin-bottom:.4rem">No products found</div><div style="font-size:.82rem">Try a different search or category</div></div>'; return; }
+  const theme = shop?.themeColor || '#6366f1';
+  grid.innerHTML=list.map(p=>{
+    const price = p.onSale && p.salePrice ? p.salePrice : p.price;
+    const img = p.images?.[0] || '';
+    return `
+    <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer">
+      <div class="product-img" style="position:relative;overflow:hidden">
+        ${img
+          ? `<img src="${img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;transition:transform .3s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform=''" onerror="this.parentElement.innerHTML='<div style=font-size:2.5rem;text-align:center;line-height:180px>📦</div>'"/>`
+          : `<div style="font-size:3rem;text-align:center;line-height:180px">📦</div>`}
+        ${p.onSale ? `<span style="position:absolute;top:.6rem;left:.6rem;background:#ef4444;color:#fff;font-size:.6rem;font-weight:800;padding:.18rem .55rem;border-radius:20px;text-transform:uppercase;letter-spacing:.06em">Sale</span>` : ''}
+        ${p.featured ? `<span style="position:absolute;top:.6rem;right:.6rem;background:rgba(0,0,0,.6);color:#fbbf24;font-size:.65rem;font-weight:700;padding:.18rem .55rem;border-radius:20px">⭐</span>` : ''}
+        ${p.stock<=0 ? `<div style="position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center"><span style="background:rgba(0,0,0,.7);color:#fff;font-size:.72rem;font-weight:700;padding:.35rem .85rem;border-radius:20px">Out of Stock</span></div>` : ''}
+      </div>
+      <div class="product-body" style="padding:.85rem">
+        <div style="font-size:.62rem;font-weight:700;color:${theme};text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem">${p.categoryName||''}</div>
+        <div class="product-name" style="font-weight:700;font-size:.88rem;margin-bottom:.4rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4">${p.name}</div>
+        <div style="font-size:.78rem;color:var(--text3);margin-bottom:.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.45">${p.description||''}</div>
+        <div style="display:flex;align-items:baseline;gap:.4rem;flex-wrap:wrap;margin-bottom:.4rem">
+          <div style="font-weight:800;font-size:1rem;color:${theme}">KES ${price?.toLocaleString('en-KE')}</div>
+          ${p.onSale && p.salePrice ? `<div style="font-size:.75rem;color:#94a3b8;text-decoration:line-through">KES ${p.price?.toLocaleString('en-KE')}</div>` : ''}
+        </div>
+        <div style="font-size:.7rem;color:var(--text3)">${p.stock>0 ? `✅ ${p.stock} ${p.unit||'pcs'} available` : '<span style="color:#ef4444">❌ Out of stock</span>'}</div>
+      </div>
+      <div class="product-actions" style="padding:.65rem .85rem;border-top:1px solid var(--border);display:flex;gap:.4rem">
+        <button onclick="event.stopPropagation();openOrderForm({id:'${p.id}',name:'${p.name.replace(/'/g,'')}',price:${price},image:'${p.images?.[0]||''}',stock:${p.stock||0}})" style="flex:1;padding:.45rem;background:${theme};color:#fff;border:none;border-radius:7px;font-size:.72rem;font-weight:700;cursor:pointer${p.stock<=0?';opacity:.5;cursor:not-allowed':''}" ${p.stock<=0?'disabled':''}>🛒 Order</button>
+        <button onclick="event.stopPropagation();window.location.href='product.html?id=${p.id}'" style="padding:.45rem .65rem;background:var(--bg3,#f1f5f9);color:var(--text2,#475569);border:none;border-radius:7px;font-size:.72rem;font-weight:700;cursor:pointer">View</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openProduct(id){
+  const p=allProducts.find(x=>x.id===id); if(!p) return;
+  let imgIdx=0;
+  const imgs=p.images||[];
+  const imgHtml=imgs.length?`<div class="prod-modal-imgs"><img id="modalImg" src="${imgs[0]}" alt="${p.name}" onerror="this.style.display='none'"/><div class="img-nav">${imgs.map((_,i)=>`<button class="img-dot ${i===0?'active':''}" onclick="changeImg(${i})" id="dot${i}"></button>`).join('')}</div></div>`:`<div class="prod-modal-imgs" style="display:flex;align-items:center;justify-content:center;font-size:4rem">📦</div>`;
+  document.getElementById('prodModalContent').innerHTML=`${imgHtml}<div class="prod-modal-body">
+    <div style="font-size:.72rem;color:${shop?.themeColor||'#6366f1'};font-weight:700;margin-bottom:.4rem">${p.categoryName||''}</div>
+    <div class="prod-modal-name">${p.name}</div>
+    <div style="display:flex;align-items:baseline;gap:.6rem;margin:.65rem 0">
+      <div class="prod-modal-price" style="color:${shop?.themeColor||'#6366f1'}">${p.onSale&&p.salePrice?`KES ${p.salePrice?.toLocaleString()}`:`KES ${p.price?.toLocaleString()}`}</div>
+      ${p.onSale&&p.salePrice?`<div style="font-size:.85rem;color:var(--text3);text-decoration:line-through">KES ${p.price?.toLocaleString()}</div><div style="font-size:.78rem;font-weight:700;color:#ef4444">Save ${p.discountPct||Math.round((1-p.salePrice/p.price)*100)}%</div>`:''}
+    </div>
+    ${p.sku?`<div style="font-size:.72rem;color:var(--text3);margin-bottom:.5rem">SKU: ${p.sku}</div>`:''}
+    <div class="prod-modal-desc">${p.description||'No description available.'}</div>
+    <div style="display:flex;gap:.65rem;align-items:center;margin-bottom:1.25rem;font-size:.78rem">
+      <span style="font-weight:700;color:${p.stock===0?'#ef4444':p.stock<=5?'#f59e0b':'#22c55e'}">${p.stock===0?'❌ Out of Stock':p.stock<=5?`⚠️ Only ${p.stock} left`:`✅ ${p.stock} ${p.unit} in stock`}</span>
+    </div>
+    <div style="display:flex;gap:.65rem;flex-wrap:wrap">
+      ${shop?.whatsapp?`<button onclick="orderViaWa('${p.name}',${p.price})" style="flex:1;padding:.75rem;background:#22c55e;color:#fff;border:none;border-radius:var(--radius);font-weight:700;cursor:pointer;font-family:inherit">💬 Order via WhatsApp</button>`:''}
+      ${shop?.phone?`<button onclick="window.open('tel:${shop.phone}')" style="padding:.75rem 1.25rem;background:${shop.themeColor||'#6366f1'};color:#fff;border:none;border-radius:var(--radius);font-weight:700;cursor:pointer;font-family:inherit">📞 Call</button>`:''}
+    </div>
+    <div class="seller-section">
+      <div class="seller-section-title">Sold by</div>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        ${shop?.logo ? '<img src="'+shop.logo+'" style="width:40px;height:40px;border-radius:8px;object-fit:contain" onerror="this.style.display=\'none\'" />' : '<div style="width:40px;height:40px;border-radius:8px;background:'+(shop?.themeColor||'#6366f1')+';display:flex;align-items:center;justify-content:center;font-size:1.1rem">🏪</div>'}
+        <div>
+          <div style="font-weight:700;font-size:.88rem">${shop?.name}</div>
+          ${shop?.location?`<div style="font-size:.72rem;color:var(--text3)">📍 ${shop.location}</div>`:''}
+        </div>
+        <a href="shop-seller.html?slug=${slug}" style="margin-left:auto;font-size:.75rem;color:${shop?.themeColor||'#6366f1'};font-weight:600">View Profile →</a>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('productModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+window.changeImg = function(i){
+  document.getElementById('modalImg').src=allProducts.find(p=>document.getElementById('modalImg').alt===p.name)?.images[i]||'';
+  document.querySelectorAll('.img-dot').forEach((d,j)=>d.classList.toggle('active',j===i));
+};
+
+function closeModal(){ document.getElementById('productModal').classList.remove('open'); document.body.style.overflow=''; }
+
+function orderViaWa(name,price){
+  if(!shop?.whatsapp){ toast('No WhatsApp number set for this shop','warn'); return; }
+  const storeUrl = window.location.href;
+  const msg = `Hi *${shop.name}*! 👋\n\nI found your store on SELA and I'd like to order:\n\n📦 *${name}*\n💰 Price: KES ${Number(price).toLocaleString('en-KE')}\n\nCould you please confirm availability and share payment details?\n\n🔗 ${storeUrl}`;
+  window.open(`https://wa.me/${shop.whatsapp.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+function filterCat(cat,btn){
+  currentCat=cat;
+  document.querySelectorAll('.sb-cat-item').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  applyFilters();
+  document.getElementById('feedTitle').textContent=cat||'All Products';
+}
+function filterCatStrip(cat){
+  currentCat=cat;
+  document.querySelectorAll('.strip-btn').forEach(b=>b.classList.remove('strip-active'));
+  event.currentTarget.classList.add('strip-active');
+  applyFilters();
+}
+function applyFilters(){
+  let list=allProducts;
+  if(currentCat) list=list.filter(p=>p.categoryName===currentCat||p.categoryId===currentCat);
+  if(currentSearch) list=list.filter(p=>p.name.toLowerCase().includes(currentSearch)||p.description?.toLowerCase().includes(currentSearch));
+  products=list;
+  renderProducts(products);
+}
+function debSearch(q){ clearTimeout(searchTimer); searchTimer=setTimeout(()=>doSearch(q),350); }
+function doSearch(q){ currentSearch=q.toLowerCase(); applyFilters(); }
+function sortProducts(sort){
+  const sorters={newest:(a,b)=>new Date(b.createdAt)-new Date(a.createdAt),price_asc:(a,b)=>a.price-b.price,price_desc:(a,b)=>b.price-a.price,name:(a,b)=>a.name.localeCompare(b.name)};
+  products=[...products].sort(sorters[sort]||sorters.newest);
+  renderProducts(products);
+}
+function shareStore(){ if(navigator.share) navigator.share({title:shop?.name,url:location.href}); else copyLink(); }
+function scrollToProducts(){ document.getElementById('productsGrid').scrollIntoView({behavior:'smooth'}); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+init();
+
+function renderFeatured() {
+  const strip = document.getElementById('featuredStrip');
+  const row   = document.getElementById('featuredRow');
+  if (!strip || !row) return;
+  const featured = allProducts.filter(p => p.featured).slice(0, 8);
+  if (!featured.length) return;
+  strip.style.display = '';
+  row.innerHTML = featured.map(p => {
+    const price = p.onSale && p.salePrice ? p.salePrice : p.price;
+    const img   = p.images?.[0] || '';
+    const color = shop?.themeColor || '#6366f1';
+    return `<div style="flex:0 0 160px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.07)" onclick=\"window.location.href='product.html?id=${p.id}'\" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.12)'" onmouseout="this.style.transform='';this.style.boxShadow='0 1px 3px rgba(0,0,0,.07)'">
+      <div style="height:110px;overflow:hidden;background:#f1f5f9;display:flex;align-items:center;justify-content:center;position:relative">
+        ${img ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover" onerror="this.outerHTML='<div style=font-size:2rem;text-align:center>📦</div>'"/>` : '<div style="font-size:2rem">📦</div>'}
+        ${p.onSale ? `<div style="position:absolute;top:.4rem;left:.4rem;background:${color};color:#fff;font-size:.55rem;font-weight:800;padding:.15rem .45rem;border-radius:4px;text-transform:uppercase">Sale</div>` : ''}
+      </div>
+      <div style="padding:.65rem .75rem">
+        <div style="font-size:.65rem;font-weight:700;color:${color};text-transform:uppercase;letter-spacing:.06em;margin-bottom:.2rem">${p.categoryName||''}</div>
+        <div style="font-size:.78rem;font-weight:700;color:#0f172a;line-height:1.35;margin-bottom:.3rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${p.name}</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:800;color:${color}">KES ${Number(price).toLocaleString()}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+</script>
+
+<!-- ══ ORDER FORM MODAL ══ -->
+<div id="orderFormOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto" onclick="if(event.target===this)closeOrderForm()">
+  <div style="background:var(--card,#fff);border-radius:16px;width:100%;max-width:480px;margin:auto;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+    <!-- Header -->
+    <div style="padding:1.25rem 1.5rem;background:var(--accent,#6366f1);color:#fff;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem">🛒 Place Order</div>
+        <div id="orderFormShopName" style="font-size:.75rem;opacity:.85"></div>
+      </div>
+      <button onclick="closeOrderForm()" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:.9rem;cursor:pointer">✕</button>
+    </div>
+
+    <div style="padding:1.25rem 1.5rem">
+      <!-- Product summary -->
+      <div id="orderProductSummary" style="display:flex;align-items:center;gap:.75rem;padding:.75rem;background:var(--bg3,#f8fafc);border-radius:10px;margin-bottom:1.25rem;border:1px solid var(--border,#e2e8f0)">
+        <img id="orderProductImg" src="" alt="" style="width:52px;height:52px;object-fit:cover;border-radius:8px;display:none"/>
+        <div style="font-size:2rem;display:none" id="orderProductEmoji">📦</div>
+        <div style="flex:1">
+          <div id="orderProductName" style="font-weight:700;font-size:.9rem"></div>
+          <div id="orderProductPrice" style="font-weight:800;color:var(--accent,#6366f1);font-size:.95rem"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <button onclick="changeOrderQty(-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid var(--border,#e2e8f0);background:var(--bg,#fff);font-size:.9rem;cursor:pointer;font-weight:700">−</button>
+          <span id="orderQtyDisplay" style="font-weight:800;min-width:20px;text-align:center">1</span>
+          <button onclick="changeOrderQty(1)" style="width:28px;height:28px;border-radius:50%;border:1px solid var(--border,#e2e8f0);background:var(--bg,#fff);font-size:.9rem;cursor:pointer;font-weight:700">+</button>
+        </div>
+      </div>
+
+      <!-- Delivery type -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem">
+        <button id="typePickup" onclick="setOrderType('pickup')" style="padding:.65rem;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;border:2px solid var(--accent,#6366f1);background:rgba(99,102,241,.08);color:var(--accent,#6366f1)">🏪 Pickup</button>
+        <button id="typeDelivery" onclick="setOrderType('delivery')" style="padding:.65rem;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;border:1px solid var(--border,#e2e8f0);background:var(--bg,#fff);color:var(--text2,#64748b)">🚚 Delivery</button>
+      </div>
+      <div id="deliveryAddressWrap" style="display:none;margin-bottom:.75rem">
+        <label style="font-size:.75rem;font-weight:700;color:var(--text3,#94a3b8);display:block;margin-bottom:.3rem">DELIVERY ADDRESS *</label>
+        <textarea id="orderAddress" placeholder="Enter your full delivery address..." style="width:100%;padding:.6rem .85rem;border:1.5px solid var(--border,#e2e8f0);border-radius:8px;font-family:inherit;font-size:.85rem;min-height:65px;resize:none;background:var(--bg,#fff)"></textarea>
+      </div>
+
+      <!-- Customer info -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.65rem">
+        <div>
+          <label style="font-size:.75rem;font-weight:700;color:var(--text3,#94a3b8);display:block;margin-bottom:.3rem">FULL NAME *</label>
+          <input id="orderName" placeholder="Your name" style="width:100%;padding:.6rem .85rem;border:1.5px solid var(--border,#e2e8f0);border-radius:8px;font-family:inherit;font-size:.85rem;background:var(--bg,#fff)"/>
+        </div>
+        <div>
+          <label style="font-size:.75rem;font-weight:700;color:var(--text3,#94a3b8);display:block;margin-bottom:.3rem">PHONE NUMBER *</label>
+          <input id="orderPhone" type="tel" placeholder="+254 7XX XXX XXX" style="width:100%;padding:.6rem .85rem;border:1.5px solid var(--border,#e2e8f0);border-radius:8px;font-family:inherit;font-size:.85rem;background:var(--bg,#fff)"/>
+        </div>
+      </div>
+      <div style="margin-bottom:.65rem">
+        <label style="font-size:.75rem;font-weight:700;color:var(--text3,#94a3b8);display:block;margin-bottom:.3rem">NOTE TO SELLER (OPTIONAL)</label>
+        <textarea id="orderNote" placeholder="Any special requests..." style="width:100%;padding:.6rem .85rem;border:1.5px solid var(--border,#e2e8f0);border-radius:8px;font-family:inherit;font-size:.85rem;min-height:50px;resize:none;background:var(--bg,#fff)"></textarea>
+      </div>
+
+      <!-- Total -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.75rem;background:var(--bg3,#f8fafc);border-radius:8px;margin-bottom:1rem;border:1px solid var(--border,#e2e8f0)">
+        <span style="font-weight:700;color:var(--text2,#475569)">Total</span>
+        <span id="orderTotalDisplay" style="font-weight:900;font-size:1.1rem;color:var(--accent,#6366f1)">KES 0</span>
+      </div>
+      <div style="font-size:.72rem;color:var(--text3,#94a3b8);margin-bottom:1rem;text-align:center">💳 Payment on delivery / pickup — no online payment required</div>
+
+      <button onclick="submitOrder()" id="orderSubmitBtn" style="width:100%;padding:.85rem;background:var(--accent,#6366f1);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.95rem;cursor:pointer">✅ Place Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- Order Confirmation Modal -->
+<div id="orderConfirmOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2001;align-items:center;justify-content:center;padding:1.5rem">
+  <div style="background:var(--card,#fff);border-radius:16px;width:100%;max-width:420px;padding:2rem;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+    <div style="font-size:3rem;margin-bottom:.75rem">🎉</div>
+    <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:.35rem">Order Placed!</div>
+    <div id="confirmOrderNo" style="font-size:.88rem;color:var(--text2,#475569);margin-bottom:.75rem"></div>
+    <div id="confirmOrderMsg" style="font-size:.82rem;color:var(--text2,#475569);line-height:1.6;margin-bottom:1.25rem;padding:.75rem;background:var(--bg3,#f8fafc);border-radius:8px;text-align:left"></div>
+    <div id="confirmWaBtn" style="display:none;margin-bottom:.75rem">
+      <a id="confirmWaLink" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.5rem;background:#22c55e;color:#fff;border-radius:10px;font-weight:700;font-size:.88rem;text-decoration:none">💬 Send WhatsApp Confirmation</a>
+      <div style="font-size:.7rem;color:var(--text3,#94a3b8);margin-top:.3rem">Optional — confirm your order via WhatsApp</div>
+    </div>
+    <button onclick="closeOrderConfirm()" style="width:100%;padding:.7rem;background:var(--bg3,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:10px;font-weight:700;cursor:pointer;font-size:.88rem">Continue Shopping</button>
+  </div>
+</div>
+
+
+<!-- ══ REVIEWS SECTION ══ -->
+<div style="max-width:1200px;margin:2.5rem auto;padding:0 1.5rem" id="reviewsSection">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.5rem">
+    <div>
+      <h2 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:.2rem">⭐ Customer Reviews</h2>
+      <div id="reviewsSub" style="font-size:.82rem;color:var(--text3)">Loading…</div>
+    </div>
+    <button onclick="openReviewForm()" id="writeReviewBtn"
+      style="padding:.55rem 1.25rem;background:var(--accent,#6366f1);color:#fff;border:none;border-radius:9px;font-weight:700;font-size:.82rem;cursor:pointer">
+      ✍️ Write a Review
+    </button>
+  </div>
+
+  <!-- Summary bar -->
+  <div id="reviewsSummary" style="display:none;background:var(--card,#fff);border:1px solid var(--border,#e2e8f0);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+    <div style="text-align:center;min-width:80px">
+      <div id="avgRating" style="font-size:2.5rem;font-weight:900;line-height:1;color:var(--accent,#6366f1)">0</div>
+      <div id="starsDisplay" style="font-size:1.1rem;margin:.2rem 0">☆☆☆☆☆</div>
+      <div id="totalReviews" style="font-size:.75rem;color:var(--text3,#94a3b8)">0 reviews</div>
+    </div>
+    <div style="flex:1;min-width:180px" id="ratingBreakdown"></div>
+  </div>
+
+  <!-- Sort -->
+  <div style="display:flex;gap:.5rem;margin-bottom:1rem;align-items:center">
+    <span style="font-size:.75rem;color:var(--text3,#94a3b8)">Sort:</span>
+    <button onclick="loadReviews('newest')"  id="rs-newest"  class="review-sort active-rs">Newest</button>
+    <button onclick="loadReviews('highest')" id="rs-highest" class="review-sort">Highest ⭐</button>
+    <button onclick="loadReviews('lowest')"  id="rs-lowest"  class="review-sort">Lowest ⭐</button>
+  </div>
+
+  <!-- Reviews list -->
+  <div id="reviewsList" style="display:flex;flex-direction:column;gap:1rem">
+    <div style="text-align:center;padding:2rem;color:var(--text3,#94a3b8)">Loading reviews…</div>
+  </div>
+  <div id="reviewsPagination" style="display:flex;justify-content:center;gap:.4rem;margin-top:1.25rem;flex-wrap:wrap"></div>
+</div>
+
+<!-- ══ REVIEW FORM MODAL ══ -->
+<div id="reviewFormOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto" onclick="if(event.target===this)closeReviewForm()">
+  <div style="background:var(--card,#fff);border-radius:16px;width:100%;max-width:460px;margin:auto;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+    <div style="padding:1.25rem 1.5rem;background:var(--accent,#6366f1);color:#fff;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-family:'Montserrat',sans-serif;font-weight:800">⭐ Write a Review</div>
+      <button onclick="closeReviewForm()" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer">✕</button>
+    </div>
+    <div style="padding:1.25rem 1.5rem">
+
+      <!-- Step 1: Verify order -->
+      <div id="reviewStep1">
+        <p style="font-size:.85rem;color:var(--text2,#475569);margin-bottom:1rem;line-height:1.6">
+          Reviews are only available to customers who have received their order. Enter your order details to continue.
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.75rem">
+          <div>
+            <label style="font-size:.72rem;font-weight:700;color:var(--text3,#94a3b8);display:block;margin-bottom:.3rem">ORDER NUMBER</label>
+            <input id="rvOrderNo" placeholder="e.g. ORD-0001" style="width:100%;padding:.55rem .75rem;border:1.5px solid var(--border,#e2e8f0);border-radius:8px;font-family:inherit;font-size:.85rem;text-transform:uppercase"/>
+          </div>
+          <div>
+            <label style="font-size:.72rem;font-weight:700;color:var(--text3,#94a3b8);display:block;margin-bottom:.3rem">PHONE NUMBER</label>
+            <input id="rvPhone" type="tel" placeholder="+254 7XX XXX XXX" style="width:100%;padding:.55rem .75rem;border:1.5px solid var(--border,#e2e8f0);border-radius:8px;font-family:inherit;font-size:.85rem"/>
+          </div>
+        </div>
+        <div id="rvVerifyMsg" style="display:none;padding:.5rem .75rem;border-radius:7px;font-size:.78rem;margin-bottom:.75rem"></div>
+        <button onclick="verifyOrderForReview()" id="rvVerifyBtn"
+          style="width:100%;padding:.65rem;background:var(--accent,#6366f1);color:#fff;border:none;border-radius:9px;font-weight:700;cursor:pointer">
+          🔍 Verify Order
+        </button>
+      </div>
+
+      <!-- Step 2: Write review -->
+      <div id="reviewStep2" style="display:none">
+        <div id="rvOrderConfirmed" style="padding:.6rem .85rem;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:8px;font-size:.82rem;color:#16a34a;font-weight:600;margin-bottom:1rem"></div>
+
+        <!-- Star rating -->
+        <div style="margin-bottom:1rem">
+          <label style="font-size:.72rem;font-weight:700;color:var(--text3,#94a3b8);display:block;margin-bottom:.5rem">YOUR RATING *</label>
+          <div id="starPicker" style="display:flex;gap:.25rem">
+            ${[1,2,3,4,5].map(n=>`<button type="button" onclick="setReviewRating(${n})" id="rstar${n}" style="font-size:1.8rem;background:none;border:none;cursor:pointer;line-height:1;transition:transform .1s" onmouseover="hoverStars(${n})" onmouseout="renderStars()">☆</button>`).join('')}
+          </div>
+          <input type="hidden" id="rvRating" value="0"/>
+          <div id="ratingLabel" style="font-size:.75rem;color:var(--text3,#94a3b8);margin-top:.25rem;height:1rem"></div>
+        </div>
+
+        <div style="margin-bottom:.75rem">
+          <label style="font-size:.72rem;font-weight:700;color:var(--text3,#94a3b8);display:block;margin-bottom:.3rem">YOUR REVIEW *</label>
+          <textarea id="rvComment" placeholder="Share your experience with this shop…" maxlength="1000" oninput="document.getElementById('rvCharCount').textContent=this.value.length+'/1000'"
+            style="width:100%;padding:.65rem .85rem;border:1.5px solid var(--border,#e2e8f0);border-radius:8px;font-family:inherit;font-size:.85rem;min-height:100px;resize:none"></textarea>
+          <div style="text-align:right;font-size:.7rem;color:var(--text3,#94a3b8)" id="rvCharCount">0/1000</div>
+        </div>
+
+        <button onclick="submitReview()" id="rvSubmitBtn"
+          style="width:100%;padding:.7rem;background:var(--accent,#6366f1);color:#fff;border:none;border-radius:9px;font-weight:800;cursor:pointer;font-size:.9rem">
+          ⭐ Submit Review
+        </button>
+      </div>
+
+      <!-- Step 3: Thank you -->
+      <div id="reviewStep3" style="display:none;text-align:center;padding:1.5rem 0">
+        <div style="font-size:3rem;margin-bottom:.75rem">🎉</div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:.5rem">Thank You!</div>
+        <div style="font-size:.85rem;color:var(--text2,#475569);margin-bottom:1.25rem">Your review has been published.</div>
+        <button onclick="closeReviewForm();loadReviews()" style="padding:.6rem 1.5rem;background:var(--accent,#6366f1);color:#fff;border:none;border-radius:9px;font-weight:700;cursor:pointer">See All Reviews</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

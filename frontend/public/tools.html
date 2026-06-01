@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Free ICT Tools — Aircoast Solutions Kenya</title>
+<meta name="description" content="Free browser-based ICT tools from Aircoast Solutions Kenya. PDF to Word converter, image compressor, password generator and more — no sign-up needed."/>
+<meta name="keywords" content="free ICT tools Kenya, PDF to Word converter Mombasa, image compressor Kenya, Aircoast Solutions tools"/>
+<meta property="og:title" content="Free ICT Tools — Aircoast Solutions Kenya"/>
+<meta property="og:description" content="Browser-based productivity tools. No sign-up, no file uploads — runs entirely in your browser."/>
+<meta property="og:type" content="website"/>
+<link rel="canonical" href="tools.html"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='10'>🔧</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;
+  --card:#1a2035;--card2:#1f2740;--border:#252f47;
+  --accent:#00d4ff;--green:#00e676;--orange:#ff6b35;--red:#ff4757;--gold:#f59e0b;
+  --text:#e8edf5;--text2:#8a97b0;--text3:#5a6a8a;
+  --font-head:'Montserrat',sans-serif;--font-body:'Roboto',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-body)}
+em{color:var(--accent);font-style:normal}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{background:var(--bg2);border-bottom:1px solid var(--border);padding:.5rem 1.5rem;font-size:.73rem;color:var(--text3)}
+.breadcrumb a{color:var(--text2);text-decoration:none}.breadcrumb a:hover{color:var(--accent)}
+
+/* ── TOOLS CSS (extracted) ── */
+/* ══════════════════ TOOLS PAGE ══════════════════ */
+        .tools-hero{background:linear-gradient(135deg,#080b11 0%,#0a1018 50%,#0d1525 100%);border-bottom:1px solid var(--border);padding:3.5rem 2rem 3rem;position:relative;overflow:hidden;text-align:center}
+    .tools-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(0,212,255,.06) 0%,transparent 60%)}
+    .tools-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+    .tools-hero-inner{max-width:700px;margin:0 auto;position:relative}
+    .tools-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);padding:.3rem .85rem;border-radius:20px;margin-bottom:1.2rem}
+    .tools-hero h1{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.9rem}
+    .tools-hero h1 em{font-style:normal;color:var(--accent)}
+    .tools-hero p{color:var(--text2);font-size:.95rem;line-height:1.7}
+
+    /* Tool cards grid */
+    .tools-main{max-width:1100px;margin:0 auto;padding:2.5rem 2rem 4rem}
+    .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+    .tool-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .3s;cursor:pointer}
+    .tool-card:hover{border-color:rgba(0,212,255,.4);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+    .tool-card-header{padding:1.5rem 1.5rem 0;display:flex;align-items:center;gap:1rem}
+    .tool-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+    .tool-card-title{font-family:var(--font-head);font-size:1.05rem;font-weight:700}
+    .tool-card-sub{font-size:.75rem;color:var(--text3);margin-top:.15rem}
+    .tool-card-body{padding:1rem 1.5rem 1.5rem}
+    .tool-card-desc{font-size:.83rem;color:var(--text2);line-height:1.7;margin-bottom:1rem}
+    .tool-badge-row{display:flex;gap:.5rem;flex-wrap:wrap}
+    .tool-badge{font-size:.65rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .55rem;border-radius:4px;background:rgba(0,212,255,.08);color:var(--accent);border:1px solid rgba(0,212,255,.15)}
+    .tool-badge.free{background:rgba(0,230,118,.08);color:var(--green);border-color:rgba(0,230,118,.2)}
+    .tool-open-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.82rem;font-weight:600;color:var(--accent);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);padding:.4rem .9rem;border-radius:7px;cursor:pointer;font-family:var(--font-body);transition:all .2s}
+    .tool-open-btn:hover{background:rgba(0,212,255,.18)}
+
+    /* PDF Converter Tool */
+    #pdfConverterTool{display:none}
+    .converter-page-inner{max-width:840px;margin:0 auto;padding:2rem 2rem 4rem}
+    .converter-back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--text2);font-size:.85rem;cursor:pointer;margin-bottom:1.75rem;transition:color .2s;background:none;border:none;font-family:var(--font-body);padding:0}
+    .converter-back-btn:hover{color:var(--accent)}
+    .converter-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+    .converter-header{padding:2rem 2rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;gap:1.25rem}
+    .converter-header-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#e53e3e,#c53030);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+    .converter-header-text h2{font-family:var(--font-head);font-size:1.3rem;font-weight:800;margin-bottom:.3rem}
+    .converter-header-text p{font-size:.83rem;color:var(--text2);line-height:1.6}
+    .converter-body{padding:2rem}
+
+    /* Drop zone */
+    .drop-zone{border:2px dashed var(--border);border-radius:14px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:all .3s;position:relative;background:var(--bg3)}
+    .drop-zone.drag-over{border-color:var(--accent);background:rgba(0,212,255,.04);box-shadow:0 0 0 4px rgba(0,212,255,.08)}
+    .drop-zone.has-file{border-color:var(--green);background:rgba(0,230,118,.03)}
+    .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .drop-icon{font-size:3rem;margin-bottom:.75rem;transition:transform .3s}
+    .drop-zone.drag-over .drop-icon{transform:scale(1.15)}
+    .drop-title{font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+    .drop-sub{font-size:.82rem;color:var(--text3);line-height:1.6}
+    .drop-sub strong{color:var(--accent)}
+    .drop-file-info{margin-top:1rem;padding:.75rem 1rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:8px;display:none;align-items:center;gap:.75rem}
+    .drop-file-info.show{display:flex}
+    .dfi-icon{font-size:1.4rem}
+    .dfi-name{font-size:.88rem;font-weight:600;color:var(--text)}
+    .dfi-size{font-size:.75rem;color:var(--text3);margin-top:.15rem}
+    .dfi-remove{margin-left:auto;background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:.2rem;transition:color .2s}
+    .dfi-remove:hover{color:var(--red)}
+
+    /* Convert button */
+    .convert-btn{width:100%;margin-top:1.5rem;padding:1rem;font-size:1rem;font-weight:700;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:all .25s;border:none;font-family:var(--font-head)}
+    .convert-btn:not(:disabled){background:linear-gradient(135deg,var(--accent),#0099cc);color:var(--bg)}
+    .convert-btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.3)}
+    .convert-btn:disabled{background:var(--bg3);color:var(--text3);cursor:not-allowed;border:1px solid var(--border)}
+
+    /* Progress section */
+    .progress-section{margin-top:1.75rem;display:none}
+    .progress-section.show{display:block}
+    .progress-track{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+    .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    .progress-label{font-size:.85rem;font-weight:600;color:var(--text)}
+    .progress-pct{font-size:.82rem;color:var(--accent);font-weight:700}
+    .progress-bar-wrap{background:var(--bg2);border-radius:20px;height:8px;overflow:hidden;margin-bottom:1rem}
+    .progress-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .4s ease;width:0%}
+    .progress-bar-fill.error{background:var(--red)}
+    .progress-steps{display:flex;flex-direction:column;gap:.5rem}
+    .progress-step{display:flex;align-items:center;gap:.65rem;font-size:.8rem;color:var(--text3);transition:color .3s}
+    .progress-step.active{color:var(--text)}
+    .progress-step.done{color:var(--green)}
+    .progress-step.error-step{color:var(--red)}
+    .ps-dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0;transition:all .3s}
+    .progress-step.active .ps-dot{border-color:var(--accent);background:rgba(0,212,255,.1);animation:pulse-dot .8s ease infinite}
+    .progress-step.done .ps-dot{border-color:var(--green);background:rgba(0,230,118,.15);color:var(--green)}
+    .progress-step.error-step .ps-dot{border-color:var(--red);background:rgba(255,71,87,.1)}
+    @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,.4)}50%{box-shadow:0 0 0 5px rgba(0,212,255,0)}}
+    .ps-msg{line-height:1.4}
+
+    /* Download section */
+    .download-section{margin-top:1.25rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:12px;padding:1.5rem;display:none;align-items:center;gap:1.25rem}
+    .download-section.show{display:flex}
+    .dl-icon{font-size:2.5rem;flex-shrink:0}
+    .dl-info h4{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--green);margin-bottom:.25rem}
+    .dl-info p{font-size:.8rem;color:var(--text2)}
+    .dl-btn{margin-left:auto;display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--bg);padding:.7rem 1.4rem;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;border:none;font-family:var(--font-head);transition:all .2s;white-space:nowrap;flex-shrink:0}
+    .dl-btn:hover{background:#33ff99;transform:translateY(-1px)}
+    .dl-btn:disabled{background:var(--bg3);color:var(--text3);cursor:not-allowed}
+
+    /* Reset button */
+    .converter-reset-btn{width:100%;margin-top:1rem;padding:.7rem;font-size:.85rem;font-weight:600;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:var(--font-body);transition:all .2s;display:none}
+    .converter-reset-btn.show{display:block}
+    .converter-reset-btn:hover{background:var(--card2);border-color:var(--accent);color:var(--text)}
+
+    /* Limitation note */
+    .converter-note{margin-top:1.5rem;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.18);border-radius:10px;padding:1rem 1.25rem;font-size:.78rem;color:var(--text2);line-height:1.7}
+    .converter-note strong{color:#f59e0b}
+
+    @media(max-width:640px){
+      .converter-header{flex-direction:column;text-align:center}
+      .download-section{flex-direction:column;text-align:center}
+      .dl-btn{margin-left:0;width:100%;justify-content:center}
+    }
+
+
+/* ── CONVERTER CSS (extracted) ── */
+    .converter-page-inner{max-width:840px;margin:0 auto;padding:2rem 2rem 4rem}
+    .converter-back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--text2);font-size:.85rem;cursor:pointer;margin-bottom:1.75rem;transition:color .2s;background:none;border:none;font-family:var(--font-body);padding:0}
+    .converter-back-btn:hover{color:var(--accent)}
+    .converter-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+    .converter-header{padding:2rem 2rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;gap:1.25rem}
+    .converter-header-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#e53e3e,#c53030);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+    .converter-header-text h2{font-family:var(--font-head);font-size:1.3rem;font-weight:800;margin-bottom:.3rem}
+    .converter-header-text p{font-size:.83rem;color:var(--text2);line-height:1.6}
+    .converter-body{padding:2rem}
+
+    /* Drop zone */
+    .drop-zone{border:2px dashed var(--border);border-radius:14px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:all .3s;position:relative;background:var(--bg3)}
+    .drop-zone.drag-over{border-color:var(--accent);background:rgba(0,212,255,.04);box-shadow:0 0 0 4px rgba(0,212,255,.08)}
+    .drop-zone.has-file{border-color:var(--green);background:rgba(0,230,118,.03)}
+    .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .drop-icon{font-size:3rem;margin-bottom:.75rem;transition:transform .3s}
+    .drop-zone.drag-over .drop-icon{transform:scale(1.15)}
+    .drop-title{font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+    .drop-sub{font-size:.82rem;color:var(--text3);line-height:1.6}
+    .drop-sub strong{color:var(--accent)}
+    .drop-file-info{margin-top:1rem;padding:.75rem 1rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:8px;display:none;align-items:center;gap:.75rem}
+    .drop-file-info.show{display:flex}
+    .dfi-icon{font-size:1.4rem}
+    .dfi-name{font-size:.88rem;font-weight:600;color:var(--text)}
+    .dfi-size{font-size:.75rem;color:var(--text3);margin-top:.15rem}
+    .dfi-remove{margin-left:auto;background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:.2rem;transition:color .2s}
+    .dfi-remove:hover{color:var(--red)}
+
+    /* Convert button */
+    .convert-btn{width:100%;margin-top:1.5rem;padding:1rem;font-size:1rem;font-weight:700;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:all .25s;border:none;font-family:var(--font-head)}
+    .convert-btn:not(:disabled){background:linear-gradient(135deg,var(--accent),#0099cc);color:var(--bg)}
+    .convert-btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.3)}
+    .convert-btn:disabled{background:var(--bg3);color:var(--text3);cursor:not-allowed;border:1px solid var(--border)}
+
+    /* Progress section */
+    .progress-section{margin-top:1.75rem;display:none}
+    .progress-section.show{display:block}
+    .progress-track{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+    .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    .progress-label{font-size:.85rem;font-weight:600;color:var(--text)}
+    .progress-pct{font-size:.82rem;color:var(--accent);font-weight:700}
+    .progress-bar-wrap{background:var(--bg2);border-radius:20px;height:8px;overflow:hidden;margin-bottom:1rem}
+    .progress-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .4s ease;width:0%}
+    .progress-bar-fill.error{background:var(--red)}
+    .progress-steps{display:flex;flex-direction:column;gap:.5rem}
+    .progress-step{display:flex;align-items:center;gap:.65rem;font-size:.8rem;color:var(--text3);transition:color .3s}
+    .progress-step.active{color:var(--text)}
+    .progress-step.done{color:var(--green)}
+    .progress-step.error-step{color:var(--red)}
+    .ps-dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0;transition:all .3s}
+    .progress-step.active .ps-dot{border-color:var(--accent);background:rgba(0,212,255,.1);animation:pulse-dot .8s ease infinite}
+    .progress-step.done .ps-dot{border-color:var(--green);background:rgba(0,230,118,.15);color:var(--green)}
+    .progress-step.error-step .ps-dot{border-color:var(--red);background:rgba(255,71,87,.1)}
+    @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,.4)}50%{box-shadow:0 0 0 5px rgba(0,212,255,0)}}
+    .ps-msg{line-height:1.4}
+
+    /* Download section */
+    .download-section{margin-top:1.25rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:12px;padding:1.5rem;display:none;align-items:center;gap:1.25rem}
+    .download-section.show{display:flex}
+    .dl-icon{font-size:2.5rem;flex-shrink:0}
+    .dl-info h4{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--green);margin-bottom:.25rem}
+    .dl-info p{font-size:.8rem;color:var(--text2)}
+    .dl-btn{margin-left:auto;display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--bg);padding:.7rem 1.4rem;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;border:none;font-family:var(--font-head);transition:all .2s;white-space:nowrap;flex-shrink:0}
+    .dl-btn:hover{background:#33ff99;transform:translateY(-1px)}
+    .dl-btn:disabled{background:var(--bg3);color:var(--text3);cursor:not-allowed}
+
+    /* Reset button */
+    .converter-reset-btn{width:100%;margin-top:1rem;padding:.7rem;font-size:.85rem;font-weight:600;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:var(--font-body);transition:all .2s;display:none}
+    .converter-reset-btn.show{display:block}
+    .converter-reset-btn:hover{background:var(--card2);border-color:var(--accent);color:var(--text)}
+
+    /* Limitation note */
+    .converter-note{margin-top:1.5rem;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.18);border-radius:10px;padding:1rem 1.25rem;font-size:.78rem;color:var(--text2);line-height:1.7}
+    .converter-note strong{color:#f59e0b}
+
+    @media(max-width:640px){
+      .converter-header{flex-direction:column;text-align:center}
+      .download-section{flex-direction:column;text-align:center}
+      .dl-btn{margin-left:0;width:100%;justify-content:center}
+    }
+
+
+/* ── Back button for converter view ── */
+.back-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:1rem 2rem}
+.back-bar-inner{max-width:840px;margin:0 auto}
+.converter-back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--text2);font-size:.85rem;cursor:pointer;transition:color .2s;background:none;border:none;font-family:var(--font-body);padding:0}
+.converter-back-btn:hover{color:var(--accent)}
+
+/* ── Page views (toggle between grid and converter) ── */
+#toolsGrid{display:block}
+#pdfConverterView{display:none}
+
+/* ── Global footer ── */
+.ac-footer{border-top:1px solid var(--border);padding:2.5rem 2rem 0;margin-top:4rem;background:var(--bg2)}
+.ac-footer-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.ac-footer-logo{font-family:var(--font-head);font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:.85rem}
+.ac-footer-dot{color:var(--accent)}
+.ac-footer-brand p{font-size:.83rem;color:var(--text3);line-height:1.75;max-width:280px}
+.ac-footer-col h4{font-family:var(--font-head);font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.9rem}
+.ac-footer-col ul{list-style:none;padding:0;margin:0}
+.ac-footer-col ul li{margin-bottom:.5rem}
+.ac-footer-col ul li a{color:var(--text3);font-size:.81rem;text-decoration:none;transition:color .2s}
+.ac-footer-col ul li a:hover{color:var(--accent)}
+.ac-footer-bottom{max-width:1300px;margin:0 auto;border-top:1px solid var(--border);padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;color:var(--text3);font-size:.78rem;flex-wrap:wrap;gap:.5rem}
+@media(max-width:768px){.ac-footer-inner{grid-template-columns:1fr;gap:1.75rem}}
+</style>
+</head>
+<body>
+
+<div class="breadcrumb">
+  <a href="index.html">🏠 Home</a> ›
+  <span id="bcCurrent" style="color:var(--text)">🔧 Tools</span>
+</div>
+
+<!-- ═══ TOOLS GRID VIEW ═══ -->
+<div id="toolsGrid">
+  <section class="tools-hero">
+    <div class="tools-hero-inner">
+      <div class="tools-eyebrow">⚙️ Free ICT Utilities</div>
+      <h1>Productivity <em>Tools</em></h1>
+      <p>Free, browser-based tools to help you work smarter with documents, devices, and files — no sign-up needed.</p>
+    </div>
+  </section>
+
+  <div class="tools-main">
+    <div class="tools-grid">
+
+      <!-- PDF → Word -->
+      <div class="tool-card" onclick="openPdfConverter()">
+        <div class="tool-card-header">
+          <div class="tool-icon-wrap" style="background:linear-gradient(135deg,#e53e3e,#c53030)">📄</div>
+          <div>
+            <div class="tool-card-title">PDF → Word Converter</div>
+            <div class="tool-card-sub">Convert PDF to editable .docx</div>
+          </div>
+        </div>
+        <div class="tool-card-body">
+          <p class="tool-card-desc">Upload any PDF and instantly convert it to a Microsoft Word (.docx) file you can edit. Runs entirely in your browser — no file is uploaded anywhere.</p>
+          <div class="tool-badge-row">
+            <span class="tool-badge free">Free</span>
+            <span class="tool-badge">Browser-based</span>
+            <span class="tool-badge">No sign-up</span>
+          </div>
+          <button class="tool-open-btn">Open Tool →</button>
+        </div>
+      </div>
+
+      <!-- Image Compressor (coming soon) -->
+      <div class="tool-card" style="opacity:.55;cursor:default">
+        <div class="tool-card-header">
+          <div class="tool-icon-wrap" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">🖼️</div>
+          <div>
+            <div class="tool-card-title">Image Compressor</div>
+            <div class="tool-card-sub">Reduce image file size</div>
+          </div>
+        </div>
+        <div class="tool-card-body">
+          <p class="tool-card-desc">Compress JPG, PNG, and WebP images without visible quality loss. Great for websites, WhatsApp, and email attachments.</p>
+          <div class="tool-badge-row">
+            <span class="tool-badge free">Free</span>
+            <span class="tool-badge" style="background:rgba(245,158,11,.08);color:#f59e0b;border-color:rgba(245,158,11,.2)">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Generator (coming soon) -->
+      <div class="tool-card" style="opacity:.55;cursor:default">
+        <div class="tool-card-header">
+          <div class="tool-icon-wrap" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)">🔒</div>
+          <div>
+            <div class="tool-card-title">Password Generator</div>
+            <div class="tool-card-sub">Create strong secure passwords</div>
+          </div>
+        </div>
+        <div class="tool-card-body">
+          <p class="tool-card-desc">Generate strong, random passwords with custom length and character sets. Boost your cybersecurity in seconds.</p>
+          <div class="tool-badge-row">
+            <span class="tool-badge free">Free</span>
+            <span class="tool-badge" style="background:rgba(245,158,11,.08);color:#f59e0b;border-color:rgba(245,158,11,.2)">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Code Generator (coming soon) -->
+      <div class="tool-card" style="opacity:.55;cursor:default">
+        <div class="tool-card-header">
+          <div class="tool-icon-wrap" style="background:linear-gradient(135deg,#059669,#047857)">📱</div>
+          <div>
+            <div class="tool-card-title">QR Code Generator</div>
+            <div class="tool-card-sub">Create custom QR codes</div>
+          </div>
+        </div>
+        <div class="tool-card-body">
+          <p class="tool-card-desc">Generate QR codes for URLs, contacts, WhatsApp links, and more. Download as PNG instantly.</p>
+          <div class="tool-badge-row">
+            <span class="tool-badge free">Free</span>
+            <span class="tool-badge" style="background:rgba(245,158,11,.08);color:#f59e0b;border-color:rgba(245,158,11,.2)">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Word Count / Text Analyser (coming soon) -->
+      <div class="tool-card" style="opacity:.55;cursor:default">
+        <div class="tool-card-header">
+          <div class="tool-icon-wrap" style="background:linear-gradient(135deg,#0891b2,#0e7490)">📊</div>
+          <div>
+            <div class="tool-card-title">Text Analyser</div>
+            <div class="tool-card-sub">Word count, reading time & more</div>
+          </div>
+        </div>
+        <div class="tool-card-body">
+          <p class="tool-card-desc">Paste any text and instantly get word count, character count, sentence count, and estimated reading time.</p>
+          <div class="tool-badge-row">
+            <span class="tool-badge free">Free</span>
+            <span class="tool-badge" style="background:rgba(245,158,11,.08);color:#f59e0b;border-color:rgba(245,158,11,.2)">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Converter (coming soon) -->
+      <div class="tool-card" style="opacity:.55;cursor:default">
+        <div class="tool-card-header">
+          <div class="tool-icon-wrap" style="background:linear-gradient(135deg,#d97706,#b45309)">🔢</div>
+          <div>
+            <div class="tool-card-title">Unit Converter</div>
+            <div class="tool-card-sub">Length, weight, data size & more</div>
+          </div>
+        </div>
+        <div class="tool-card-body">
+          <p class="tool-card-desc">Convert between units — kilometres to miles, GB to MB, kilograms to pounds and dozens more conversion categories.</p>
+          <div class="tool-badge-row">
+            <span class="tool-badge free">Free</span>
+            <span class="tool-badge" style="background:rgba(245,158,11,.08);color:#f59e0b;border-color:rgba(245,158,11,.2)">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end tools-grid -->
+  </div><!-- end tools-main -->
+</div><!-- end #toolsGrid -->
+
+<!-- ═══ PDF CONVERTER VIEW ═══ -->
+<div id="pdfConverterView">
+  <div class="back-bar">
+    <div class="back-bar-inner">
+      <button class="converter-back-btn" onclick="showToolsGrid()">← Back to Tools</button>
+    </div>
+  </div>
+  <div class="converter-page-inner">
+    <div class="converter-card">
+      <div class="converter-header">
+        <div class="converter-header-icon">📄</div>
+        <div class="converter-header-text">
+          <h2>PDF to Word Converter</h2>
+          <p>Upload a PDF and convert it to an editable Microsoft Word (.docx) document. Runs entirely in your browser — no file is sent to any server.</p>
+        </div>
+      </div>
+      <div class="converter-body">
+        <div class="drop-zone" id="dropZone"
+          ondragover="handleDragOver(event)"
+          ondragleave="handleDragLeave(event)"
+          ondrop="handleDrop(event)">
+          <input type="file" id="pdfFileInput" accept=".pdf,application/pdf" onchange="handleFileSelect(event)"/>
+          <div class="drop-icon" id="dropIcon">📥</div>
+          <div class="drop-title" id="dropTitle">Drop your PDF here</div>
+          <p class="drop-sub">or <strong>click to browse</strong> · PDF files only · Max 20MB</p>
+          <div class="drop-file-info" id="dropFileInfo">
+            <span class="dfi-icon">📄</span>
+            <div>
+              <div class="dfi-name" id="dfiName">—</div>
+              <div class="dfi-size" id="dfiSize">—</div>
+            </div>
+            <button class="dfi-remove" onclick="removeFile(event)" title="Remove">✕</button>
+          </div>
+        </div>
+        <button class="convert-btn" id="convertBtn" disabled onclick="startConversion()">
+          <span id="convertBtnText">⚡ Convert to Word</span>
+        </button>
+        <div class="progress-section" id="progressSection">
+          <div class="progress-track">
+            <div class="progress-header">
+              <span class="progress-label" id="progressLabel">Converting…</span>
+              <span class="progress-pct"   id="progressPct">0%</span>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+            <div class="progress-steps" id="progressSteps"></div>
+          </div>
+        </div>
+        <div class="download-section" id="downloadSection">
+          <div class="dl-icon">✅</div>
+          <div class="dl-info">
+            <h4>Conversion Complete!</h4>
+            <p id="dlInfo">Your Word document is ready to download.</p>
+          </div>
+          <button class="dl-btn" id="downloadBtn" onclick="downloadFile()">⬇️ Download .docx</button>
+        </div>
+        <button class="converter-reset-btn" id="resetBtn" onclick="resetConverter()">🔄 Convert Another File</button>
+        <div class="converter-note">
+          <strong>💡 How it works:</strong> Conversion happens entirely in your browser — no file is uploaded to any server. Your PDF is processed locally and your Word document is generated on your device.
+          <strong>⚠️ Note:</strong> Text-based PDFs convert best. Scanned image-only PDFs will produce limited output.
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- end #pdfConverterView -->
+
+<footer class="ac-footer">
+  <div class="ac-footer-inner">
+    <div class="ac-footer-brand">
+      <div class="ac-footer-logo">Aircoast<span class="ac-footer-dot">.</span>Solutions</div>
+      <p>Aircoast Solutions — ICT accessories, digital transformation, printing, online services &amp; more. 10 branches across Kenya.</p>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Our Branches</h4>
+      <ul>
+        <li><a href="shop.html">Aircoast Solutions – Bamburi</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Mwembe Tayari</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Nakuru Town</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Eldoret</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Eastleigh Nairobi</a></li>
+        <li><a href="shop.html">Aircoast Solutions – Westlands</a></li>
+      </ul>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">🛍️ Marketplace</a></li>
+        <li><a href="services.html">⚙️ Services</a></li>
+        <li><a href="tools.html">🔧 Tools</a></li>
+        <li><a href="blog.html">📝 Blog</a></li>
+        <li><a href="about.html">🏢 About Us</a></li>
+        <li><a href="mailto:umurjillo@gmail.com">✉️ umurjillo@gmail.com</a></li>
+        <li><a href="https://wa.me/254740169448" target="_blank">💬 WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ac-footer-bottom">
+    <span>© 2025 Aircoast Solutions · umurjillo@gmail.com</span>
+    <span>Mombasa, Kenya 🇰🇪</span>
+  </div>
+</footer>
+
+<script src="notif-bell.js"></script>
+<script src="header.js"></script>
+<script>
+// ── View switching ─────────────────────────────────────────────────────────────
+function showToolsGrid() {
+  document.getElementById('toolsGrid').style.display       = 'block';
+  document.getElementById('pdfConverterView').style.display = 'none';
+  document.getElementById('bcCurrent').textContent = '🔧 Tools';
+  window.scrollTo(0, 0);
+  resetConverter();
+}
+
+function openPdfConverter() {
+  document.getElementById('toolsGrid').style.display       = 'none';
+  document.getElementById('pdfConverterView').style.display = 'block';
+  document.getElementById('bcCurrent').textContent = '🔧 Tools › 📄 PDF Converter';
+  window.scrollTo(0, 0);
+  // Push state so browser back works
+  history.pushState({ tool:'pdf' }, '', 'tools.html?tool=pdf');
+}
+
+// Handle browser back/forward
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.tool === 'pdf') openPdfConverter();
+  else showToolsGrid();
+});
+
+// Check URL on load
+(function() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.get('tool') === 'pdf') { document.getElementById('toolsGrid').style.display='none'; document.getElementById('pdfConverterView').style.display='block'; document.getElementById('bcCurrent').textContent='🔧 Tools › 📄 PDF Converter'; }
+})();
+
+// ── PDF Converter logic ────────────────────────────────────────────────────────
+// openPdfConverter — defined above
+
+// showTools — defined above
+
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  document.getElementById('dropZone').classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) applyFile(file);
+}
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) applyFile(file);
+}
+
+function removeFile(e) {
+  e.stopPropagation();
+  selectedPdfFile = null;
+  document.getElementById('pdfFileInput').value = '';
+  document.getElementById('dropFileInfo').classList.remove('show');
+  document.getElementById('dropZone').classList.remove('has-file');
+  document.getElementById('dropIcon').textContent = '📥';
+  document.getElementById('dropTitle').textContent = 'Drop your PDF here';
+  document.getElementById('convertBtn').disabled = true;
+  resetProgressUI();
+}
+
+async function startConversion() {
+  if (!selectedPdfFile) return;
+
+  // Lock UI
+  document.getElementById('convertBtn').disabled = true;
+  document.getElementById('convertBtnText').textContent = '⏳ Converting…';
+  document.getElementById('dropZone').style.pointerEvents = 'none';
+  document.getElementById('downloadSection').classList.remove('show');
+  document.getElementById('resetBtn').classList.remove('show');
+
+  // Show progress UI
+  document.getElementById('progressSection').classList.add('show');
+  buildStepsUI(6);
+  setStep(1, 6, 'Reading PDF file…');
+
+  try {
+    // ── STEP 1: Read file as ArrayBuffer ──
+    await delay(300);
+    const arrayBuffer = await selectedPdfFile.arrayBuffer();
+    setStep(2, 6, 'Loading PDF structure…');
+    await delay(200);
+
+    // ── STEP 2: Load with PDF.js ──
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const totalPages = pdfDoc.numPages;
+    setStep(3, 6, `Extracting text from ${totalPages} page${totalPages > 1 ? 's' : ''}…`);
+    await delay(200);
+
+    // ── STEP 3: Extract text page by page ──
+    const pageTexts = [];
+    for (let i = 1; i <= totalPages; i++) {
+      const page    = await pdfDoc.getPage(i);
+      const content = await page.getTextContent();
+
+      // Group items into lines by Y-position
+      const lines = groupIntoLines(content.items);
+      pageTexts.push(lines);
+
+      const pct = Math.round((i / totalPages) * 100);
+      setStep(3, 6, `Extracting text… ${pct}% (page ${i}/${totalPages})`);
+    }
+    setStep(4, 6, 'Analysing document structure…');
+    await delay(300);
+
+    // ── STEP 4: Build docx paragraphs ──
+    const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } = docx;
+
+    const children = [];
+    for (let p = 0; p < pageTexts.length; p++) {
+      const lines = pageTexts[p];
+      for (const line of lines) {
+        const text = line.text.trim();
+        if (!text) { children.push(new Paragraph('')); continue; }
+
+        const isHeading = looksLikeHeading(text, line.fontSize);
+        if (isHeading) {
+          children.push(new Paragraph({
+            text,
+            heading: HeadingLevel.HEADING_2,
+            spacing: { before: 240, after: 120 },
+          }));
+        } else {
+          children.push(new Paragraph({
+            children: [new TextRun({ text, size: 22 })],
+            spacing: { after: 80 },
+          }));
+        }
+      }
+      // Page break between pages (except last)
+      if (p < pageTexts.length - 1) {
+        children.push(new Paragraph({ pageBreakBefore: true, text: '' }));
+      }
+    }
+
+    setStep(5, 6, 'Building Word document…');
+    await delay(300);
+
+    // ── STEP 5: Create & pack document ──
+    const outputName = selectedPdfFile.name.replace(/\.pdf$/i, '') + '_converted.docx';
+    const doc = new Document({
+      creator: 'Aircoast Solutions — PDF Converter',
+      title: outputName,
+      sections: [{ properties: {}, children }],
+    });
+
+    setStep(6, 6, 'Finalising and preparing download…');
+    await delay(200);
+
+    // ── STEP 6: Generate blob and trigger download ──
+    const blob = await Packer.toBlob(doc);
+    const sizekb = (blob.size / 1024).toFixed(1);
+
+    // Store blob URL for download button
+    conversionBlobURL  = URL.createObjectURL(blob);
+    conversionFileName = outputName;
+
+    // Update UI
+    document.getElementById('downloadSection').classList.add('show');
+    document.getElementById('dlInfo').textContent =
+      `${totalPages} page${totalPages !== 1 ? 's' : ''} converted · ${sizekb} KB · "${outputName}"`;
+    document.getElementById('resetBtn').classList.add('show');
+    document.getElementById('convertBtnText').textContent = '✅ Converted!';
+    document.getElementById('dropZone').style.pointerEvents = '';
+    setStep(6, 6, '✅ Conversion complete!');
+    showToast('🎉 Done! Click Download to save your Word file.', 'success');
+
+  } catch (err) {
+    console.error('Conversion error:', err);
+    setErrorStep('Error: ' + (err.message || 'Conversion failed'));
+    document.getElementById('convertBtnText').textContent = '⚡ Convert to Word';
+    document.getElementById('convertBtn').disabled = false;
+    document.getElementById('dropZone').style.pointerEvents = '';
+    document.getElementById('resetBtn').classList.add('show');
+    showToast('❌ ' + (err.message || 'Conversion failed'), 'error');
+  }
+}
+
+function downloadFile() {
+  if (!conversionBlobURL) return;
+  const btn = document.getElementById('downloadBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Downloading…';
+
+  const a    = document.createElement('a');
+  a.href     = conversionBlobURL;
+  a.download = conversionFileName || 'converted.docx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.innerHTML = '⬇️ Download .docx';
+    showToast('⬇️ Download started!', 'success');
+  }, 800);
+}
+
+function resetConverter() {
+  if (conversionBlobURL) { URL.revokeObjectURL(conversionBlobURL); }
+  selectedPdfFile    = null;
+  conversionBlobURL  = null;
+  conversionFileName = null;
+  document.getElementById('pdfFileInput').value  = '';
+  document.getElementById('dropFileInfo').classList.remove('show');
+  document.getElementById('dropZone').classList.remove('has-file');
+  document.getElementById('dropZone').style.pointerEvents = '';
+  document.getElementById('dropIcon').textContent  = '📥';
+  document.getElementById('dropTitle').textContent = 'Drop your PDF here';
+  document.getElementById('convertBtn').disabled   = true;
+  document.getElementById('convertBtnText').textContent = '⚡ Convert to Word';
+  resetProgressUI();
+}
+
+
+</script>
+</body>
+</html>

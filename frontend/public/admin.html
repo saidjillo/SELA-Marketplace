@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SELA Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f0f2f5;--card:#fff;--text:#1a1d23;--text2:#4b5563;--text3:#9ca3af;--border:#e5e7eb;--accent:#6366f1;--green:#16a34a;--red:#dc2626;--orange:#ea580c;--sidebar:#1e293b;--sidebar-text:#94a3b8;--sidebar-active:#fff;font-family:'Inter',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+
+/* Sidebar */
+.sidebar{width:240px;background:var(--sidebar);min-height:100vh;position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:100}
+.sb-brand{padding:1.5rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.sb-brand-name{font-family:'Montserrat',sans-serif;font-size:1.2rem;font-weight:900;color:#fff}
+.sb-brand-sub{font-size:.65rem;color:var(--sidebar-text);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+.sb-nav{padding:.75rem 0;flex:1}
+.sb-section{padding:.35rem 1rem .25rem;font-size:.58rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.1em;margin-top:.5rem}
+.sb-item{display:flex;align-items:center;gap:.7rem;padding:.6rem 1.25rem;color:var(--sidebar-text);cursor:pointer;font-size:.82rem;font-weight:500;transition:all .15s;border:none;background:none;width:100%;text-align:left;text-decoration:none}
+.sb-item:hover{background:rgba(255,255,255,.06);color:#e2e8f0}
+.sb-item.active{background:rgba(99,102,241,.2);color:#a5b4fc;border-left:3px solid #6366f1}
+.sb-item-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.sb-logout{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.06)}
+.sb-logout button{width:100%;padding:.6rem;background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.2);border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s}
+.sb-logout button:hover{background:rgba(239,68,68,.22)}
+
+/* Main */
+.main{margin-left:240px;flex:1;padding:0;min-height:100vh}
+.topbar{background:var(--card);border-bottom:1px solid var(--border);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.topbar-title{font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:800;color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:1rem}
+.admin-badge{background:rgba(99,102,241,.1);color:var(--accent);border:1px solid rgba(99,102,241,.2);padding:.3rem .85rem;border-radius:20px;font-size:.75rem;font-weight:700}
+.topbar-marketplace{font-size:.8rem;color:var(--accent);font-weight:600;text-decoration:none;display:flex;align-items:center;gap:.3rem}
+
+/* Content */
+.page{display:none;padding:2rem}
+.page.show{display:block}
+
+/* Stats grid */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;position:relative;overflow:hidden;transition:box-shadow .2s}
+.stat-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c,var(--accent))}
+.stat-icon{font-size:1.6rem;margin-bottom:.9rem}
+.stat-num{font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:900;color:var(--text);line-height:1}
+.stat-label{font-size:.72rem;color:var(--text3);margin-top:.25rem;margin-bottom:.5rem}
+.stat-sub{font-size:.7rem;color:var(--text2);padding-top:.5rem;border-top:1px solid var(--border)}
+.stat-badge{display:inline-flex;align-items:center;gap:.25rem;font-size:.62rem;font-weight:700;padding:.18rem .5rem;border-radius:20px;margin-top:.3rem}
+.badge-up{background:rgba(22,163,74,.1);color:var(--green)}
+.badge-warn{background:rgba(234,88,12,.1);color:var(--orange)}
+.badge-info{background:rgba(99,102,241,.1);color:var(--accent)}
+
+/* Section cards */
+.section-card{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:1.5rem}
+.sc-head{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;border-bottom:1px solid var(--border)}
+.sc-title{font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:.5rem}
+.sc-actions{display:flex;gap:.5rem;align-items:center}
+
+/* Search */
+.search-input{padding:.5rem 1rem;border:1px solid var(--border);border-radius:8px;font-size:.8rem;color:var(--text);background:var(--bg);outline:none;width:220px}
+.search-input:focus{border-color:var(--accent)}
+
+/* Table */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{padding:.7rem 1rem;text-align:left;font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--bg);white-space:nowrap}
+.data-table td{padding:.8rem 1rem;font-size:.82rem;color:var(--text);border-bottom:1px solid var(--border)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:#f9fafb}
+.data-table tbody tr{transition:background .12s}
+
+/* Status badges */
+.s-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .65rem;border-radius:20px;font-size:.68rem;font-weight:700}
+.s-active{background:rgba(22,163,74,.1);color:var(--green)}
+.s-suspended{background:rgba(220,38,38,.1);color:var(--red)}
+.s-pending{background:rgba(234,88,12,.1);color:var(--orange)}
+.s-unverified{background:rgba(156,163,175,.1);color:var(--text3)}
+
+/* Action buttons */
+.act-btn{padding:.3rem .7rem;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;border:none;transition:all .15s}
+.act-suspend{background:rgba(234,88,12,.1);color:var(--orange)}
+.act-suspend:hover{background:rgba(234,88,12,.2)}
+.act-unsuspend{background:rgba(22,163,74,.1);color:var(--green)}
+.act-delete{background:rgba(220,38,38,.1);color:var(--red)}
+.act-delete:hover{background:rgba(220,38,38,.2)}
+.act-view{background:rgba(99,102,241,.1);color:var(--accent)}
+.act-view:hover{background:rgba(99,102,241,.2)}
+
+/* Pagination */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.5rem;border-top:1px solid var(--border);font-size:.78rem;color:var(--text2)}
+.page-btns{display:flex;gap:.3rem}
+.page-btn{padding:.35rem .75rem;border:1px solid var(--border);border-radius:6px;background:var(--card);cursor:pointer;font-size:.75rem;color:var(--text2)}
+.page-btn:hover{border-color:var(--accent);color:var(--accent)}
+.page-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.page-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* Activity feed */
+.activity-list{padding:0}
+.activity-item{display:flex;align-items:flex-start;gap:.85rem;padding:.85rem 1.5rem;border-bottom:1px solid var(--border)}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.activity-text{flex:1;font-size:.82rem;color:var(--text2);line-height:1.5}
+.activity-text strong{color:var(--text)}
+.activity-time{font-size:.68rem;color:var(--text3);white-space:nowrap}
+
+/* Toast */
+.admin-toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#1e293b;color:#fff;padding:.75rem 1.25rem;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .25s;pointer-events:none}
+.admin-toast.show{opacity:1;transform:translateY(0)}
+
+/* Empty state */
+.empty-state{text-align:center;padding:3rem;color:var(--text3)}
+.empty-state div{font-size:2.5rem;margin-bottom:.75rem}
+
+/* 2-col layout */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+
+/* Filter tabs */
+.filter-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
+.filter-tab{padding:.35rem .85rem;border:1px solid var(--border);border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s}
+.filter-tab:hover{border-color:var(--accent);color:var(--accent)}
+.filter-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+@media(max-width:900px){.two-col{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.sidebar{width:200px}.main{margin-left:200px}}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-brand-name">SELA <span style="color:#6366f1">.</span></div>
+    <div class="sb-brand-sub">Admin Control Panel</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-section">Overview</div>
+    <button class="sb-item active" onclick="showPage('overview',this)"><span class="sb-item-icon">📊</span> Dashboard</button>
+    <button class="sb-item" onclick="showPage('activity',this)"><span class="sb-item-icon">📡</span> Live Activity</button>
+    <div class="sb-section">Platform</div>
+    <button class="sb-item" onclick="showPage('users',this)"><span class="sb-item-icon">👥</span> Users</button>
+    <button class="sb-item" onclick="showPage('stores',this)"><span class="sb-item-icon">🏪</span> Stores</button>
+    <button class="sb-item" onclick="showPage('products',this)"><span class="sb-item-icon">📦</span> Products</button>
+    <div class="sb-section">Analytics</div>
+    <button class="sb-item" onclick="showPage('analytics',this)"><span class="sb-item-icon">📈</span> Analytics</button>
+    <div class="sb-section">Finance</div>
+    <button class="sb-item" onclick="showPage('finance',this)"><span class="sb-item-icon">💰</span> Revenue</button>
+    <button class="sb-item" onclick="showPage('subscriptions',this)"><span class="sb-item-icon">🔑</span> Subscriptions</button>
+    <div class="sb-section">Admin Tools</div>
+    <button class="sb-item" onclick="showPage('create-user',this)"><span class="sb-item-icon">➕</span> Create User</button>
+    <button class="sb-item" onclick="showPage('create-store',this)"><span class="sb-item-icon">🏪</span> Create Store</button>
+    <div class="sb-section">System</div>
+    <button class="sb-item" onclick="showPage('settings',this)"><span class="sb-item-icon">⚙️</span> Settings</button>
+    <a class="sb-item" href="index.html"><span class="sb-item-icon">🌐</span> Marketplace</a>
+  </div>
+  <div class="sb-logout">
+    <button onclick="adminLogout()">🚪 Log Out</button>
+  </div>
+</nav>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="pageTitle">Dashboard Overview</div>
+    <div class="topbar-right">
+      <span class="admin-badge">🔐 Admin</span>
+      <span id="adminName" style="font-size:.82rem;color:var(--text2);font-weight:600"></span>
+      <button onclick="goToMyStore()" style="font-size:.8rem;color:#16a34a;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;padding:.3rem .75rem;background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.2);border-radius:8px">🏪 My Store</button>
+      <a href="index.html" class="topbar-marketplace">🌐 View Marketplace</a>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW ──────────────────────────────────────────────── -->
+  <div class="page show" id="page-overview">
+    <div id="adminStoreBtn" style="display:none;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem"></div>
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card" style="--c:#6366f1"><div class="stat-icon">👥</div><div class="stat-num" id="s-users">—</div><div class="stat-label">Total Users</div><div class="stat-sub" id="s-users-sub">Loading…</div></div>
+      <div class="stat-card" style="--c:#0ea5e9"><div class="stat-icon">🏪</div><div class="stat-num" id="s-shops">—</div><div class="stat-label">Active Stores</div><div class="stat-sub" id="s-shops-sub">Loading…</div></div>
+      <div class="stat-card" style="--c:#16a34a"><div class="stat-icon">📦</div><div class="stat-num" id="s-products">—</div><div class="stat-label">Products Listed</div><div class="stat-sub" id="s-products-sub">Loading…</div></div>
+      <div class="stat-card" style="--c:#ea580c"><div class="stat-icon">📍</div><div class="stat-num" id="s-branches">—</div><div class="stat-label">Active Branches</div><div class="stat-sub">Across Kenya</div></div>
+      <div class="stat-card" style="--c:#f59e0b"><div class="stat-icon">💰</div><div class="stat-num" id="s-revenue">KES 0</div><div class="stat-label">Total Revenue</div><div class="stat-sub" id="s-revenue-sub">Loading…</div></div>
+      <div class="stat-card" style="--c:#ec4899"><div class="stat-icon">⏳</div><div class="stat-num" id="s-pending">—</div><div class="stat-label">Pending Stores</div><div class="stat-sub">Awaiting approval</div></div>
+    </div>
+
+    <div class="two-col">
+      <div class="section-card">
+        <div class="sc-head">
+          <div class="sc-title">👥 Recent Users</div>
+          <button class="act-btn act-view" onclick="showPage('users',document.querySelector('[onclick*=users]'))">View All</button>
+        </div>
+        <table class="data-table" id="recentUsersTable">
+          <thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Status</th></tr></thead>
+          <tbody><tr><td colspan="4" style="text-align:center;color:var(--text3);padding:1.5rem">Loading…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="section-card">
+        <div class="sc-head">
+          <div class="sc-title">🏪 Recent Stores</div>
+          <button class="act-btn act-view" onclick="showPage('stores',document.querySelector('[onclick*=stores]'))">View All</button>
+        </div>
+        <table class="data-table" id="recentShopsTable">
+          <thead><tr><th>Store</th><th>Owner</th><th>Products</th><th>Status</th></tr></thead>
+          <tbody><tr><td colspan="4" style="text-align:center;color:var(--text3);padding:1.5rem">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── USERS ─────────────────────────────────────────────────── -->
+  <div class="page" id="page-users">
+    <div class="section-card">
+      <div class="sc-head">
+        <div class="sc-title">👥 All Users</div>
+        <div class="sc-actions">
+          <input class="search-input" id="userSearch" placeholder="🔍 Search users…" oninput="debounce(()=>loadUsers(1),400)()"/>
+          <div class="filter-tabs">
+            <button class="filter-tab active" onclick="setUserFilter('all',this)">All</button>
+            <button class="filter-tab" onclick="setUserFilter('verified',this)">Verified</button>
+            <button class="filter-tab" onclick="setUserFilter('suspended',this)">Suspended</button>
+          </div>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Username</th><th>Stores</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="usersBody"><tr><td colspan="8" style="text-align:center;color:var(--text3);padding:2rem">Loading…</td></tr></tbody>
+      </table>
+      <div class="pagination">
+        <span id="usersPagInfo">—</span>
+        <div class="page-btns" id="usersPagBtns"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STORES ────────────────────────────────────────────────── -->
+  <div class="page" id="page-stores">
+    <div class="section-card">
+      <div class="sc-head">
+        <div class="sc-title">🏪 All Stores</div>
+        <div class="sc-actions">
+          <input class="search-input" id="shopSearch" placeholder="🔍 Search stores…" oninput="debounce(()=>loadShops(1),400)()"/>
+          <div class="filter-tabs">
+            <button class="filter-tab active" onclick="setShopFilter('all',this)">All</button>
+            <button class="filter-tab" onclick="setShopFilter('active',this)">Active</button>
+            <button class="filter-tab" onclick="setShopFilter('suspended',this)">Suspended</button>
+            <button class="filter-tab" onclick="setShopFilter('pending',this)">Pending</button>
+          </div>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Store</th><th>Owner Email</th><th>Products</th><th>Location</th><th>Created</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="shopsBody"><tr><td colspan="8" style="text-align:center;color:var(--text3);padding:2rem">Loading…</td></tr></tbody>
+      </table>
+      <div class="pagination">
+        <span id="shopsPagInfo">—</span>
+        <div class="page-btns" id="shopsPagBtns"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRODUCTS ──────────────────────────────────────────────── -->
+  <div class="page" id="page-products">
+    <div class="section-card">
+      <div class="sc-head"><div class="sc-title">📦 All Products</div></div>
+      <div id="productsBody" style="padding:2rem;text-align:center;color:var(--text3)">Loading…</div>
+    </div>
+  </div>
+
+  <!-- ── FINANCE ───────────────────────────────────────────────── -->
+  <div class="page" id="page-finance">
+    <div class="stats-grid">
+      <div class="stat-card" style="--c:#16a34a"><div class="stat-icon">💰</div><div class="stat-num" id="f-total">KES 0</div><div class="stat-label">Total Revenue</div><div class="stat-sub">All time</div></div>
+      <div class="stat-card" style="--c:#0ea5e9"><div class="stat-icon">📅</div><div class="stat-num" id="f-month">KES 0</div><div class="stat-label">This Month</div><div class="stat-sub">Subscription fees</div></div>
+      <div class="stat-card" style="--c:#6366f1"><div class="stat-icon">🏪</div><div class="stat-num" id="f-active-subs">0</div><div class="stat-label">Active Subscriptions</div><div class="stat-sub">Paying stores</div></div>
+    </div>
+    <div class="section-card">
+      <div class="sc-head"><div class="sc-title">💳 Recent Transactions</div></div>
+      <div style="padding:3rem;text-align:center;color:var(--text3)">
+        <div style="font-size:2.5rem;margin-bottom:.75rem">💳</div>
+        <p>No subscription payments yet.</p>
+        <p style="font-size:.8rem;margin-top:.35rem">Revenue appears here when stores subscribe to paid plans.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SUBSCRIPTIONS ─────────────────────────────────────────── -->
+  <div class="page" id="page-subscriptions">
+    <div class="section-card">
+      <div class="sc-head"><div class="sc-title">🔑 Store Subscriptions</div></div>
+      <div style="padding:3rem;text-align:center;color:var(--text3)">
+        <div style="font-size:2.5rem;margin-bottom:.75rem">🔑</div>
+        <p>Subscription management coming soon.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY ──────────────────────────────────────────────── -->
+  <div class="page" id="page-activity">
+    <div class="section-card">
+      <div class="sc-head"><div class="sc-title">📡 Platform Activity</div></div>
+      <div class="activity-list" id="activityFeed"><div style="padding:2rem;text-align:center;color:var(--text3)">Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- ── SETTINGS ──────────────────────────────────────────────── -->
+  <div class="page" id="page-settings">
+    <div style="max-width:720px;display:flex;flex-direction:column;gap:1.25rem">
+
+      <div class="section-card">
+        <div class="sc-head"><div class="sc-title">🌐 Platform Information</div></div>
+        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:.85rem">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem">
+            <div>
+              <label style="display:block;font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Platform Name</label>
+              <input class="search-input" id="set-platform-name" value="SELA Marketplace" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+            </div>
+            <div>
+              <label style="display:block;font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Contact Email</label>
+              <input class="search-input" id="set-contact-email" value="admin@sela.co.ke" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+            </div>
+          </div>
+          <div style="font-size:.75rem;color:var(--text3);padding:.65rem;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+            ℹ️ To change backend config update <code>.env</code> and restart the server.
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="sc-head"><div class="sc-title">🔐 Change Admin Password</div></div>
+        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:.85rem">
+          
+      <!-- One-time setup card -->
+      <div class="section-card" id="adminSetupCard" style="border-color:rgba(99,102,241,.25)">
+        <div class="sc-head" style="background:rgba(99,102,241,.05)">
+          <div class="sc-title" style="color:var(--accent)">🔧 Admin Account Setup</div>
+        </div>
+        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:.85rem">
+          <p style="font-size:.82rem;color:var(--text2)">Set your admin email address. This is needed for creating admin-owned stores. Run this once after first setup.</p>
+          <div id="setupMsg"></div>
+          <div>
+            <label style="display:block;font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Admin Email</label>
+            <input class="search-input" id="setup-email" type="email" value="admin@sela.co.ke" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Display Name</label>
+            <input class="search-input" id="setup-name" value="SELA Admin" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+          </div>
+          <button onclick="runAdminSetup()" style="width:fit-content;padding:.6rem 1.5rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer">⚙️ Save Admin Email</button>
+        </div>
+      </div>
+<div id="adminPwdMsg"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem">
+            <div>
+              <label style="display:block;font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">New Password</label>
+              <input class="search-input" id="set-new-pwd" type="password" placeholder="Min 8 characters" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+            </div>
+            <div>
+              <label style="display:block;font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Confirm Password</label>
+              <input class="search-input" id="set-confirm-pwd" type="password" placeholder="Repeat password" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+            </div>
+          </div>
+          <button onclick="changeAdminPassword()" style="width:fit-content;padding:.6rem 1.5rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer">🔒 Update Password</button>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="sc-head">
+          <div class="sc-title">📊 System Status</div>
+          <button onclick="loadSystemStatus()" class="act-btn act-view">🔄 Refresh</button>
+        </div>
+        <div style="padding:1.25rem" id="systemStatus">
+          <div style="color:var(--text3);font-size:.82rem">Click Refresh to check system status</div>
+        </div>
+      </div>
+
+      <div class="section-card" style="border-color:rgba(234,88,12,.2)">
+        <div class="sc-head" style="background:rgba(234,88,12,.04)">
+          <div class="sc-title" style="color:var(--orange)">🔒 Maintenance Operations</div>
+        </div>
+        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:.75rem">
+          <p style="font-size:.82rem;color:var(--text2);line-height:1.65">
+            Sensitive operations like database resets, data exports, and server restarts are intentionally <strong>not available from this UI</strong> for security reasons. These must be performed directly on the server terminal by an authorized system administrator.
+          </p>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.1rem;font-size:.8rem;display:flex;flex-direction:column;gap:.6rem">
+            <div style="font-weight:700;color:var(--text);margin-bottom:.2rem">📋 Available terminal commands:</div>
+            <div style="display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;background:var(--card);border-radius:7px;border:1px solid var(--border)">
+              <span style="font-size:.85rem">🗑️</span>
+              <div>
+                <div style="font-weight:700;color:var(--text);font-size:.78rem">Reset database (wipe all data)</div>
+                <code style="font-size:.75rem;color:var(--accent)">node reset-db.js</code>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;background:var(--card);border-radius:7px;border:1px solid var(--border)">
+              <span style="font-size:.85rem">🔄</span>
+              <div>
+                <div style="font-weight:700;color:var(--text);font-size:.78rem">Restart the server</div>
+                <code style="font-size:.75rem;color:var(--accent)">Ctrl+C &nbsp;→&nbsp; npm start</code>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;background:var(--card);border-radius:7px;border:1px solid var(--border)">
+              <span style="font-size:.85rem">🌱</span>
+              <div>
+                <div style="font-weight:700;color:var(--text);font-size:.78rem">Seed demo vendor data</div>
+                <code style="font-size:.75rem;color:var(--accent)">node seed-vendor-products.js</code>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;background:var(--card);border-radius:7px;border:1px solid var(--border)">
+              <span style="font-size:.85rem">🔗</span>
+              <div>
+                <div style="font-weight:700;color:var(--text);font-size:.78rem">Backfill product slugs</div>
+                <code style="font-size:.75rem;color:var(--accent)">node backfill-slugs.js</code>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:.72rem;color:var(--text3);margin-top:.25rem">
+            💡 Keep your server terminal accessible only to authorized personnel. Never share your <code>.env</code> file or admin credentials.
+          </div>
+        </div>
+      </div>
+
+
+      <div class="section-card" style="border-color:rgba(234,88,12,.2)">
+        <div class="sc-head" style="background:rgba(234,88,12,.04)">
+          <div class="sc-title" style="color:var(--orange)">🗑️ Store Cleanup</div>
+          <button onclick="loadShopsList()" class="act-btn act-view">🔄 Load Stores</button>
+        </div>
+        <div style="padding:1.25rem">
+          <p style="font-size:.82rem;color:var(--text2);margin-bottom:1rem">View all stores in the database. Select duplicates or stale ones and delete them.</p>
+          <div id="cleanupMsg"></div>
+          <div id="shopsListCleanup" style="display:none">
+            <table class="data-table" style="margin-bottom:1rem">
+              <thead><tr>
+                <th><input type="checkbox" id="selectAllShops" onchange="document.querySelectorAll('.shop-del-check').forEach(c=>c.checked=this.checked)"/></th>
+                <th>Store</th><th>Owner</th><th>Status</th><th>Created</th>
+              </tr></thead>
+              <tbody id="cleanupBody"></tbody>
+            </table>
+            <div style="display:flex;gap:.75rem;align-items:center">
+              <button onclick="deleteSelectedShops()" style="padding:.5rem 1.1rem;background:rgba(220,38,38,.1);color:var(--red);border:1px solid rgba(220,38,38,.25);border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer">🗑️ Delete Selected</button>
+              <span id="cleanupCount" style="font-size:.8rem;color:var(--text3)"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ── CREATE USER ────────────────────────────────────────────────────────── -->
+  <div class="page" id="page-create-user">
+    <div style="max-width:580px">
+      <div class="section-card">
+        <div class="sc-head">
+          <div class="sc-title">➕ Create User Account</div>
+        </div>
+        <div style="padding:1.75rem">
+          <p style="font-size:.83rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.65">
+            Create an account on behalf of a user. The generated credentials will be shown below — share them with the user so they can log in and change their password.
+          </p>
+          <div id="createUserMsg"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+            <div>
+              <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">First Name *</label>
+              <input class="search-input" id="cu-first" placeholder="e.g. Amina" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+            </div>
+            <div>
+              <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Last Name *</label>
+              <input class="search-input" id="cu-last" placeholder="e.g. Wanjiru" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+            </div>
+          </div>
+          <div style="margin-bottom:1rem">
+            <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Email Address *</label>
+            <input class="search-input" id="cu-email" type="email" placeholder="user@email.com" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+          </div>
+          <div style="margin-bottom:1rem">
+            <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Username *</label>
+            <input class="search-input" id="cu-username" placeholder="e.g. aminaw (letters, numbers, _)" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+          </div>
+          <div style="margin-bottom:1.25rem">
+            <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">
+              Password * 
+              <button onclick="generatePassword()" style="background:rgba(99,102,241,.1);color:var(--accent);border:1px solid rgba(99,102,241,.2);border-radius:6px;padding:.12rem .5rem;font-size:.65rem;font-weight:700;cursor:pointer;margin-left:.4rem">⚡ Auto-generate</button>
+            </label>
+            <div style="display:flex;gap:.5rem">
+              <input class="search-input" id="cu-password" type="text" placeholder="Min 8 characters" style="flex:1;padding:.65rem 1rem;font-size:.88rem"/>
+            </div>
+          </div>
+          <div style="display:flex;gap:.75rem">
+            <button onclick="adminCreateUser()" id="cuBtn" style="flex:1;padding:.75rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:10px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.88rem;cursor:pointer;transition:all .2s">
+              ➕ Create Account
+            </button>
+            <button onclick="clearCreateUser()" style="padding:.75rem 1.25rem;background:var(--bg);color:var(--text2);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer">
+              Clear
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Credentials result card -->
+      <div class="section-card" id="cuResultCard" style="display:none;border:2px solid rgba(22,163,74,.3)">
+        <div class="sc-head" style="background:rgba(22,163,74,.05)">
+          <div class="sc-title" style="color:var(--green)">✅ Account Created — Share these credentials</div>
+        </div>
+        <div style="padding:1.5rem">
+          <p style="font-size:.8rem;color:var(--text2);margin-bottom:1.25rem">Share these login details with the user. They should change their password after first login.</p>
+          <div id="cuCredentials" style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem;font-family:monospace;font-size:.85rem;line-height:2"></div>
+          <div style="display:flex;gap:.65rem;margin-top:1rem">
+            <button onclick="copyCredentials()" style="flex:1;padding:.6rem;background:rgba(99,102,241,.1);color:var(--accent);border:1px solid rgba(99,102,241,.2);border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer">📋 Copy Credentials</button>
+            <button onclick="clearCreateUser()" style="flex:1;padding:.6rem;background:var(--bg);color:var(--text2);border:1px solid var(--border);border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer">➕ Create Another</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CREATE STORE ────────────────────────────────────────────────────────── -->
+  <div class="page" id="page-create-store">
+    <div style="max-width:680px">
+      <div class="section-card">
+        <div class="sc-head">
+          <div class="sc-title">🏪 Create Store on Behalf of User</div>
+        </div>
+        <div style="padding:1.75rem">
+          <p style="font-size:.83rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.65">
+            Create a vendor store for a user who needs assistance. You can assign it to an existing user account or create a new account alongside the store.
+          </p>
+          <div id="createStoreMsg"></div>
+
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1.5rem">
+            <div style="font-size:.75rem;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.85rem">👤 Owner Account</div>
+            <!-- For myself toggle -->
+            <div style="display:flex;gap:.5rem;margin-bottom:.85rem">
+              <button id="cs-for-self-btn" onclick="setStoreOwnerMode('self')" style="flex:1;padding:.55rem;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;border:2px solid #6366f1;background:rgba(99,102,241,.1);color:#6366f1">👤 For Myself (Admin)</button>
+              <button id="cs-for-other-btn" onclick="setStoreOwnerMode('other')" style="flex:1;padding:.55rem;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text2)">🤝 For Another User</button>
+            </div>
+
+            <div id="cs-other-user-section" style="display:none;margin-bottom:.85rem">
+              <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Owner Email * <span style="font-size:.65rem;color:var(--text3)">(existing user OR new)</span></label>
+              <div style="display:flex;gap:.5rem">
+                <input class="search-input" id="cs-owner-email" type="email" placeholder="owner@email.com" style="flex:1;padding:.65rem 1rem;font-size:.88rem" oninput="lookupUser()"/>
+                <button onclick="lookupUser()" style="padding:.6rem 1rem;background:rgba(99,102,241,.1);color:var(--accent);border:1px solid rgba(99,102,241,.2);border-radius:8px;font-size:.75rem;font-weight:700;cursor:pointer">🔍 Look up</button>
+              </div>
+              <div id="cs-user-status" style="font-size:.75rem;margin-top:.4rem;color:var(--text3)"></div>
+            </div>
+            <div id="cs-self-info" style="padding:.65rem 1rem;background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.2);border-radius:8px;margin-bottom:.85rem;font-size:.8rem;color:#6366f1;font-weight:600">
+              👑 This store will be created under the <strong>Admin account</strong> and managed from your vendor dashboard.
+            </div>
+          </div>
+
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1.5rem">
+            <div style="font-size:.75rem;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.85rem">🏪 Store Details</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem">
+              <div>
+                <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Store Name *</label>
+                <input class="search-input" id="cs-name" placeholder="e.g. TechZone Nairobi" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+              </div>
+              <div>
+                <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Location</label>
+                <input class="search-input" id="cs-location" placeholder="e.g. Nairobi, Kenya" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem">
+              <div>
+                <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Store Phone</label>
+                <input class="search-input" id="cs-phone" placeholder="e.g. 0712 345 678" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+              </div>
+              <div>
+                <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">WhatsApp Number</label>
+                <input class="search-input" id="cs-whatsapp" placeholder="e.g. 254712345678" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+              </div>
+            </div>
+            <div style="margin-bottom:.85rem">
+              <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Store Description</label>
+              <textarea class="search-input" id="cs-desc" placeholder="Brief description of what the store sells…" rows="3" style="width:100%;padding:.65rem 1rem;font-size:.85rem;resize:vertical"></textarea>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem">
+              <div>
+                <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Theme Colour</label>
+                <input type="color" id="cs-theme" value="#6366f1" style="width:100%;height:42px;border:1px solid var(--border);border-radius:8px;cursor:pointer;padding:.2rem"/>
+              </div>
+              <div>
+                <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text3);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em">Logo URL (optional)</label>
+                <input class="search-input" id="cs-logo" placeholder="https://…" style="width:100%;padding:.65rem 1rem;font-size:.88rem"/>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="adminCreateStore()" id="csBtn" style="width:100%;padding:.85rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:10px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s">
+            🏪 Create Store
+          </button>
+        </div>
+      </div>
+
+      <!-- Store result card -->
+      <div class="section-card" id="csResultCard" style="display:none;border:2px solid rgba(22,163,74,.3)">
+        <div class="sc-head" style="background:rgba(22,163,74,.05)">
+          <div class="sc-title" style="color:var(--green)">✅ Store Created Successfully</div>
+        </div>
+        <div style="padding:1.5rem">
+          <div id="csResult" style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem;font-size:.85rem;line-height:2"></div>
+          <div style="display:flex;gap:.65rem;margin-top:1rem">
+            <a id="csViewLink" href="#" target="_blank" style="flex:1;padding:.6rem;background:rgba(99,102,241,.1);color:var(--accent);border:1px solid rgba(99,102,241,.2);border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer;text-align:center;text-decoration:none">👁️ View Store</a>
+            <button onclick="clearCreateStore()" style="flex:1;padding:.6rem;background:var(--bg);color:var(--text2);border:1px solid var(--border);border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer">🏪 Create Another</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
+
+
+  <!-- ANALYTICS PANEL -->
+  <div class="page" id="page-analytics">
+    <div class="page-header">
+      <div class="page-title">📈 Platform Analytics</div>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center">
+        <button onclick="setAdminPeriod('today')" id="aap-today" class="btn-outline btn-sm">Today</button>
+        <button onclick="setAdminPeriod('7d')"   id="aap-7d"    class="btn-primary btn-sm">7 Days</button>
+        <button onclick="setAdminPeriod('30d')"  id="aap-30d"   class="btn-outline btn-sm">30 Days</button>
+        <button onclick="setAdminPeriod('90d')"  id="aap-90d"   class="btn-outline btn-sm">90 Days</button>
+        <input type="date" id="aap-from" onchange="setAdminCustom()" style="padding:.3rem .5rem;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:.72rem;color:var(--text)"/>
+        <span style="font-size:.72rem;color:var(--text3)">to</span>
+        <input type="date" id="aap-to" onchange="setAdminCustom()" style="padding:.3rem .5rem;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:.72rem;color:var(--text)"/>
+      </div>
+    </div>
+    <div class="stats-grid" style="margin-bottom:1.5rem">
+      <div class="stat-card" style="--c:#6366f1"><div class="stat-icon">👁️</div><div class="stat-num" id="aan-views">—</div><div class="stat-label">Page Views</div></div>
+      <div class="stat-card" style="--c:#16a34a"><div class="stat-icon">💰</div><div class="stat-num" id="aan-revenue">—</div><div class="stat-label">Revenue</div></div>
+      <div class="stat-card" style="--c:#a855f7"><div class="stat-icon">🧾</div><div class="stat-num" id="aan-sales">—</div><div class="stat-label">Total Sales</div></div>
+      <div class="stat-card" style="--c:#0ea5e9"><div class="stat-icon">🏪</div><div class="stat-num" id="aan-shops">—</div><div class="stat-label">New Shops</div></div>
+      <div class="stat-card" style="--c:#f59e0b"><div class="stat-icon">👥</div><div class="stat-num" id="aan-users">—</div><div class="stat-label">New Users</div></div>
+    </div>
+    <div class="section-card" style="margin-bottom:1rem">
+      <div class="sc-head"><div class="sc-title">💰 Revenue Trend</div></div>
+      <div style="padding:0 1rem 1rem">
+        <div id="aanRevenueChart" style="height:140px;display:flex;align-items:flex-end;gap:3px;overflow:hidden"></div>
+        <div id="aanRevenueDates" style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--text3);margin-top:.3rem"></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+      <div class="section-card"><div class="sc-head"><div class="sc-title">🏪 Most Visited Shops</div></div><div style="padding:0 1rem 1rem" id="aanTopShops">Loading…</div></div>
+      <div class="section-card"><div class="sc-head"><div class="sc-title">📦 Most Viewed Products</div></div><div style="padding:0 1rem 1rem" id="aanTopProducts">Loading…</div></div>
+    </div>
+    <div class="section-card"><div class="sc-head"><div class="sc-title">🔍 Top Search Keywords</div></div><div style="padding:0 1rem 1rem;display:flex;flex-wrap:wrap;gap:.4rem" id="aanTopSearches">Loading…</div></div>
+  </div>
+
+<script>
+const API = 'http://localhost:5000/api';
+let userFilter = 'all', shopFilter = 'all';
+let userPage = 1, shopPage = 1;
+
+function getToken() {
+  return (window.SELA && window.SELA.getToken) ? window.SELA.getToken()
+    : (localStorage.getItem('td_token') || localStorage.getItem('ac_user_token') || '');
+}
+function authH() {
+  return (window.SELA && window.SELA.authHeaders) ? window.SELA.authHeaders()
+    : { 'Content-Type':'application/json', 'Authorization':'Bearer '+getToken() };
+}
+function toast(msg, type='success') {
+  const t = document.getElementById('adminToast');
+  t.textContent = msg;
+  t.style.background = type==='error' ? '#dc2626' : type==='warn' ? '#ea580c' : '#1e293b';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'});
+}
+function fmtKES(n) { return 'KES ' + Number(n||0).toLocaleString('en-KE'); }
+function debounce(fn, ms) { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; }
+
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  document.getElementById('page-'+name).classList.add('show');
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  // Update URL hash without triggering hashchange
+  history.replaceState(null,'','#'+name);
+
+  if (name==='users') loadUsers(1);
+  if (name==='stores') loadShops(1);
+  if (name==='activity') loadActivity();
+  if (name==='finance') loadFinance();
+  if (name==='products') loadProducts();
+  if (name==='analytics') initAdminAnalytics();
+  const allTitles = {overview:'Dashboard Overview',users:'User Management',stores:'Store Management',
+    products:'Product Management',finance:'Finance & Revenue',subscriptions:'Subscriptions',
+    activity:'Live Activity',settings:'Settings',analytics:'Platform Analytics'};
+  document.getElementById('pageTitle').textContent = allTitles[name]||name;
+}
+
+// ── Admin init ──────────────────────────────────────────────────────────────
+function checkAdminAuth() {
+  const tok = getToken();
+  if (!tok) { window.location.href='auth.html'; return false; }
+  const u = (window.SELA&&window.SELA.getUser) ? window.SELA.getUser() 
+    : (() => { try { return JSON.parse(localStorage.getItem('ac_user')||'{}'); } catch { return {}; } })();
+  document.getElementById('adminName').textContent = (u.firstName||u.name||'Admin') + ' ' + (u.lastName||'');
+  return true;
+}
+
+// ── Load stats ──────────────────────────────────────────────────────────────
+
+// ── Load admin's own store link ────────────────────────────────────────────────
+
+async function goToMyStore() {
+  try {
+    const r = await fetch(API+'/admin/my-shops', { headers:authH() });
+    const j = await r.json().catch(()=>({}));
+    if (j.data && j.data.length > 0) {
+      const shop = j.data[0];
+      const id = shop.id || (shop._id ? shop._id.toString() : '');
+      if (id) { window.open('shop-dashboard.html?id=' + encodeURIComponent(id), '_blank'); return; }
+    }
+    if (confirm('No store found.\nGo to Create Store?')) {
+      showPage('create-store', document.querySelector('[onclick*="create-store"]'));
+    }
+  } catch(e) { toast('Cannot reach backend','error'); }
+}
+
+async function loadAdminStoreLink() {
+  try {
+    const r = await fetch(API+'/admin/my-shops', { headers:authH() });
+    const j = await r.json().catch(()=>({}));
+    const stores = j.data || [];
+    if (!stores.length) return;
+    
+    const el = document.getElementById('adminStoreBtn');
+    if (!el) return;
+    // Update topbar My Store button
+    const topBtn = document.getElementById('myStoreDashBtn');
+    if (topBtn && stores[0]) {
+      const s0 = stores[0];
+      const sid = s0.id || (s0._id && s0._id.toString()) || '';
+      if (sid) {
+        topBtn.href = 'shop-dashboard.html?id=' + encodeURIComponent(sid);
+        topBtn.title = '🏪 ' + s0.name;
+        topBtn.textContent = '🏪 ' + s0.name;
+      }
+    }
+    // Show inline button too
+    el.style.display = 'flex';
+    el.innerHTML = stores.map(s =>
+      `<a href="shop-dashboard.html?id=${s.id||s._id}"
+         style="display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1.1rem;
+                background:rgba(22,163,74,.1);color:#16a34a;border:1px solid rgba(22,163,74,.2);
+                border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none">
+         🏪 ${s.name} — Vendor Dashboard ↗
+       </a>`
+    ).join('');
+  } catch {}
+}
+
+async function loadStats() {
+  try {
+    const r = await fetch(API+'/admin/stats', { headers:authH() });
+    const j = await r.json();
+    if (!j.success) { toast('Failed to load stats: '+j.message,'error'); return; }
+    const s = j.stats;
+    document.getElementById('s-users').textContent = s.totalUsers;
+    document.getElementById('s-users-sub').textContent = '+'+s.newUsersMonth+' this month';
+    document.getElementById('s-shops').textContent = s.activeShops;
+    document.getElementById('s-shops-sub').textContent = s.totalShops+' total · '+s.newShopsMonth+' new';
+    document.getElementById('s-products').textContent = s.totalProducts;
+    document.getElementById('s-products-sub').textContent = '+'+s.newProductsWeek+' this week';
+    document.getElementById('s-branches').textContent = s.totalBranches;
+    document.getElementById('s-revenue').textContent = fmtKES(s.totalRevenue);
+    document.getElementById('s-revenue-sub').textContent = fmtKES(s.monthRevenue)+' this month';
+    document.getElementById('s-pending').textContent = s.pendingShops;
+    document.getElementById('f-total').textContent = fmtKES(s.totalRevenue);
+    document.getElementById('f-month').textContent = fmtKES(s.monthRevenue);
+  } catch(e) { toast('Could not reach backend','error'); }
+}
+
+// ── Load overview tables ─────────────────────────────────────────────────────
+async function loadOverview() {
+  try {
+    const r = await fetch(API+'/admin/activity', { headers:authH() });
+    const j = await r.json();
+    if (!j.success) return;
+
+    // Recent users
+    const utbody = document.querySelector('#recentUsersTable tbody');
+    if (j.newUsers?.length) {
+      utbody.innerHTML = j.newUsers.map(u=>`<tr>
+        <td><strong>${u.firstName} ${u.lastName}</strong></td>
+        <td style="color:var(--text2)">${u.email}</td>
+        <td style="color:var(--text3)">${fmtDate(u.createdAt)}</td>
+        <td>${u.isVerified ? '<span class="s-badge s-active">✓ Verified</span>' : '<span class="s-badge s-unverified">Unverified</span>'}</td>
+      </tr>`).join('');
+    } else {
+      utbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:1.5rem">No users yet</td></tr>';
+    }
+
+    // Recent shops
+    const stbody = document.querySelector('#recentShopsTable tbody');
+    if (j.newShops?.length) {
+      stbody.innerHTML = j.newShops.map(s=>`<tr>
+        <td><a href="shop-store.html?id=${s._id||s.id||''}" target="_blank" style="font-weight:700;color:var(--text);text-decoration:none">${s.name} ↗</a></td>
+        <td style="color:var(--text2)">${s.ownerEmail||'—'}</td>
+        <td style="color:var(--text3)">—</td>
+        <td><span class="s-badge s-${s.status||'active'}">${s.status||'active'}</span></td>
+      </tr>`).join('');
+    } else {
+      stbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:1.5rem">No stores yet</td></tr>';
+    }
+  } catch {}
+}
+
+// ── Users ────────────────────────────────────────────────────────────────────
+async function loadUsers(page=1) {
+  userPage = page;
+  const search = document.getElementById('userSearch').value;
+  const r = await fetch(`${API}/admin/users?page=${page}&limit=15&search=${encodeURIComponent(search)}&status=${userFilter}`, { headers:authH() });
+  const j = await r.json().catch(()=>({}));
+  if (!j.success) { document.getElementById('usersBody').innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--red);padding:2rem">${j.message||'Error loading users'}</td></tr>`; return; }
+
+  const tbody = document.getElementById('usersBody');
+  if (!j.data?.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:3rem">No users found</td></tr>';
+  } else {
+    const offset = (page-1)*15;
+    tbody.innerHTML = j.data.map((u,i)=>`<tr>
+      <td style="color:var(--text3)">${offset+i+1}</td>
+      <td><strong>${u.firstName} ${u.lastName}</strong></td>
+      <td style="color:var(--text2)">${u.email}</td>
+      <td style="color:var(--text3)">@${u.username}</td>
+      <td><span style="font-weight:700;color:var(--accent)">${u.shops||0}</span></td>
+      <td style="color:var(--text3)">${fmtDate(u.createdAt)}</td>
+      <td>${u.suspended ? '<span class="s-badge s-suspended">Suspended</span>' : u.isVerified ? '<span class="s-badge s-active">Active</span>' : '<span class="s-badge s-unverified">Unverified</span>'}</td>
+      <td style="display:flex;gap:.35rem;flex-wrap:wrap">
+        <button class="act-btn ${u.suspended?'act-unsuspend':'act-suspend'}" onclick="toggleSuspendUser('${u.id||u._id}',this)">
+          ${u.suspended ? '✓ Reinstate' : '⊘ Suspend'}
+        </button>
+        <button class="act-btn act-delete" onclick="deleteUser('${u.id||u._id}',this)">🗑️</button>
+      </td>
+    </tr>`).join('');
+  }
+
+  document.getElementById('usersPagInfo').textContent = `${j.total} users · Page ${page}/${j.pages||1}`;
+  renderPagination('usersPagBtns', page, j.pages||1, p=>loadUsers(p));
+}
+
+function setUserFilter(f, btn) {
+  userFilter = f;
+  document.querySelectorAll('#page-users .filter-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  loadUsers(1);
+}
+
+async function toggleSuspendUser(id, btn) {
+  btn.disabled = true;
+  const r = await fetch(`${API}/admin/users/${id}/suspend`, { method:'POST', headers:authH() });
+  const j = await r.json().catch(()=>({}));
+  if (j.success) { toast(j.message); loadUsers(userPage); }
+  else { toast(j.message||'Error','error'); btn.disabled=false; }
+}
+
+async function deleteUser(id, btn) {
+  if (!confirm('Permanently delete this user and all their data?')) return;
+  btn.disabled = true;
+  const r = await fetch(`${API}/admin/users/${id}`, { method:'DELETE', headers:authH() });
+  const j = await r.json().catch(()=>({}));
+  if (j.success) { toast('User deleted'); loadUsers(userPage); }
+  else { toast(j.message||'Error','error'); btn.disabled=false; }
+}
+
+// ── Stores ───────────────────────────────────────────────────────────────────
+async function loadShops(page=1) {
+  shopPage = page;
+  const search = document.getElementById('shopSearch').value;
+  const r = await fetch(`${API}/admin/shops?page=${page}&limit=15&search=${encodeURIComponent(search)}&status=${shopFilter}`, { headers:authH() });
+  const j = await r.json().catch(()=>({}));
+  if (!j.success) { document.getElementById('shopsBody').innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--red);padding:2rem">${j.message||'Error'}</td></tr>`; return; }
+
+  const tbody = document.getElementById('shopsBody');
+  if (!j.data?.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:3rem">No stores found</td></tr>';
+  } else {
+    const offset = (page-1)*15;
+    tbody.innerHTML = j.data.map((s,i)=>`<tr>
+      <td style="color:var(--text3)">${offset+i+1}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <div style="width:28px;height:28px;border-radius:6px;background:${s.themeColor||'#6366f1'}22;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0">${s.logo?`<img src="${s.logo}" style="width:28px;height:28px;border-radius:6px;object-fit:cover" onerror="this.textContent='🏪'"/>`:'🏪'}</div>
+          <div>
+              <a href="shop-store.html?slug=${s.slug||''}&id=${s.id||s._id||''}" target="_blank" 
+                 style="font-weight:700;color:var(--text);text-decoration:none" 
+                 onmouseover="this.style.color='var(--accent)'" 
+                 onmouseout="this.style.color='var(--text)'">${s.name} ↗</a>
+              <div style="font-size:.65rem;color:var(--text3)">${s.slug||'—'}</div>
+            </div>
+        </div>
+      </td>
+      <td style="color:var(--text2)">${s.ownerEmail||s.email||'—'}</td>
+      <td style="font-weight:700;color:var(--accent)">${s.products||0}</td>
+      <td style="color:var(--text3)">${s.location||'—'}</td>
+      <td style="color:var(--text3)">${fmtDate(s.createdAt)}</td>
+      <td><span class="s-badge s-${s.status||'active'}">${s.status||'active'}</span>${s.published?'':'<span class="s-badge s-unverified" style="margin-left:.25rem">Draft</span>'}</td>
+      <td style="display:flex;gap:.35rem;flex-wrap:wrap">
+        <a class="act-btn act-view" href="shop-store.html?id=${s.id||s._id}" target="_blank">👁️</a>
+        <button class="act-btn ${s.status==='suspended'?'act-unsuspend':'act-suspend'}" onclick="toggleSuspendShop('${s.id||s._id}',this)">
+          ${s.status==='suspended'?'✓ Restore':'⊘ Suspend'}
+        </button>
+        <button class="act-btn act-delete" onclick="deleteShop('${s.id||s._id}',this,'${s.name}')">🗑️</button>
+      </td>
+    </tr>`).join('');
+  }
+
+  document.getElementById('shopsPagInfo').textContent = `${j.total} stores · Page ${page}/${j.pages||1}`;
+  renderPagination('shopsPagBtns', page, j.pages||1, p=>loadShops(p));
+}
+
+function setShopFilter(f, btn) {
+  shopFilter = f;
+  document.querySelectorAll('#page-stores .filter-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  loadShops(1);
+}
+
+async function toggleSuspendShop(id, btn) {
+  btn.disabled = true;
+  const r = await fetch(`${API}/admin/shops/${id}/suspend`, { method:'POST', headers:authH() });
+  const j = await r.json().catch(()=>({}));
+  if (j.success) { toast('Store status updated to: '+j.status); loadShops(shopPage); }
+  else { toast(j.message||'Error','error'); btn.disabled=false; }
+}
+
+async function deleteShop(id, btn, name) {
+  if (!confirm(`Delete store "${name}" and all its products? This cannot be undone.`)) return;
+  btn.disabled = true;
+  const r = await fetch(`${API}/admin/shops/${id}`, { method:'DELETE', headers:authH() });
+  const j = await r.json().catch(()=>({}));
+  if (j.success) { toast('Store deleted'); loadShops(shopPage); }
+  else { toast(j.message||'Error','error'); btn.disabled=false; }
+}
+
+// ── Products ─────────────────────────────────────────────────────────────────
+async function loadProducts() {
+  const el = document.getElementById('productsBody');
+  try {
+    const r = await fetch(`${API}/products?limit=50`, { headers:authH() });
+    const j = await r.json();
+    if (!j.data?.length) { el.innerHTML='<div style="text-align:center;padding:3rem;color:var(--text3)">No products yet</div>'; return; }
+    el.innerHTML = `<table class="data-table"><thead><tr><th>#</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Store</th><th>Added</th></tr></thead><tbody>${
+      j.data.map((p,i)=>`<tr>
+        <td style="color:var(--text3)">${i+1}</td>
+        <td><strong>${p.name}</strong></td>
+        <td style="color:var(--text3)">${p.categoryName||p.category||'—'}</td>
+        <td style="font-weight:700;color:var(--green)">KES ${Number(p.price||0).toLocaleString()}</td>
+        <td>${p.stock||'—'}</td>
+        <td style="color:var(--accent)">${p._shopName||p.shop||'—'}</td>
+        <td style="color:var(--text3)">${fmtDate(p.createdAt)}</td>
+      </tr>`).join('')
+    }</tbody></table>`;
+  } catch { el.innerHTML='<div style="padding:2rem;text-align:center;color:var(--text3)">Error loading products</div>'; }
+}
+
+// ── Activity ─────────────────────────────────────────────────────────────────
+async function loadActivity() {
+  const feed = document.getElementById('activityFeed');
+  try {
+    const r = await fetch(API+'/admin/activity', { headers:authH() });
+    const j = await r.json();
+    const items = [
+      ...(j.newUsers||[]).map(u=>({ icon:'👤', bg:'rgba(99,102,241,.1)', text:`<strong>${u.firstName} ${u.lastName}</strong> registered`, time:u.createdAt })),
+      ...(j.newShops||[]).map(s=>({ icon:'🏪', bg:'rgba(22,163,74,.1)', text:`Store <strong>${s.name}</strong> was created`, time:s.createdAt })),
+      ...(j.newProducts||[]).map(p=>({ icon:'📦', bg:'rgba(14,165,233,.1)', text:`Product <strong>${p.name}</strong> was listed`, time:p.createdAt })),
+    ].sort((a,b)=>new Date(b.time)-new Date(a.time));
+
+    feed.innerHTML = items.length ? items.map(a=>`
+      <div class="activity-item">
+        <div class="activity-icon" style="background:${a.bg}">${a.icon}</div>
+        <div class="activity-text">${a.text}</div>
+        <div class="activity-time">${fmtDate(a.time)}</div>
+      </div>`).join('')
+    : '<div style="padding:3rem;text-align:center;color:var(--text3)">No activity yet — register users and create stores to see activity here.</div>';
+  } catch { feed.innerHTML='<div style="padding:2rem;text-align:center;color:var(--text3)">Error loading activity</div>'; }
+}
+
+// ── Finance ──────────────────────────────────────────────────────────────────
+async function loadFinance() {
+  try {
+    const r = await fetch(API+'/admin/stats', { headers:authH() });
+    const j = await r.json();
+    if (j.success) {
+      document.getElementById('f-total').textContent = fmtKES(j.stats.totalRevenue);
+      document.getElementById('f-month').textContent = fmtKES(j.stats.monthRevenue);
+    }
+  } catch {}
+}
+
+// ── Pagination helper ────────────────────────────────────────────────────────
+function renderPagination(containerId, current, total, onPage) {
+  const c = document.getElementById(containerId);
+  if (total <= 1) { c.innerHTML=''; return; }
+  let html = `<button class="page-btn" ${current===1?'disabled':''} onclick="(${onPage.toString()})(${current-1})">‹</button>`;
+  for (let p=Math.max(1,current-2); p<=Math.min(total,current+2); p++) {
+    html += `<button class="page-btn${p===current?' active':''}" onclick="(${onPage.toString()})(${p})">${p}</button>`;
+  }
+  html += `<button class="page-btn" ${current===total?'disabled':''} onclick="(${onPage.toString()})(${current+1})">›</button>`;
+  c.innerHTML = html;
+}
+
+// ── Logout ───────────────────────────────────────────────────────────────────
+function adminLogout() {
+  (window.SELA && window.SELA.logout) ? window.SELA.logout() : ['td_token','ac_user_token','ac_user','_sela_my_shop','_sela_shops'].forEach(k=>localStorage.removeItem(k));
+  window.location.href = 'auth.html';
+}
+
+// ── Boot ─────────────────────────────────────────────────────────────────────
+if (checkAdminAuth()) {
+  // Navigate to page from URL hash (e.g. admin.html#stores)
+  function bootToPage() {
+    const hash = window.location.hash.replace('#','');
+    const validPages = ['overview','users','stores','products','finance','subscriptions','activity','settings','create-user','create-store'];
+    const target = validPages.includes(hash) ? hash : 'overview';
+    const btn = document.querySelector(`[onclick*="showPage('${target}"]`);
+    showPage(target, btn);
+    if (target === 'overview') { loadStats(); loadOverview(); }
+  }
+  bootToPage();
+  loadAdminStoreLink();
+  // Also handle hash changes (back/forward navigation)
+  window.addEventListener('hashchange', bootToPage);
+}
+
+// ── Create User ────────────────────────────────────────────────────────────────
+let lastCreatedCredentials = '';
+
+function generatePassword() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#';
+  let pwd = '';
+  for (let i=0; i<10; i++) pwd += chars[Math.floor(Math.random()*chars.length)];
+  document.getElementById('cu-password').value = pwd;
+}
+
+function showFormMsg(id, msg, type='error') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = `<div style="padding:.65rem 1rem;border-radius:8px;font-size:.8rem;font-weight:600;margin-bottom:1rem;
+    background:${type==='error'?'rgba(220,38,38,.08)':type==='success'?'rgba(22,163,74,.08)':'rgba(99,102,241,.08)'};
+    color:${type==='error'?'var(--red)':type==='success'?'var(--green)':'var(--accent)'};
+    border:1px solid ${type==='error'?'rgba(220,38,38,.2)':type==='success'?'rgba(22,163,74,.2)':'rgba(99,102,241,.2)'}">${msg}</div>`;
+}
+
+async function adminCreateUser() {
+  const first    = document.getElementById('cu-first').value.trim();
+  const last     = document.getElementById('cu-last').value.trim();
+  const email    = document.getElementById('cu-email').value.trim();
+  const username = document.getElementById('cu-username').value.trim();
+  const password = document.getElementById('cu-password').value;
+  const btn      = document.getElementById('cuBtn');
+
+  if (!first || !last || !email || !username || !password) {
+    showFormMsg('createUserMsg', 'All fields are required'); return;
+  }
+  if (password.length < 8) {
+    showFormMsg('createUserMsg', 'Password must be at least 8 characters'); return;
+  }
+  document.getElementById('createUserMsg').innerHTML = '';
+  btn.disabled = true; btn.textContent = '⏳ Creating…';
+
+  try {
+    // Register via the public endpoint
+    const r1 = await fetch(API+'/users/register', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ firstName:first, lastName:last, username, email, password })
+    });
+    const j1 = await r1.json().catch(()=>({}));
+
+    if (!j1.success && !j1.userId) {
+      showFormMsg('createUserMsg', j1.message || 'Failed to create user'); 
+      btn.disabled=false; btn.textContent='➕ Create Account'; return;
+    }
+
+    // Auto-verify if devCode returned
+    if (j1.userId && j1.devCode) {
+      await fetch(API+'/users/verify-email', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ userId:j1.userId, code:j1.devCode })
+      }).catch(()=>{});
+    }
+
+    // Show credentials
+    const creds = `🌐 Platform: http://localhost:5000\n👤 Name: ${first} ${last}\n📧 Email: ${email}\n🔑 Username: ${username}\n🔒 Password: ${password}\n\n⚠️ Please change your password after first login.`;
+    lastCreatedCredentials = creds;
+
+    document.getElementById('cuCredentials').innerHTML = 
+      `<div>🌐 <strong>Platform:</strong> <a href="http://localhost:5000" target="_blank" style="color:var(--accent)">http://localhost:5000</a></div>
+       <div>👤 <strong>Name:</strong> ${first} ${last}</div>
+       <div>📧 <strong>Email:</strong> ${email}</div>
+       <div>🔑 <strong>Username:</strong> ${username}</div>
+       <div>🔒 <strong>Password:</strong> <code style="background:rgba(99,102,241,.1);padding:.1rem .5rem;border-radius:4px;color:var(--accent)">${password}</code></div>
+       <div style="margin-top:.5rem;font-size:.72rem;color:var(--orange)">⚠️ Ask the user to change their password after first login.</div>`;
+
+    document.getElementById('cuResultCard').style.display = '';
+    document.getElementById('page-create-user').querySelector('.section-card').style.display = 'none';
+    toast('User account created successfully!');
+
+  } catch(e) {
+    showFormMsg('createUserMsg', 'Cannot reach backend: '+e.message);
+  } finally {
+    btn.disabled=false; btn.textContent='➕ Create Account';
+  }
+}
+
+function copyCredentials() {
+  const el = document.getElementById('cuCredentials');
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(()=>toast('Credentials copied to clipboard!')).catch(()=>{
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); toast('Copied!');
+  });
+}
+
+function clearCreateUser() {
+  document.getElementById('cu-first').value = '';
+  document.getElementById('cu-last').value  = '';
+  document.getElementById('cu-email').value = '';
+  document.getElementById('cu-username').value = '';
+  document.getElementById('cu-password').value = '';
+  document.getElementById('createUserMsg').innerHTML = '';
+  document.getElementById('cuResultCard').style.display = 'none';
+  document.querySelector('#page-create-user .section-card').style.display = '';
+}
+
+// ── Create Store ───────────────────────────────────────────────────────────────
+
+let csOwnerMode = 'self'; // 'self' or 'other'
+
+function setStoreOwnerMode(mode) {
+  csOwnerMode = mode;
+  const selfBtn  = document.getElementById('cs-for-self-btn');
+  const otherBtn = document.getElementById('cs-for-other-btn');
+  const otherSec = document.getElementById('cs-other-user-section');
+  const selfInfo = document.getElementById('cs-self-info');
+
+  if (mode === 'self') {
+    selfBtn.style.cssText  = 'flex:1;padding:.55rem;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;border:2px solid #6366f1;background:rgba(99,102,241,.1);color:#6366f1';
+    otherBtn.style.cssText = 'flex:1;padding:.55rem;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text2)';
+    otherSec.style.display = 'none';
+    selfInfo.style.display = '';
+  } else {
+    otherBtn.style.cssText = 'flex:1;padding:.55rem;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;border:2px solid #6366f1;background:rgba(99,102,241,.1);color:#6366f1';
+    selfBtn.style.cssText  = 'flex:1;padding:.55rem;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text2)';
+    otherSec.style.display = '';
+    selfInfo.style.display = 'none';
+  }
+}
+
+let csFoundUserId = null;
+
+async function lookupUser() {
+  const email = document.getElementById('cs-owner-email').value.trim();
+  const statusEl = document.getElementById('cs-user-status');
+  if (!email || !/\S+@\S+\.\S+/.test(email)) { statusEl.textContent=''; return; }
+  statusEl.textContent = '🔍 Looking up…'; statusEl.style.color='var(--text3)';
+  try {
+    const r = await fetch(`${API}/admin/users?search=${encodeURIComponent(email)}&limit=1`, { headers:authH() });
+    const j = await r.json().catch(()=>({}));
+    const user = j.data?.[0];
+    if (user && user.email?.toLowerCase() === email.toLowerCase()) {
+      csFoundUserId = user.id || user._id;
+      statusEl.innerHTML = `✅ Found: <strong>${user.firstName} ${user.lastName}</strong> (@${user.username}) — will assign store to this account`;
+      statusEl.style.color = 'var(--green)';
+    } else {
+      csFoundUserId = null;
+      statusEl.innerHTML = '⚡ No account found — a new account will be created automatically';
+      statusEl.style.color = 'var(--orange)';
+    }
+  } catch { statusEl.textContent = ''; }
+}
+
+async function adminCreateStore() {
+  const adminUser = JSON.parse(localStorage.getItem('ac_user')||'{}');
+  const isSelf    = csOwnerMode === 'self';
+  const emailEl   = document.getElementById('cs-owner-email');
+  const email     = isSelf ? (adminUser.email||'admin@sela.co.ke') : (emailEl?.value.trim()||'');
+  const name      = document.getElementById('cs-name').value.trim();
+  const location  = document.getElementById('cs-location').value.trim();
+  const phone     = document.getElementById('cs-phone').value.trim();
+  const whatsapp  = document.getElementById('cs-whatsapp').value.trim();
+  const desc      = document.getElementById('cs-desc').value.trim();
+  const theme     = document.getElementById('cs-theme').value;
+  const logo      = document.getElementById('cs-logo').value.trim();
+  const btn       = document.getElementById('csBtn');
+
+  if (!name) { showFormMsg('createStoreMsg','Store Name is required'); return; }
+  if (!isSelf && !email) { showFormMsg('createStoreMsg','Owner Email is required'); return; }
+  document.getElementById('createStoreMsg').innerHTML = '';
+  btn.disabled=true; btn.textContent='⏳ Creating…';
+
+  try {
+    let shopData = null;
+
+    if (isSelf) {
+      // ── Use dedicated admin own-shop endpoint ────────────────────────────
+      const r = await fetch(API+'/admin/create-own-shop', {
+        method:'POST', headers:authH(),
+        body:JSON.stringify({ name, description:desc, phone, whatsapp, location,
+          themeColor:theme, logo })
+      });
+      const j = await r.json().catch(()=>({}));
+      if (!j.success) {
+        showFormMsg('createStoreMsg', '❌ ' + (j.message||'Failed to create store') + ' (Status: ' + r.status + ')');
+        btn.disabled=false; btn.textContent='🏪 Create Store'; return;
+      }
+      shopData = j.data;
+
+      // Publish it
+      const shopId = shopData.id || shopData._id;
+      await fetch(`${API}/shops/${shopId}/demo-publish`, {
+        method:'POST', headers:authH()
+      }).catch(()=>{});
+
+      document.getElementById('csResult').innerHTML = `
+        <div>🏪 <strong>Store:</strong> ${shopData.name}</div>
+        <div>🔗 <strong>Slug:</strong> ${shopData.slug}</div>
+        <div>👑 <strong>Owner:</strong> Admin (you)</div>
+        <div style="margin-top:.5rem;font-size:.75rem;color:var(--orange)">
+          💡 Manage this store from your 
+          <a href="shop-dashboard.html?id=${shopId}" style="color:var(--accent);font-weight:700">Vendor Dashboard →</a>
+        </div>`;
+
+    } else {
+      // ── Use /api/admin/create-shop for creating on behalf of another user ─
+      let ownerId = csFoundUserId;
+      let newUserCreds = null;
+
+      if (!ownerId) {
+        // Create the user first
+        const username = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g,'') + Math.floor(Math.random()*100);
+        const password = 'Sela' + Math.floor(10000+Math.random()*90000) + '!';
+        const r0 = await fetch(API+'/users/register', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({ firstName:name.split(' ')[0]||'Vendor', lastName:name.split(' ')[1]||'User', username, email, password })
+        });
+        const j0 = await r0.json().catch(()=>({}));
+        if (j0.userId) {
+          if (j0.devCode) {
+            const rv = await fetch(API+'/users/verify-email', {
+              method:'POST', headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({ userId:j0.userId, code:j0.devCode })
+            });
+            const jv = await rv.json().catch(()=>({}));
+            if (jv.token) ownerId = j0.userId;
+          }
+          newUserCreds = { email, username, password };
+        }
+      }
+
+      const r1 = await fetch(API+'/admin/create-shop', {
+        method:'POST', headers:authH(),
+        body:JSON.stringify({ name, ownerEmail:email, ownerId:ownerId||'',
+          location, phone, whatsapp, description:desc, themeColor:theme, logo,
+          status:'active', published:true })
+      });
+      const j1 = await r1.json().catch(()=>({}));
+      if (!j1.success) {
+        showFormMsg('createStoreMsg', j1.message||'Failed to create store');
+        btn.disabled=false; btn.textContent='🏪 Create Store'; return;
+      }
+      shopData = j1.data;
+
+      let resultHtml = `<div>🏪 <strong>Store:</strong> ${shopData.name}</div>
+        <div>📧 <strong>Owner:</strong> ${email}</div>`;
+      if (newUserCreds) {
+        resultHtml += `<hr style="border:none;border-top:1px solid var(--border);margin:.5rem 0"/>
+          <div style="color:var(--orange);font-weight:700;margin-bottom:.25rem">🆕 New Account Created:</div>
+          <div>📧 Email: ${newUserCreds.email}</div>
+          <div>🔑 Username: ${newUserCreds.username}</div>
+          <div>🔒 Password: <code style="background:rgba(99,102,241,.1);padding:.1rem .5rem;border-radius:4px;color:var(--accent)">${newUserCreds.password}</code></div>`;
+      }
+      document.getElementById('csResult').innerHTML = resultHtml;
+    }
+
+    const shopId = shopData?.id || shopData?._id;
+    const slug   = shopData?.slug || '';
+    document.getElementById('csViewLink').href = `shop-store.html?slug=${slug}&id=${shopId||''}`;
+    document.getElementById('csResultCard').style.display = '';
+    toast('Store created successfully!');
+
+  } catch(e) {
+    showFormMsg('createStoreMsg','Error: '+e.message);
+  } finally {
+    btn.disabled=false; btn.textContent='🏪 Create Store';
+  }
+}
+
+function clearCreateStore() {
+  ['cs-owner-email','cs-name','cs-location','cs-phone','cs-whatsapp','cs-desc','cs-logo'].forEach(id=>{
+    const el = document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('cs-theme').value = '#6366f1';
+  document.getElementById('createStoreMsg').innerHTML = '';
+  document.getElementById('csResultCard').style.display = 'none';
+  document.getElementById('cs-user-status').textContent = '';
+  csFoundUserId = null;
+}
+
+
+// ── Settings ───────────────────────────────────────────────────────────────────
+async function runAdminSetup() {
+  const email = document.getElementById('setup-email').value.trim();
+  const name  = document.getElementById('setup-name').value.trim();
+  const msg   = document.getElementById('setupMsg');
+  if (!email) { msg.innerHTML='<div style="color:var(--red);font-size:.8rem">Email required</div>'; return; }
+  try {
+    const r = await fetch(API+'/admin/setup-email', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, name, secret:'sela_setup_2025' })
+    });
+    const j = await r.json().catch(()=>({}));
+    if (j.success) {
+      msg.innerHTML = '<div style="color:var(--green);font-size:.8rem;padding:.5rem">✅ Admin email set to: ' + j.email + ' — you can now create admin-owned stores.</div>';
+      // Update local storage
+      const u = JSON.parse(localStorage.getItem('ac_user')||'{}');
+      u.email = email;
+      localStorage.setItem('ac_user', JSON.stringify(u));
+      toast('Admin email updated!');
+    } else {
+      msg.innerHTML = '<div style="color:var(--red);font-size:.8rem;padding:.5rem">' + (j.message||'Failed') + '</div>';
+    }
+  } catch { msg.innerHTML = '<div style="color:var(--red);font-size:.8rem">Cannot reach backend</div>'; }
+}
+
+
+async function loadShopsList() {
+  const wrap = document.getElementById('shopsListCleanup');
+  const tbody = document.getElementById('cleanupBody');
+  const msg = document.getElementById('cleanupMsg');
+  msg.innerHTML = '';
+  try {
+    const r = await fetch(API+'/admin/shops-list', { headers:authH() });
+    const j = await r.json().catch(()=>({}));
+    if (!j.success) { msg.innerHTML='<div style="color:var(--red);font-size:.8rem">'+j.message+'</div>'; return; }
+    
+    wrap.style.display = '';
+    document.getElementById('cleanupCount').textContent = j.count + ' store(s) found';
+    
+    if (!j.shops.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:1rem">No stores in database</td></tr>';
+      return;
+    }
+    
+    tbody.innerHTML = j.shops.map(s => `<tr>
+      <td><input type="checkbox" class="shop-del-check" value="${s.id}"/></td>
+      <td><strong>${s.name}</strong><div style="font-size:.65rem;color:var(--text3)">${s.slug}</div></td>
+      <td style="color:var(--text2);font-size:.8rem">${s.ownerEmail||'—'}</td>
+      <td><span class="s-badge s-${s.status||'active'}">${s.status||'active'}</span></td>
+      <td style="color:var(--text3);font-size:.75rem">${new Date(s.createdAt).toLocaleDateString('en-KE')}</td>
+    </tr>`).join('');
+  } catch { msg.innerHTML='<div style="color:var(--red);font-size:.8rem">Cannot reach backend</div>'; }
+}
+
+function toggleAllShops(cb) {
+  document.querySelectorAll('.shop-del-check').forEach(c => c.checked = cb.checked);
+}
+
+async function deleteSelectedShops() {
+  const checked = Array.from(document.querySelectorAll('.shop-del-check:checked')).map(c => c.value);
+  if (!checked.length) { toast('Select at least one store to delete','warn'); return; }
+  if (!confirm('Delete ' + checked.length + ' store(s) and all their products? This cannot be undone.')) return;
+  
+  const r = await fetch(API+'/admin/shops-cleanup', {
+    method:'DELETE', headers:authH(),
+    body: JSON.stringify({ deleteIds: checked })
+  });
+  const j = await r.json().catch(()=>({}));
+  if (j.success) {
+    toast(j.message);
+    loadShopsList(); // refresh
+  } else {
+    toast(j.message||'Error deleting','error');
+  }
+}
+
+async function changeAdminPassword() {
+  const np = document.getElementById('set-new-pwd').value;
+  const cp = document.getElementById('set-confirm-pwd').value;
+  if (!np || np.length < 8) { showFormMsg('adminPwdMsg','Password must be at least 8 characters'); return; }
+  if (np !== cp) { showFormMsg('adminPwdMsg','Passwords do not match'); return; }
+  try {
+    const r = await fetch(API+'/admin/change-password', {
+      method:'POST', headers:authH(), body:JSON.stringify({ newPassword:np })
+    });
+    const j = await r.json().catch(()=>({}));
+    if (j.success) {
+      showFormMsg('adminPwdMsg','✅ Password changed successfully. You will need to log in again.','success');
+      document.getElementById('set-new-pwd').value = '';
+      document.getElementById('set-confirm-pwd').value = '';
+    } else { showFormMsg('adminPwdMsg', j.message||'Failed to change password'); }
+  } catch { showFormMsg('adminPwdMsg','Cannot reach backend'); }
+}
+
+async function loadSystemStatus() {
+  const el = document.getElementById('systemStatus');
+  el.innerHTML = '<div style="color:var(--text3);font-size:.82rem">Checking…</div>';
+  try {
+    const r = await fetch(API+'/admin/stats', { headers:authH() });
+    const j = await r.json().catch(()=>({}));
+    if (j.success) {
+      const s = j.stats;
+      el.innerHTML = [
+        { icon:'✅', label:'Backend', value:'Online', color:'var(--green)' },
+        { icon:'🗄️', label:'MongoDB Atlas', value:'Connected', color:'var(--green)' },
+        { icon:'👥', label:'Total Users', value:s.totalUsers, color:'var(--text)' },
+        { icon:'🏪', label:'Active Stores', value:s.activeShops, color:'var(--text)' },
+        { icon:'📦', label:'Total Products', value:s.totalProducts, color:'var(--text)' },
+        { icon:'💰', label:'Total Revenue', value:'KES '+Number(s.totalRevenue||0).toLocaleString('en-KE'), color:'var(--green)' },
+      ].map(row=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.82rem">
+          <span style="color:var(--text2)">${row.icon} ${row.label}</span>
+          <strong style="color:${row.color}">${row.value}</strong>
+        </div>`).join('') + '<div style="font-size:.7rem;color:var(--text3);margin-top:.65rem">Last checked: '+new Date().toLocaleTimeString()+'</div>';
+    } else { el.innerHTML = '<div style="color:var(--red)">Could not reach backend</div>'; }
+  } catch { el.innerHTML = '<div style="color:var(--red)">Backend offline</div>'; }
+}
+
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ADMIN ANALYTICS
+// ══════════════════════════════════════════════════════════════════════════════
+let _aaPeriod = '7d';
+
+async function initAdminAnalytics() { await loadAdminAnalytics(); }
+
+function setAdminPeriod(period) {
+  _aaPeriod = period;
+  ['today','7d','30d','90d'].forEach(p => {
+    const btn = document.getElementById('aap-'+p);
+    if (!btn) return;
+    btn.className = p === period ? 'btn-primary btn-sm' : 'btn-outline btn-sm';
+  });
+  const f = document.getElementById('aap-from'); if(f) f.value = '';
+  const t = document.getElementById('aap-to');   if(t) t.value = '';
+  loadAdminAnalytics();
+}
+
+function setAdminCustom() {
+  const f = document.getElementById('aap-from')?.value;
+  const t = document.getElementById('aap-to')?.value;
+  if (!f || !t) return;
+  ['today','7d','30d','90d'].forEach(p => {
+    const btn = document.getElementById('aap-'+p);
+    if (btn) btn.className = 'btn-outline btn-sm';
+  });
+  _aaPeriod = 'custom';
+  loadAdminAnalytics(f, t);
+}
+
+async function loadAdminAnalytics(from, to) {
+  const token = getToken();
+  let url = `/api/admin/analytics?period=${_aaPeriod}`;
+  if (from && to) url = `/api/admin/analytics?from=${from}&to=${to}`;
+
+  try {
+    const r = await fetch(url, { headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' } });
+    const j = await r.json().catch(() => ({}));
+    if (!j.success) return;
+    const d = j.data;
+
+    const fmt = n => 'KES ' + Number(n||0).toLocaleString('en-KE');
+    const se  = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+
+    se('aan-views',   Number(d.totalViews||0).toLocaleString());
+    se('aan-revenue', fmt(d.totalRevenue));
+    se('aan-sales',   Number(d.totalSales||0).toLocaleString());
+    se('aan-shops',   d.newShops||0);
+    se('aan-users',   d.newUsers||0);
+
+    // Revenue trend chart
+    adminRenderBarChart('aanRevenueChart', 'aanRevenueDates', d.revenueTrend||[], 'revenue', 'rgba(22,163,74,.6)', '#16a34a');
+
+    // Top shops
+    const shopsEl = document.getElementById('aanTopShops');
+    if (shopsEl) {
+      if (!d.topShops?.length) { shopsEl.innerHTML = '<div style="color:var(--text3);font-size:.82rem">No shop visits recorded yet</div>'; }
+      else {
+        const maxV = d.topShops[0].views;
+        shopsEl.innerHTML = d.topShops.map((s,i) => `
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem">
+            <span style="font-size:.7rem;color:var(--text3);width:16px;flex-shrink:0">${i+1}</span>
+            ${s.logo ? `<img src="${s.logo}" style="width:28px;height:28px;border-radius:6px;object-fit:cover;flex-shrink:0"/>` : '<div style="width:28px;height:28px;border-radius:6px;background:rgba(99,102,241,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem">🏪</div>'}
+            <div style="flex:1;min-width:0">
+              <div style="font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.name||'Unknown'}</div>
+              <div style="height:4px;background:var(--border,#e2e8f0);border-radius:2px;margin-top:2px"><div style="height:100%;width:${Math.round((s.views/maxV)*100)}%;background:#6366f1;border-radius:2px"></div></div>
+            </div>
+            <span style="font-size:.72rem;font-weight:700;color:#6366f1;flex-shrink:0">${s.views}</span>
+          </div>`).join('');
+      }
+    }
+
+    // Top products
+    const prodsEl = document.getElementById('aanTopProducts');
+    if (prodsEl) {
+      if (!d.topProducts?.length) { prodsEl.innerHTML = '<div style="color:var(--text3);font-size:.82rem">No product views recorded yet</div>'; }
+      else {
+        const maxV = d.topProducts[0].views;
+        prodsEl.innerHTML = d.topProducts.map((p,i) => `
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem">
+            <span style="font-size:.7rem;color:var(--text3);width:16px;flex-shrink:0">${i+1}</span>
+            <div style="width:28px;height:28px;border-radius:6px;background:rgba(99,102,241,.1);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem">📦</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name||'Unknown'}</div>
+              <div style="height:4px;background:var(--border,#e2e8f0);border-radius:2px;margin-top:2px"><div style="height:100%;width:${Math.round((p.views/maxV)*100)}%;background:#3b82f6;border-radius:2px"></div></div>
+            </div>
+            <span style="font-size:.72rem;font-weight:700;color:#3b82f6;flex-shrink:0">${p.views} views</span>
+          </div>`).join('');
+      }
+    }
+
+    // Top searches
+    const searchEl = document.getElementById('aanTopSearches');
+    if (searchEl) {
+      if (!d.topSearches?.length) { searchEl.innerHTML = '<div style="color:var(--text3);font-size:.82rem">No searches recorded yet</div>'; }
+      else {
+        searchEl.innerHTML = d.topSearches.map(s =>
+          `<span style="padding:.25rem .65rem;background:rgba(99,102,241,.1);color:#6366f1;border-radius:20px;font-size:.75rem;font-weight:600">🔍 ${s._id} <span style="opacity:.6">${s.count}</span></span>`
+        ).join('');
+      }
+    }
+  } catch(e) { console.error('Admin analytics error:', e); }
+}
+
+function adminRenderBarChart(chartId, datesId, data, field, barColor, activeColor) {
+  const chartEl = document.getElementById(chartId);
+  const datesEl = document.getElementById(datesId);
+  if (!chartEl) return;
+  if (!data.length) {
+    chartEl.innerHTML = '<div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--text3,#94a3b8);font-size:.82rem">No data yet — data accumulates as sales are made</div>';
+    return;
+  }
+  const maxVal = Math.max(...data.map(d => d[field]||0), 1);
+  const today  = new Date().toISOString().slice(0,10);
+  chartEl.innerHTML = data.map(d => {
+    const h   = Math.max(4, Math.round(((d[field]||0)/maxVal)*130));
+    const val = field==='revenue' ? 'KES '+Number(d[field]||0).toLocaleString('en-KE') : (d[field]||0);
+    return `<div title="${d._id}: ${val}" style="flex:1;min-width:3px;height:${h}px;background:${d._id===today?activeColor:barColor};border-radius:2px 2px 0 0;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'"></div>`;
+  }).join('');
+  if (datesEl && data.length) {
+    datesEl.innerHTML = '<span>' + data[0]._id + '</span><span>' + data[data.length-1]._id + '</span>';
+  }
+}
+</script>
+</body>
+</html>

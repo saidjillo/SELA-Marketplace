@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Join SELA as a Vendor — SELA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8fafc;--card:#fff;--border:#e2e8f0;--accent:#6366f1;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08)}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.page-wrap{max-width:900px;margin:0 auto;padding:2rem 1.5rem 5rem}
+/* Steps */
+.steps-bar{display:flex;gap:0;margin-bottom:3rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.step{flex:1;padding:1rem;text-align:center;font-size:.8rem;font-weight:600;color:var(--text3);border-right:1px solid var(--border);position:relative;transition:all .2s}
+.step:last-child{border-right:none}
+.step.active{background:#ede9fe;color:var(--accent)}
+.step.done{background:#dcfce7;color:#16a34a}
+.step-num{display:block;font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:.15rem}
+/* Form */
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;box-shadow:var(--shadow);margin-bottom:1.5rem}
+.form-title{font-family:'Montserrat',sans-serif;font-size:1.35rem;font-weight:800;margin-bottom:.4rem}
+.form-sub{font-size:.85rem;color:var(--text2);margin-bottom:2rem;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.78rem;font-weight:700;color:var(--text2);margin-bottom:.35rem}
+.fg input,.fg textarea,.fg select{width:100%;padding:.7rem .95rem;background:#f8fafc;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:.88rem;color:var(--text);outline:none;transition:border-color .2s}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--accent);background:#fff}
+.fg textarea{min-height:90px;resize:vertical;line-height:1.6}
+.fg-hint{font-size:.68rem;color:var(--text3);margin-top:.2rem}
+/* Color picker */
+.color-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
+.color-dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .18s;flex-shrink:0}
+.color-dot.selected{border-color:#0f172a;transform:scale(1.15)}
+.color-custom{display:flex;align-items:center;gap:.5rem;margin-top:.5rem}
+.color-custom input[type=color]{width:36px;height:36px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;padding:2px}
+/* Social */
+.social-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:600px){.social-grid{grid-template-columns:1fr}}
+.social-input{display:flex;align-items:center;gap:.5rem;background:#f8fafc;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s}
+.social-input:focus-within{border-color:var(--accent)}
+.social-icon{padding:.65rem .75rem;font-size:1rem;flex-shrink:0;min-width:42px;text-align:center}
+.social-input input{flex:1;padding:.65rem .5rem;background:none;border:none;outline:none;font-size:.84rem;font-family:inherit;color:var(--text)}
+/* Pricing gate */
+.pricing-gate{background:linear-gradient(135deg,#312e81,#4c1d95);border-radius:16px;padding:2.5rem;color:#fff;text-align:center}
+.pricing-gate h3{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.5rem}
+.pricing-gate p{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:1.75rem;line-height:1.6}
+.price-tag{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:900;color:#a5b4fc;margin:.75rem 0}
+.price-tag span{font-size:1rem;font-weight:500;color:rgba(255,255,255,.6)}
+.features-check{list-style:none;text-align:left;display:inline-block;margin:1rem 0 2rem}
+.features-check li{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:rgba(255,255,255,.8);margin-bottom:.5rem}
+.features-check li::before{content:'✓';color:#4ade80;font-weight:800}
+/* Buttons */
+.btn-primary{padding:.85rem 2rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(99,102,241,.35)}
+.btn-primary:disabled{background:#cbd5e1;cursor:not-allowed;transform:none}
+.btn-outline{padding:.85rem 2rem;background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.btn-outline:hover{background:#ede9fe}
+.btn-row{display:flex;gap:1rem;justify-content:space-between;margin-top:1.5rem;flex-wrap:wrap}
+/* Message */
+.msg{padding:.7rem 1rem;border-radius:var(--radius);font-size:.82rem;margin-bottom:1rem;display:none}
+.msg.show{display:block}
+.msg.error{background:#fef2f2;border:1px solid #fca5a5;color:#dc2626}
+.msg.success{background:#f0fdf4;border:1px solid #86efac;color:#16a34a}
+/* Success */
+.success-screen{display:none;text-align:center;padding:2rem}
+.success-screen.show{display:block}
+.success-icon{font-size:4rem;margin-bottom:1rem;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+
+<div class="page-wrap">
+  <!-- Header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem">
+    <div>
+      <a href="shops.html" style="font-size:.8rem;color:var(--text3);font-weight:600">← Back to Shops</a>
+      <h1 style="font-family:'Montserrat',sans-serif;font-size:1.6rem;font-weight:800;margin-top:.25rem">Join SELA as a Vendor</h1>
+    </div>
+    <div style="font-size:.8rem;color:var(--text3)">Already have a shop? <a href="shop-dashboard.html" style="color:var(--accent);font-weight:600">Go to Dashboard →</a></div>
+  </div>
+
+  <!-- Steps -->
+  <div class="steps-bar">
+    <div class="step active" id="step1"><span class="step-num">1</span>Shop Info</div>
+    <div class="step" id="step2"><span class="step-num">2</span>Branding</div>
+    <div class="step" id="step3"><span class="step-num">3</span>Branches</div>
+    <div class="step" id="step4"><span class="step-num">4</span>Subscribe & Publish</div>
+  </div>
+
+  <div class="msg" id="mainMsg"></div>
+
+  <!-- STEP 1: Shop Info -->
+  <div id="panel1">
+    <div class="form-card">
+      <div class="form-title">📋 Shop Information</div>
+      <div class="form-sub">Tell customers about your shop. This is the public-facing information they'll see.</div>
+      <div class="form-grid">
+        <div class="fg"><label>Shop Name *</label><input id="shopName" type="text" placeholder="e.g. Mama Jane's Fashion House" maxlength="60"/></div>
+        <div class="fg"><label>Your Email *</label><input id="shopEmail" type="email" placeholder="you@email.com"/></div>
+        <div class="fg"><label>Phone Number</label><input id="shopPhone" type="tel" placeholder="+254 7XX XXX XXX"/></div>
+        <div class="fg"><label>WhatsApp Number</label><input id="shopWhatsapp" type="tel" placeholder="+254 7XX XXX XXX"/></div>
+      </div>
+      <div class="fg"><label>Location / Address</label><input id="shopLocation" type="text" placeholder="e.g. Westlands, Nairobi"/></div>
+      <div class="fg"><label>Description</label><textarea id="shopDesc" placeholder="Describe what your shop sells, your story, what makes you special…"></textarea></div>
+      <div class="btn-row" style="justify-content:flex-end">
+        <button class="btn-primary" onclick="gotoStep(2)">Next: Branding →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Branding -->
+  <div id="panel2" style="display:none">
+    <div class="form-card">
+      <div class="form-title">🎨 Branding & Theme</div>
+      <div class="form-sub">Give your shop a unique look. Choose a theme color and add your logo and banner URLs.</div>
+      <div class="fg">
+        <label>Theme Color</label>
+        <div class="color-row" id="colorPresets">
+          <div class="color-dot selected" style="background:#6366f1" data-color="#6366f1" onclick="pickColor('#6366f1',this)"></div>
+          <div class="color-dot" style="background:#ec4899" data-color="#ec4899" onclick="pickColor('#ec4899',this)"></div>
+          <div class="color-dot" style="background:#f59e0b" data-color="#f59e0b" onclick="pickColor('#f59e0b',this)"></div>
+          <div class="color-dot" style="background:#22c55e" data-color="#22c55e" onclick="pickColor('#22c55e',this)"></div>
+          <div class="color-dot" style="background:#ef4444" data-color="#ef4444" onclick="pickColor('#ef4444',this)"></div>
+          <div class="color-dot" style="background:#0ea5e9" data-color="#0ea5e9" onclick="pickColor('#0ea5e9',this)"></div>
+          <div class="color-dot" style="background:#14b8a6" data-color="#14b8a6" onclick="pickColor('#14b8a6',this)"></div>
+          <div class="color-dot" style="background:#8b5cf6" data-color="#8b5cf6" onclick="pickColor('#8b5cf6',this)"></div>
+          <div class="color-dot" style="background:#f97316" data-color="#f97316" onclick="pickColor('#f97316',this)"></div>
+          <div class="color-dot" style="background:#64748b" data-color="#64748b" onclick="pickColor('#64748b',this)"></div>
+        </div>
+        <div class="color-custom">
+          <input type="color" id="colorPicker" value="#6366f1" oninput="pickColor(this.value,null,this.value)"/>
+          <span style="font-size:.78rem;color:var(--text2)">Custom color: <strong id="colorHex">#6366f1</strong></span>
+        </div>
+        <input type="hidden" id="shopThemeColor" value="#6366f1"/>
+      </div>
+      <div class="form-grid">
+        <div class="fg"><label>Logo URL (optional)</label><input id="shopLogo" type="url" placeholder="https://… (direct image link)"/><div class="fg-hint">Link to your logo image. PNG/JPG recommended.</div></div>
+        <div class="fg"><label>Banner URL (optional)</label><input id="shopBanner" type="url" placeholder="https://… (wide image)"/><div class="fg-hint">Shown as the hero banner on your storefront.</div></div>
+      </div>
+      <div class="fg">
+        <label>Social Media Links</label>
+        <div class="social-grid">
+          <div class="social-input"><span class="social-icon">📘</span><input id="socFb" type="url" placeholder="Facebook page URL"/></div>
+          <div class="social-input"><span class="social-icon">📸</span><input id="socIg" type="url" placeholder="Instagram URL"/></div>
+          <div class="social-input"><span class="social-icon">🐦</span><input id="socTw" type="url" placeholder="Twitter / X URL"/></div>
+          <div class="social-input"><span class="social-icon">🎵</span><input id="socTk" type="url" placeholder="TikTok URL"/></div>
+          <div class="social-input"><span class="social-icon">▶️</span><input id="socYt" type="url" placeholder="YouTube channel URL"/></div>
+          <div class="social-input"><span class="social-icon">💬</span><input id="socWa" type="url" placeholder="WhatsApp invite link"/></div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-outline" onclick="gotoStep(1)">← Back</button>
+        <button class="btn-primary" onclick="gotoStep(3)">Next: Branches →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Branches -->
+  <div id="panel3" style="display:none">
+    <div class="form-card">
+      <div class="form-title">🏪 Branch Setup</div>
+      <div class="form-sub">A main branch is created automatically. Add extra branches for other locations (optional — you can add more later from your dashboard).</div>
+      <div id="branchList">
+        <div style="background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:.85rem">
+          <div style="font-weight:700;font-size:.9rem;margin-bottom:.15rem">🏠 Main Branch</div>
+          <div style="font-size:.78rem;color:var(--text3)">Created automatically from your shop details above.</div>
+        </div>
+      </div>
+      <button onclick="addBranchForm()" style="padding:.6rem 1.25rem;background:#ede9fe;color:var(--accent);border:1.5px dashed var(--accent);border-radius:var(--radius);font-weight:700;font-size:.82rem;cursor:pointer;width:100%;margin-bottom:1rem">+ Add Another Branch</button>
+      <div class="btn-row">
+        <button class="btn-outline" onclick="gotoStep(2)">← Back</button>
+        <button class="btn-primary" onclick="gotoStep(4)">Next: Subscribe →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: Publish Your Store -->
+  <div id="panel4" style="display:none">
+    <div style="background:linear-gradient(135deg,#0f0c29,#1e1b4b);border-radius:20px;padding:2.5rem;text-align:center;color:#fff;margin-bottom:1.25rem">
+      <div style="font-size:3rem;margin-bottom:.75rem">🚀</div>
+      <h3 style="font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:900;margin-bottom:.5rem">Ready to Publish!</h3>
+      <p style="font-size:.9rem;color:rgba(255,255,255,.65);margin-bottom:.5rem;line-height:1.7">Your store details are set. Click below to publish your store on SELA.</p>
+      <p style="font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:2rem">Billing and subscription will be set up later from your store dashboard.</p>
+      <div id="publishMsgBox" style="display:none;background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:.75rem 1rem;font-size:.82rem;color:#ff6b6b;margin-bottom:1rem;text-align:left"></div>
+      <button id="publishNowBtn" onclick="publishStore()" style="width:100%;max-width:380px;padding:1rem;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;cursor:pointer;transition:all .2s;letter-spacing:.02em">
+        🏪 Publish My Store
+      </button>
+      <p style="font-size:.68rem;color:rgba(255,255,255,.3);margin-top:1rem">You can set up M-Pesa billing later from your dashboard settings.</p>
+    </div>
+    <div style="display:flex;justify-content:flex-start">
+      <button class="btn-outline" onclick="gotoStep(3)">← Back</button>
+    </div>
+  </div>
+  <!-- Success -->
+  <div class="success-screen" id="successScreen">
+    <div class="form-card" style="text-align:center;padding:3rem">
+      <div class="success-icon">🎉</div>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.5rem">Shop Published!</h2>
+      <p style="color:var(--text2);margin-bottom:2rem">Your shop is now live and accepting customers.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <button class="btn-primary" id="goDashboard">📊 Go to Dashboard</button>
+        <button class="btn-outline" id="goStore">🏪 View My Shop</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+const API = 'http://localhost:5000/api';
+let selectedColor = '#6366f1';
+let createdShopId = null;
+let createdShopSlug = null;
+let branchCount = 0;
+
+function getToken() { return localStorage.getItem('td_token') || localStorage.getItem('ac_user_token') || null; }
+
+function pickColor(hex, dotEl, customHex) {
+  selectedColor = customHex || hex;
+  document.getElementById('shopThemeColor').value = selectedColor;
+  document.getElementById('colorHex').textContent = selectedColor;
+  document.getElementById('colorPicker').value = selectedColor;
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+  if (dotEl) dotEl.classList.add('selected');
+}
+
+function showMsg(id, text, type='error') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text; el.className = 'msg show ' + type;
+}
+
+function gotoStep(n) {
+  // Validate step 1
+  if (n > 1) {
+    const name = document.getElementById('shopName').value.trim();
+    const email = document.getElementById('shopEmail').value.trim();
+    if (!name) { showMsg('mainMsg','Please enter your shop name'); gotoPanel(1); return; }
+    if (!email || !/\S+@\S+\.\S+/.test(email)) { showMsg('mainMsg','Please enter a valid email'); gotoPanel(1); return; }
+    document.getElementById('mainMsg').className = 'msg';
+  }
+  gotoPanel(n);
+}
+
+function gotoPanel(n) {
+  [1,2,3,4].forEach(i => {
+    document.getElementById('panel'+i).style.display = i===n ? '' : 'none';
+    const stepEl = document.getElementById('step'+i);
+    stepEl.classList.remove('active','done');
+    if (i === n) stepEl.classList.add('active');
+    else if (i < n) stepEl.classList.add('done');
+  });
+  document.getElementById('successScreen').classList.remove('show');
+}
+
+function addBranchForm() {
+  branchCount++;
+  const div = document.createElement('div');
+  div.style.cssText = 'background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1.25rem;margin-bottom:.85rem';
+  div.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+      <div style="font-weight:700;font-size:.88rem">🏪 Branch ${branchCount + 1}</div>
+      <button onclick="this.closest('div[data-branch]').remove()" style="background:#fee2e2;color:#dc2626;border:none;border-radius:6px;padding:.25rem .6rem;font-size:.72rem;font-weight:700;cursor:pointer">Remove</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+      <div><label style="font-size:.72rem;font-weight:700;color:#475569;display:block;margin-bottom:.3rem">Branch Name *</label><input type="text" placeholder="e.g. Westlands Branch" style="width:100%;padding:.6rem .85rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:.84rem;outline:none" class="br-name"/></div>
+      <div><label style="font-size:.72rem;font-weight:700;color:#475569;display:block;margin-bottom:.3rem">Location</label><input type="text" placeholder="e.g. Westlands Mall, Nairobi" style="width:100%;padding:.6rem .85rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:.84rem;outline:none" class="br-location"/></div>
+      <div><label style="font-size:.72rem;font-weight:700;color:#475569;display:block;margin-bottom:.3rem">Phone</label><input type="tel" placeholder="+254..." style="width:100%;padding:.6rem .85rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:.84rem;outline:none" class="br-phone"/></div>
+      <div><label style="font-size:.72rem;font-weight:700;color:#475569;display:block;margin-bottom:.3rem">WhatsApp</label><input type="tel" placeholder="+254..." style="width:100%;padding:.6rem .85rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:.84rem;outline:none" class="br-wa"/></div>
+    </div>`;
+  div.dataset.branch = branchCount;
+  document.getElementById('branchList').appendChild(div);
+}
+
+async function publishStore() {
+  const btn    = document.getElementById('publishNowBtn');
+  const msgBox = document.getElementById('publishMsgBox');
+  if (msgBox) msgBox.style.display = 'none';
+
+  // Get token — try both user and admin keys
+  const tok = (window.SELA&&window.SELA.getToken) ? window.SELA.getToken()
+    : (localStorage.getItem('ac_user_token')||localStorage.getItem('td_token')||'');
+  if (!tok) {
+    window.location.href = 'auth.html?redirect=' + encodeURIComponent(window.location.href);
+    return;
+  }
+
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Preparing…'; }
+
+  // ── Get a real backend JWT (register/login if user is local-only) ─────────
+  async function getRealToken() {
+    // If already a real JWT (not local-*), use it
+    if (!tok.startsWith('local-')) return tok;
+
+    // User registered locally — auto-register on backend
+    const u = (() => { try { return JSON.parse(localStorage.getItem('ac_user')||'{}'); } catch { return {}; } })();
+    if (!u.email || !u.password) return null;
+
+    // Try login first (in case they registered before)
+    try {
+      const ctrl = new AbortController();
+      setTimeout(() => ctrl.abort(), 5000);
+      const rl = await fetch(API + '/users/login', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ login: u.email, password: u.password }),
+        signal: ctrl.signal
+      });
+      const jl = await rl.json().catch(() => ({}));
+      if (jl.success && jl.token) {
+        localStorage.setItem('ac_user_token', jl.token);
+        if (jl.user) localStorage.setItem('ac_user', JSON.stringify(jl.user));
+        return jl.token;
+      }
+    } catch {}
+
+    // Login failed — try register
+    try {
+      const ctrl2 = new AbortController();
+      setTimeout(() => ctrl2.abort(), 5000);
+      const rr = await fetch(API + '/users/register', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          firstName: u.firstName || 'User',
+          lastName:  u.lastName  || 'Account',
+          username:  u.username  || u.email.split('@')[0],
+          email:     u.email,
+          password:  u.password
+        }),
+        signal: ctrl2.signal
+      });
+      const jr = await rr.json().catch(() => ({}));
+      // If registered but needs verify — auto-verify with devCode if available
+      if (jr.success) {
+        if (jr.token) {
+          localStorage.setItem('ac_user_token', jr.token);
+          return jr.token;
+        }
+        if (jr.devCode && jr.userId) {
+          const rv = await fetch(API + '/users/verify-email', {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ userId: jr.userId, code: jr.devCode })
+          });
+          const jv = await rv.json().catch(() => ({}));
+          if (jv.success && jv.token) {
+            localStorage.setItem('ac_user_token', jv.token);
+            if (jv.user) localStorage.setItem('ac_user', JSON.stringify(jv.user));
+            return jv.token;
+          }
+        }
+      }
+      // Email may already be registered — try login again
+      if (jr.message?.toLowerCase().includes('already') || jr.message?.toLowerCase().includes('exist')) {
+        const ctrl3 = new AbortController();
+        setTimeout(() => ctrl3.abort(), 4000);
+        const rl2 = await fetch(API + '/users/login', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ login: u.email, password: u.password }),
+          signal: ctrl3.signal
+        });
+        const jl2 = await rl2.json().catch(() => ({}));
+        if (jl2.success && jl2.token) {
+          localStorage.setItem('ac_user_token', jl2.token);
+          if (jl2.user) localStorage.setItem('ac_user', JSON.stringify(jl2.user));
+          return jl2.token;
+        }
+      }
+    } catch {}
+
+    return null; // Backend offline — can't get real token
+  }
+
+  if (btn) btn.textContent = '⏳ Connecting to SELA…';
+
+  const realToken = await getRealToken();
+
+  const shopData = {
+    name:        document.getElementById('shopName').value.trim(),
+    email:       document.getElementById('shopEmail').value.trim(),
+    phone:       document.getElementById('shopPhone').value.trim(),
+    whatsapp:    document.getElementById('shopWhatsapp').value.trim(),
+    location:    document.getElementById('shopLocation').value.trim(),
+    description: document.getElementById('shopDesc').value.trim(),
+    themeColor:  document.getElementById('shopThemeColor').value,
+    logo:        document.getElementById('shopLogo').value.trim(),
+    banner:      document.getElementById('shopBanner').value.trim(),
+    social: {
+      facebook:  document.getElementById('socFb').value.trim(),
+      instagram: document.getElementById('socIg').value.trim(),
+      twitter:   document.getElementById('socTw').value.trim(),
+      tiktok:    document.getElementById('socTk').value.trim(),
+      youtube:   document.getElementById('socYt').value.trim(),
+      whatsapp:  document.getElementById('socWa').value.trim(),
+    }
+  };
+
+  if (!shopData.name) {
+    if (btn) { btn.disabled=false; btn.textContent='🏪 Publish My Store'; }
+    gotoStep(1); showMsg('mainMsg','Please enter your shop name'); return;
+  }
+
+  let shopId = null, shopSlug = null;
+
+  // ── Try backend with real token ────────────────────────────────────────────
+  if (realToken) {
+    if (btn) btn.textContent = '⏳ Creating your store…';
+    try {
+      const ctrl = new AbortController();
+      setTimeout(() => ctrl.abort(), 6000);
+      const r1 = await fetch(`${API}/shops`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json', 'Authorization':'Bearer '+realToken},
+        body: JSON.stringify(shopData),
+        signal: ctrl.signal
+      });
+      const j1 = await r1.json().catch(() => ({}));
+      if (j1.success && j1.data) {
+        shopId   = j1.data.id;
+        shopSlug = j1.data.slug;
+        // Add extra branches
+        const branchForms = document.querySelectorAll('[data-branch]');
+        for (const bf of branchForms) {
+          const bname = bf.querySelector('.br-name')?.value.trim();
+          if (!bname) continue;
+          await fetch(`${API}/shops/${shopId}/branches`, {
+            method:'POST',
+            headers:{'Content-Type':'application/json','Authorization':'Bearer '+realToken},
+            body: JSON.stringify({ name:bname, location:bf.querySelector('.br-location')?.value.trim()||'', phone:bf.querySelector('.br-phone')?.value.trim()||'' })
+          }).catch(() => {});
+        }
+        // Publish without payment
+        await fetch(`${API}/shops/${shopId}/demo-publish`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+realToken}
+        }).catch(() => {});
+        console.log('✅ Shop created in database:', shopId);
+      } else {
+        if (msgBox) {
+          msgBox.textContent = j1.message || 'Could not create shop on server';
+          msgBox.style.display = 'block';
+        }
+      }
+    } catch (err) {
+      console.warn('Backend create failed:', err);
+    }
+  }
+
+  // If backend failed — show real error
+  if (!shopId) {
+    if (btn) { btn.disabled=false; btn.textContent='🏪 Publish My Store'; }
+    if (msgBox) {
+      msgBox.textContent = '❌ Could not create store. Please make sure you are logged in and the backend is running.';
+      msgBox.style.background='#fef2f2'; msgBox.style.color='#dc2626';
+      msgBox.style.borderColor='#fca5a5'; msgBox.style.display='block';
+    }
+    return;
+  }
+
+  createdShopId   = shopId;
+  createdShopSlug = shopSlug;
+  if (btn) { btn.disabled=false; btn.textContent='🏪 Publish My Store'; }
+
+  // Show success
+  [1,2,3,4].forEach(i => { document.getElementById('panel'+i).style.display='none'; });
+  document.getElementById('successScreen').classList.add('show');
+  document.getElementById('goDashboard').onclick = () => window.location.href = 'shop-dashboard.html?id=' + createdShopId;
+  document.getElementById('goStore').onclick     = () => window.location.href = 'shop-store.html?slug=' + createdShopSlug;
+}
+
+async function createAndPublishPreview() { return publishStore(); }
+
+// Keep old name as alias
+async function createAndPublishPreview() { return publishStore(); }
+
+
+// ── Pre-fill form from saved offline shop data ────────────────────────────────
+(function prefillFromSaved() {
+  if (!new URLSearchParams(location.search).has('prefill')) return;
+  const saved = (() => { try { return JSON.parse(localStorage.getItem('_sela_pending_shop')||'null'); } catch { return null; } })();
+  if (!saved) return;
+
+  // Fill step 1 fields
+  const set = (id, val) => { const el=document.getElementById(id); if(el && val) el.value=val; };
+  set('shopName',     saved.name);
+  set('shopEmail',    saved.email);
+  set('shopPhone',    saved.phone);
+  set('shopWhatsapp', saved.whatsapp);
+  set('shopLocation', saved.location);
+  set('shopDesc',     saved.description);
+
+  // Fill step 2 fields
+  set('shopLogo',   saved.logo);
+  set('shopBanner', saved.banner);
+  if (saved.themeColor) {
+    document.getElementById('shopThemeColor').value = saved.themeColor;
+    selectedColor = saved.themeColor;
+    document.getElementById('colorHex').textContent = saved.themeColor;
+    document.getElementById('colorPicker').value   = saved.themeColor;
+  }
+  if (saved.social) {
+    set('socFb', saved.social.facebook);
+    set('socIg', saved.social.instagram);
+    set('socTw', saved.social.twitter);
+    set('socTk', saved.social.tiktok);
+    set('socYt', saved.social.youtube);
+    set('socWa', saved.social.whatsapp);
+  }
+
+  // Show a notice
+  const notice = document.createElement('div');
+  notice.style.cssText = 'background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:.75rem 1.1rem;margin-bottom:1rem;font-size:.82rem;color:#15803d;display:flex;align-items:center;gap:.5rem';
+  notice.innerHTML = '✅ Your shop details have been pre-filled from your offline draft. Review and click Publish My Store.';
+  document.querySelector('.page-wrap')?.insertBefore(notice, document.getElementById('step1')?.closest('.form-card') || document.querySelector('.steps-bar').nextSibling);
+
+  // Skip straight to step 4
+  setTimeout(() => gotoStep(4), 100);
+})();
+
+</script>
+</body>
+</html>

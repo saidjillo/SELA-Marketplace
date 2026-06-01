@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Account — SELA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--card:#131720;--border:#1e2435;--accent:#00d4ff;--text:#e8edf5;--text2:#8899b8;--text3:#4a5a78;--green:#00e676;--red:#ff4757;--gold:#d4a017;--radius:12px}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--accent);text-decoration:none}button{cursor:pointer;font-family:inherit}
+
+/* Page layout */
+.auth-page{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 130px)}
+@media(max-width:768px){.auth-page{grid-template-columns:1fr}}
+
+/* Left branding panel */
+.auth-brand{background:linear-gradient(160deg,#0a0d14,#0f1a2e,#0a1020);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2.5rem;position:relative;overflow:hidden}
+.auth-brand::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,255,.06),transparent 70%);pointer-events:none}
+.auth-brand::after{content:'';position:absolute;bottom:-80px;left:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(124,77,255,.05),transparent 70%);pointer-events:none}
+.brand-logo{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:.3rem}
+.brand-logo span{color:var(--accent)}
+.brand-tag{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);margin-bottom:3rem}
+.brand-feature{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:1.5rem;max-width:300px}
+.brand-feature-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.brand-feature-title{font-weight:700;font-size:.85rem;margin-bottom:.2rem;color:var(--text)}
+.brand-feature-desc{font-size:.75rem;color:var(--text3);line-height:1.55}
+@media(max-width:768px){.auth-brand{display:none}}
+
+/* Right form panel */
+.auth-form-panel{display:flex;align-items:center;justify-content:center;padding:2rem 1.5rem;background:var(--bg)}
+.auth-box{width:100%;max-width:440px}
+
+/* Tab switcher */
+.auth-tabs{display:flex;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:.3rem;margin-bottom:2rem;gap:.25rem}
+.auth-tab{flex:1;padding:.6rem;border-radius:8px;border:none;background:none;color:var(--text3);font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.03em}
+.auth-tab.active{background:var(--card);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+
+/* Views */
+.auth-view{display:none}
+.auth-view.show{display:block}
+.auth-heading{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.3rem}
+.auth-sub{font-size:.82rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.6}
+
+/* Offline banner */
+#offlineBanner{display:none;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:.85rem 1.1rem;margin-bottom:1.25rem;font-size:.79rem;color:rgba(0,212,255,.9);line-height:1.6}
+#offlineBanner strong{color:var(--accent)}
+#offlineBanner code{background:rgba(0,212,255,.1);padding:.1rem .4rem;border-radius:4px;font-size:.75rem}
+
+/* Form elements */
+.form-group{margin-bottom:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.form-label{display:block;font-size:.75rem;font-weight:700;color:var(--text2);margin-bottom:.38rem;letter-spacing:.03em}
+.form-input{width:100%;padding:.72rem 1rem;background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:inherit;font-size:.88rem;outline:none;transition:all .2s}
+.form-input:focus{border-color:var(--accent);background:rgba(0,212,255,.04)}
+.form-input::placeholder{color:var(--text3)}
+.form-input.error{border-color:var(--red)}
+
+/* Password input with toggle */
+.pwd-wrap{position:relative}
+.pwd-wrap .form-input{padding-right:2.75rem}
+.pwd-toggle{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);font-size:1rem;cursor:pointer;display:flex;align-items:center;padding:0}
+.pwd-toggle:hover{color:var(--accent)}
+
+/* Strength bar */
+.strength-wrap{margin-top:.5rem}
+.strength-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:.35rem}
+.strength-bar{height:100%;width:0;border-radius:2px;transition:all .3s}
+.strength-label{font-size:.68rem;font-weight:700;color:var(--text3);margin-bottom:.5rem}
+.strength-reqs{display:grid;grid-template-columns:1fr 1fr;gap:.3rem}
+.req-item{display:flex;align-items:center;gap:.35rem;font-size:.68rem;color:var(--text3);transition:color .2s}
+.req-item::before{content:'○';font-size:.7rem;flex-shrink:0;transition:all .2s}
+.req-item.met{color:var(--green)}
+.req-item.met::before{content:'✓';color:var(--green)}
+
+/* Submit button */
+.auth-btn{width:100%;padding:.85rem;background:linear-gradient(135deg,#00d4ff,#0099bb);color:#0b0e14;border:none;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;letter-spacing:.02em;margin-top:.25rem}
+.auth-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,212,255,.3)}
+.auth-btn:disabled{background:rgba(255,255,255,.08);color:rgba(255,255,255,.3);cursor:not-allowed;transform:none}
+
+/* Messages */
+.auth-msg{padding:.65rem 1rem;border-radius:8px;font-size:.8rem;margin-bottom:1rem;display:none;line-height:1.55}
+.auth-msg.error{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.25);color:#ff6b6b}
+.auth-msg.success{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.2);color:var(--green)}
+.auth-msg.info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);color:var(--accent)}
+
+/* Dividers & links */
+.auth-alt{text-align:center;font-size:.8rem;color:var(--text3);margin-top:1.25rem}
+.auth-alt a{color:var(--accent);font-weight:700}
+.auth-link{color:var(--accent);font-size:.75rem;font-weight:600;cursor:pointer;background:none;border:none;padding:0}
+.auth-link:hover{opacity:.8}
+
+/* OTP inputs */
+.otp-row{display:flex;gap:.5rem;margin-bottom:1rem}
+.otp-input{flex:1;height:52px;background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:800;text-align:center;outline:none;transition:border-color .2s}
+.otp-input:focus{border-color:var(--accent);background:rgba(0,212,255,.04)}
+
+/* Forgot password link */
+.forgot-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem}
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+
+<script src="auth.js"></script>
+<script src="header.js"></script>
+
+<div class="auth-page">
+  <!-- Left branding -->
+  <div class="auth-brand">
+    <div class="brand-logo">SELA<span>.</span></div>
+    <div class="brand-tag">Kenya's Multi-Vendor Marketplace</div>
+    <div class="brand-feature">
+      <div class="brand-feature-icon" style="background:rgba(0,212,255,.1)">🏪</div>
+      <div><div class="brand-feature-title">Open Your Own Store</div><div class="brand-feature-desc">Create and manage your vendor shop on SELA. List products, manage inventory, and grow your business.</div></div>
+    </div>
+    <div class="brand-feature">
+      <div class="brand-feature-icon" style="background:rgba(0,230,118,.1)">📦</div>
+      <div><div class="brand-feature-title">Shop Across All Stores</div><div class="brand-feature-desc">Browse thousands of products from verified Kenyan vendors — all in one marketplace.</div></div>
+    </div>
+    <div class="brand-feature">
+      <div class="brand-feature-icon" style="background:rgba(212,160,23,.1)">💬</div>
+      <div><div class="brand-feature-title">Order via WhatsApp</div><div class="brand-feature-desc">Contact sellers directly and order securely via WhatsApp with M-Pesa payment support.</div></div>
+    </div>
+  </div>
+
+  <!-- Right form -->
+  <div class="auth-form-panel">
+    <div class="auth-box">
+      <!-- Tab switcher -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" onclick="switchTab('login')">🔐 Login</button>
+        <button class="auth-tab" data-tab="register" onclick="switchTab('register')">✨ Create Account</button>
+      </div>
+      <!-- LOGIN VIEW -->
+      <div class="auth-view show" id="view-login">
+        <div class="auth-heading">Welcome back</div>
+        <div class="auth-sub">Log in to your SELA account</div>
+        <div class="auth-msg" id="loginMsg"></div>
+        <div class="form-group">
+          <label class="form-label">Email or Username</label>
+          <input class="form-input" id="loginId" type="text" placeholder="your@email.com or username" autocomplete="username"/>
+        </div>
+        <div class="form-group">
+          <div class="forgot-row">
+            <label class="form-label">Password</label>
+            <button class="auth-link" onclick="switchTab('forgot')">Forgot password?</button>
+          </div>
+          <div class="pwd-wrap">
+            <input class="form-input" id="loginPwd" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')submitLogin()"/>
+            <button class="pwd-toggle" onclick="togglePwd('loginPwd',this)" type="button">👁</button>
+          </div>
+        </div>
+        <button class="auth-btn" id="loginBtn" onclick="submitLogin()">🔐 Login</button>
+        <div class="auth-alt">Don't have an account? <a href="#" onclick="switchTab('register');return false">Create one →</a></div>
+      </div>
+
+      <!-- REGISTER VIEW -->
+      <div class="auth-view" id="view-register">
+        <div class="auth-heading">Create your account</div>
+        <div class="auth-sub">Join SELA — browse products, open stores & track orders</div>
+        <div class="auth-msg" id="regMsg"></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name *</label>
+            <input class="form-input" id="regFirst" type="text" placeholder="Amina" autocomplete="given-name"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name *</label>
+            <input class="form-input" id="regLast" type="text" placeholder="Wanjiru" autocomplete="family-name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Username *</label>
+          <input class="form-input" id="regUser" type="text" placeholder="aminaw (letters, numbers, _)" autocomplete="username"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input class="form-input" id="regEmail" type="email" placeholder="amina@email.com" autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <div class="pwd-wrap">
+            <input class="form-input" id="regPwd" type="password" placeholder="Min 8 characters" autocomplete="new-password"/>
+            <button class="pwd-toggle" onclick="togglePwd('regPwd',this)" type="button">👁</button>
+          </div>
+          <div class="strength-wrap">
+            <div class="strength-track"><div class="strength-bar" id="strengthBar"></div></div>
+            <div class="strength-label" id="strengthLabel"></div>
+            <div class="strength-reqs">
+              <div class="req-item" id="req-0">At least 8 characters</div>
+              <div class="req-item" id="req-1">Lowercase letter</div>
+              <div class="req-item" id="req-2">Uppercase letter</div>
+              <div class="req-item" id="req-3">Number</div>
+              <div class="req-item" id="req-4">Special character</div>
+            </div>
+          </div>
+        </div>
+        <button class="auth-btn" id="regBtn" onclick="submitRegister()">🚀 Create Account</button>
+        <div class="auth-alt">Already have an account? <a href="#" onclick="switchTab('login');return false">Log in →</a></div>
+      </div>
+
+      <!-- VERIFY VIEW -->
+      <div class="auth-view" id="view-verify">
+        <div class="auth-heading">Verify your email</div>
+        <div class="auth-sub" id="verifySubText">Enter the 6-digit code sent to your email</div>
+        <div class="auth-msg" id="verifyMsg"></div>
+        <div class="otp-row">
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric"/>
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric"/>
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric"/>
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric"/>
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric"/>
+          <input class="otp-input" type="text" maxlength="1" inputmode="numeric"/>
+        </div>
+        <button class="auth-btn" id="verifyBtn" onclick="submitVerify()">✅ Verify</button>
+        <div class="auth-alt">Didn't get it? <a href="#" onclick="resendCode();return false">Resend code</a></div>
+      </div>
+
+      <!-- FORGOT PASSWORD VIEW -->
+      <div class="auth-view" id="view-forgot">
+        <div class="auth-heading">Reset password</div>
+        <div class="auth-sub">Enter your email and we'll send a reset link</div>
+        <div class="auth-msg" id="forgotMsg"></div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" id="forgotEmail" type="email" placeholder="your@email.com"/>
+        </div>
+        <button class="auth-btn" id="forgotBtn" onclick="submitForgot()">Send Reset Link</button>
+        <div class="auth-alt"><a href="#" onclick="switchTab('login');return false">← Back to login</a></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:5000/api';
+let _userId = null;
+
+// ── Helpers ─────────────────────────────────────────────────────────────────
+function showMsg(id, msg, type='error') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg; el.className = 'auth-msg ' + type; el.style.display = 'block';
+}
+function hideMsg(id) { const el=document.getElementById(id); if(el){el.style.display='none';el.textContent='';} }
+
+function apiFetch(url, opts={}, ms=5000) {
+  const ctrl = new AbortController();
+  const tid  = setTimeout(() => ctrl.abort(), ms);
+  return fetch(url, { ...opts, signal: ctrl.signal })
+    .then(r => { clearTimeout(tid); return r; })
+    .catch(() => { clearTimeout(tid); return null; });
+}
+
+function togglePwd(id, btn) {
+  const inp = document.getElementById(id);
+  if (!inp) return;
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+
+// ── Tab switching ────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.auth-view').forEach(v => v.classList.toggle('show', v.id === 'view-' + tab));
+}
+
+// ── Local account storage ────────────────────────────────────────────────────
+const LOCAL_STORE = {
+  all()  { try { return JSON.parse(localStorage.getItem('_sela_users')||'[]'); } catch { return []; } },
+  save(u){ const all=LOCAL_STORE.all(); const i=all.findIndex(x=>x.email===u.email||x.username===u.username); if(i>=0) all[i]=u; else all.push(u); localStorage.setItem('_sela_users',JSON.stringify(all)); },
+  find(q){ return LOCAL_STORE.all().find(u=>u.email===q||u.username===q||u.phone===q)||null; }
+};
+function loginLocally(user) {
+  const token = 'local-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  localStorage.setItem('ac_user_token', token);
+  localStorage.setItem('ac_user', JSON.stringify(user));
+}
+
+// ── Login ────────────────────────────────────────────────────────────────────
+async function submitLogin() {
+  const login = (document.getElementById('loginId')?.value||'').trim();
+  const pass  = (document.getElementById('loginPwd')?.value||'');
+  const btn   = document.getElementById('loginBtn');
+  const redirect = new URLSearchParams(location.search).get('redirect')||'index.html';
+
+  hideMsg('loginMsg');
+  if (!login) { showMsg('loginMsg','Enter your email or username'); return; }
+  if (!pass)  { showMsg('loginMsg','Enter your password'); return; }
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Logging in…'; }
+
+  try {
+    // Try vendor/user login first
+    const r1 = await fetch(API+'/users/login', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({login, password:pass})
+    });
+    const j1 = await r1.json().catch(()=>({}));
+    if (j1.success && j1.token) {
+      localStorage.removeItem('td_token');
+      localStorage.removeItem('_sela_my_shop');
+      localStorage.removeItem('_sela_shops');
+      localStorage.removeItem('_sela_pending_shop');
+      localStorage.setItem('ac_user_token', j1.token);
+      localStorage.setItem('ac_user', JSON.stringify(j1.user||{}));
+      if (btn){btn.disabled=false;btn.textContent='🔐 Log In';}
+      window.location.href = redirect; return;
+    }
+
+    // Try admin login
+    const r2 = await fetch(API+'/auth/login', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({username:login, password:pass})
+    });
+    const j2 = await r2.json().catch(()=>({}));
+    if (j2.success && j2.token) {
+      localStorage.removeItem('ac_user_token');
+      localStorage.removeItem('_sela_my_shop');
+      localStorage.removeItem('_sela_shops');
+      localStorage.removeItem('_sela_pending_shop');
+      localStorage.setItem('td_token', j2.token);
+      const name = (j2.admin?.name||'Admin').split(' ');
+      localStorage.setItem('ac_user', JSON.stringify({
+        id:'admin', firstName:name[0], lastName:name.slice(1).join(' ')||'',
+        username:login, email:j2.admin?.email||'', isAdmin:true, role:'admin'
+      }));
+      if (btn){btn.disabled=false;btn.textContent='🔐 Log In';}
+      window.location.href = '/admin.html'; return;
+    }
+
+    showMsg('loginMsg', j1.message || j2.message || 'Incorrect credentials');
+  } catch(e) {
+    showMsg('loginMsg','Cannot reach backend — start it with: <code>cd backend &amp;&amp; npm start</code>');
+  } finally {
+    if (btn){btn.disabled=false;btn.textContent='🔐 Log In';}
+  }
+}
+
+// ── Register ─────────────────────────────────────────────────────────────────
+async function submitRegister() {
+  const first    = (document.getElementById('regFirst')?.value || '').trim();
+  const last     = (document.getElementById('regLast')?.value  || '').trim();
+  const username = (document.getElementById('regUser')?.value  || '').trim();
+  const email    = (document.getElementById('regEmail')?.value || '').trim();
+  const pass     = (document.getElementById('regPwd')?.value   || '');
+  const btn      = document.getElementById('regBtn');
+  const redirect = new URLSearchParams(location.search).get('redirect') || 'index.html';
+
+  hideMsg('regMsg');
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Creating account…'; }
+
+  try {
+    const res = await fetch(`${API}/users/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstName:first, lastName:last, username, email, password:pass })
+    });
+
+    let j = {};
+    try { j = await res.json(); } catch {}
+
+    if (j.success && j.userId && j.devCode) {
+      // Auto-verify immediately (email not configured)
+      const res2 = await fetch(`${API}/users/verify-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: j.userId, code: j.devCode })
+      });
+      let jv = {};
+      try { jv = await res2.json(); } catch {}
+
+      if (jv.success && jv.token) {
+        (window.SELA||{saveLogin:function(t,u){localStorage.setItem('ac_user_token',t);localStorage.setItem('ac_user',JSON.stringify(u));}}).saveLogin(jv.token, jv.user||{}, false);
+        if (btn) { btn.disabled=false; btn.textContent='🚀 Create Account'; }
+        const postRedirect2 = sessionStorage.getItem('post_login_redirect');
+        if (postRedirect2) { sessionStorage.removeItem('post_login_redirect'); window.location.href=postRedirect2; return; }
+        window.location.href = redirect;
+        return;
+      }
+    }
+
+    // Handle errors
+    const msg = j.message || 'Registration failed — check your details and try again';
+    if (j.code === 'EMAIL_EXISTS') {
+      showMsg('regMsg', msg + ' <a href="#" onclick="switchTab(\'login\')" style="color:#0ea5e9;font-weight:700">Log in →</a>');
+    } else {
+      showMsg('regMsg', msg);
+    }
+
+  } catch (err) {
+    if (err.message?.includes('fetch') || err.message?.includes('Failed')) {
+      showMsg('regMsg', 'Cannot reach server — make sure the backend is running: <code>cd backend &amp;&amp; npm start</code>');
+    } else {
+      showMsg('regMsg', 'Error: ' + err.message);
+    }
+  } finally {
+    if (btn) { btn.disabled=false; btn.textContent='🚀 Create Account'; }
+  }
+}
+
+// ── Verify ───────────────────────────────────────────────────────────────────
+async function submitVerify() {
+  const code = Array.from(document.querySelectorAll('.otp-input')).map(i=>i.value.trim()).join('');
+  const btn  = document.getElementById('verifyBtn');
+  const redirect = new URLSearchParams(location.search).get('redirect') || 'index.html';
+  if (code.length < 6) { showMsg('verifyMsg','Enter the 6-digit code'); return; }
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Verifying…'; }
+  const r = await apiFetch(`${API}/users/verify-email`, {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ userId:_userId, code })
+  });
+  if (r) {
+    const j = await r.json().catch(() => ({}));
+    if (j.success) {
+      localStorage.setItem('ac_user_token', j.token);
+      localStorage.setItem('ac_user', JSON.stringify(j.user));
+      window.location.href = redirect; return;
+    }
+    showMsg('verifyMsg', j.message || 'Invalid code — try again');
+  } else {
+    showMsg('verifyMsg','Backend offline — try logging in with your email and password directly');
+  }
+  if (btn) { btn.disabled=false; btn.textContent='✅ Verify'; }
+}
+async function resendCode() {
+  if (!_userId) { showMsg('verifyMsg','Please start registration again'); return; }
+  const r = await apiFetch(`${API}/users/resend-code`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:_userId})});
+  showMsg('verifyMsg', r ? 'Code resent!' : 'Cannot resend — backend offline', r?'success':'error');
+}
+
+// ── Forgot password ───────────────────────────────────────────────────────────
+async function submitForgot() {
+  const email = document.getElementById('forgotEmail')?.value.trim();
+  const btn   = document.getElementById('forgotBtn');
+  if (!email) { showMsg('forgotMsg','Enter your email'); return; }
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Sending…'; }
+  const r = await apiFetch(`${API}/users/forgot-password`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+  if (r) {
+    const j = await r.json().catch(() => ({}));
+    showMsg('forgotMsg', j.message || (j.success ? 'Reset link sent! Check your email.' : 'Failed'), j.success?'success':'error');
+  } else {
+    const u = LOCAL_STORE.find(email);
+    showMsg('forgotMsg', u ? '⚡ Backend offline. Use your original password to log in.' : 'No account with that email.', u?'info':'error');
+  }
+  if (btn) { btn.disabled=false; btn.textContent='Send Reset Link'; }
+}
+
+// ── OTP inputs ────────────────────────────────────────────────────────────────
+document.querySelectorAll('.otp-input').forEach((inp, i, arr) => {
+  inp.addEventListener('input', () => { if (inp.value && arr[i+1]) arr[i+1].focus(); });
+  inp.addEventListener('keydown', e => { if (e.key==='Backspace' && !inp.value && arr[i-1]) arr[i-1].focus(); });
+  inp.addEventListener('paste', e => {
+    const text = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'');
+    arr.forEach((el,j) => el.value = text[j]||'');
+    e.preventDefault();
+    const last = arr[Math.min(text.length, arr.length-1)]; if(last) last.focus();
+  });
+});
+
+// ── Password strength ─────────────────────────────────────────────────────────
+function checkStrength(p) {
+  const tests = [/.{8,}/, /[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/];
+  let score = 0;
+  tests.forEach((t,i) => {
+    const ok = t.test(p);
+    if (ok) score++;
+    const el = document.getElementById('req-'+i);
+    if (el) el.classList.toggle('met', ok);
+  });
+  const bar = document.getElementById('strengthBar');
+  const lbl = document.getElementById('strengthLabel');
+  const colors = ['','#ef4444','#f59e0b','#eab308','#22c55e','#22c55e'];
+  const words  = ['','Weak','Fair','Good','Strong','Very Strong'];
+  if (bar) { bar.style.width=(score*20)+'%'; bar.style.background=colors[score]; }
+  if (lbl) { lbl.textContent=p?words[score]:''; lbl.style.color=colors[score]; }
+}
+document.getElementById('regPwd')?.addEventListener('input', e => checkStrength(e.target.value));
+
+// ── Tab from URL ──────────────────────────────────────────────────────────────
+const urlTab = new URLSearchParams(location.search).get('tab');
+if (urlTab) switchTab(urlTab);
+
+// ── Offline check on load ─────────────────────────────────────────────────────
+apiFetch(`${API}/products?limit=1`, {}, 2000).then(r => {
+  if (!r) {
+    const banner = document.getElementById('offlineBanner');
+    if (banner) banner.style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>

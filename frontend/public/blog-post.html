@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title id="pageTitle">Blog Post — SELA</title>
+<meta name="description" id="metaDesc" content="Expert ICT guide from SELA Kenya."/>
+<meta property="og:title" id="ogTitle" content="Blog — SELA"/>
+<meta property="og:description" id="ogDesc" content=""/>
+<meta property="og:type" content="article"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='12'>📝</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;
+  --card:#1a2035;--card2:#1f2740;--border:#252f47;
+  --accent:#00d4ff;--green:#00e676;--orange:#ff6b35;--red:#ff4757;--gold:#f59e0b;
+  --text:#e8edf5;--text2:#8a97b0;--text3:#5a6a8a;
+  --font-head:'Montserrat',sans-serif;--font-body:'Roboto',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-body)}
+
+/* HEADER */
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.4rem 1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:var(--text3)}
+.topbar a{color:var(--text3)}.topbar a:hover{color:var(--accent)}
+.topbar-wa{background:#25D366;color:#fff;padding:.2rem .75rem;border-radius:4px;font-size:.7rem;font-weight:700}
+header{background:rgba(11,14,20,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 1.5rem}
+.header-inner{max-width:1200px;margin:0 auto;height:60px;display:flex;align-items:center;gap:1rem}
+.logo{font-family:var(--font-head);font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:.3rem}
+.logo-dot{color:var(--accent)}.logo-badge{font-size:.55rem;font-weight:700;background:var(--accent);color:var(--bg);padding:2px 5px;border-radius:3px;letter-spacing:.05em;align-self:flex-start;margin-top:4px}
+.header-nav{display:flex;gap:.25rem;align-items:center;margin-left:auto}
+.hn-link{padding:.4rem .7rem;border-radius:6px;font-size:.72rem;font-weight:600;color:var(--text2);background:none;border:none;transition:all .15s;font-family:var(--font-head)}
+.hn-link:hover{color:var(--text);background:var(--card)}
+.hn-link.active{color:var(--accent);background:rgba(0,212,255,.08)}
+.btn-wa-hdr{background:#25D366;color:#fff;padding:.4rem .9rem;border-radius:6px;font-size:.72rem;font-weight:700}
+
+/* BREADCRUMB */
+.breadcrumb{background:var(--bg2);border-bottom:1px solid var(--border);padding:.5rem 1.5rem}
+.bc-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:.4rem;font-size:.73rem;color:var(--text3);flex-wrap:wrap}
+.bc-link{color:var(--text2);cursor:pointer}.bc-link:hover{color:var(--accent)}
+
+/* PROGRESS BAR */
+#readProgress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--green));z-index:160;transition:width .1s}
+
+/* MAIN LAYOUT */
+.post-layout{max-width:1200px;margin:0 auto;padding:2rem 1.5rem;display:grid;grid-template-columns:1fr 300px;gap:2.5rem;align-items:start}
+@media(max-width:900px){.post-layout{grid-template-columns:1fr}.post-sidebar{display:none}}
+
+/* ARTICLE */
+.post-hero{background:linear-gradient(135deg,var(--bg3),var(--card2));border:1px solid var(--border);border-radius:16px;padding:2rem 2.5rem 1.75rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.post-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,212,255,.04),transparent 70%);pointer-events:none}
+.post-hero-top{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap}
+.post-cat-badge{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px}
+.post-featured-badge{font-size:.62rem;font-weight:700;text-transform:uppercase;background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.2);padding:.2rem .65rem;border-radius:4px}
+.post-emoji{font-size:3rem;margin-bottom:.75rem;display:block}
+.post-title{font-family:var(--font-head);font-size:clamp(1.35rem,3.5vw,2rem);font-weight:900;line-height:1.2;margin-bottom:1rem}
+.post-excerpt{font-size:.92rem;color:var(--text2);line-height:1.75;margin-bottom:1.25rem}
+.post-meta-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding-top:1rem;border-top:1px solid var(--border)}
+.post-meta-item{display:flex;align-items:center;gap:.35rem;font-size:.75rem;color:var(--text3)}
+.post-meta-item strong{color:var(--text2)}
+
+/* METRICS BAR */
+.metrics-bar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.85rem 1.25rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;margin-bottom:1.75rem}
+.metric{display:flex;align-items:center;gap:.35rem;font-size:.8rem;color:var(--text2)}
+.metric strong{font-family:var(--font-head);font-size:.9rem;font-weight:800;color:var(--text)}
+.metric-sep{width:1px;height:20px;background:var(--border)}
+.vote-row{display:flex;align-items:center;gap:.4rem;margin-left:auto}
+.vote-btn{width:34px;height:34px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--text3);font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.vote-btn:hover{border-color:var(--accent);color:var(--accent)}
+.vote-btn.up.active{background:rgba(0,230,118,.12);border-color:var(--green);color:var(--green)}
+.vote-btn.down.active{background:rgba(255,71,87,.12);border-color:var(--red);color:var(--red)}
+.like-btn{display:flex;align-items:center;gap:.35rem;padding:.45rem .9rem;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:.78rem;font-weight:600;font-family:var(--font-head);transition:all .2s}
+.like-btn:hover{border-color:#f43f5e;color:#f43f5e}
+.like-btn.liked{background:rgba(244,63,94,.1);border-color:#f43f5e;color:#f43f5e}
+
+/* ARTICLE BODY */
+.post-body{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem 2.5rem;margin-bottom:1.75rem;line-height:1.9;color:var(--text2);font-size:.95rem}
+.post-body h3{font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--text);margin:1.75rem 0 .65rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.post-body h4{font-family:var(--font-head);font-size:.9rem;font-weight:700;color:var(--text2);margin:1.25rem 0 .5rem}
+.post-body p{margin-bottom:1rem}
+.post-body strong{color:var(--text);font-weight:700}
+.post-body ul,.post-body ol{padding-left:1.25rem;margin-bottom:1rem}
+.post-body li{margin-bottom:.35rem}
+.post-body .tip-box{background:linear-gradient(135deg,rgba(0,212,255,.06),rgba(0,212,255,.02));border:1px solid rgba(0,212,255,.2);border-left:3px solid var(--accent);border-radius:8px;padding:.9rem 1.1rem;margin:1.25rem 0;font-size:.88rem;color:var(--text2)}
+.post-body code{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:.1rem .4rem;font-family:monospace;font-size:.85rem;color:var(--accent)}
+
+/* TAGS */
+.post-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.75rem}
+.post-tag{font-size:.68rem;font-weight:600;color:var(--accent);background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.18);padding:.18rem .55rem;border-radius:4px;cursor:pointer}
+.post-tag:hover{background:rgba(0,212,255,.14)}
+
+/* SHARE BAR */
+.share-bar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;margin-bottom:1.75rem}
+.share-label{font-size:.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-right:.25rem}
+.shr-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.35rem .75rem;border-radius:6px;border:none;cursor:pointer;font-size:.7rem;font-weight:700;font-family:var(--font-head);transition:all .2s;white-space:nowrap}
+.shr-btn:hover{transform:translateY(-1px)}
+.shr-wa{background:#25D366;color:#fff}.shr-fb{background:#1877F2;color:#fff}
+.shr-li{background:#0A66C2;color:#fff}.shr-pin{background:#E60023;color:#fff}
+.shr-tt{background:#010101;color:#fff;border:1px solid #333}
+.shr-ig{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);color:#fff}
+.shr-copy{background:var(--card);border:1px solid var(--border);color:var(--text2)}
+
+/* AUTHOR CARD */
+.author-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem}
+.author-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--green));display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.author-name{font-family:var(--font-head);font-size:.88rem;font-weight:800;color:var(--text)}
+.author-role{font-size:.75rem;color:var(--text3);margin-top:.15rem}
+.author-bio{font-size:.78rem;color:var(--text2);margin-top:.35rem;line-height:1.6}
+
+/* RELATED */
+.related-section{margin-bottom:1.5rem}
+.related-title{font-family:var(--font-head);font-size:.85rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.85rem}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.related-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.85rem;cursor:pointer;transition:all .2s;display:flex;gap:.65rem;align-items:flex-start}
+.related-card:hover{border-color:rgba(0,212,255,.25);transform:translateY(-2px)}
+.related-emoji{font-size:1.6rem;flex-shrink:0}
+.related-card-title{font-family:var(--font-head);font-size:.75rem;font-weight:700;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.related-card:hover .related-card-title{color:var(--accent)}
+.related-card-meta{font-size:.65rem;color:var(--text3);margin-top:.2rem}
+
+/* SIDEBAR */
+.post-sidebar{display:flex;flex-direction:column;gap:1rem;position:sticky;top:80px}
+.sidebar-widget{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.sw-head{background:var(--bg3);padding:.65rem 1rem;border-bottom:1px solid var(--border);font-family:var(--font-head);font-size:.72rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em}
+.sw-body{padding:.75rem 1rem}
+
+/* TOC */
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.toc-item{font-size:.78rem;color:var(--text2);padding:.25rem .5rem;border-radius:5px;cursor:pointer;border-left:2px solid transparent;transition:all .15s;line-height:1.4}
+.toc-item:hover,.toc-item.active{border-left-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.05)}
+
+/* Metrics widget */
+.metric-widget-row{display:flex;align-items:center;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--border)}
+.metric-widget-row:last-child{border-bottom:none}
+.metric-widget-label{font-size:.75rem;color:var(--text3);display:flex;align-items:center;gap:.35rem}
+.metric-widget-val{font-family:var(--font-head);font-size:.82rem;font-weight:800;color:var(--text)}
+
+/* Toast */
+.bp-toast{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);background:var(--green);color:var(--bg);padding:.45rem 1.1rem;border-radius:20px;font-size:.78rem;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;white-space:nowrap}
+.bp-toast.show{opacity:1}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-size:.75rem;color:var(--text3);margin-top:1rem}
+@media(max-width:768px){.topbar{display:none}.header-nav{display:none}.post-layout{padding:1rem}.post-hero,.post-body{padding:1.25rem}}
+
+/* ══════════════════════════════════════════════════════
+   COMMENT SYSTEM — Social Media Style
+══════════════════════════════════════════════════════ */
+.comments-section{margin-bottom:2rem}
+.comments-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
+.comments-title{font-family:var(--font-head);font-size:1.1rem;font-weight:800;display:flex;align-items:center;gap:.6rem}
+.comments-count{font-size:.75rem;font-weight:700;background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.2);padding:.15rem .55rem;border-radius:20px}
+.comments-sort{display:flex;gap:.35rem}
+.sort-btn{padding:.28rem .75rem;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text3);font-size:.7rem;font-weight:600;font-family:var(--font-head);cursor:pointer;transition:all .2s}
+.sort-btn.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+
+/* Admin bar */
+.admin-comment-bar{background:rgba(255,107,53,.06);border:1px solid rgba(255,107,53,.2);border-radius:10px;padding:.65rem 1rem;display:none;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap}
+.admin-comment-bar.show{display:flex}
+.acb-label{font-size:.72rem;font-weight:700;color:var(--orange);font-family:var(--font-head)}
+.acb-btn{padding:.3rem .75rem;border-radius:6px;border:none;font-size:.72rem;font-weight:700;cursor:pointer;font-family:var(--font-head);transition:all .2s}
+.acb-select-all{background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.2)}
+.acb-select-all:hover{background:var(--accent);color:var(--bg)}
+.acb-del-selected{background:rgba(255,71,87,.1);color:var(--red);border:1px solid rgba(255,71,87,.2)}
+.acb-del-selected:hover{background:var(--red);color:#fff}
+.acb-del-all{background:var(--red);color:#fff}
+.acb-del-all:hover{opacity:.85}
+
+/* Comment form */
+.comment-form-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.25rem;margin-bottom:1.5rem}
+.cf-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.cf-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:800;flex-shrink:0;border:2px solid var(--border);font-family:var(--font-head)}
+.cf-title{font-family:var(--font-head);font-size:.85rem;font-weight:700;color:var(--text)}
+.cf-fields{display:flex;flex-direction:column;gap:.65rem}
+.cf-name-row{display:flex;gap:.65rem}
+.cf-input{flex:1;padding:.6rem .9rem;background:var(--bg3);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:var(--font-body);font-size:.84rem;outline:none;transition:border-color .2s}
+.cf-input:focus{border-color:var(--accent)}
+.cf-input.err{border-color:var(--red)}
+.cf-textarea{width:100%;padding:.75rem .9rem;background:var(--bg3);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:var(--font-body);font-size:.88rem;outline:none;resize:vertical;min-height:90px;line-height:1.6;transition:border-color .2s}
+.cf-textarea:focus{border-color:var(--accent)}
+.cf-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.cf-char{font-size:.68rem;color:var(--text3)}
+.cf-char.warn{color:var(--orange)}
+.cf-char.over{color:var(--red)}
+.cf-submit{padding:.6rem 1.5rem;background:var(--accent);color:var(--bg);border:none;border-radius:8px;font-family:var(--font-head);font-size:.8rem;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.cf-submit:hover{background:#33ddff;transform:translateY(-1px)}
+.cf-submit:disabled{background:var(--border);color:var(--text3);cursor:not-allowed;transform:none}
+
+/* Comment list */
+.comment-list{display:flex;flex-direction:column;gap:1rem}
+.comment-empty{text-align:center;padding:3rem 1rem;color:var(--text3)}
+.comment-empty-icon{font-size:2.5rem;margin-bottom:.5rem}
+
+/* Individual comment */
+.comment-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.1rem;position:relative;transition:border-color .2s}
+.comment-item:hover{border-color:rgba(0,212,255,.15)}
+.comment-item.pinned{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.03)}
+.comment-item.admin-comment{border-color:rgba(0,212,255,.25);background:rgba(0,212,255,.02)}
+.comment-item.deleted-comment{opacity:.55}
+.comment-select-cb{position:absolute;top:.85rem;left:-.5rem;display:none;width:16px;height:16px;cursor:pointer;accent-color:var(--accent)}
+.comment-select-cb.show{display:block}
+
+/* Comment header */
+.comment-head{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.6rem}
+.comment-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;flex-shrink:0;font-family:var(--font-head);position:relative;overflow:hidden}
+.comment-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.admin-avatar-wrap{position:relative}
+.admin-crown{position:absolute;top:-4px;right:-4px;font-size:.6rem;z-index:1}
+.comment-meta{flex:1;min-width:0}
+.comment-author{font-family:var(--font-head);font-size:.82rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.comment-admin-badge{font-size:.58rem;font-weight:700;background:rgba(0,212,255,.12);color:var(--accent);border:1px solid rgba(0,212,255,.25);padding:.1rem .45rem;border-radius:3px;letter-spacing:.08em;text-transform:uppercase}
+.comment-pin-badge{font-size:.58rem;font-weight:700;background:rgba(245,158,11,.12);color:var(--gold);border:1px solid rgba(245,158,11,.25);padding:.1rem .45rem;border-radius:3px}
+.comment-time{font-size:.68rem;color:var(--text3);display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-top:.15rem}
+.comment-edited-badge{font-size:.62rem;color:var(--text3);font-style:italic}
+
+/* Comment body */
+.comment-body{font-size:.88rem;color:var(--text2);line-height:1.75;margin-bottom:.75rem;word-break:break-word}
+.comment-body.deleted-text{font-style:italic;color:var(--text3)}
+
+/* Comment footer — metrics + actions */
+.comment-footer{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.comment-metric{display:flex;align-items:center;gap:.28rem;font-size:.7rem;color:var(--text3)}
+.comment-metric-sep{font-size:.6rem;color:var(--border)}
+.comment-like-btn{display:flex;align-items:center;gap:.28rem;padding:.25rem .65rem;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text3);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font-head)}
+.comment-like-btn:hover{border-color:#f43f5e;color:#f43f5e}
+.comment-like-btn.liked{background:rgba(244,63,94,.1);border-color:#f43f5e;color:#f43f5e}
+.comment-reply-btn,.comment-edit-btn,.comment-delete-btn,.comment-pin-btn{background:none;border:none;font-size:.72rem;font-weight:600;cursor:pointer;font-family:var(--font-head);padding:.25rem .55rem;border-radius:6px;transition:all .2s}
+.comment-reply-btn{color:var(--accent)}.comment-reply-btn:hover{background:rgba(0,212,255,.08)}
+.comment-edit-btn{color:var(--text3)}.comment-edit-btn:hover{color:var(--accent);background:rgba(0,212,255,.06)}
+.comment-delete-btn{color:var(--text3)}.comment-delete-btn:hover{color:var(--red);background:rgba(255,71,87,.06)}
+.comment-pin-btn{color:var(--text3)}.comment-pin-btn:hover{color:var(--gold)}
+
+/* Edit form inside comment */
+.comment-edit-form{margin-top:.75rem;background:var(--bg3);border-radius:10px;padding:.85rem;border:1px solid var(--border)}
+.comment-edit-form textarea{width:100%;padding:.6rem .8rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:.86rem;resize:vertical;min-height:70px;outline:none;line-height:1.6}
+.comment-edit-form textarea:focus{border-color:var(--accent)}
+.edit-form-btns{display:flex;gap:.5rem;margin-top:.5rem}
+.ef-save{padding:.4rem .9rem;background:var(--accent);color:var(--bg);border:none;border-radius:7px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:var(--font-head)}
+.ef-cancel{padding:.4rem .9rem;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:7px;font-size:.75rem;cursor:pointer}
+
+/* Replies */
+.comment-replies{margin-top:.85rem;margin-left:1.25rem;padding-left:1rem;border-left:2px solid var(--border);display:flex;flex-direction:column;gap:.75rem}
+.reply-item{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;position:relative;transition:border-color .2s}
+.reply-item:hover{border-color:rgba(0,212,255,.12)}
+.reply-item.admin-comment{border-color:rgba(0,212,255,.2)}
+.reply-form{margin-top:.75rem;margin-left:1.25rem;padding-left:1rem;border-left:2px solid var(--accent)}
+
+/* Reply form */
+.reply-form-inner{background:var(--bg3);border-radius:10px;padding:.85rem;border:1px solid var(--border)}
+.reply-form-inner textarea{width:100%;padding:.6rem .8rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:.84rem;resize:none;height:70px;outline:none;line-height:1.6}
+.reply-form-inner textarea:focus{border-color:var(--accent)}
+.reply-form-row{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap;align-items:center}
+.reply-name-input{flex:1;min-width:120px;padding:.4rem .75rem;background:var(--bg2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.8rem;outline:none}
+.reply-name-input:focus{border-color:var(--accent)}
+.rf-submit{padding:.4rem .9rem;background:var(--accent);color:var(--bg);border:none;border-radius:7px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:var(--font-head)}
+.rf-cancel{padding:.4rem .75rem;background:none;border:1px solid var(--border);color:var(--text3);border-radius:7px;font-size:.75rem;cursor:pointer}
+
+/* Notification bell */
+/* notif-bell CSS now in notif-bell.js */
+.notif-clear{font-size:.65rem;color:var(--text3);cursor:pointer;border:none;background:none}.notif-clear:hover{color:var(--accent)}
+.notif-item{padding:.65rem 1rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.notif-item:hover{background:var(--card2)}
+.notif-item:last-child{border-bottom:none}
+.notif-item-name{font-family:var(--font-head);font-size:.75rem;font-weight:700;color:var(--text)}
+.notif-item-body{font-size:.72rem;color:var(--text2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-top:.1rem}
+.notif-item-time{font-size:.65rem;color:var(--text3);margin-top:.15rem}
+.notif-empty{padding:1rem;text-align:center;font-size:.78rem;color:var(--text3)}
+
+/* ── SELA Global Footer ─────────────────────────────────────────────── */
+.ac-footer{border-top:1px solid var(--border,#252f47);padding:2.5rem 2rem 0;margin-top:4rem;background:var(--bg2,#111520);font-family:'Roboto',sans-serif}
+.ac-footer-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.ac-footer-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text,#e8edf5);margin-bottom:.85rem}
+.ac-footer-dot{color:var(--accent,#00d4ff)}
+.ac-footer-brand p{font-size:.83rem;color:var(--text3,#5a6a8a);line-height:1.75;max-width:280px}
+.ac-footer-col h4{font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;color:var(--text,#e8edf5);margin-bottom:.9rem;letter-spacing:.03em}
+.ac-footer-col ul{list-style:none;padding:0;margin:0}
+.ac-footer-col ul li{margin-bottom:.5rem}
+.ac-footer-col ul li a{color:var(--text3,#5a6a8a);font-size:.81rem;text-decoration:none;transition:color .2s}
+.ac-footer-col ul li a:hover{color:var(--accent,#00d4ff)}
+.ac-footer-bottom{max-width:1300px;margin:0 auto;border-top:1px solid var(--border,#252f47);padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;color:var(--text3,#5a6a8a);font-size:.78rem;flex-wrap:wrap;gap:.5rem}
+@media(max-width:768px){.ac-footer-inner{grid-template-columns:1fr;gap:1.75rem}.ac-footer-brand p{max-width:100%}}
+
+/* ── header.js injects a sticky header — prevent content from hiding under it ── */
+body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(script):not(style):first-of-type {
+  scroll-margin-top: 180px;
+}
+
+</style>
+<link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+
+<div id="readProgress" style="width:0"></div>
+
+  <a href="https://wa.me/254700000000" class="topbar-wa" target="_blank">💬 WhatsApp</a>
+</div>
+
+<div class="breadcrumb">
+  <div class="bc-inner">
+    <a href="index.html" class="bc-link">🏠 Home</a>
+    <span style="color:var(--text3)">›</span>
+    <a href="blog.html" class="bc-link">📝 Blog</a>
+    <span style="color:var(--text3)">›</span>
+    <span id="bcTitle" style="color:var(--text)">Article</span>
+  </div>
+</div>
+
+<div class="post-layout">
+  <!-- ARTICLE COLUMN -->
+  <div>
+    <!-- Hero card -->
+    <div class="post-hero" id="postHero">
+      <div class="post-hero-top" id="postHeroTop"></div>
+      <span class="post-emoji" id="postEmoji">📝</span>
+      <h1 class="post-title" id="postTitle">Loading…</h1>
+      <p class="post-excerpt" id="postExcerpt"></p>
+      <div class="post-meta-row" id="postMetaRow"></div>
+    </div>
+
+    <!-- Live metrics bar -->
+    <div class="metrics-bar" id="metricsBar">
+      <div class="metric"><strong id="mViews">—</strong> 👁️ views</div>
+      <div class="metric-sep"></div>
+      <div class="metric"><strong id="mLikes">—</strong> ❤️ likes</div>
+      <div class="metric-sep"></div>
+      <div class="metric"><strong id="mVotes">—</strong> ⭐ votes</div>
+      <div class="metric-sep"></div>
+      <div class="metric">Updated <strong id="mUpdated">—</strong></div>
+      <div class="vote-row">
+        <button class="vote-btn up" id="voteUp" onclick="castVote(1)" title="Helpful">👍</button>
+        <button class="vote-btn down" id="voteDn" onclick="castVote(-1)" title="Not helpful">👎</button>
+        <button class="like-btn" id="likeBtn" onclick="toggleLike()">❤️ <span id="likeBtnCount">0</span></button>
+      </div>
+    </div>
+
+    <!-- Article body -->
+    <div class="post-body" id="postBody"></div>
+
+    <!-- Tags -->
+    <div class="post-tags" id="postTags"></div>
+
+    <!-- Share bar -->
+    <div class="share-bar">
+      <span class="share-label">Share:</span>
+      <button class="shr-btn shr-wa"  onclick="sharePost('whatsapp')">💬 WhatsApp</button>
+      <button class="shr-btn shr-fb"  onclick="sharePost('facebook')">FB</button>
+      <button class="shr-btn shr-li"  onclick="sharePost('linkedin')">LI</button>
+      <button class="shr-btn shr-pin" onclick="sharePost('pinterest')">Pin</button>
+      <button class="shr-btn shr-tt"  onclick="sharePost('tiktok')">TikTok</button>
+      <button class="shr-btn shr-ig"  onclick="sharePost('instagram')">IG</button>
+      <button class="shr-btn shr-copy" onclick="sharePost('copy')">🔗 Copy</button>
+    </div>
+
+    <!-- Author card -->
+    <div class="author-card">
+      <div class="author-avatar">✍️</div>
+      <div>
+        <div class="author-name">SELA Team</div>
+        <div class="author-role">ICT Specialists · Mombasa & Nairobi, Kenya</div>
+        <div class="author-bio">Expert ICT tips from Kenya's trusted accessories provider. 10 branches across the country — visit us or call +254 700 000 000.</div>
+      </div>
+    </div>
+
+    <!-- Related posts -->
+    <div class="related-section">
+      <div class="related-title">More Articles</div>
+      <div class="related-grid" id="relatedGrid"></div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         COMMENT SYSTEM
+    ════════════════════════════════════════ -->
+    <div class="comments-section" id="commentsSection">
+
+      <!-- Header -->
+      <div class="comments-header">
+        <div class="comments-title">
+          💬 Discussion
+          <span class="comments-count" id="commentsCount">0 comments</span>
+        </div>
+        <div class="comments-sort">
+          <button class="sort-btn active" onclick="setSortAndLoad('newest',this)">Newest</button>
+          <button class="sort-btn" onclick="setSortAndLoad('popular',this)">Popular</button>
+        </div>
+      </div>
+
+      <!-- Admin bulk actions bar -->
+      <div class="admin-comment-bar" id="adminCommentBar">
+        <span class="acb-label">🔑 Admin</span>
+        <button class="acb-btn acb-select-all" onclick="toggleSelectAll()">☑️ Select All</button>
+        <button class="acb-btn acb-del-selected" onclick="deleteSelected()">🗑️ Delete Selected</button>
+        <button class="acb-btn acb-del-all" onclick="deleteAllComments()">💥 Delete All</button>
+      </div>
+
+      <!-- Post a comment form -->
+      <div class="comment-form-wrap">
+        <div class="cf-header">
+          <div class="cf-avatar" id="cfAvatar" style="background:var(--bg3);color:var(--text3);font-size:1.3rem;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;border:2px solid var(--border)">?</div>
+          <div class="cf-title">Join the discussion</div>
+        </div>
+        <div class="cf-fields">
+          <div id="cfUserInfo" style="padding:.5rem .75rem;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.15);border-radius:8px;font-size:.82rem;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:.6rem"><div id="cfAvatarInline" style="width:28px;height:28px;border-radius:50%;background:#6366f1;color:#fff;font-weight:800;font-size:.78rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">?</div><span>Commenting as <strong id="cfUserDisplayName">...</strong></span><input type="hidden" id="cfName" value=""/></div>
+          <textarea class="cf-textarea" id="cfBody" placeholder="Share your thoughts, questions or experiences…" maxlength="2000" oninput="updateCharCount(this,'cfChar')"></textarea>
+          <div class="cf-footer">
+            <span class="cf-char" id="cfChar">0 / 2000</span>
+            <button class="cf-submit" onclick="submitComment()" id="cfSubmit">
+              <span>💬</span> Post Comment
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments list -->
+      <div class="comment-list" id="commentList">
+        <div class="comment-empty">
+          <div class="comment-empty-icon">💬</div>
+          <p>Be the first to comment!</p>
+        </div>
+      </div>
+
+    </div><!-- end commentsSection -->
+
+  </div><!-- end article column -->
+  <aside class="post-sidebar">
+    <!-- Metrics widget -->
+    <div class="sidebar-widget">
+      <div class="sw-head">📊 Article Stats</div>
+      <div class="sw-body">
+        <div class="metric-widget-row"><span class="metric-widget-label">👁️ Views</span><span class="metric-widget-val" id="swViews">—</span></div>
+        <div class="metric-widget-row"><span class="metric-widget-label">❤️ Likes</span><span class="metric-widget-val" id="swLikes">—</span></div>
+        <div class="metric-widget-row"><span class="metric-widget-label">⭐ Vote score</span><span class="metric-widget-val" id="swVotes">—</span></div>
+        <div class="metric-widget-row"><span class="metric-widget-label">⏱️ Read time</span><span class="metric-widget-val" id="swRead">—</span></div>
+        <div class="metric-widget-row"><span class="metric-widget-label">📅 Published</span><span class="metric-widget-val" id="swDate">—</span></div>
+        <div class="metric-widget-row"><span class="metric-widget-label">🔄 Updated</span><span class="metric-widget-val" id="swUpdated">—</span></div>
+      </div>
+    </div>
+
+    <!-- TOC -->
+    <div class="sidebar-widget" id="tocWidget" style="display:none">
+      <div class="sw-head">📋 Table of Contents</div>
+      <div class="sw-body"><ul class="toc-list" id="tocList"></ul></div>
+    </div>
+
+    <!-- More from category -->
+    <div class="sidebar-widget" id="moreCatWidget">
+      <div class="sw-head" id="moreCatTitle">📂 More Articles</div>
+      <div class="sw-body" id="moreCatList" style="padding:.5rem 1rem"></div>
+    </div>
+  </aside>
+</div>
+
+<div class="bp-toast" id="bpToast"></div>
+
+<script src="blog-posts-data.js"></script>
+<script>
+const API = 'http://localhost:5000/api';
+const CAT_COLORS = {'How-To':'#00d4ff','Security':'#a855f7','Networking':'#00e676','Devices':'#ff6b35','Buying Guide':'#f59e0b','Tips':'#f59e0b'};
+
+let currentPost  = null;
+let postMeta     = {};
+let userVote     = 0;    // -1, 0, or 1
+let userLiked    = false;
+let toastTimer;
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function showToast(msg, type='success') {
+  const el = document.getElementById('bpToast');
+  el.textContent = msg;
+  el.style.background = type==='error' ? 'var(--red)' : 'var(--green)';
+  el.style.color      = type==='error' ? '#fff' : 'var(--bg)';
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ── Load post from URL ────────────────────────────────────────────────────────
+function getPostFromURL() {
+  const id = new URLSearchParams(window.location.search).get('id');
+  if (!id) { window.location.href = 'blog.html'; return null; }
+  const post = blogPosts.find(p => p.id === id);
+  if (!post) { window.location.href = 'blog.html'; return null; }
+  return post;
+}
+
+// ── Render post ───────────────────────────────────────────────────────────────
+function renderPost(p, meta) {
+  const color = CAT_COLORS[p.category] || '#8a97b0';
+  const fmt = d => new Date(d).toLocaleDateString('en-KE', {day:'numeric',month:'long',year:'numeric'});
+  const timeAgo = d => {
+    const s = Math.floor((Date.now()-new Date(d))/1000);
+    if(s<60) return 'just now';
+    if(s<3600) return Math.floor(s/60)+' min ago';
+    if(s<86400) return Math.floor(s/3600)+' hr ago';
+    if(s<604800) return Math.floor(s/86400)+' days ago';
+    return fmt(d);
+  };
+
+  // SEO
+  document.title = `${p.title} — SELA`;
+  document.getElementById('pageTitle').textContent = `${p.title} — SELA`;
+  document.getElementById('metaDesc').content  = p.excerpt;
+  document.getElementById('ogTitle').content   = p.title;
+  document.getElementById('ogDesc').content    = p.excerpt;
+  document.getElementById('bcTitle').textContent = p.title.length > 40 ? p.title.substring(0,40)+'…' : p.title;
+
+  // Hero
+  const heroTop = document.getElementById('postHeroTop');
+  heroTop.innerHTML = `
+    <span class="post-cat-badge" style="background:${color}20;color:${color};border:1px solid ${color}40">${p.category}</span>
+    ${p.featured ? '<span class="post-featured-badge">⭐ Featured</span>' : ''}`;
+  document.getElementById('postEmoji').textContent = p.emoji;
+  document.getElementById('postTitle').textContent = p.title;
+  document.getElementById('postExcerpt').textContent = p.excerpt;
+
+  const metaRow = document.getElementById('postMetaRow');
+  metaRow.innerHTML = `
+    <span class="post-meta-item">📅 ${fmt(p.date)}</span>
+    <span class="post-meta-item">⏱️ ${p.readTime}</span>
+    <span class="post-meta-item">🗂️ ${p.category}</span>
+    ${meta.updatedAt ? `<span class="post-meta-item">🔄 Updated ${timeAgo(meta.updatedAt)}</span>` : ''}`;
+
+  // Article body
+  document.getElementById('postBody').innerHTML = p.body;
+
+  // Tags
+  const tags = p.tags || [];
+  document.getElementById('postTags').innerHTML = tags.map(t =>
+    `<a href="blog.html?tag=${encodeURIComponent(t)}" class="post-tag">#${t}</a>`
+  ).join('');
+
+  // Related posts (same category)
+  const related = blogPosts.filter(r => r.id !== p.id && r.category === p.category).slice(0,4);
+  const extra   = blogPosts.filter(r => r.id !== p.id && r.category !== p.category).slice(0, Math.max(0, 4-related.length));
+  document.getElementById('relatedGrid').innerHTML = [...related,...extra].map(r =>
+    `<div class="related-card" onclick="window.location.href='blog-post.html?id=${r.id}'">
+      <div class="related-emoji">${r.emoji}</div>
+      <div>
+        <div class="related-card-title">${r.title}</div>
+        <div class="related-card-meta">${r.readTime} · ${r.category}</div>
+      </div>
+    </div>`
+  ).join('');
+
+  // Sidebar — more from category
+  document.getElementById('moreCatTitle').textContent = `📂 More ${p.category}`;
+  const moreCat = blogPosts.filter(r => r.id !== p.id && r.category === p.category).slice(0,5);
+  document.getElementById('moreCatList').innerHTML = moreCat.map(r =>
+    `<div style="padding:.4rem 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="window.location.href='blog-post.html?id=${r.id}'">
+      <div style="font-family:var(--font-head);font-size:.75rem;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:.15rem;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">${r.emoji} ${r.title}</div>
+      <div style="font-size:.65rem;color:var(--text3)">${r.readTime}</div>
+    </div>`
+  ).join('');
+
+  // Generate TOC from h3/h4 headings in body
+  buildTOC(p.body);
+
+  // Reading progress bar
+  window.addEventListener('scroll', updateProgress);
+}
+
+// ── Table of Contents ─────────────────────────────────────────────────────────
+function buildTOC(bodyHTML) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = bodyHTML;
+  const headings = tmp.querySelectorAll('h3, h4');
+  if (headings.length < 2) return;
+
+  // Add IDs to rendered headings
+  const rendered = document.getElementById('postBody').querySelectorAll('h3,h4');
+  const items = [];
+  rendered.forEach((el, i) => {
+    const slug = 'h-' + i;
+    el.id = slug;
+    items.push({ id: slug, text: el.textContent.trim(), level: el.tagName });
+  });
+
+  document.getElementById('tocList').innerHTML = items.map(h =>
+    `<li class="toc-item${h.level==='H4'?' toc-h4':''}" style="${h.level==='H4'?'padding-left:1rem;font-size:.72rem':''}" onclick="document.getElementById('${h.id}').scrollIntoView({behavior:'smooth'})">${h.text}</li>`
+  ).join('');
+  document.getElementById('tocWidget').style.display = '';
+}
+
+// ── Reading progress ──────────────────────────────────────────────────────────
+function updateProgress() {
+  const body = document.getElementById('postBody');
+  if (!body) return;
+  const rect = body.getBoundingClientRect();
+  const total = rect.height;
+  const read  = Math.max(0, -rect.top);
+  const pct   = Math.min(100, (read / total) * 100);
+  document.getElementById('readProgress').style.width = pct + '%';
+
+  // Update active TOC item
+  const headings = document.getElementById('postBody').querySelectorAll('h3,h4');
+  let active = null;
+  headings.forEach(h => { if (h.getBoundingClientRect().top < 120) active = h.id; });
+  document.querySelectorAll('.toc-item').forEach(el => el.classList.remove('active'));
+  if (active) {
+    const tocEl = [...document.querySelectorAll('.toc-item')].find(el => el.getAttribute('onclick')?.includes(active));
+    if (tocEl) tocEl.classList.add('active');
+  }
+}
+
+// ── Metrics ───────────────────────────────────────────────────────────────────
+function updateMetricsUI(meta) {
+  const fmt = n => Number(n).toLocaleString();
+  const timeAgo = d => {
+    if (!d) return '—';
+    const s = Math.floor((Date.now()-new Date(d))/1000);
+    if(s<60) return 'just now';
+    if(s<3600) return Math.floor(s/60)+'m ago';
+    if(s<86400) return Math.floor(s/3600)+'h ago';
+    return new Date(d).toLocaleDateString('en-KE',{day:'numeric',month:'short'});
+  };
+
+  ['mViews','swViews'].forEach(id => document.getElementById(id).textContent = fmt(meta.views||0));
+  ['mLikes','swLikes'].forEach(id => document.getElementById(id).textContent = fmt(meta.likes||0));
+  ['mVotes','swVotes'].forEach(id => document.getElementById(id).textContent = (meta.voteScore||0) >= 0 ? '+' + (meta.voteScore||0) : String(meta.voteScore||0));
+  ['mUpdated'].forEach(id => document.getElementById(id).textContent = timeAgo(meta.updatedAt||meta.lastRead));
+  document.getElementById('likeBtnCount').textContent = meta.likes || 0;
+  document.getElementById('swRead').textContent    = currentPost?.readTime || '—';
+  document.getElementById('swDate').textContent    = new Date(currentPost?.date).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'});
+  document.getElementById('swUpdated').textContent = timeAgo(meta.updatedAt || meta.lastRead);
+
+  // Vote button states
+  document.getElementById('voteUp').classList.toggle('active', userVote === 1);
+  document.getElementById('voteDn').classList.toggle('active', userVote === -1);
+  // Like button state
+  document.getElementById('likeBtn').classList.toggle('liked', userLiked);
+}
+
+async function recordView() {
+  try {
+    const r = await fetch(`${API}/blog/meta/${currentPost.id}/view`, { method:'POST' });
+    const j = await r.json();
+    if (j.success) { postMeta.views = j.views; updateMetricsUI(postMeta); }
+  } catch {}
+}
+
+async function castVote(v) {
+  const previous = userVote;
+  userVote = userVote === v ? 0 : v; // toggle off if clicking same
+  try {
+    const r = await fetch(`${API}/blog/meta/${currentPost.id}/vote`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ vote: userVote, previous })
+    });
+    const j = await r.json();
+    if (j.success) {
+      postMeta.voteScore = j.voteScore;
+      postMeta.voteCount = j.voteCount;
+      localStorage.setItem(`vote_${currentPost.id}`, userVote);
+      updateMetricsUI(postMeta);
+      showToast(userVote === 1 ? '👍 Helpful — thanks!' : userVote === -1 ? '👎 Noted — thanks!' : 'Vote removed');
+    }
+  } catch {
+    userVote = previous; // revert
+    showToast('Could not save vote','error');
+  }
+}
+
+async function toggleLike() {
+  userLiked = !userLiked;
+  document.getElementById('likeBtn').classList.toggle('liked', userLiked);
+  try {
+    const r = await fetch(`${API}/blog/meta/${currentPost.id}/like`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ liked: userLiked })
+    });
+    const j = await r.json();
+    if (j.success) {
+      postMeta.likes = j.likes;
+      localStorage.setItem(`like_${currentPost.id}`, userLiked ? '1' : '0');
+      updateMetricsUI(postMeta);
+      if (userLiked) showToast('❤️ Marked as helpful!');
+    }
+  } catch { userLiked = !userLiked; showToast('Could not save','error'); }
+}
+
+// ── Social sharing ────────────────────────────────────────────────────────────
+function sharePost(platform) {
+  if (!currentPost) return;
+  const pageUrl = window.location.href;
+  const p = currentPost;
+  const msgs = {
+    whatsapp:  `📖 *${p.title}*\n\n${p.excerpt.substring(0,120)}…\n\nRead more: ${pageUrl}\n\n_SELA Blog_`,
+    facebook:  pageUrl,
+    linkedin:  `${p.title} — ${p.excerpt.substring(0,100)}… ${pageUrl}`,
+    pinterest: `${p.title} | ICT Guide by SELA Kenya. ${pageUrl}`,
+    tiktok:    `${p.title} 📖 Full article: ${pageUrl}`,
+    instagram: `${p.title}\n\n${p.excerpt.substring(0,150)}…\n\n🔗 ${pageUrl}`,
+  };
+  const enc = t => encodeURIComponent(t);
+  const urls = {
+    whatsapp:  `https://wa.me/?text=${enc(msgs.whatsapp)}`,
+    facebook:  `https://www.facebook.com/sharer/sharer.php?u=${enc(pageUrl)}`,
+    linkedin:  `https://www.linkedin.com/sharing/share-offsite/?url=${enc(pageUrl)}`,
+    pinterest: `https://pinterest.com/pin/create/button/?url=${enc(pageUrl)}&description=${enc(msgs.pinterest)}`,
+  };
+  if (platform === 'tiktok') { navigator.clipboard.writeText(msgs.tiktok).then(() => showToast('TikTok caption copied!')); return; }
+  if (platform === 'instagram') { navigator.clipboard.writeText(msgs.instagram).then(() => showToast('Instagram caption copied!')); return; }
+  if (platform === 'copy') { navigator.clipboard.writeText(pageUrl).then(() => showToast('Link copied!')); return; }
+  if (urls[platform]) window.open(urls[platform], '_blank', 'noopener,width=600,height=520');
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// AUTH — shared with main site (same localStorage token)
+// ══════════════════════════════════════════════════════════════════════════════
+function getToken()  { return localStorage.getItem('ac_user_token') || localStorage.getItem('td_token') || null; }
+function isAdmin() {
+  try {
+    const t=getToken(); if(!t) return false;
+    const p=JSON.parse(atob(t.split('.')[1]));
+    return p.role==='admin'||p.isAdmin===true;
+  } catch{return false;}
+}
+function isLoggedIn() { return !!getToken(); }
+function getCurrentUserId() {
+  try { const t=getToken();if(!t)return '';const p=JSON.parse(atob(t.split('.')[1]));return p.id||p.sub||''; } catch{return '';}
+}
+function getCurrentUserEmail() {
+  try { const t=getToken();if(!t)return '';const p=JSON.parse(atob(t.split('.')[1]));return p.email||''; } catch{return '';}
+}
+
+async function verifyStoredToken() {
+  const token = getToken();
+  if (!token) return;
+  try {
+    const r = await fetch(`${API}/auth/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    const j = await r.json();
+    if (!j.valid) localStorage.removeItem('td_token');
+  } catch { /* offline - keep token */ }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// COMMENT SYSTEM
+// ══════════════════════════════════════════════════════════════════════════════
+let commentSort    = 'newest';
+let allComments    = [];
+let selectedIds    = new Set();
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+(async () => {
+  // 1. Verify admin token first so isAdmin() works for comment form
+  await verifyStoredToken();
+
+  // 2. Load post from URL
+  currentPost = getPostFromURL();
+  if (!currentPost) return;
+
+  // 3. Restore user state from localStorage
+  userVote  = parseInt(localStorage.getItem(`vote_${currentPost.id}`) || '0');
+  userLiked = localStorage.getItem(`like_${currentPost.id}`) === '1';
+
+  // 4. Load metrics from DB
+  try {
+    const r = await fetch(`${API}/blog/meta/${currentPost.id}`, { signal: AbortSignal.timeout(5000) });
+    const j = await r.json();
+    postMeta = j.success ? j.data : { views: currentPost.views||0, likes: currentPost.likes||0, voteScore:0, voteCount:0 };
+  } catch {
+    postMeta = { views: currentPost.views||0, likes: currentPost.likes||0, voteScore:0, voteCount:0 };
+  }
+
+  // 5. Render post and metrics
+  renderPost(currentPost, postMeta);
+  updateMetricsUI(postMeta);
+
+  // 6. Record view after 3 seconds (genuine read)
+  setTimeout(recordView, 3000);
+
+  // 7. Load comments and set up admin UI
+  await loadComments();
+  updateAdminUI();
+})();
+
+// ── Avatar helpers ─────────────────────────────────────────────────────────────
+const AVATAR_COLORS = [
+  '#E91E63','#9C27B0','#673AB7','#3F51B5','#2196F3',
+  '#009688','#4CAF50','#FF5722','#795548','#607D8B',
+  '#F44336','#FF9800','#00BCD4','#8BC34A','#CDDC39',
+];
+function pickColor(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+  return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length];
+}
+
+// Admin avatar — SELA logo style
+function adminAvatarHTML(size = 38) {
+  return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:linear-gradient(135deg,#0b0e14,#1a2035);border:2px solid rgba(0,212,255,.4);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0">
+    <span style="font-family:var(--font-head);font-size:${Math.round(size*.3)}px;font-weight:900;color:var(--accent);letter-spacing:-.03em">AS</span>
+  </div>`;
+}
+
+// Anonymous user avatar circle
+function anonAvatarHTML(name, color, size = 38) {
+  const letter = name ? name.trim()[0].toUpperCase() : '?';
+  // Compute contrasting text color
+  const hex = color.replace('#','');
+  const r = parseInt(hex.substring(0,2),16);
+  const g = parseInt(hex.substring(2,4),16);
+  const b = parseInt(hex.substring(4,6),16);
+  const luminance = (0.299*r + 0.587*g + 0.114*b) / 255;
+  const textColor = luminance > 0.5 ? '#1a1a2e' : '#ffffff';
+  return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:${Math.round(size*.42)}px;font-weight:800;color:${textColor};flex-shrink:0">${letter}</div>`;
+}
+
+// Update comment form avatar as user types name
+function updateCfAvatar(name) {
+  const el = document.getElementById('cfAvatar');
+  if (!el) return;
+  if (!name.trim()) {
+    el.innerHTML = '?';
+    el.style.background = 'var(--bg3)';
+    el.style.color = 'var(--text3)';
+    el.style.fontSize = '1.3rem';
+    return;
+  }
+  const color = pickColor(name.trim());
+  const letter = name.trim()[0].toUpperCase();
+  const hex = color.replace('#','');
+  const r = parseInt(hex.substring(0,2),16), g = parseInt(hex.substring(2,4),16), b = parseInt(hex.substring(4,6),16);
+  const textColor = ((0.299*r + 0.587*g + 0.114*b)/255) > 0.5 ? '#1a1a2e' : '#ffffff';
+  el.innerHTML = letter;
+  el.style.background = color;
+  el.style.color = textColor;
+  el.style.fontSize = '.95rem';
+}
+
+// ── Char count ─────────────────────────────────────────────────────────────────
+function updateCharCount(ta, spanId) {
+  const el = document.getElementById(spanId);
+  if (!el) return;
+  const len = ta.value.length;
+  el.textContent = `${len} / 2000`;
+  el.className = 'cf-char' + (len > 1800 ? ' warn' : '') + (len >= 2000 ? ' over' : '');
+}
+
+// ── Time formatting ────────────────────────────────────────────────────────────
+function timeAgoC(date) {
+  const s = Math.floor((Date.now() - new Date(date)) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s/60) + 'm ago';
+  if (s < 86400) return Math.floor(s/3600) + 'h ago';
+  if (s < 604800) return Math.floor(s/86400) + 'd ago';
+  return new Date(date).toLocaleDateString('en-KE',{day:'numeric',month:'short'});
+}
+
+// ── Candit edit window (1 hour) ────────────────────────────────────────────────
+function editWindowOpen(comment) {
+  if (isAdmin()) return true;
+  if (!comment.editExpiry) return false;
+  return new Date() < new Date(comment.editExpiry);
+}
+
+// ── Load comments ──────────────────────────────────────────────────────────────
+async function loadComments() {
+  if (!currentPost) return;
+  try {
+    const r = await fetch(`${API}/comments/${currentPost.id}?sort=${commentSort}`);
+    const j = await r.json();
+    if (j.success) {
+      allComments = j.data;
+      renderComments(j.data, j.count);
+    }
+  } catch(err) { console.warn('Comments error:', err.message); }
+}
+
+function setSortAndLoad(sort, btn) {
+  commentSort = sort;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  loadComments();
+}
+
+// ── Render all comments ────────────────────────────────────────────────────────
+function renderComments(comments, total) {
+  const countEl = document.getElementById('commentsCount');
+  if (countEl) countEl.textContent = `${total} comment${total !== 1 ? 's' : ''}`;
+
+  const list = document.getElementById('commentList');
+  if (!comments || !comments.length) {
+    list.innerHTML = `<div class="comment-empty"><div class="comment-empty-icon">💬</div><p>No comments yet. Be the first!</p></div>`;
+    return;
+  }
+  list.innerHTML = comments.map(c => commentHTML(c, false)).join('');
+  // Record view for each visible comment
+  comments.forEach(c => recordCommentView(c.id));
+}
+
+// ── Build comment HTML ─────────────────────────────────────────────────────────
+
+function canManageComment(comment) {
+  if (isAdmin()) return true;
+  const uid   = getCurrentUserId();
+  const email = getCurrentUserEmail();
+  const stored = comment?.id ? localStorage.getItem('ct_' + comment.id) : null;
+  const userIdMatch  = uid   && comment.userId    && (comment.userId.toString()  === uid   || comment.userId === uid);
+  const emailMatch   = email && comment.userEmail && comment.userEmail === email;
+  const tokenMatch   = stored && comment.editToken && stored === comment.editToken;
+  console.log('canManage check:', {uid, email, cmtUserId:comment.userId, cmtEmail:comment.userEmail, userIdMatch, emailMatch, tokenMatch});
+  return !!(userIdMatch || emailMatch || tokenMatch);
+}
+
+function commentHTML(c, isReply) {
+  const admin   = isAdmin();
+  const deleted = c.deleted;
+  const stored  = localStorage.getItem('ct_' + c.id);
+  const canManage = canManageComment(c);
+  const canEdit   = canManage && !deleted;
+  const canDelete = canManage && !deleted;
+  const cls     = `${isReply ? 'reply-item' : 'comment-item'}${c.isAdmin?' admin-comment':''}${c.pinned?' pinned':''}${deleted?' deleted-comment':''}`;
+
+  const avatarHTML = c.isAdmin
+    ? adminAvatarHTML(isReply ? 32 : 38)
+    : anonAvatarHTML(c.authorName, c.authorColor || '#607D8B', isReply ? 32 : 38);
+
+  const editToken = localStorage.getItem(`ct_${c.id}`) || '';
+
+  const repliesHTML = (!isReply && c.replies && c.replies.length)
+    ? `<div class="comment-replies">${c.replies.map(r => commentHTML(r, true)).join('')}</div>`
+    : '';
+
+  return `<div class="${cls}" id="cm-${c.id}" data-id="${c.id}">
+    ${admin && !isReply ? `<input type="checkbox" class="comment-select-cb" data-id="${c.id}" onchange="toggleSelect('${c.id}',this)"/>` : ''}
+    <div class="comment-head">
+      ${avatarHTML}
+      <div class="comment-meta">
+        <div class="comment-author">
+          ${c.authorName}
+          ${c.isAdmin ? '<span class="comment-admin-badge">✦ Team</span>' : ''}
+          ${c.pinned ? '<span class="comment-pin-badge">📌 Pinned</span>' : ''}
+        </div>
+        <div class="comment-time">
+          <span>${timeAgoC(c.createdAt)}</span>
+          ${c.edited ? '<span class="comment-edited-badge">· edited</span>' : ''}
+          <span class="comment-metric">· 👁 <span id="cv-${c.id}">${c.views || 0}</span></span>
+          <span class="comment-metric">· ❤ <span id="cl-${c.id}">${c.likes || 0}</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="comment-body${deleted?' deleted-text':''}" id="cb-${c.id}">${deleted ? '[Comment deleted]' : escapeHTML(c.body)}</div>
+    <div class="comment-edit-form" id="cef-${c.id}" style="display:none">
+      <textarea id="cet-${c.id}">${deleted ? '' : escapeHTML(c.body)}</textarea>
+      <div class="edit-form-btns">
+        <button class="ef-save" onclick="saveEdit('${c.id}','${editToken}')">Save</button>
+        <button class="ef-cancel" onclick="hideEditForm('${c.id}')">Cancel</button>
+      </div>
+    </div>
+    ${!deleted ? `<div class="comment-footer">
+      <button class="comment-like-btn${isCommentLiked(c.id)?' liked':''}" id="clb-${c.id}" onclick="likeComment('${c.id}')">
+        ❤ <span id="cl2-${c.id}">${c.likes || 0}</span>
+      </button>
+      ${!isReply ? `<button class="comment-reply-btn" onclick="toggleReplyForm('${c.id}')">↩ Reply</button>` : ''}
+      ${canEdit ? `<button class="comment-edit-btn" onclick="showEditForm('${c.id}')">✏️ Edit</button>` : ''}
+      ${canDelete ? `<button class="comment-delete-btn" onclick="deleteComment('${c.id}','${c.editToken||''}')">🗑️ Delete</button>` : ''}
+      ${admin ? `<button class="comment-pin-btn" onclick="pinComment('${c.id}')" title="Pin">${c.pinned?'📌':'📍'}</button>` : ''}
+    </div>` : ''}
+    ${!isReply ? `<div class="reply-form" id="rf-${c.id}" style="display:none">
+      <div class="reply-form-inner">
+        <textarea id="rft-${c.id}" placeholder="Write a reply…" maxlength="2000"></textarea>
+        <div class="reply-form-row">
+          <input class="reply-name-input" id="rfn-${c.id}" placeholder="Your name *" maxlength="60"/>
+          <button class="rf-submit" onclick="submitReply('${c.id}')">Reply</button>
+          <button class="rf-cancel" onclick="toggleReplyForm('${c.id}')">Cancel</button>
+        </div>
+      </div>
+    </div>
+    ${repliesHTML}` : ''}
+  </div>`;
+}
+
+function escapeHTML(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+}
+
+// ── Submit comment ─────────────────────────────────────────────────────────────
+async function initBlogCommentAuth() {
+  const tok  = localStorage.getItem('ac_user_token') || localStorage.getItem('td_token') || '';
+  const user = (() => { try { return JSON.parse(localStorage.getItem('ac_user')||'{}'); } catch { return {}; } })();
+  const loggedIn = !!(tok && (user.id || user.email));
+  const gate = document.getElementById('blogCommentGate');
+  const banner = document.getElementById('blogUserBanner');
+  const form = document.getElementById('blogCommentFormWrap');
+  const nameEl = document.getElementById('blogUserName');
+
+  if (loggedIn) {
+    if (gate) gate.style.display = 'none';
+    if (banner) banner.style.display = 'none'; // inline banner used instead
+    if (form) form.style.display = '';
+
+    // Populate user info
+    const isAdmin = user.isAdmin || user.role === 'admin';
+    const displayName = isAdmin ? '👑 SELA Admin'
+      : ((user.firstName||'') + ' ' + (user.lastName||'')).trim() || user.username || 'You';
+
+    const infoEl = document.getElementById('cfUserInfo');
+    const nameEl2 = document.getElementById('cfUserDisplayName');
+    const avatarEl = document.getElementById('cfAvatarInline');
+    if (infoEl) infoEl.style.display = 'flex';
+    if (nameEl2) nameEl2.textContent = displayName;
+    if (avatarEl) {
+      avatarEl.textContent = displayName[0].toUpperCase();
+      const hash = [...(user.email||'a')].reduce((a,c)=>a+c.charCodeAt(0),0);
+      avatarEl.style.background = isAdmin ? '#6366f1' : `hsl(${hash%360},60%,45%)`;
+    }
+    // Also pre-fill hidden name for backward compat
+    const cfN = document.getElementById('cfName');
+    if (cfN) cfN.value = displayName;
+
+  } else {
+    if (gate) gate.style.display = '';
+    if (banner) banner.style.display = 'none';
+    if (form) form.style.display = 'none';
+    const url = encodeURIComponent(window.location.href);
+    const lLink = document.getElementById('blogLoginLink');
+    const rLink = document.getElementById('blogRegLink');
+    if (lLink) lLink.href = 'auth.html?redirect='+url;
+    if (rLink) rLink.href = 'auth.html?tab=register&redirect='+url;
+  }
+}
+
+async function submitComment() {
+  if (!currentPost) return;
+  const body = document.getElementById('cfBody').value.trim();
+  const btn  = document.getElementById('cfSubmit');
+  if (!body) { document.getElementById('cfBody').classList.add('err'); return; }
+
+  // Require login
+  const tok  = localStorage.getItem('ac_user_token') || localStorage.getItem('td_token') || '';
+  const user = (() => { try { return JSON.parse(localStorage.getItem('ac_user')||'{}'); } catch { return {}; } })();
+  if (!tok || !(user.id || user.email)) {
+    const redirect = encodeURIComponent(window.location.href);
+    if (confirm('You need to be logged in to comment.\n\nGo to login page?')) {
+      sessionStorage.setItem('post_login_redirect', window.location.href);
+      window.location.href = 'auth.html?redirect=' + redirect;
+    }
+    return;
+  }
+
+  if (btn) { btn.disabled=true; btn.innerHTML='⏳ Posting…'; }
+  try {
+    const r = await fetch(`${API}/comments/${encodeURIComponent(currentPost.id || currentPost._id)}`, {
+      method:  'POST',
+      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+tok },
+      body:    JSON.stringify({ body })
+    });
+    const j = await r.json().catch(()=>({}));
+    if (j.success) {
+      document.getElementById('cfBody').value = '';
+      await loadComments(currentPost.id || currentPost._id);
+      showToast && showToast('💬 Comment posted!');
+    } else if (j.code === 'LOGIN_REQUIRED') {
+      alert('Session expired — please log in again.');
+      window.location.href = 'auth.html?redirect=' + encodeURIComponent(window.location.href);
+    } else {
+      alert(j.message || 'Failed to post comment');
+    }
+  } catch {
+    alert('Cannot connect to server — please try again.');
+  } finally {
+    if (btn) { btn.disabled=false; btn.innerHTML='<span>💬</span> Post Comment'; }
+  }
+}
+
+// ── Submit reply ───────────────────────────────────────────────────────────────
+async function submitReply(parentId) {
+  if (!currentPost) return;
+  if (!parentId || parentId === 'undefined' || parentId === 'null') {
+    showToast('Cannot reply — invalid comment ID','error'); return;
+  }
+  const nameEl = document.getElementById(`rfn-${parentId}`);
+  const bodyEl = document.getElementById(`rft-${parentId}`);
+  const name   = nameEl?.value.trim();
+  const body   = bodyEl?.value.trim();
+  if (!name || !body) { showToast('Name and reply text required','error'); return; }
+
+  const headers = { 'Content-Type': 'application/json' };
+  const token = getToken();
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  try {
+    const r = await fetch(`${API}/comments/${currentPost.id}`, {
+      method: 'POST', headers,
+      body: JSON.stringify({ authorName: name, body, parentId: String(parentId) })
+    });
+    const j = await r.json();
+    if (j.success) {
+      localStorage.setItem(`ct_${j.data.id}`, j.data.editToken || '');
+      showToast('↩ Reply posted!');
+      toggleReplyForm(parentId);
+      await loadComments();
+    } else { showToast(j.message,'error'); }
+  } catch { showToast('Cannot connect','error'); }
+}
+
+// ── Edit / delete ──────────────────────────────────────────────────────────────
+function showEditForm(id) {
+  document.getElementById(`cef-${id}`).style.display = '';
+}
+function hideEditForm(id) {
+  document.getElementById(`cef-${id}`).style.display = 'none';
+}
+
+async function saveEdit(id, editToken) {
+  const ta = document.getElementById(`cet-${id}`);
+  const body = ta?.value.trim();
+  if (!body) return;
+  const headers = { 'Content-Type': 'application/json' };
+  const token = getToken();
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  try {
+    const r = await fetch(`${API}/comments/comment/${id}`, {
+      method: 'PATCH', headers,
+      body: JSON.stringify({ body, editToken: localStorage.getItem(`ct_${id}`) || editToken })
+    });
+    const j = await r.json();
+    if (j.success) {
+      showToast('✅ Comment updated');
+      await loadComments();
+    } else { showToast(j.message,'error'); }
+  } catch { showToast('Cannot connect','error'); }
+}
+
+async function deleteComment(id, editToken) {
+  if (!confirm('Delete this comment?')) return;
+  const storedToken = localStorage.getItem(`ct_${id}`) || editToken || '';
+  const headers = { 'Content-Type': 'application/json' };
+  const token = getToken();
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  // Pass editToken both in body AND query param for maximum compatibility
+  const url = token
+    ? `${API}/comments/comment/${id}`
+    : `${API}/comments/comment/${id}?editToken=${encodeURIComponent(storedToken)}`;
+  try {
+    const r = await fetch(url, {
+      method: 'DELETE',
+      headers,
+      body: JSON.stringify({ editToken: storedToken })
+    });
+    const j = await r.json();
+    if (j.success) { showToast('🗑️ Deleted'); await loadComments(); }
+    else showToast(j.message, 'error');
+  } catch { showToast('Cannot connect','error'); }
+}
+
+// ── Admin bulk actions ─────────────────────────────────────────────────────────
+function toggleSelect(id, cb) {
+  if (cb.checked) selectedIds.add(id); else selectedIds.delete(id);
+}
+
+function toggleSelectAll() {
+  const cbs = document.querySelectorAll('.comment-select-cb');
+  const allChecked = selectedIds.size === cbs.length;
+  cbs.forEach(cb => {
+    cb.checked = !allChecked;
+    const id = cb.dataset.id;
+    if (!allChecked) selectedIds.add(id); else selectedIds.delete(id);
+  });
+}
+
+async function deleteSelected() {
+  if (!selectedIds.size) { showToast('No comments selected','error'); return; }
+  if (!confirm(`Delete ${selectedIds.size} selected comment(s)?`)) return;
+  try {
+    const r = await fetch(`${API}/comments/bulk/${currentPost.id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` },
+      body: JSON.stringify({ ids: [...selectedIds] })
+    });
+    const j = await r.json();
+    if (j.success) { selectedIds.clear(); showToast('Deleted selected'); await loadComments(); }
+    else showToast(j.message,'error');
+  } catch { showToast('Cannot connect','error'); }
+}
+
+async function deleteAllComments() {
+  if (!confirm('Delete ALL comments for this post? This cannot be undone.')) return;
+  try {
+    const r = await fetch(`${API}/comments/bulk/${currentPost.id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` },
+      body: JSON.stringify({ ids: null })
+    });
+    const j = await r.json();
+    if (j.success) { showToast('All comments deleted'); await loadComments(); }
+    else showToast(j.message,'error');
+  } catch { showToast('Cannot connect','error'); }
+}
+
+// ── Like / pin ─────────────────────────────────────────────────────────────────
+function isCommentLiked(id) { return localStorage.getItem(`clike_${id}`) === '1'; }
+
+async function likeComment(id) {
+  const liked = !isCommentLiked(id);
+  // Optimistic UI update
+  localStorage.setItem(`clike_${id}`, liked ? '1' : '0');
+  const btn = document.getElementById(`clb-${id}`);
+  if (btn) btn.classList.toggle('liked', liked);
+  // Update count optimistically
+  ['cl-' + id, 'cl2-' + id].forEach(elId => {
+    const el = document.getElementById(elId);
+    if (el) {
+      const cur = parseInt(el.textContent) || 0;
+      el.textContent = Math.max(0, cur + (liked ? 1 : -1));
+    }
+  });
+  try {
+    const r = await fetch(`${API}/comments/comment/${id}/like`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ liked })
+    });
+    const j = await r.json();
+    if (j.success) {
+      // Sync with server value
+      ['cl-' + id, 'cl2-' + id].forEach(elId => {
+        const el = document.getElementById(elId);
+        if (el) el.textContent = j.likes;
+      });
+    } else {
+      // Revert on error
+      localStorage.setItem(`clike_${id}`, liked ? '0' : '1');
+      if (btn) btn.classList.toggle('liked', !liked);
+    }
+  } catch {
+    // Revert on network error
+    localStorage.setItem(`clike_${id}`, liked ? '0' : '1');
+    if (btn) btn.classList.toggle('liked', !liked);
+  }
+}
+
+async function pinComment(id) {
+  try {
+    const r = await fetch(`${API}/comments/comment/${id}/pin`, {
+      method: 'PATCH',
+      headers: { 'Authorization': `Bearer ${getToken()}` }
+    });
+    const j = await r.json();
+    if (j.success) { showToast(j.pinned ? '📌 Pinned' : 'Unpinned'); await loadComments(); }
+  } catch { showToast('Cannot connect','error'); }
+}
+
+// ── Reply form toggle ──────────────────────────────────────────────────────────
+function toggleReplyForm(parentId) {
+  const el = document.getElementById(`rf-${parentId}`);
+  if (!el) return;
+  const isOpen = el.style.display !== 'none';
+  el.style.display = isOpen ? 'none' : '';
+  if (!isOpen) {
+    const nameInput = document.getElementById(`rfn-${parentId}`);
+    if (nameInput) {
+      const savedName = localStorage.getItem('cf_last_name') || '';
+      nameInput.value = savedName;
+      nameInput.focus();
+    }
+  }
+}
+
+// ── View tracking ──────────────────────────────────────────────────────────────
+async function recordCommentView(id) {
+  try {
+    const r = await fetch(`${API}/comments/comment/${id}/view`, { method: 'POST' });
+    const j = await r.json();
+    if (j.success) {
+      const el = document.getElementById(`cv-${id}`);
+      if (el) el.textContent = j.views;
+    }
+  } catch {}
+}
+
+// ── Admin select checkboxes visibility ────────────────────────────────────────
+function updateAdminUI() {
+  const admin = isAdmin();
+  document.getElementById('adminCommentBar')?.classList.toggle('show', admin);
+  document.querySelectorAll('.comment-select-cb').forEach(el => el.classList.toggle('show', admin));
+
+  // If admin: pre-fill name as "SELA Team" and show admin avatar
+  if (admin) {
+    const nameInput = document.getElementById('cfName');
+    const avatarEl  = document.getElementById('cfAvatar');
+    if (nameInput && !nameInput.value) {
+      nameInput.value = 'SELA Team';
+      nameInput.readOnly = true;
+      nameInput.style.opacity = '.6';
+      nameInput.style.cursor  = 'not-allowed';
+    }
+    if (avatarEl) {
+      avatarEl.style.background  = 'linear-gradient(135deg,#0b0e14,#1a2035)';
+      avatarEl.style.border      = '2px solid rgba(0,212,255,.5)';
+      avatarEl.style.color       = 'var(--accent)';
+      avatarEl.style.fontFamily  = 'var(--font-head)';
+      avatarEl.style.fontWeight  = '900';
+      avatarEl.style.fontSize    = '.75rem';
+      avatarEl.innerHTML         = 'AS';
+    }
+  }
+}
+
+// ── Notification Bell ──────────────────────────────────────────────────────────
+
+// loadNotifications handled by notif-bell.js
+
+// Pre-fill name from last comment
+(function prefillName() {
+  const last = localStorage.getItem('cf_last_name');
+  if (last && document.getElementById('cfName')) {
+    document.getElementById('cfName').value = last;
+    updateCfAvatar(last);
+  }
+})();
+
+// Save last used name
+document.getElementById('cfName')?.addEventListener('blur', function() {
+  if (this.value.trim()) localStorage.setItem('cf_last_name', this.value.trim());
+});
+
+</script>
+<script src="auth.js"></script>
+<script src="notif-bell.js"></script>
+<footer class="ac-footer">
+  <div class="ac-footer-inner">
+    <div class="ac-footer-brand">
+      <div class="ac-footer-logo">SELA<span class="ac-footer-dot">.</span>Solutions</div>
+      <p>SELA — ICT accessories, digital transformation, printing, online services &amp; more. 6 branches across Kenya.</p>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Our Branches</h4>
+      <ul>
+        <li><a href="shop.html">SELA – Bamburi</a></li>
+        <li><a href="shop.html">SELA – Mwembe Tayari</a></li>
+        <li><a href="shop.html">SELA – Nakuru Town</a></li>
+        <li><a href="shop.html">SELA – Eldoret</a></li>
+        <li><a href="shop.html">SELA – Eastleigh Nairobi</a></li>
+        <li><a href="shop.html">SELA – Westlands</a></li>
+      </ul>
+    </div>
+    <div class="ac-footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+        <li><a href="tel:+254700000000">📞 +254 700 000 000</a></li>
+        <li><a href="mailto:admin@sela.co.ke">✉️ admin@sela.co.ke</a></li>
+        <li><a href="https://wa.me/254700000000" target="_blank">💬 WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ac-footer-bottom">
+    <span>© 2025 SELA · admin@sela.co.ke</span>
+    <span>Mombasa, Kenya 🇰🇪</span>
+  </div>
+</footer>
+<script src="header.js"></script>
+</body>
+</html>
