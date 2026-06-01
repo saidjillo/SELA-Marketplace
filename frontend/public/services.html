@@ -197,6 +197,14 @@ body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(scri
 }
 
 </style>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#00d4ff"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SELA"/>
+  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
 </head>
 <body>
 
@@ -778,5 +786,15 @@ function showToast(msg, type='success') {
   </div>
 </footer>
 <script src="header.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.warn('SW failed:', err));
+      });
+    }
+  </script>
 </body>
 </html>

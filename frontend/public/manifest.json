@@ -1,0 +1,112 @@
+{
+  "name": "SELA \u2014 Kenya's Marketplace",
+  "short_name": "SELA",
+  "description": "Shop local, sell online. Kenya's multi-vendor marketplace.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#00d4ff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-KE",
+  "categories": [
+    "shopping",
+    "business"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Hot Deals",
+      "short_name": "Deals",
+      "description": "Browse latest hot deals",
+      "url": "/hotdeals.html",
+      "icons": [
+        {
+          "src": "/icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "My Wishlist",
+      "short_name": "Wishlist",
+      "description": "View saved items",
+      "url": "/wishlist.html",
+      "icons": [
+        {
+          "src": "/icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Sell on SELA",
+      "short_name": "Sell",
+      "description": "Start your store",
+      "url": "/shops.html",
+      "icons": [
+        {
+          "src": "/icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}

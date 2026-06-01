@@ -49,6 +49,14 @@
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="My Wishlist — SELA Kenya"/>
   <meta name="twitter:description" content="Your saved products on SELA marketplace."/>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#00d4ff"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SELA"/>
+  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
 </head>
 <body>
 <div class="page">
@@ -129,5 +137,15 @@ function clearAll() {
 
 render();
 </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.warn('SW failed:', err));
+      });
+    }
+  </script>
 </body>
 </html>

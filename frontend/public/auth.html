@@ -116,6 +116,14 @@ a{color:var(--accent);text-decoration:none}button{cursor:pointer;font-family:inh
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Login or Register — SELA Kenya"/>
   <meta name="twitter:description" content="Sign in to your SELA account or create a new one to start shopping and selling."/>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#00d4ff"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SELA"/>
+  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
 </head>
 <body>
 
@@ -508,5 +516,15 @@ apiFetch(`${API}/products?limit=1`, {}, 2000).then(r => {
   }
 });
 </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.warn('SW failed:', err));
+      });
+    }
+  </script>
 </body>
 </html>

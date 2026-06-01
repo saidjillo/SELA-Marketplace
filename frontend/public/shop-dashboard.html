@@ -109,6 +109,14 @@ tr:hover td{background:#f8fafc}
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Vendor Dashboard — SELA Kenya"/>
   <meta name="twitter:description" content="Manage your SELA store, products, orders and analytics."/>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#00d4ff"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SELA"/>
+  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
 </head>
 <body>
 
@@ -3133,6 +3141,14 @@ async function generateCatalogue(){
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Vendor Dashboard — SELA Kenya"/>
   <meta name="twitter:description" content="Manage your SELA store, products, orders and analytics."/>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#00d4ff"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SELA"/>
+  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
 </head><body><h1>${shop?.name||'Product Catalogue'}</h1><div style="font-size:.82rem;color:#64748b;margin-bottom:1.5rem">${shop?.location||''} · ${shop?.phone||''} · ${shop?.email||''} · Generated ${new Date().toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'})}</div>${Object.entries(grouped).map(([cat,ps])=>`<h2>${cat} (${ps.length})</h2><div class="grid">${ps.map(p=>`<div class="card">${p.images?.[0]?`<img src="${p.images[0]}" onerror="this.style.display='none'"/>`:''}<div class="card-name">${p.name}</div><div class="card-price">KES ${p.price?.toLocaleString()}</div>${p.onSale&&p.salePrice?`<div class="card-sale">Sale: KES ${p.salePrice?.toLocaleString()}</div>`:''}<div class="card-sku">${p.sku||''}</div></div>`).join('')}</div>`).join('')}<div class="footer">${shop?.name} · Page 1</div>
   <!-- ── SERVICES SECTION ───────────────────────────────────────────────── -->
   <div id="panel-services" class="panel">
@@ -3648,6 +3664,16 @@ async function generateCatalogue(){
     </div>
   </div>
 
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.warn('SW failed:', err));
+      });
+    }
+  </script>
 </body></html>`;
     const win=window.open('','_blank');
     win.document.write(html); win.document.close();
@@ -3680,6 +3706,14 @@ async function exportInventoryPDF(){
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Vendor Dashboard — SELA Kenya"/>
   <meta name="twitter:description" content="Manage your SELA store, products, orders and analytics."/>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#00d4ff"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SELA"/>
+  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
 </head><body><h1>${shop?.name} — Inventory Report</h1><div style="font-size:.78rem;color:#64748b;margin-bottom:.75rem">Generated ${new Date().toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'})}</div><div class="summary"><div class="sm"><div class="sm-num">${d.totalProducts||0}</div><div class="sm-label">Total Products</div></div><div class="sm"><div class="sm-num">${d.totalStock||0}</div><div class="sm-label">Total Stock</div></div><div class="sm"><div class="sm-num">${d.totalSold||0}</div><div class="sm-label">Total Sold</div></div><div class="sm"><div class="sm-num" style="color:#ef4444">${d.lowStock||0}</div><div class="sm-label">Low Stock</div></div><div class="sm"><div class="sm-num" style="color:#22c55e">${d.newThisWeek||0}</div><div class="sm-label">Added This Week</div></div></div><h2>Full Inventory</h2><table><thead><tr><th>Product</th><th>Category</th><th>Stock</th><th>Sold</th><th>Status</th></tr></thead><tbody>${(d.products||[]).map(p=>`<tr><td>${p.name}</td><td>${p.categoryName||'—'}</td><td>${p.stock} ${p.unit}</td><td>${p.sold}</td><td>${p.stock===0?'Out of Stock':p.stock<=5?'Low Stock':'In Stock'}</td></tr>`).join('')}</tbody></table>
   <!-- ── SERVICES SECTION ───────────────────────────────────────────────── -->
   <div id="panel-services" class="panel">
@@ -4194,6 +4228,16 @@ async function exportInventoryPDF(){
     </div>
   </div>
 
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.warn('SW failed:', err));
+      });
+    }
+  </script>
 </body></html>`;
     const win=window.open('','_blank');
     win.document.write(html); win.document.close();
@@ -5747,5 +5791,15 @@ function downloadInvoice(h) {
     </div>
   </div>
 
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.warn('SW failed:', err));
+      });
+    }
+  </script>
 </body>
 </html>
