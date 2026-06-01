@@ -658,6 +658,8 @@ body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(scri
 
 <script>
 const API = window.SELA_API || 'http://localhost:5000/api';
+const BASE = window.SELA_BASE || 'http://localhost:5000';
+function fixImg(src){ if(!src)return''; if(src.startsWith('http'))return src; if(src.startsWith('/'))return BASE+src; return src; }
 let allDeals = [];
 let activeCategory = 'All';
 let activeSearch   = '';
@@ -1015,7 +1017,7 @@ function renderGallery(d) {
   main.innerHTML = `<img src="${d.images[0]}" id="hdlMainImg" alt="${d.title}"/>`;
   thumbs.innerHTML = d.images.map((img,i)=>
     `<div class="hdl-thumb${i===0?' active':''}" onclick="setGallery(${i})">
-      <img src="${img}" alt="image ${i+1}" loading="lazy"/>
+      <img src="${fixImg(img)}" alt="image ${i+1}" loading="lazy"/>
     </div>`
   ).join('');
 }
@@ -1237,7 +1239,7 @@ function openEditForm(id) {
   const prev=document.getElementById('afImgPreview');
   prev.innerHTML=(d.images||[]).map(img=>
     `<div class="admin-img-thumb">
-      <img src="${img}" alt=""/>
+      <img src="${fixImg(img)}" alt=""/>
       <button class="admin-img-del" onclick="removeExistingImg('${id}','${img}')" title="Remove">✕</button>
     </div>`
   ).join('');

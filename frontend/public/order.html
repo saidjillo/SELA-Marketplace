@@ -488,6 +488,8 @@ button{cursor:pointer;font-family:var(--font-body)}
 <script src="header.js"></script>
 <script>
 const API = window.SELA_API || 'http://localhost:5000/api';
+const BASE = window.SELA_BASE || 'http://localhost:5000';
+function fixImg(src){ if(!src)return''; if(src.startsWith('http'))return src; if(src.startsWith('/'))return BASE+src; return src; }
 const CAT_EMOJI = {'Phones & Tablets':'📱','Computer Peripherals':'🖥️','Networking Gear':'📡','Cables & Accessories':'🔌','Power & Charging':'⚡','Storage Devices':'💾','Other':'📦'};
 let orderProduct = null, orderQty = 1, selectedBranch = '', selectedPayment = 'mpesa', discountPct = 0;
 let _tt;
@@ -797,7 +799,7 @@ function renderProduct(p, isHotDeal) {
         ${images.map((img,i)=>`
           <div onclick="galGoTo(${i})" id="galThumb${i}"
             style="flex-shrink:0;width:60px;height:60px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid ${i===0?'var(--accent)':'var(--border)'};transition:border-color .15s">
-            <img src="${img}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.display='none'"/>
+            <img src="${fixImg(img)}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.display='none'"/>
           </div>`).join('')}
       </div>
     </div>` : mainImg ? `
@@ -949,7 +951,7 @@ function loadRelated(product, related) {
     const em  = CAT_EMOJI[r.category] || '📦';
     const url = r.slug ? `product.html?slug=${encodeURIComponent(r.slug)}` : `product.html?id=${encodeURIComponent(r.id)}`;
     return `<a href="${url}" class="ord-al-item">
-      <div class="ord-al-img">${img?`<img src="${img}" alt="${r.name}"/>`:em}</div>
+      <div class="ord-al-img">${img?`<img src="${fixImg(img)}" alt="${r.name}"/>`:em}</div>
       <div><div class="ord-al-name">${r.name}</div><div class="ord-al-price">KES ${Number(r.price).toLocaleString('en-KE')}</div></div>
     </a>`;
   }).join('');

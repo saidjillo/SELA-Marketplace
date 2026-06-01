@@ -4,7 +4,9 @@
  */
 (function () {
   'use strict';
-  const API = 'http://localhost:5000/api';
+  const API = window.SELA_API || 'http://localhost:5000/api';
+const BASE = window.SELA_BASE || 'http://localhost:5000';
+function fixImg(src){ if(!src)return''; if(src.startsWith('http'))return src; if(src.startsWith('/'))return BASE+src; return src; }
   function fmt(n){ return Number(n||0).toLocaleString('en-KE'); }
 
   /* ─── CSS ──────────────────────────────────────────────────────────────── */
@@ -256,10 +258,10 @@
       const storeUrl = 'shop-store.html?slug=' + (s.slug||'') + '&id=' + (s.id||s._id||'');
       return `<a class="mh-store" href="${storeUrl}" style="--c:${c}22">
         <div class="mh-store-banner" style="background:linear-gradient(135deg,${c}22,${c}44)">
-          ${s.banner?`<img src="${s.banner}" alt="" onerror="this.style.display='none'"/>` :''}
+          ${s.banner?`<img src="${fixImg(s.banner)}" alt="" onerror="this.style.display='none'"/>` :''}
           <span class="mh-store-live">● LIVE</span>
           ${s.logo
-            ? `<img class="mh-store-logo" src="${s.logo}" alt="" onerror="this.style.display='none'"/>`
+            ? `<img class="mh-store-logo" src="${fixImg(s.logo)}" alt="" onerror="this.style.display='none'"/>`
             : `<div class="mh-store-logo-ph" style="background:linear-gradient(135deg,${c},${c}88)">🏪</div>`}
         </div>
         <div class="mh-store-body">
@@ -290,7 +292,7 @@
 
   function prodCard(p) {
     const price = p.onSale && p.salePrice ? p.salePrice : p.price;
-    const img   = (p.images&&p.images[0]) || p.image || '';
+    const img = fixImg((p.images&&p.images[0]) || p.image || '');
     const isNew = new Date()-new Date(p.createdAt||0) < 7*86400000;
     const dest  = p.slug ? `product.html?slug=${p.slug}` : `product.html?id=${p.id||p._id}`;
     return `<a class="mh-prod" href="${dest}">

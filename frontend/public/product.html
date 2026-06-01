@@ -811,6 +811,8 @@ body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(scri
 </script>
 <script>
 const API = window.SELA_API || 'http://localhost:5000/api';
+const BASE = window.SELA_BASE || 'http://localhost:5000';
+function fixImg(src){ if(!src)return''; if(src.startsWith('http'))return src; if(src.startsWith('/'))return BASE+src; return src; }
 
 // ── Shared constants ──────────────────────────────────────────────────────────
 const CAT_EMOJI = {'Phones & Tablets':'📱','Computer Peripherals':'🖥️','Networking Gear':'📡','Cables & Accessories':'🔌','Power & Charging':'⚡','Storage Devices':'💾','Other':'📦'};
@@ -1254,14 +1256,14 @@ function renderGallery(p, imgs, emoji) {
     // Thumbnail strip (inside gallery-wrap, vertical)
     thumbsEl.innerHTML = imgs.map((img,i)=>
       `<div class="thumb-item${i===0?' active':''}" onclick="setGallery(${i})">
-        <img src="${img}" alt="img ${i+1}"/>
+        <img src="${fixImg(img)}" alt="img ${i+1}"/>
       </div>`
     ).join('');
 
     // Left sidebar thumbnails
     sideThumbsEl.innerHTML = imgs.map((img,i)=>
       `<div class="thumb-item${i===0?' active':''}" onclick="setGallery(${i})" style="width:100%;height:56px">
-        <img src="${img}" alt="img ${i+1}"/>
+        <img src="${fixImg(img)}" alt="img ${i+1}"/>
       </div>`
     ).join('');
   } else {
@@ -1304,7 +1306,7 @@ function renderRelated(related, fallbackEmoji) {
     const img = r.images?.[0] || r.image;
     const em  = CAT_EMOJI[r.category]||'📦';
     return `<a href="product.html?id=${r.id}${r.slug?'&slug='+encodeURIComponent(r.slug):''}" class="related-card">
-      <div class="related-card-img">${img?`<img src="${img}" alt="${r.name}"/>`:`<span>${em}</span>`}</div>
+      <div class="related-card-img">${img?`<img src="${fixImg(img)}" alt="${r.name}"/>`:`<span>${em}</span>`}</div>
       <div>
         <div class="related-card-name">${r.name}</div>
         <div class="related-card-price">KES ${Number(r.price).toLocaleString('en-KE')}</div>
