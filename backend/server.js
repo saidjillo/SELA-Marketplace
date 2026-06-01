@@ -95,7 +95,7 @@ async function uniqueProductSlug(shopId, name, excludeId) {
 
 
 const app  = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 // ── MongoDB Atlas ────────────────────────────────────────────────────────────
 if (!process.env.MONGODB_URI) {
@@ -144,11 +144,17 @@ mongoose.connection.on('reconnected',  () => console.log('✅  MongoDB reconnect
 
 // ── Seed admin only (never touches products) ─────────────────────────────────
 async function seedAdminIfNeeded() {
-  const exists = await Admin.findOne({ username: process.env.ADMIN_USERNAME || 'admin' });
+  const username = process.env.ADMIN_USERNAME || 'admin';
+  const password = process.env.ADMIN_PASSWORD || 'TechDeals@2025!';
+  const hash = await bcrypt.hash(password, 12);
+  const exists = await Admin.findOne({ username });
   if (!exists) {
-    const hash = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'TechDeals@2025!', 12);
-    await Admin.create({ username: process.env.ADMIN_USERNAME || 'admin', email: process.env.ADMIN_EMAIL || 'admin@sela.co.ke', name: 'SELA Admin', passwordHash: hash, role: 'admin' });
-    console.log('✅  Admin seeded');
+    await Admin.create({ username, email: process.env.ADMIN_EMAIL || 'admin@sela.co.ke', name: 'SELA Admin', passwordHash: hash });
+    console.log('✅ Admin account created');
+  } else {
+    // Always update password from env on startup
+    await Admin.updateOne({ username }, { passwordHash: hash });
+    console.log('✅ Admin password synced from env');
   }
 }
 
@@ -160,45 +166,64 @@ if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 app.use('/uploads', express.static(uploadsDir));
 // static middleware moved to bottom — see end of file
 
-// ── Multer ───────────────────────────────────────────────────────────────────
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename:    (req, file, cb) => cb(null, `${uuidv4()}${path.extname(file.originalname)}`),
+// ── Cloudinary v2 + Multer (memory storage) ─────────────────────────────────
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+// Upload buffer to Cloudinary, return secure URL
+async function uploadToCloudinary(buffer, mimetype) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder:'sela', resource_type:'image', transformation:[{width:1200,height:1200,crop:'limit',quality:'auto'}] },
+      (err, result) => err ? reject(err) : resolve(result.secure_url)
+    );
+    stream.end(buffer);
+  });
+}
+
+const imageFilter = (req, file, cb) => {
+  /jpeg|jpg|png|webp|gif/.test(file.mimetype) ? cb(null,true) : cb(new Error('Images only'));
+};
+
+// Use memory storage — files processed in RAM then sent to Cloudinary
+const memStorage = multer.memoryStorage();
+
 const upload = multer({
-  storage,
-  limits: { fileSize: 8 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    /jpeg|jpg|png|webp/.test(file.mimetype) ? cb(null, true) : cb(new Error('Only images allowed'));
-  },
+  storage: memStorage,
+  limits:  { fileSize: 8 * 1024 * 1024 },
+  fileFilter: imageFilter,
 });
 
 // ── Multer for Hot Deals (up to 6 images) ───────────────────────────────────
 const hotDealUpload = multer({
-  storage,
-  limits: { fileSize: 8 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    /jpeg|jpg|png|webp/.test(file.mimetype) ? cb(null, true) : cb(new Error('Images only'));
-  },
+  storage: memStorage,
+  limits:  { fileSize: 8 * 1024 * 1024 },
+  fileFilter: imageFilter,
 }).array('images', 6);
 
 
 // POST /api/shops/:id/upload-images — upload up to 6 product images
 const shopProductUpload = multer({
-  storage,
-  limits: { fileSize: 8 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    /jpeg|jpg|png|webp|gif/.test(file.mimetype) ? cb(null,true) : cb(new Error('Images only'));
-  },
+  storage: memStorage,
+  limits:  { fileSize: 8 * 1024 * 1024 },
+  fileFilter: imageFilter,
 }).array('images', 6);
 
 app.post('/api/shops/:id/upload-images', (req, res) => {
   const user = getShopUser(req);
   if (!user) return res.status(401).json({ success:false, message:'Login required' });
-  shopProductUpload(req, res, (err) => {
+  shopProductUpload(req, res, async (err) => {
     if (err) return res.status(400).json({ success:false, message: err.message });
-    const urls = (req.files||[]).map(f => `/uploads/${f.filename}`);
-    res.json({ success:true, urls });
+    try {
+      const urls = await Promise.all(
+        (req.files||[]).map(f => uploadToCloudinary(f.buffer, f.mimetype))
+      );
+      res.json({ success:true, urls });
+    } catch(e) { res.status(500).json({ success:false, message:'Image upload failed: '+e.message }); }
   });
 });
 
@@ -218,11 +243,9 @@ function generateSlug(name, id) {
 
 // ── Multi-image upload for products (up to 6) ─────────────────────────────────
 const productImgUpload = multer({
-  storage,
-  limits: { fileSize: 8 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    /jpeg|jpg|png|webp/.test(file.mimetype) ? cb(null, true) : cb(new Error('Images only'));
-  },
+  storage: memStorage,
+  limits:  { fileSize: 8 * 1024 * 1024 },
+  fileFilter: imageFilter,
 }).array('images', 6);
 
 
@@ -977,7 +1000,9 @@ app.post('/api/hotdeals', (req, res) => {
       const dealPrice = parseFloat(s(req.body.dealPrice))||0;
       if (!title||!category||!description||!originalPrice||!dealPrice||!shop)
         return res.status(400).json({ success:false, message:'Required fields missing' });
-      const images = (req.files||[]).map(f => '/uploads/'+f.filename);
+      const images = await Promise.all(
+        (req.files||[]).map(f => uploadToCloudinary(f.buffer, f.mimetype))
+      ).catch(()=>[]);
       const discPct = Math.round(((originalPrice-dealPrice)/originalPrice)*100);
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80)+'-'+Date.now().toString(36);
       let vendorId = s(req.body.vendorId);
