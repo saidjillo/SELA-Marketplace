@@ -1,0 +1,12 @@
+{
+  "name": "sela-marketplace",
+  "version": "1.0.0",
+  "description": "SELA Multi-Vendor Marketplace",
+  "scripts": {
+    "build": "cd backend && npm install",
+    "start": "cd backend && node server.js"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
