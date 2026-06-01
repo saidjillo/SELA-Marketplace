@@ -3,22 +3,13 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>SELA — All Products & Services | Mombasa, Kenya</title>
+  <title>SELA — Kenya's Online Marketplace | Shop & Sell Local</title>
   <meta name="description" content="SELA — ICT accessories, printing, KRA returns, CV writing, WiFi setup &amp; more in Mombasa. Call +254 700 000 000 or email admin@sela.co.ke. 6 branches across Kenya."/>
   <meta name="keywords" content="ICT accessories Mombasa, laptop repair Mombasa, printing services Mombasa, KRA returns Mombasa, CV writing, WiFi installation, SELA Kenya"/>
   <meta name="author" content="SELA"/>
   <meta name="theme-color" content="#00d4ff"/>
   <!-- Open Graph — controls how link looks when shared on WhatsApp, Facebook, Twitter -->
-  <meta property="og:type"        content="website"/>
-  <meta property="og:title"       content="SELA — All Products & Services | Mombasa"/>
-  <meta property="og:description" content="Phones, laptops, networking gear, printing, CV writing, KRA returns, WiFi setup & more. Walk in or WhatsApp us. 6 branches across Kenya."/>
-  <meta property="og:url"         content="https://aircoast.ke"/>
-  <meta property="og:image"       content="https://aircoast.ke/og-image.png"/>
-  <meta property="og:locale"      content="en_KE"/>
   <!-- Twitter card -->
-  <meta name="twitter:card"        content="summary_large_image"/>
-  <meta name="twitter:title"       content="SELA — All Products & Services"/>
-  <meta name="twitter:description" content="Phones, laptops, printing, KRA returns, WiFi setup & more. 6 branches in Kenya."/>
   <!-- Favicon (inline SVG as data URI — no file needed) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='12'>🛍️</text></svg>"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1728,6 +1719,22 @@
 
 </style>
 <link rel="stylesheet" href="theme.css"/>
+
+  <!-- SEO -->
+  <meta name="description" content="Browse products, services and hot deals from local Kenyan vendors. Fast delivery across Mombasa and Kenya. Shop electronics, accessories and more."/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/index.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="SELA — Kenya's Online Marketplace | Shop & Sell Local"/>
+  <meta property="og:description" content="Browse products, services and hot deals from local Kenyan vendors. Fast delivery across Mombasa and Kenya. Shop electronics, accessories and more."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/index.html"/>
+  <meta property="og:image" content="/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="SELA — Kenya's Online Marketplace | Shop & Sell Local"/>
+  <meta name="twitter:description" content="Browse products, services and hot deals from local Kenyan vendors. Fast delivery across Mombasa and Kenya. Shop electronics, accessories and more."/>
 </head>
 <body>
 
@@ -3869,7 +3876,7 @@
      JAVASCRIPT
 ════════════════════════════════════════ -->
 <script>
-const API = 'http://localhost:5000/api'; // MongoDB Atlas backend
+const API = window.SELA_API || 'http://localhost:5000/api'; // MongoDB Atlas backend
 
 // Clear any old cached product data from localStorage (one-time cleanup)
 // Products now live exclusively in MongoDB Atlas — no local caching
@@ -7076,6 +7083,7 @@ function wlToggleCard(id, name, price, image, shopName, slug, event) {
 
 <script src="auth.js"></script>
 <script src="wishlist.js"></script>
+<script src="config.js"></script>
 <script src="header.js"></script>
 <script src="marketplace-home.js"></script>
 <script src="notif-bell.js">

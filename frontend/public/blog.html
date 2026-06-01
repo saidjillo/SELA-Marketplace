@@ -2,12 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Blog — SELA ICT Tips & Guides Kenya</title>
+<title>Blog — ICT Tips, Guides & News for Kenyan Businesses | SELA</title>
 <meta name="description" content="Expert ICT tips, guides, and tutorials from SELA Kenya. Learn about networking, cybersecurity, laptops, phones, Windows, and more."/>
 <meta name="keywords" content="ICT blog Kenya, tech tips Mombasa, networking guide Kenya, cybersecurity Kenya, laptop guide, SELA blog"/>
-<meta property="og:title" content="SELA Blog — ICT Tips & Guides"/>
-<meta property="og:description" content="Expert ICT articles from Kenya's trusted tech accessories provider."/>
-<meta property="og:type" content="website"/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='12'>📝</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 <style>
@@ -161,6 +158,22 @@ body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(scri
 
 </style>
 <link rel="stylesheet" href="theme.css"/>
+
+  <!-- SEO -->
+  <meta name="description" content="Expert ICT tips, business guides and tech news from SELA Kenya. Learn how to grow your online business."/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/blog.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Blog — ICT Tips, Guides & News for Kenyan Businesses | SELA"/>
+  <meta property="og:description" content="Expert ICT tips, business guides and tech news from SELA Kenya. Learn how to grow your online business."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/blog.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Blog — ICT Tips, Guides & News for Kenyan Businesses | SELA"/>
+  <meta name="twitter:description" content="Expert ICT tips, business guides and tech news from SELA Kenya. Learn how to grow your online business."/>
 </head>
 <body>
 
@@ -299,7 +312,7 @@ body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(scri
 
 <script src="blog-posts-data.js"></script>
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 let metaMap       = {};   // { postId: { views, likes, voteScore, ... } }
 let commentCounts = {};  // { postId: count }
 let activeTag    = 'All';
@@ -612,6 +625,7 @@ function renderFeaturedHero() {
     <span>Mombasa, Kenya 🇰🇪</span>
   </div>
 </footer>
+<script src="config.js"></script>
 <script src="header.js"></script>
 </body>
 </html>

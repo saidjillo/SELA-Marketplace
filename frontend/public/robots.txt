@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /shop-dashboard.html
+Disallow: /order.html
+Disallow: /auth.html
+Disallow: /user-settings.html
+Disallow: /wishlist.html
+
+Sitemap: https://sela-marketplace-production.up.railway.app/sitemap.xml

@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Sell on SELA — Start Your Online Store in Minutes</title>
+  <title>Sell on SELA — Start Your Online Store in Minutes | Kenya</title>
   <meta name="description" content="Join Kenya's growing multi-vendor marketplace. List your products, manage orders, and grow your business with SELA."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
   <script src="wishlist.js"></script>
-  <script src="header.js" defer></script>
+  <script src="config.js"></script>
+<script src="header.js" defer></script>
   <style>
     :root{
       --bg:#0b0e14;--bg2:#131822;--bg3:#1a2030;
@@ -134,6 +135,22 @@
       .pricing-grid{grid-template-columns:1fr}
     }
   </style>
+
+  <!-- SEO -->
+  <meta name="description" content="Join Kenya's growing marketplace. List your products, manage orders and reach customers across Kenya. Plans from KES 500/month."/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/shops.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Sell on SELA — Start Your Online Store in Minutes | Kenya"/>
+  <meta property="og:description" content="Join Kenya's growing marketplace. List your products, manage orders and reach customers across Kenya. Plans from KES 500/month."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/shops.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Sell on SELA — Start Your Online Store in Minutes | Kenya"/>
+  <meta name="twitter:description" content="Join Kenya's growing marketplace. List your products, manage orders and reach customers across Kenya. Plans from KES 500/month."/>
 </head>
 <body>
 
@@ -350,7 +367,7 @@
 </footer>
 
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 let allShops = [];
 
 function requireLogin(dest) {

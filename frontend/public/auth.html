@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Account — SELA</title>
+<title>Login or Register — SELA Kenya</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -99,10 +99,28 @@ a{color:var(--accent);text-decoration:none}button{cursor:pointer;font-family:inh
 .forgot-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem}
 </style>
 <link rel="stylesheet" href="theme.css"/>
+
+  <!-- SEO -->
+  <meta name="robots" content="noindex,nofollow"/>
+  <meta name="description" content="Sign in to your SELA account or create a new one to start shopping and selling."/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/auth.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Login or Register — SELA Kenya"/>
+  <meta property="og:description" content="Sign in to your SELA account or create a new one to start shopping and selling."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/auth.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Login or Register — SELA Kenya"/>
+  <meta name="twitter:description" content="Sign in to your SELA account or create a new one to start shopping and selling."/>
 </head>
 <body>
 
 <script src="auth.js"></script>
+<script src="config.js"></script>
 <script src="header.js"></script>
 
 <div class="auth-page">
@@ -235,7 +253,7 @@ a{color:var(--accent);text-decoration:none}button{cursor:pointer;font-family:inh
 </div>
 
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 let _userId = null;
 
 // ── Helpers ─────────────────────────────────────────────────────────────────

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Vendor Dashboard — SELA</title>
+<title>Vendor Dashboard — SELA Kenya</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -92,6 +92,23 @@ tr:hover td{background:#f8fafc}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 </style>
 <link rel="stylesheet" href="theme.css"/>
+
+  <!-- SEO -->
+  <meta name="robots" content="noindex,nofollow"/>
+  <meta name="description" content="Manage your SELA store, products, orders and analytics."/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/shop-dashboard.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Vendor Dashboard — SELA Kenya"/>
+  <meta property="og:description" content="Manage your SELA store, products, orders and analytics."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/shop-dashboard.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Vendor Dashboard — SELA Kenya"/>
+  <meta name="twitter:description" content="Manage your SELA store, products, orders and analytics."/>
 </head>
 <body>
 
@@ -907,9 +924,10 @@ tr:hover td{background:#f8fafc}
 
 <div class="toast" id="toast"></div>
 
+<script src="config.js"></script>
 <script src="auth.js"></script>
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 let shopId = new URLSearchParams(location.search).get('id');
 let shop = null, branches = [], categories = [], products = [], allProducts = [];
 
@@ -3096,9 +3114,26 @@ async function generateCatalogue(){
     const grouped={};
     prods.forEach(p=>{const c=p.categoryName||'Uncategorised';if(!grouped[c])grouped[c]=[];grouped[c].push(p);});
     // Build print-friendly HTML
-    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>${shop?.name} — Product Catalogue</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;padding:2rem;color:#0f172a;background:#fff}h1{font-size:1.8rem;font-weight:900;margin-bottom:.25rem}h2{font-size:1.1rem;font-weight:800;margin:1.5rem 0 .75rem;border-bottom:2px solid ${shop?.themeColor||'#6366f1'};padding-bottom:.35rem;color:${shop?.themeColor||'#6366f1'}}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.card{border:1px solid #e2e8f0;border-radius:8px;padding:.85rem;page-break-inside:avoid}.card img{width:100%;height:120px;object-fit:cover;border-radius:6px;margin-bottom:.5rem}.card-name{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.card-price{font-size:.85rem;color:${shop?.themeColor||'#6366f1'};font-weight:800}.card-sale{font-size:.72rem;color:#16a34a;font-weight:700}.card-sku{font-size:.68rem;color:#94a3b8}.footer{margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#94a3b8;text-align:center}@media print{body{padding:1rem}.grid{grid-template-columns:repeat(3,1fr)}}@keyframes spin{to{transform:rotate(360deg)}}
+    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Vendor Dashboard — SELA Kenya</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;padding:2rem;color:#0f172a;background:#fff}h1{font-size:1.8rem;font-weight:900;margin-bottom:.25rem}h2{font-size:1.1rem;font-weight:800;margin:1.5rem 0 .75rem;border-bottom:2px solid ${shop?.themeColor||'#6366f1'};padding-bottom:.35rem;color:${shop?.themeColor||'#6366f1'}}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.card{border:1px solid #e2e8f0;border-radius:8px;padding:.85rem;page-break-inside:avoid}.card img{width:100%;height:120px;object-fit:cover;border-radius:6px;margin-bottom:.5rem}.card-name{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.card-price{font-size:.85rem;color:${shop?.themeColor||'#6366f1'};font-weight:800}.card-sale{font-size:.72rem;color:#16a34a;font-weight:700}.card-sku{font-size:.68rem;color:#94a3b8}.footer{margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#94a3b8;text-align:center}@media print{body{padding:1rem}.grid{grid-template-columns:repeat(3,1fr)}}@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-</style></head><body><h1>${shop?.name||'Product Catalogue'}</h1><div style="font-size:.82rem;color:#64748b;margin-bottom:1.5rem">${shop?.location||''} · ${shop?.phone||''} · ${shop?.email||''} · Generated ${new Date().toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'})}</div>${Object.entries(grouped).map(([cat,ps])=>`<h2>${cat} (${ps.length})</h2><div class="grid">${ps.map(p=>`<div class="card">${p.images?.[0]?`<img src="${p.images[0]}" onerror="this.style.display='none'"/>`:''}<div class="card-name">${p.name}</div><div class="card-price">KES ${p.price?.toLocaleString()}</div>${p.onSale&&p.salePrice?`<div class="card-sale">Sale: KES ${p.salePrice?.toLocaleString()}</div>`:''}<div class="card-sku">${p.sku||''}</div></div>`).join('')}</div>`).join('')}<div class="footer">${shop?.name} · Page 1</div>
+</style>
+  <!-- SEO -->
+  <meta name="robots" content="noindex,nofollow"/>
+  <meta name="description" content="Manage your SELA store, products, orders and analytics."/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/shop-dashboard.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Vendor Dashboard — SELA Kenya"/>
+  <meta property="og:description" content="Manage your SELA store, products, orders and analytics."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/shop-dashboard.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Vendor Dashboard — SELA Kenya"/>
+  <meta name="twitter:description" content="Manage your SELA store, products, orders and analytics."/>
+</head><body><h1>${shop?.name||'Product Catalogue'}</h1><div style="font-size:.82rem;color:#64748b;margin-bottom:1.5rem">${shop?.location||''} · ${shop?.phone||''} · ${shop?.email||''} · Generated ${new Date().toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'})}</div>${Object.entries(grouped).map(([cat,ps])=>`<h2>${cat} (${ps.length})</h2><div class="grid">${ps.map(p=>`<div class="card">${p.images?.[0]?`<img src="${p.images[0]}" onerror="this.style.display='none'"/>`:''}<div class="card-name">${p.name}</div><div class="card-price">KES ${p.price?.toLocaleString()}</div>${p.onSale&&p.salePrice?`<div class="card-sale">Sale: KES ${p.salePrice?.toLocaleString()}</div>`:''}<div class="card-sku">${p.sku||''}</div></div>`).join('')}</div>`).join('')}<div class="footer">${shop?.name} · Page 1</div>
   <!-- ── SERVICES SECTION ───────────────────────────────────────────────── -->
   <div id="panel-services" class="panel">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem">
@@ -3626,9 +3661,26 @@ async function exportInventoryPDF(){
     const r=await fetch(`${API}/shops/${shopId}/inventory`);
     const j=await r.json();
     const d=j.data||{};
-    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>${shop?.name} — Inventory Report</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;padding:2rem;color:#0f172a}h1{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}h2{font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;color:${shop?.themeColor||'#6366f1'}}table{width:100%;border-collapse:collapse;font-size:.82rem}th{padding:.6rem;text-align:left;background:${shop?.themeColor||'#6366f1'};color:#fff;font-weight:700}td{padding:.6rem;border-bottom:1px solid #e2e8f0}.summary{display:flex;gap:2rem;margin:1rem 0 1.5rem;flex-wrap:wrap}.sm{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:.85rem 1.25rem}.sm-num{font-size:1.5rem;font-weight:900}.sm-label{font-size:.72rem;color:#64748b;margin-top:.1rem}@keyframes spin{to{transform:rotate(360deg)}}
+    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Vendor Dashboard — SELA Kenya</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;padding:2rem;color:#0f172a}h1{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}h2{font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;color:${shop?.themeColor||'#6366f1'}}table{width:100%;border-collapse:collapse;font-size:.82rem}th{padding:.6rem;text-align:left;background:${shop?.themeColor||'#6366f1'};color:#fff;font-weight:700}td{padding:.6rem;border-bottom:1px solid #e2e8f0}.summary{display:flex;gap:2rem;margin:1rem 0 1.5rem;flex-wrap:wrap}.sm{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:.85rem 1.25rem}.sm-num{font-size:1.5rem;font-weight:900}.sm-label{font-size:.72rem;color:#64748b;margin-top:.1rem}@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-</style></head><body><h1>${shop?.name} — Inventory Report</h1><div style="font-size:.78rem;color:#64748b;margin-bottom:.75rem">Generated ${new Date().toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'})}</div><div class="summary"><div class="sm"><div class="sm-num">${d.totalProducts||0}</div><div class="sm-label">Total Products</div></div><div class="sm"><div class="sm-num">${d.totalStock||0}</div><div class="sm-label">Total Stock</div></div><div class="sm"><div class="sm-num">${d.totalSold||0}</div><div class="sm-label">Total Sold</div></div><div class="sm"><div class="sm-num" style="color:#ef4444">${d.lowStock||0}</div><div class="sm-label">Low Stock</div></div><div class="sm"><div class="sm-num" style="color:#22c55e">${d.newThisWeek||0}</div><div class="sm-label">Added This Week</div></div></div><h2>Full Inventory</h2><table><thead><tr><th>Product</th><th>Category</th><th>Stock</th><th>Sold</th><th>Status</th></tr></thead><tbody>${(d.products||[]).map(p=>`<tr><td>${p.name}</td><td>${p.categoryName||'—'}</td><td>${p.stock} ${p.unit}</td><td>${p.sold}</td><td>${p.stock===0?'Out of Stock':p.stock<=5?'Low Stock':'In Stock'}</td></tr>`).join('')}</tbody></table>
+</style>
+  <!-- SEO -->
+  <meta name="robots" content="noindex,nofollow"/>
+  <meta name="description" content="Manage your SELA store, products, orders and analytics."/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/shop-dashboard.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Vendor Dashboard — SELA Kenya"/>
+  <meta property="og:description" content="Manage your SELA store, products, orders and analytics."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/shop-dashboard.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Vendor Dashboard — SELA Kenya"/>
+  <meta name="twitter:description" content="Manage your SELA store, products, orders and analytics."/>
+</head><body><h1>${shop?.name} — Inventory Report</h1><div style="font-size:.78rem;color:#64748b;margin-bottom:.75rem">Generated ${new Date().toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'})}</div><div class="summary"><div class="sm"><div class="sm-num">${d.totalProducts||0}</div><div class="sm-label">Total Products</div></div><div class="sm"><div class="sm-num">${d.totalStock||0}</div><div class="sm-label">Total Stock</div></div><div class="sm"><div class="sm-num">${d.totalSold||0}</div><div class="sm-label">Total Sold</div></div><div class="sm"><div class="sm-num" style="color:#ef4444">${d.lowStock||0}</div><div class="sm-label">Low Stock</div></div><div class="sm"><div class="sm-num" style="color:#22c55e">${d.newThisWeek||0}</div><div class="sm-label">Added This Week</div></div></div><h2>Full Inventory</h2><table><thead><tr><th>Product</th><th>Category</th><th>Stock</th><th>Sold</th><th>Status</th></tr></thead><tbody>${(d.products||[]).map(p=>`<tr><td>${p.name}</td><td>${p.categoryName||'—'}</td><td>${p.stock} ${p.unit}</td><td>${p.sold}</td><td>${p.stock===0?'Out of Stock':p.stock<=5?'Low Stock':'In Stock'}</td></tr>`).join('')}</tbody></table>
   <!-- ── SERVICES SECTION ───────────────────────────────────────────────── -->
   <div id="panel-services" class="panel">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem">

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Help Centre — SELA</title>
+<title>Help Center — SELA Kenya</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='10'>💬</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -192,6 +192,22 @@ img{max-width:100%;border-radius:var(--radius-sm)}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 <link rel="stylesheet" href="theme.css"/>
+
+  <!-- SEO -->
+  <meta name="description" content="Get help and support for SELA marketplace. Find answers to common questions or contact us directly."/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/help.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Help Center — SELA Kenya"/>
+  <meta property="og:description" content="Get help and support for SELA marketplace. Find answers to common questions or contact us directly."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/help.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Help Center — SELA Kenya"/>
+  <meta name="twitter:description" content="Get help and support for SELA marketplace. Find answers to common questions or contact us directly."/>
 </head>
 <body>
 
@@ -346,10 +362,11 @@ img{max-width:100%;border-radius:var(--radius-sm)}
 <div class="hc-toast" id="hcToast"></div>
 
 <script src="auth.js"></script>
+<script src="config.js"></script>
 <script src="header.js"></script>
 <script src="notif-bell.js"></script>
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 let currentFilter='all',currentSort='newest',currentSearch='',currentPage=1,currentPostType='question',searchTimer=null;
 
 function getToken(){return localStorage.getItem('ac_user_token')||localStorage.getItem('td_token')||window._acUser?.getToken()||null;}

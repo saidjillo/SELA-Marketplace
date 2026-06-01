@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Join SELA as a Vendor — SELA</title>
+<title>Create Your Store — SELA Kenya</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -69,6 +69,22 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
 </style>
 <link rel="stylesheet" href="theme.css"/>
+
+  <!-- SEO -->
+  <meta name="description" content="Set up your online store on SELA Kenya marketplace in minutes."/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/shop-create.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Create Your Store — SELA Kenya"/>
+  <meta property="og:description" content="Set up your online store on SELA Kenya marketplace in minutes."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/shop-create.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Create Your Store — SELA Kenya"/>
+  <meta name="twitter:description" content="Set up your online store on SELA Kenya marketplace in minutes."/>
 </head>
 <body>
 
@@ -208,9 +224,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   </div>
 </div>
 
+<script src="config.js"></script>
 <script src="auth.js"></script>
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 let selectedColor = '#6366f1';
 let createdShopId = null;
 let createdShopSlug = null;

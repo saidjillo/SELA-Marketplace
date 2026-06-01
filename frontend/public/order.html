@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Place Order — SELA Kenya</title>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title id="pg-title">Place Order — SELA Kenya</title>
 <meta name="description" content="Order ICT accessories from SELA Kenya. Fast confirmation via WhatsApp and email. Free pickup at any of our 9 branches across Kenya."/>
-<meta property="og:type" content="website"/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='10'>🛒</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 <style>
@@ -218,6 +218,23 @@ button{cursor:pointer;font-family:var(--font-body)}
 
   </style>
 <link rel="stylesheet" href="theme.css"/>
+
+  <!-- SEO -->
+  <meta name="robots" content="noindex,nofollow"/>
+  <meta name="description" content="Complete your order securely with M-Pesa payment on SELA marketplace."/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/order.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Place Order — SELA Kenya"/>
+  <meta property="og:description" content="Complete your order securely with M-Pesa payment on SELA marketplace."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/order.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Place Order — SELA Kenya"/>
+  <meta name="twitter:description" content="Complete your order securely with M-Pesa payment on SELA marketplace."/>
 </head>
 <body>
 <div class="breadcrumb">
@@ -456,9 +473,10 @@ button{cursor:pointer;font-family:var(--font-body)}
 
 <script src="auth.js"></script>
 <script src="notif-bell.js"></script>
+<script src="config.js"></script>
 <script src="header.js"></script>
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 const CAT_EMOJI = {'Phones & Tablets':'📱','Computer Peripherals':'🖥️','Networking Gear':'📡','Cables & Accessories':'🔌','Power & Charging':'⚡','Storage Devices':'💾','Other':'📦'};
 let orderProduct = null, orderQty = 1, selectedBranch = '', selectedPayment = 'mpesa', discountPct = 0;
 let _tt;

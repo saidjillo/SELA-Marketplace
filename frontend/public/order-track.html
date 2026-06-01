@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Track Your Order — SELA</title>
-  <script src="header.js" defer></script>
+  <title>Track Your Order — SELA Kenya</title>
+  <script src="config.js"></script>
+<script src="header.js" defer></script>
   <style>
     :root{--bg:#0b0e14;--card:#131822;--border:rgba(255,255,255,.08);--accent:#00d4ff;--text:#e8eaf0;--text2:#9aa0b0;--text3:#5a6070;--green:#16a34a;--orange:#f97316;--red:#ef4444;--radius:12px;}
     *{box-sizing:border-box;margin:0;padding:0}
@@ -58,6 +59,22 @@
     .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
     @keyframes spin{to{transform:rotate(360deg)}}
   </style>
+
+  <!-- SEO -->
+  <meta name="description" content="Track the status of your SELA order in real time."/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/order-track.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Track Your Order — SELA Kenya"/>
+  <meta property="og:description" content="Track the status of your SELA order in real time."/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/order-track.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Track Your Order — SELA Kenya"/>
+  <meta name="twitter:description" content="Track the status of your SELA order in real time."/>
 </head>
 <body>
 <div class="page">
@@ -77,7 +94,7 @@
 </div>
 
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 
 const STEPS = [
   { key:'pending',          icon:'🕐', label:'Order Received' },

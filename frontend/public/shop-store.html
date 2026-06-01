@@ -100,6 +100,18 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:inherit}
 .active-rs{border:2px solid var(--accent,#6366f1)!important;background:rgba(99,102,241,.08)!important;color:var(--accent,#6366f1)!important}
 </style>
 <link rel="stylesheet" href="theme.css"/>
+
+  <!-- SEO -->
+  <meta name="robots" content="index,follow"/>
+  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/shop-store.html"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="SELA Kenya"/>
+  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/shop-store.html"/>
+  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:site" content="@selaKenya"/>
 </head>
 <body>
 <script src="auth.js">
@@ -445,6 +457,7 @@ async function submitReview() {
 }
 
 </script>
+<script src="config.js"></script>
 <script src="header.js"></script>
 
 <nav class="store-nav" id="storeNav">
@@ -596,7 +609,7 @@ async function submitReview() {
 <div class="toast" id="toast"></div>
 
 <script>
-const API = 'http://localhost:5000/api';
+const API = window.SELA_API || 'http://localhost:5000/api';
 const slug = new URLSearchParams(location.search).get('slug');
 const shopIdParam = new URLSearchParams(location.search).get('id');
 let shop = null, branches = [], categories = [], allProducts = [], products = [];
@@ -998,6 +1011,17 @@ function renderFeatured() {
       </div>
     </div>`;
   }).join('');
+}
+
+function updateShopSEO(shop) {
+  const name = shop.name || 'Store';
+  const desc = shop.description ? shop.description.slice(0,155) : ('Shop at '+name+' on SELA Kenya marketplace.');
+  document.title = name + ' — SELA Kenya';
+  const setMeta = (sel,val) => { const el=document.querySelector(sel); if(el) el.setAttribute('content',val); };
+  setMeta('meta[name="description"]', desc);
+  setMeta('meta[property="og:title"]', name+' — SELA Kenya');
+  setMeta('meta[property="og:description"]', desc);
+  setMeta('meta[property="og:url"]', window.location.href);
 }
 </script>
 
