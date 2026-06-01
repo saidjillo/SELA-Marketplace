@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
+window.SELA_BASE=window.SELA_API.replace('/api','');
+</script>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Seller Profile — SELA</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -77,8 +81,6 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:inherit}
     <div style="text-align:center"><div style="width:36px;height:36px;border:3px solid #e2e8f0;border-top-color:#6366f1;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem"></div>Loading seller profile…</div>
   </div>
 </div>
-
-<script src="config.js"></script>
 <script>
 const API = window.SELA_API || 'http://localhost:5000/api';
 const slug = new URLSearchParams(location.search).get('slug');

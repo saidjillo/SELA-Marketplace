@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
+window.SELA_BASE=window.SELA_API.replace('/api','');
+</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Sell on SELA — Start Your Online Store in Minutes | Kenya</title>
@@ -8,7 +12,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
   <script src="wishlist.js"></script>
-  <script src="config.js"></script>
 <script src="header.js" defer></script>
   <style>
     :root{

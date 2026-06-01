@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
+window.SELA_BASE=window.SELA_API.replace('/api','');
+</script>
   <title>Place Order — SELA Kenya</title>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -481,7 +485,6 @@ button{cursor:pointer;font-family:var(--font-body)}
 
 <script src="auth.js"></script>
 <script src="notif-bell.js"></script>
-<script src="config.js"></script>
 <script src="header.js"></script>
 <script>
 const API = window.SELA_API || 'http://localhost:5000/api';

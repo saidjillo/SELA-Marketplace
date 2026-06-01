@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
+window.SELA_BASE=window.SELA_API.replace('/api','');
+</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>SELA — Kenya's Online Marketplace | Shop & Sell Local</title>
@@ -4536,16 +4540,19 @@ async function loadProducts() {
 
   if (!all.length) {
     grid.innerHTML = backendOk
-      ? `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#8899b8">
-           <div style="font-size:3rem;margin-bottom:.75rem">🏪</div>
-           <h3 style="color:#e8edf5;margin-bottom:.5rem">No products listed yet</h3>
-           <p style="margin-bottom:1.25rem;font-size:.88rem">Run the seed script or add products from your vendor dashboard.</p>
-           <a href="javascript:void(0)" onclick="(window._requireLogin||function(d){window.location.href=d})('shop-create.html')" style="padding:.65rem 1.35rem;background:#6366f1;color:#fff;border-radius:8px;font-weight:700;text-decoration:none">🏪 Open a Store</a>
+      ? `<div style="grid-column:1/-1;text-align:center;padding:4rem 1rem;color:#8899b8">
+           <div style="font-size:3.5rem;margin-bottom:1rem">🛍️</div>
+           <h3 style="color:#e8edf5;margin-bottom:.6rem;font-size:1.2rem">No products found</h3>
+           <p style="margin-bottom:1.5rem;font-size:.88rem;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.6">Try adjusting your search or filters. New products are added daily by our vendors.</p>
+           <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+             <a href="hotdeals.html" style="padding:.6rem 1.25rem;background:rgba(249,115,22,.15);color:#f97316;border:1px solid rgba(249,115,22,.3);border-radius:8px;font-weight:700;text-decoration:none;font-size:.85rem">🔥 Browse Hot Deals</a>
+             <a href="shops.html" style="padding:.6rem 1.25rem;background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:8px;font-weight:700;text-decoration:none;font-size:.85rem">🏪 Browse Stores</a>
+           </div>
          </div>`
       : `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#8899b8">
            <div style="font-size:3rem;margin-bottom:.75rem">📡</div>
            <h3 style="color:#e8edf5;margin-bottom:.5rem">Backend not running</h3>
-           <p style="font-size:.85rem">Start with: <code style="color:#00d4ff">cd backend &amp;&amp; npm start</code></p>
+           <p style="font-size:.85rem">Be the first to list products on SELA.</p>
          </div>`;
     return;
   }
@@ -7091,7 +7098,6 @@ function wlToggleCard(id, name, price, image, shopName, slug, event) {
 
 <script src="auth.js"></script>
 <script src="wishlist.js"></script>
-<script src="config.js"></script>
 <script src="header.js"></script>
 <script src="marketplace-home.js"></script>
 <script src="notif-bell.js">

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
+window.SELA_BASE=window.SELA_API.replace('/api','');
+</script>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Blog — ICT Tips, Guides & News for Kenyan Businesses | SELA</title>
 <meta name="description" content="Expert ICT tips, guides, and tutorials from SELA Kenya. Learn about networking, cybersecurity, laptops, phones, Windows, and more."/>
@@ -633,7 +637,6 @@ function renderFeaturedHero() {
     <span>Mombasa, Kenya 🇰🇪</span>
   </div>
 </footer>
-<script src="config.js"></script>
 <script src="header.js"></script>
 
   <script>

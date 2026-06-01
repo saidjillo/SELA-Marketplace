@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
+window.SELA_BASE=window.SELA_API.replace('/api','');
+</script>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title id="pageTitle">Blog Post — SELA</title>
 <meta name="description" id="metaDesc" content="Expert ICT guide from SELA Kenya."/>
@@ -1388,7 +1392,6 @@ function updateBlogSEO(post) {
     <span>Mombasa, Kenya 🇰🇪</span>
   </div>
 </footer>
-<script src="config.js"></script>
 <script src="header.js"></script>
 
   <script>

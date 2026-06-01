@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
+window.SELA_BASE=window.SELA_API.replace('/api','');
+</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Track Your Order — SELA Kenya</title>
-  <script src="config.js"></script>
 <script src="header.js" defer></script>
   <style>
     :root{--bg:#0b0e14;--card:#131822;--border:rgba(255,255,255,.08);--accent:#00d4ff;--text:#e8eaf0;--text2:#9aa0b0;--text3:#5a6070;--green:#16a34a;--orange:#f97316;--red:#ef4444;--radius:12px;}
