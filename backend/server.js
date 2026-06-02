@@ -4998,5 +4998,5 @@ app.listen(PORT, () => {
   console.log(`✅  Auth routes: /api/users/register, /api/users/login, /api/users/verify-email`);
   console.log(`✅  Shop routes: /api/shops, /api/shops/mine, /api/shops/id/:id`);
   console.log(`✅  Admin routes: /api/auth/login, /api/admin/my-shops`);
-  console.log(`📦  Server version: 2026-05-28-FIXED\n`);
+  console.log(`📦  Server version: 2026-06-02-CLOUDINARY\n`);
 });
