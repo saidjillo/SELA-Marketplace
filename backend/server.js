@@ -1916,6 +1916,14 @@ app.get('/api/shops/mine', async (req, res) => {
       }
     } else {
       shops = await Shop.find({ ownerId: auth.id }).sort({ createdAt:-1 }).lean();
+      // Fallback: search by email if no shops found by id
+      if (!shops.length && auth.email) {
+        shops = await Shop.find({ ownerEmail: auth.email }).sort({ createdAt:-1 }).lean();
+        // Sync ownerId if found by email — fixes mismatch after data migration
+        if (shops.length) {
+          await Shop.updateMany({ ownerEmail: auth.email }, { ownerId: auth.id }).catch(()=>{});
+        }
+      }
     }
 
     const data = shops.map(s => ({ ...s, id: s._id?.toString(), slug: s.slug||'' }));
@@ -2032,7 +2040,7 @@ app.post('/api/shops', async (req, res) => {
 
 app.post('/api/shops/:id/demo-publish', async (req, res) => {
   try {
-    const user = getShopUser(req);
+    const user = await resolveAuth(req).catch(()=>null) || getShopUser(req);
     if (!user) return res.status(401).json({ success: false, message: 'Login required' });
     const shop = await Shop.findById(req.params.id);
     if (!shop) return res.status(404).json({ success: false, message: 'Not found' });
