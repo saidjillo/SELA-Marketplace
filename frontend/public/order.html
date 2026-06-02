@@ -13,6 +13,13 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='10'>🛒</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 <style>
+/* GLOBAL overflow prevention */
+html { overflow-x: hidden !important; max-width: 100vw !important; }
+body { overflow-x: hidden !important; max-width: 100vw !important; }
+*, *::before, *::after { box-sizing: border-box !important; max-width: 100% !important; }
+/* But allow wider than viewport for scroll containers */
+.ord-steps-bar, .branch-grid { max-width: none !important; }
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;--card:#1a2035;--card2:#1f2740;--border:#252f47;
@@ -30,7 +37,7 @@ button{cursor:pointer;font-family:var(--font-body)}
 .breadcrumb a{color:var(--text2);text-decoration:none}.breadcrumb a:hover{color:var(--accent)}
 /* ── HERO ── */
 .ord-hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));border-bottom:1px solid var(--border);padding:1.5rem clamp(.75rem,4vw,2rem)}
-.ord-hero-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.ord-hero-inner{max-width:min(1200px,100%);width:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 .ord-hero-title{font-family:var(--font-head);font-size:1.5rem;font-weight:900;display:flex;align-items:center;gap:.65rem}
 .ord-hero-sub{font-size:.82rem;color:var(--text2);margin-top:.3rem}
 .ord-steps-bar{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
@@ -41,10 +48,10 @@ button{cursor:pointer;font-family:var(--font-body)}
 .ord-step.done .ord-step-num{background:var(--green);color:var(--bg)}
 .ord-step-sep{width:24px;height:2px;background:var(--border);border-radius:1px}
 /* ── LAYOUT ── */
-.ord-layout{max-width:1200px;margin:0 auto;padding:1.75rem clamp(.75rem,4vw,2rem);display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start}
+.ord-layout{max-width:min(1200px,100%);width:100%;margin:0 auto;padding:1.75rem clamp(.75rem,3vw,1.5rem);display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start}
 @media(max-width:900px){.ord-layout{grid-template-columns:1fr;padding:1rem}}
 /* ── SECTIONS ── */
-.ord-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem}
+.ord-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.25rem;width:100%;box-sizing:border-box;margin-bottom:1.25rem}
 .ord-section:hover{border-color:rgba(0,212,255,.12)}
 .ord-section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
 .ord-step-badge{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#0099bb);color:var(--bg);font-family:var(--font-head);font-size:.8rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -180,7 +187,7 @@ button{cursor:pointer;font-family:var(--font-body)}
 .ord-suc-shop:hover{border-color:var(--accent);color:var(--accent)}
 /* Footer */
 .ac-footer{border-top:1px solid var(--border);padding:2.5rem 2rem 0;margin-top:4rem;background:var(--bg2)}
-.ac-footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.ac-footer-inner{max-width:100%;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
 .ac-footer-logo{font-family:var(--font-head);font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:.85rem}
 .ac-footer-dot{color:var(--accent)}
 .ac-footer-brand p{font-size:.83rem;color:var(--text3);line-height:1.75;max-width:280px}
@@ -189,13 +196,13 @@ button{cursor:pointer;font-family:var(--font-body)}
 .ac-footer-col ul li{margin-bottom:.5rem}
 .ac-footer-col ul li a{color:var(--text3);font-size:.81rem;text-decoration:none;transition:color .2s}
 .ac-footer-col ul li a:hover{color:var(--accent)}
-.ac-footer-bottom{max-width:1200px;margin:0 auto;border-top:1px solid var(--border);padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;color:var(--text3);font-size:.78rem;flex-wrap:wrap;gap:.5rem}
+.ac-footer-bottom{max-width:100%;margin:0 auto;border-top:1px solid var(--border);padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;color:var(--text3);font-size:.78rem;flex-wrap:wrap;gap:.5rem}
 @media(max-width:768px){.ac-footer-inner{grid-template-columns:1fr;gap:1.75rem}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
 /* ── SELA Shared Footer ── */
   .sela-footer{background:linear-gradient(135deg,#fff8f1 0%,#fff3e8 60%,#fef9f5 100%)!important;border-top:2px solid #fcd9b0!important;margin-top:3rem}
-  .sela-footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;padding:2.5rem 2rem 2rem}
+  .sela-footer-inner{max-width:100%;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;padding:2.5rem 2rem 2rem}
   .sela-footer-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.4rem;color:#1e293b!important;margin-bottom:.6rem}
   .sela-footer-dot{color:#f97316}
   .sela-footer-brand p{font-size:.8rem;color:#78716c;line-height:1.75;max-width:240px}
@@ -208,7 +215,7 @@ button{cursor:pointer;font-family:var(--font-body)}
   .sela-footer-col ul li a{color:#57534e;font-size:.8rem;text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:.35rem}
   .sela-footer-col ul li a:hover{color:#f97316}
   .sela-footer-bottom-wrap{background:#fff7ed!important;border-top:1px solid #fcd9b0!important}
-  .sela-footer-bottom{max-width:1200px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;color:#a8a29e;font-size:.76rem;flex-wrap:wrap;gap:.5rem}
+  .sela-footer-bottom{max-width:100%;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;color:#a8a29e;font-size:.76rem;flex-wrap:wrap;gap:.5rem}
   .sela-footer-bottom a{color:#f97316;text-decoration:none;font-weight:600}
   .sela-footer-bottom a:hover{color:#ea580c}
   .sela-footer-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .65rem;background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;border-radius:20px;font-size:.68rem;font-weight:700;box-shadow:0 2px 8px rgba(249,115,22,.3)}
