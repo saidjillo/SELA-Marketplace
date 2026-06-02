@@ -5014,6 +5014,26 @@ app.get('/api/admin/cloudinary-check', async (req, res) => {
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 
+
+// GET /api/cloudinary-signature — generate upload signature for browser uploads
+app.get('/api/cloudinary-signature', (req, res) => {
+  try {
+    const folder    = req.query.folder || 'sela/products';
+    const timestamp = Math.round(Date.now() / 1000);
+    const signature = cloudinary.utils.api_sign_request(
+      { folder, timestamp },
+      cloudinary.config().api_secret
+    );
+    res.json({
+      timestamp,
+      signature,
+      apiKey:    cloudinary.config().api_key,
+      cloudName: cloudinary.config().cloud_name,
+      folder,
+    });
+  } catch(err) { res.status(500).json({ success:false, message:err.message }); }
+});
+
 // ── Serve frontend static files (MUST be after all API routes) ──────────────
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 

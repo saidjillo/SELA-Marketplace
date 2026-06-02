@@ -2465,34 +2465,50 @@ async function uploadImgFiles(files) {
   const toUpload = Array.from(files).slice(0, remaining);
   if (!toUpload.length) { toast('Maximum 6 images allowed', 'warn'); return; }
 
-  const formData = new FormData();
-  toUpload.forEach(f => formData.append('images', f));
-
   const area = document.getElementById('imgUploadArea');
-  if (area) area.innerHTML = '<div style="padding:.5rem;font-size:.8rem;color:var(--text2)">⏳ Uploading...</div>';
+  if (area) area.innerHTML = '<div style="padding:.5rem;font-size:.8rem;color:var(--text2)">⏳ Uploading images...</div>';
 
   try {
-    const r = await fetch(`${API}/shops/${shopId}/upload-images`, {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + getToken() },
-      body: formData
+    // Get signature from our server
+    const folder = 'sela/products';
+    const sigRes = await fetch(`${API}/cloudinary-signature?folder=${folder}`, {
+      headers: authHeaders()
     });
-    const j = await r.json().catch(()=>({}));
-    if (j.success && j.urls) {
-      j.urls.forEach(url => {
-        if (_productImages.length < 6) _productImages.push({ url: (window.SELA_API||'').replace('/api','') + url, isLocal: false });
-      });
-      updateImgPreview();
-    } else {
-      toast(j.message || 'Upload failed', 'error');
-    }
-  } catch {
-    toast('Upload error — check backend is running', 'error');
-  }
+    const sigData = await sigRes.json();
+    if (!sigData.signature) throw new Error('Could not get upload signature');
 
-  // Restore upload area
-  const area2 = document.getElementById('imgUploadArea');
-  if (area2) area2.innerHTML = '<div style="font-size:1.5rem;margin-bottom:.35rem">📷</div><div style="font-size:.82rem;font-weight:700;color:var(--text2)">Click or drag images here</div><div style="font-size:.72rem;color:var(--text3);margin-top:.2rem">JPG, PNG, WebP · Max 8MB each · Up to 6 images</div>';
+    const { timestamp, signature, apiKey, cloudName } = sigData;
+
+    // Upload each file directly to Cloudinary from browser
+    const uploadPromises = toUpload.map(async (file) => {
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('api_key', apiKey);
+      fd.append('timestamp', timestamp);
+      fd.append('signature', signature);
+      fd.append('folder', folder);
+
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: fd
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.secure_url;
+    });
+
+    const urls = await Promise.all(uploadPromises);
+    urls.forEach(url => {
+      if (_productImages.length < 6) _productImages.push({ url, isLocal: false });
+    });
+    updateImgPreview();
+    toast(`✅ ${urls.length} image${urls.length!==1?'s':''} uploaded`);
+  } catch(e) {
+    console.error('Upload error:', e);
+    toast('Image upload failed: ' + e.message, 'error');
+    if (area) area.innerHTML = '';
+    updateImgPreview();
+  }
 }
 
 function handleImgSelect(e) {
