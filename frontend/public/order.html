@@ -275,6 +275,58 @@ input[type="email"], select, textarea {
     @media(max-width:768px){.footer-inner{grid-template-columns:1fr 1fr;gap:1.5rem;padding:2rem 1rem 1.5rem}.footer-bottom{flex-direction:column;text-align:center}}
     @media(max-width:480px){.footer-inner{grid-template-columns:1fr}}
 
+
+/* ── Order page overflow fix ── */
+@media(max-width:600px) {
+  /* Clamp all horizontal padding */
+  .ord-hero, .ord-hero-inner,
+  .ord-layout, .ord-form,
+  .ord-summary, .ord-items,
+  .ord-section, .ord-card,
+  [class^="ord-"] {
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Summary items row */
+  .ord-item, .ord-item-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: .5rem !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+  .ord-item-name, .ord-item-title {
+    flex: 1 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  /* Quantity controls */
+  .qty-control, .quantity-row {
+    flex-shrink: 0 !important;
+  }
+
+  /* Price */
+  .ord-item-price, .ord-price {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Totals section */
+  .ord-totals, .ord-total-row {
+    width: 100% !important;
+  }
+  .ord-total-row {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+}
+
 </style>
 <link rel="stylesheet" href="theme.css"/>
 
