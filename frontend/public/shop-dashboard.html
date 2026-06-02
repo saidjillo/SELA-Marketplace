@@ -3126,37 +3126,13 @@ async function generateCatalogue(){
     const grouped={};
     prods.forEach(p=>{const c=p.categoryName||'Uncategorised';if(!grouped[c])grouped[c]=[];grouped[c].push(p);});
     // Build print-friendly HTML
-    const html=`<!DOCTYPE html><html><head>
-<script>
-window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
-window.SELA_BASE=window.SELA_API.replace('/api','');
-</script><meta charset="UTF-8"/><title>Vendor Dashboard — SELA Kenya</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;padding:2rem;color:#0f172a;background:#fff}h1{font-size:1.8rem;font-weight:900;margin-bottom:.25rem}h2{font-size:1.1rem;font-weight:800;margin:1.5rem 0 .75rem;border-bottom:2px solid ${shop?.themeColor||'#6366f1'};padding-bottom:.35rem;color:${shop?.themeColor||'#6366f1'}}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.card{border:1px solid #e2e8f0;border-radius:8px;padding:.85rem;page-break-inside:avoid}.card img{width:100%;height:120px;object-fit:cover;border-radius:6px;margin-bottom:.5rem}.card-name{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.card-price{font-size:.85rem;color:${shop?.themeColor||'#6366f1'};font-weight:800}.card-sale{font-size:.72rem;color:#16a34a;font-weight:700}.card-sku{font-size:.68rem;color:#94a3b8}.footer{margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#94a3b8;text-align:center}@media print{body{padding:1rem}.grid{grid-template-columns:repeat(3,1fr)}}@keyframes spin{to{transform:rotate(360deg)}}
+    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Vendor Dashboard — SELA Kenya</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;padding:2rem;color:#0f172a;background:#fff}h1{font-size:1.8rem;font-weight:900;margin-bottom:.25rem}h2{font-size:1.1rem;font-weight:800;margin:1.5rem 0 .75rem;border-bottom:2px solid ${shop?.themeColor||'#6366f1'};padding-bottom:.35rem;color:${shop?.themeColor||'#6366f1'}}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.card{border:1px solid #e2e8f0;border-radius:8px;padding:.85rem;page-break-inside:avoid}.card img{width:100%;height:120px;object-fit:cover;border-radius:6px;margin-bottom:.5rem}.card-name{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.card-price{font-size:.85rem;color:${shop?.themeColor||'#6366f1'};font-weight:800}.card-sale{font-size:.72rem;color:#16a34a;font-weight:700}.card-sku{font-size:.68rem;color:#94a3b8}.footer{margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#94a3b8;text-align:center}@media print{body{padding:1rem}.grid{grid-template-columns:repeat(3,1fr)}}@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 </style>
   <!-- SEO -->
   <meta name="robots" content="noindex,nofollow"/>
   <meta name="description" content="Manage your SELA store, products, orders and analytics."/>
   <meta name="robots" content="noindex,nofollow"/>
-  <link rel="canonical" href="https://sela-marketplace-production.up.railway.app/shop-dashboard.html"/>
-  <!-- Open Graph -->
-  <meta property="og:type" content="website"/>
-  <meta property="og:title" content="Vendor Dashboard — SELA Kenya"/>
-  <meta property="og:description" content="Manage your SELA store, products, orders and analytics."/>
-  <meta property="og:site_name" content="SELA Kenya"/>
-  <meta property="og:url" content="https://sela-marketplace-production.up.railway.app/shop-dashboard.html"/>
-  <meta property="og:image" content="https://sela-marketplace-production.up.railway.app/images/sela-og.png"/>
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Vendor Dashboard — SELA Kenya"/>
-  <meta name="twitter:description" content="Manage your SELA store, products, orders and analytics."/>
-  <!-- PWA -->
-  <link rel="manifest" href="/manifest.json"/>
-  <meta name="theme-color" content="#00d4ff"/>
-  <meta name="mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="SELA"/>
-  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
 </head><body><h1>${shop?.name||'Product Catalogue'}</h1><div style="font-size:.82rem;color:#64748b;margin-bottom:1.5rem">${shop?.location||''} · ${shop?.phone||''} · ${shop?.email||''} · Generated ${new Date().toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'})}</div>${Object.entries(grouped).map(([cat,ps])=>`<h2>${cat} (${ps.length})</h2><div class="grid">${ps.map(p=>`<div class="card">${p.images?.[0]?`<img src="${p.images[0]}" onerror="this.style.display='none'"/>`:''}<div class="card-name">${p.name}</div><div class="card-price">KES ${p.price?.toLocaleString()}</div>${p.onSale&&p.salePrice?`<div class="card-sale">Sale: KES ${p.salePrice?.toLocaleString()}</div>`:''}<div class="card-sku">${p.sku||''}</div></div>`).join('')}</div>`).join('')}<div class="footer">${shop?.name} · Page 1</div>
   <!-- ── SERVICES SECTION ───────────────────────────────────────────────── -->
   <div id="panel-services" class="panel">
@@ -3674,15 +3650,8 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
 
 
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('SW registered'))
-          .catch(err => console.warn('SW failed:', err));
-      });
-    }
-  </script>
+
+  
 </body></html>`;
     const win=window.open('','_blank');
     win.document.write(html); win.document.close();
@@ -3697,10 +3666,7 @@ async function exportInventoryPDF(){
     const j=await r.json();
     const d=j.data||{};
     const html=`<!DOCTYPE html><html><head>
-<script>
-window.SELA_API=(function(){var h=location.hostname;return(h==='localhost'||h==='127.0.0.1')?'http://localhost:5000/api':location.origin+'/api';})();
-window.SELA_BASE=window.SELA_API.replace('/api','');
-</script><meta charset="UTF-8"/><title>Vendor Dashboard — SELA Kenya</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;padding:2rem;color:#0f172a}h1{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}h2{font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;color:${shop?.themeColor||'#6366f1'}}table{width:100%;border-collapse:collapse;font-size:.82rem}th{padding:.6rem;text-align:left;background:${shop?.themeColor||'#6366f1'};color:#fff;font-weight:700}td{padding:.6rem;border-bottom:1px solid #e2e8f0}.summary{display:flex;gap:2rem;margin:1rem 0 1.5rem;flex-wrap:wrap}.sm{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:.85rem 1.25rem}.sm-num{font-size:1.5rem;font-weight:900}.sm-label{font-size:.72rem;color:#64748b;margin-top:.1rem}@keyframes spin{to{transform:rotate(360deg)}}
+<meta charset="UTF-8"/><title>Vendor Dashboard — SELA Kenya</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;padding:2rem;color:#0f172a}h1{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}h2{font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;color:${shop?.themeColor||'#6366f1'}}table{width:100%;border-collapse:collapse;font-size:.82rem}th{padding:.6rem;text-align:left;background:${shop?.themeColor||'#6366f1'};color:#fff;font-weight:700}td{padding:.6rem;border-bottom:1px solid #e2e8f0}.summary{display:flex;gap:2rem;margin:1rem 0 1.5rem;flex-wrap:wrap}.sm{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:.85rem 1.25rem}.sm-num{font-size:1.5rem;font-weight:900}.sm-label{font-size:.72rem;color:#64748b;margin-top:.1rem}@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 </style>
   <!-- SEO -->
