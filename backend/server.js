@@ -177,11 +177,19 @@ app.use('/uploads', express.static(uploadsDir));
 
 // ── Cloudinary v2 + Multer (memory storage) ─────────────────────────────────
 const cloudinary = require('cloudinary').v2;
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key:    process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// Support both CLOUDINARY_URL and individual vars
+if (process.env.CLOUDINARY_URL) {
+  // CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name
+  cloudinary.config(process.env.CLOUDINARY_URL);
+} else {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key:    process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+}
+console.log('Cloudinary cloud_name:', cloudinary.config().cloud_name || 'NOT SET');
+console.log('Cloudinary api_key:', cloudinary.config().api_key ? 'SET' : 'NOT SET');
 
 // Upload buffer to Cloudinary, return secure URL
 async function uploadToCloudinary(buffer, mimetype) {
@@ -5032,4 +5040,11 @@ app.listen(PORT, () => {
   console.log(`✅  Shop routes: /api/shops, /api/shops/mine, /api/shops/id/:id`);
   console.log(`✅  Admin routes: /api/auth/login, /api/admin/my-shops`);
   console.log(`📦  Server version: 2026-06-02-CLOUDINARY\n`);
+  console.log('ENV CHECK:', {
+    CLOUDINARY_URL:         process.env.CLOUDINARY_URL ? 'SET' : 'NOT SET',
+    CLOUDINARY_CLOUD_NAME:  process.env.CLOUDINARY_CLOUD_NAME || 'NOT SET',
+    CLOUDINARY_API_KEY:     process.env.CLOUDINARY_API_KEY ? 'SET' : 'NOT SET',
+    CLOUDINARY_API_SECRET:  process.env.CLOUDINARY_API_SECRET ? 'SET' : 'NOT SET',
+    ALL_KEYS: Object.keys(process.env).filter(k => k.includes('CLOUD'))
+  });
 });
