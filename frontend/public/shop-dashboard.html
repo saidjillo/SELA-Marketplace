@@ -2469,15 +2469,16 @@ async function uploadImgFiles(files) {
   if (area) area.innerHTML = '<div style="padding:.5rem;font-size:.8rem;color:var(--text2)">⏳ Uploading images...</div>';
 
   try {
-    // Get ImageKit auth params from server
-    const authRes = await fetch(`${API}/imagekit-auth`, { headers: authHeaders() });
-    const auth = await authRes.json();
-    if (!auth.token) throw new Error('Could not get upload auth');
+    const urls = [];
+    for (const file of toUpload) {
+      // Get a FRESH auth token for each file
+      const authRes = await fetch(`${API}/imagekit-auth`, { headers: authHeaders() });
+      const auth = await authRes.json();
+      if (!auth.token) throw new Error('Could not get upload auth');
 
-    const uploadPromises = toUpload.map(async (file) => {
       const fd = new FormData();
       fd.append('file', file);
-      fd.append('fileName', Date.now() + '-' + file.name);
+      fd.append('fileName', Date.now() + '-' + Math.random().toString(36).slice(2) + '-' + file.name);
       fd.append('publicKey', auth.publicKey);
       fd.append('signature', auth.signature);
       fd.append('expire', auth.expire);
@@ -2489,11 +2490,10 @@ async function uploadImgFiles(files) {
         body: fd
       });
       const data = await res.json();
-      if (data.message && !data.url) throw new Error(data.message);
-      return data.url;
-    });
+      if (!data.url) throw new Error(data.message || 'Upload failed');
+      urls.push(data.url);
+    }
 
-    const urls = await Promise.all(uploadPromises);
     urls.forEach(url => {
       if (_productImages.length < 6) _productImages.push({ url, isLocal: false });
     });
