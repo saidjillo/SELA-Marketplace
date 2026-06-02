@@ -1416,14 +1416,20 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
       display:flex;gap:.5rem;z-index:10;
     }
     .hs-dot{
-      width:8px;height:8px;border-radius:50%;
+      width:8px !important;height:8px !important;
+      min-height:8px !important;max-width:8px;
+      border-radius:50%;
       background:rgba(255,255,255,.35);border:none;cursor:pointer;
-      padding:0;transition:all .3s;
+      padding:0;transition:all .3s;flex-shrink:0;
     }
-    .hs-dot.active{background:#fff;width:24px;border-radius:4px}
+    .hs-dot.active{
+      background:#fff !important;
+      width:20px !important;max-width:20px;
+      border-radius:4px;
+    }
     .hs-arrow{
       position:absolute;top:50%;transform:translateY(-50%);
-      width:42px;height:42px;border-radius:50%;
+      width:36px !important;height:36px !important;min-height:36px;border-radius:50%;
       background:rgba(255,255,255,.1);backdrop-filter:blur(8px);
       border:1px solid rgba(255,255,255,.2);
       color:#fff;font-size:1.1rem;cursor:pointer;
