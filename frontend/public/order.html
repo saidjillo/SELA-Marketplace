@@ -247,6 +247,48 @@ html, body { overflow-x: hidden !important; }
   .branch-grid { grid-template-columns: 1fr !important; }
 }
 
+
+/* ── Order page - targeted overflow fixes ── */
+
+/* Steps bar - scrollable on mobile */
+.ord-steps-bar {
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+.ord-steps-bar::-webkit-scrollbar { display: none; }
+
+/* Sections */
+.ord-section {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+/* Hero inner */
+.ord-hero-inner {
+  overflow: hidden !important;
+}
+
+@media(max-width:600px) {
+  /* Steps bar - hide separators, show only numbers */
+  .ord-step-sep { display: none !important; }
+  .ord-step { font-size: .65rem !important; gap: .2rem !important; }
+  .ord-step-num { width: 22px !important; height: 22px !important; font-size: .65rem !important; }
+
+  /* Section padding */
+  .ord-section { padding: 1rem !important; }
+  .ord-section-head { gap: .5rem !important; margin-bottom: .85rem !important; }
+  .ord-section-title { font-size: .9rem !important; }
+
+  /* Qty row */
+  .qty-row { gap: .75rem !important; }
+
+  /* Hero */
+  .ord-hero-inner { flex-direction: column !important; align-items: flex-start !important; gap: .5rem !important; }
+  .ord-steps-bar { width: 100% !important; justify-content: space-between !important; }
+}
+
 </style>
 <link rel="stylesheet" href="theme.css"/>
 
