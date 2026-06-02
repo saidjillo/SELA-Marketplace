@@ -161,7 +161,33 @@ window.SELA.saveLogin = function(token, user, isAdmin) {
 .ac-drawer-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
 .ac-drawer-sep{height:1px;background:#1e2435;margin:.4rem 1.25rem}
 .ac-drawer-footer{padding:1rem 1.25rem;border-top:1px solid #1e2435;font-size:.68rem;color:#4a5a78}
-@media(max-width:900px){.ac-nav,.ac-search{display:none!important}.ac-hamburger{display:flex}}.ac-logo{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}@media(max-width:400px){.ac-logo{max-width:100px;font-size:.9rem!important}}.ac-sell-btn{white-space:nowrap}@media(max-width:480px){.ac-sell-btn span{display:none}}
+@media(max-width:900px){
+  .ac-nav,.ac-search{display:none!important}
+  .ac-hamburger{display:flex}
+  .ac-header-inner{padding:.5rem 1rem}
+  .ac-topbar{display:none}
+}
+@media(max-width:600px){
+  .ac-header-inner{padding:.5rem .75rem;gap:.5rem}
+  .ac-right{gap:.35rem}
+  .ac-sell-btn{padding:.38rem .65rem;font-size:.72rem}
+  .ac-login-btn{padding:.38rem .65rem;font-size:.72rem}
+}
+@media(max-width:480px){
+  .ac-header-inner{padding:.45rem .6rem}
+  .ac-logo{font-size:1.1rem!important;max-width:110px}
+  .ac-sell-btn .ac-sell-label{display:none}
+  .ac-sell-btn{padding:.38rem .55rem;min-width:36px;justify-content:center}
+  .ac-login-btn .ac-login-label{display:none}
+  .ac-login-btn{padding:.38rem .55rem;min-width:36px;justify-content:center}
+  .wl-nav-btn{padding:.35rem .4rem}
+  .ac-right{gap:.25rem}
+}
+@media(max-width:360px){
+  .ac-logo{font-size:.95rem!important;max-width:90px}
+  .ac-header-inner{padding:.4rem .5rem}
+}
+@media(min-width:901px){.ac-drawer{display:none!important}}
 @media(min-width:901px){.ac-drawer{display:none!important}}
   `;
 
@@ -220,11 +246,11 @@ window.SELA.saveLogin = function(token, user, isAdmin) {
     const loggedIn = isLoggedIn();
     const name     = getUserName();
 
-    const sellBtn = `<button class="ac-sell-btn" onclick="window._acGoSell()">🏪 Sell with Us</button>`;
+    const sellBtn = `<button class="ac-sell-btn" onclick="window._acGoSell()">🏪 <span class="ac-sell-label">Sell with Us</span></button>`;
 
     if (!loggedIn) {
       return `${sellBtn}
-      <a class="ac-login-btn" href="auth.html?redirect=${encodeURIComponent(PATH)}">🔐 Login / Register</a>`;
+      <a class="ac-login-btn" href="auth.html?redirect=${encodeURIComponent(PATH)}">🔐 <span class="ac-login-label">Login</span></a>`;
     }
 
     const label = name ? name : 'Account';
