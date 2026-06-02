@@ -193,10 +193,11 @@ console.log('Cloudinary api_key:', cloudinary.config().api_key ? 'SET' : 'NOT SE
 
 // Upload buffer to Cloudinary, return secure URL
 async function uploadToCloudinary(buffer, mimetype) {
+  const cfg = cloudinary.config();
   console.log('Cloudinary upload attempt:', {
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    has_key: !!process.env.CLOUDINARY_API_KEY,
-    has_secret: !!process.env.CLOUDINARY_API_SECRET,
+    cloud_name: cfg.cloud_name,
+    has_key: !!cfg.api_key,
+    has_secret: !!cfg.api_secret,
     buffer_size: buffer?.length,
     mimetype
   });
