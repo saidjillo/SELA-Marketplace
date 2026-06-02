@@ -391,240 +391,116 @@ body > *:not(#acTicker):not(.ac-topbar):not(.ac-header):not(.ac-drawer):not(scri
   }
 
   
-/* ═══════════════════════════════════════════════════════════
-   SELA — Universal Mobile Responsive Styles
-   Targets: Galaxy A/S/M, Redmi, Infinix, Tecno, Pixel, Itel
-   Breakpoints: 768px tablet, 480px phone, 360px small phone
-═══════════════════════════════════════════════════════════ */
 
-/* Global mobile base */
-html { -webkit-text-size-adjust: 100%; }
-body { overflow-x: hidden; -webkit-overflow-scrolling: touch; }
-* { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-img { max-width: 100%; height: auto; }
-
-/* Touch targets - minimum 44px for all interactive elements */
-button, a, input, select, textarea, .btn, [onclick] {
-  min-height: 36px;
-  touch-action: manipulation;
-}
-
-@media (max-width: 768px) {
-  /* Typography */
-  h1 { font-size: clamp(1.4rem, 6vw, 2rem) !important; }
-  h2 { font-size: clamp(1.1rem, 5vw, 1.6rem) !important; }
-  h3 { font-size: clamp(.95rem, 4vw, 1.2rem) !important; }
-  p, li, td, th { font-size: clamp(.8rem, 3.5vw, .95rem) !important; }
-
-  /* Layout */
-  .container, .page, .section, .section-inner, .wrapper {
-    padding-left: .75rem !important;
-    padding-right: .75rem !important;
-    max-width: 100% !important;
-  }
-  section { padding: 1.5rem .75rem !important; }
-
-  /* Grids → 2 cols on tablet/phone */
-  .products-grid, .product-grid, .deals-grid,
-  .features-grid, .pricing-grid, .shops-grid,
-  .grid, [class*="grid-"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: .6rem !important;
-  }
-
-  /* Flex rows → wrap */
-  .flex-row, .row, .hero-btns, .dir-bar,
-  .filter-bar, .market-filters, .stats-bar,
-  .action-row, .btn-row {
-    flex-wrap: wrap !important;
-    gap: .5rem !important;
-  }
-
-  /* Inputs full width */
-  input, select, textarea {
-    width: 100% !important;
-    max-width: 100% !important;
-    font-size: 16px !important; /* prevents iOS zoom */
-  }
-
-  /* Cards */
-  .product-card, .deal-card, .shop-card,
-  .feature-card, .pricing-card {
-    min-width: 0 !important;
-    width: 100% !important;
-  }
-
-  /* Product images */
-  .product-card-img, .deal-card-img,
-  .product-image, .deal-image {
-    height: 150px !important;
-  }
-
-  /* Tables → scrollable */
-  table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
-
-  /* Hide desktop-only elements */
-  .desktop-only, .hide-mobile { display: none !important; }
-
-  /* Show mobile-only elements */
-  .mobile-only { display: block !important; }
-
-  /* Sidebar hidden */
-  .sidebar, .side-panel { display: none !important; }
-  .main-with-sidebar, .content-with-sidebar {
+/* ══════════════════════════════════════════
+   PRODUCT PAGE — Mobile Fix (≤780px)
+══════════════════════════════════════════ */
+@media(max-width:780px) {
+  /* Layout: single column, NO sidebars */
+  .product-layout {
     grid-template-columns: 1fr !important;
+    padding: .5rem !important;
+    gap: .75rem !important;
+  }
+  .left-sidebar, .right-sidebar-col {
+    display: none !important;
+    position: static !important;
   }
 
-  /* Buttons full width on mobile */
-  .btn-full-mobile { width: 100% !important; }
-
-  /* Modal/dialog */
-  .modal, .dialog, .popup {
-    width: 95vw !important;
-    max-width: 95vw !important;
-    margin: 1rem auto !important;
-    padding: 1rem !important;
-  }
-
-  /* Stats */
-  .stat-item { min-width: 45% !important; }
-  .stat-num { font-size: 1.5rem !important; }
-
-  /* Forms */
-  .form-row, .input-row {
-    flex-direction: column !important;
-    gap: .5rem !important;
-  }
-  .form-group { width: 100% !important; }
-
-  /* Nav pills/tabs */
-  .nav-pills, .tab-bar, .cat-pills {
-    overflow-x: auto !important;
-    flex-wrap: nowrap !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-    padding-bottom: .25rem;
-  }
-  .nav-pills::-webkit-scrollbar { display: none; }
-}
-
-/* Small phones: Galaxy A03, Itel, Tecno Pop series */
-@media (max-width: 400px) {
-  .products-grid, .product-grid, .deals-grid,
-  .pricing-grid, .shops-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .product-card-img, .deal-card-img { height: 200px !important; }
-  .hero { padding: 2.5rem .75rem !important; }
-  .pricing-grid { grid-template-columns: 1fr !important; }
-}
-
-/* Landscape phones */
-@media (max-height: 500px) and (orientation: landscape) {
-  .hero { padding: 1rem .75rem !important; min-height: auto !important; }
-  .hero h1 { font-size: 1.3rem !important; }
-}
-
-
-/* Mobile sticky order bar */
-@media(max-width:768px) {
-  .product-action-bar {
-    position: sticky !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 100 !important;
-    background: var(--bg2, #131822) !important;
-    border-top: 1px solid var(--border, rgba(255,255,255,.08)) !important;
-    padding: .75rem 1rem !important;
-    display: flex !important;
-    gap: .5rem !important;
-  }
-  .product-action-bar button, .product-action-bar a {
-    flex: 1 !important;
-    text-align: center !important;
-    justify-content: center !important;
-  }
-  body { padding-bottom: 80px !important; }
-}
-
-
-/* ── Product page mobile fixes ── */
-/* Fix gallery dots */
-.gal-dot {
-  width: 6px !important;
-  height: 6px !important;
-  min-height: 6px !important;
-  max-width: 6px !important;
-}
-.gal-dot.active { width: 18px !important; max-width: 18px !important; }
-
-/* Fix thumbnails */
-.thumb-item {
-  min-height: unset !important;
-  height: 64px !important;
-}
-
-/* Gallery main image */
-.gallery-main {
-  min-height: 250px;
-  max-height: 420px;
-}
-.gallery-main img { object-fit: contain !important; }
-
-@media(max-width:600px) {
-  /* Stack gallery thumbs below main image on mobile */
+  /* Gallery: thumbs below main image */
   .gallery-wrap {
-    flex-direction: column-reverse !important;
+    flex-direction: column !important;
     gap: .5rem !important;
   }
   .gallery-thumbs {
     flex-direction: row !important;
     width: 100% !important;
     overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
     gap: .35rem !important;
+    position: static !important;
   }
   .gallery-thumbs::-webkit-scrollbar { display: none; }
   .thumb-item {
-    width: 56px !important;
-    height: 56px !important;
-    flex-shrink: 0 !important;
+    width: 54px !important;
+    height: 54px !important;
     min-height: unset !important;
+    flex-shrink: 0 !important;
   }
-  .gallery-main { max-height: 300px !important; min-height: 200px !important; }
+  .gallery-main {
+    width: 100% !important;
+    max-height: 320px !important;
+    min-height: 200px !important;
+  }
+  .gallery-main img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+
+  /* Gallery dots */
+  .gal-dot {
+    width: 6px !important; height: 6px !important;
+    min-height: 6px !important; max-width: 6px !important;
+  }
+  .gal-dot.active { width: 18px !important; max-width: 18px !important; }
+  .gal-nav button, .gal-prev, .gal-next {
+    width: 32px !important; height: 32px !important;
+    min-height: 32px !important;
+  }
 
   /* Product info */
-  .product-title { font-size: 1.1rem !important; }
-  .product-price { font-size: 1.4rem !important; }
-  .product-actions { gap: .5rem !important; }
-  .btn-order, .btn-wa-action, #wlBtn {
+  .product-title { font-size: 1.05rem !important; line-height: 1.4 !important; }
+  .product-price { font-size: 1.5rem !important; }
+
+  /* Action buttons */
+  .product-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: .5rem !important;
+  }
+  .btn-order, .btn-wa-action, #wlBtn, #orderBtn {
     flex: 1 !important;
+    min-width: 120px !important;
     padding: .65rem .5rem !important;
     font-size: .82rem !important;
     text-align: center !important;
     justify-content: center !important;
+    white-space: nowrap !important;
   }
 
-  /* Meta grid */
-  .meta-grid { grid-template-columns: 1fr 1fr !important; }
-  .prd-cf-grid { grid-template-columns: 1fr !important; }
+  /* Remove sticky from action bar - causes overlap */
+  .product-action-bar {
+    position: static !important;
+  }
+  body { padding-bottom: 0 !important; }
+
+  /* Topbar */
+  .topbar { padding: .35rem .75rem !important; font-size: .7rem !important; }
+  .breadcrumb { padding: .35rem .75rem !important; }
+  .bc-inner { font-size: .72rem !important; }
+
+  /* Meta */
+  .meta-grid { grid-template-columns: 1fr 1fr !important; gap: .4rem !important; }
+  .meta-row { padding: .4rem !important; }
 
   /* Comments */
-  .prd-cmt-item { padding: .75rem !important; }
-  .prd-cf-wrap { padding: .75rem !important; }
+  .prd-cf-grid { grid-template-columns: 1fr !important; }
+  .prd-cmt-item { padding: .65rem !important; }
+  .prd-cmt-avatar { width: 32px !important; height: 32px !important; min-height: unset !important; }
 
-  /* Related products */
-  .related-grid, [class*="related"] > div {
-    grid-template-columns: repeat(2,1fr) !important;
-  }
+  /* Share bar */
+  .share-bar { flex-wrap: wrap !important; gap: .4rem !important; }
+  .shr { padding: .3rem .6rem !important; font-size: .72rem !important; min-height: unset !important; }
 }
 
 @media(max-width:400px) {
-  .gallery-main { max-height: 250px !important; }
+  .btn-order, .btn-wa-action, #wlBtn, #orderBtn {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+  }
   .product-actions { flex-direction: column !important; }
-  .btn-order, .btn-wa-action, #wlBtn { width: 100% !important; }
 }
 
 </style>
