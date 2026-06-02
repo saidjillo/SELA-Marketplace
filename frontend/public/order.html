@@ -28,18 +28,18 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
 }
 *,*::before,*::after{box-sizing:border-box}
 html{overflow-x:hidden;max-width:100vw;scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;max-width:100vw;padding-top:70px}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;max-width:100vw}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg2)}
 ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
 
 /* ── Breadcrumb ── */
-.breadcrumb{background:var(--bg2);border-bottom:1px solid var(--border);padding:.5rem 1.5rem;font-size:.75rem;color:var(--text3)}
+.breadcrumb{background:var(--bg2);border-bottom:1px solid var(--border);padding:.5rem clamp(.75rem,3vw,1.5rem);overflow:hidden;font-size:.75rem;color:var(--text3)}
 .breadcrumb a{color:var(--text2);text-decoration:none}
 .breadcrumb a:hover{color:var(--accent)}
 
 /* ── Hero ── */
-.ord-hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));border-bottom:1px solid var(--border);padding:1.25rem 1.5rem}
+.ord-hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));border-bottom:1px solid var(--border);padding:1.25rem clamp(.75rem,3vw,1.5rem);overflow:hidden}
 .ord-hero-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .ord-hero-title{font-family:var(--font-head);font-size:1.2rem;font-weight:900;margin-bottom:.25rem}
 .ord-hero-sub{font-size:.78rem;color:var(--text2)}
@@ -53,7 +53,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .ord-step-sep{width:20px;height:1px;background:var(--border)}
 
 /* ── Layout ── */
-.ord-layout{max-width:1200px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:1fr 360px;gap:1.5rem;align-items:start}
+.ord-layout{max-width:1200px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:1fr 360px;gap:1.5rem;align-items:start;overflow:hidden}
 
 /* ── Sections ── */
 .ord-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;width:100%}
@@ -174,7 +174,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
   .ord-summary-col{position:static}
 }
 @media(max-width:600px){
-  body{padding-top:60px}
+  
   .ord-hero{padding:.75rem}
   .ord-hero-inner{flex-direction:column;align-items:flex-start;gap:.5rem}
   .ord-steps-bar{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:100%}
@@ -262,6 +262,7 @@ footer{background:linear-gradient(135deg,#fff8f1 0%,#fff3e8 60%,#fef9f5 100%)!im
   .payment-opt{padding:.6rem}
 }
 
+#orderFormArea{overflow:hidden;max-width:100%;}
 </style>
 <link rel="stylesheet" href="theme.css"/>
 
