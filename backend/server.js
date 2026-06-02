@@ -175,39 +175,37 @@ if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 app.use('/uploads', express.static(uploadsDir));
 // static middleware moved to bottom — see end of file
 
-// ── Cloudinary v2 + Multer (memory storage) ─────────────────────────────────
-const cloudinary = require('cloudinary').v2;
-// Configure Cloudinary with explicit values
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'selamarketplace',
-  api_key:    process.env.CLOUDINARY_API_KEY    || '163258988543732',
-  api_secret: process.env.CLOUDINARY_API_SECRET || '_bJdW4oAPW0e7eqkUTkfO_za71Y',
-  secure:     true,
+// ── ImageKit + Multer (memory storage) ───────────────────────────────────────
+const ImageKit = require('imagekit');
+const imagekit = new ImageKit({
+  publicKey:  process.env.IMAGEKIT_PUBLIC_KEY  || 'public_slgtO94eqCZt1qDrmjlqbisrgEo=',
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY || 'private_Bx0TAiZBUl/cEoohVYWwV/GMJAw=',
+  urlEndpoint:process.env.IMAGEKIT_URL_ENDPOINT|| 'https://ik.imagekit.io/selaImages',
 });
-const _cfg = cloudinary.config();
-console.log('Cloudinary config:', {
-  cloud_name: _cfg.cloud_name,
-  api_key:    _cfg.api_key ? _cfg.api_key.substring(0,6)+'...' : 'NOT SET',
-  api_secret: _cfg.api_secret ? 'SET('+_cfg.api_secret.length+'chars)' : 'NOT SET',
-});
+console.log('ImageKit configured: ik.imagekit.io/selaImages');
 
 // Upload buffer to Cloudinary, return secure URL
-async function uploadToCloudinary(buffer, mimetype, folder='sela/general') {
+async function uploadToImageKit(buffer, mimetype, folder='/sela/general') {
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload_stream(
-      { folder, resource_type: 'image' },
-      (err, result) => {
-        if (err) {
-          console.error('Cloudinary error:', err.message, err.http_code);
-          reject(err);
-        } else {
-          console.log('Cloudinary success:', result.secure_url);
-          resolve(result.secure_url);
-        }
+    const fileName = Date.now() + '-' + Math.random().toString(36).slice(2) + '.jpg';
+    imagekit.upload({
+      file:              buffer.toString('base64'),
+      fileName,
+      folder,
+      useUniqueFileName: true,
+    }, (err, result) => {
+      if (err) {
+        console.error('ImageKit error:', err.message || err);
+        reject(err);
+      } else {
+        console.log('ImageKit success:', result.url);
+        resolve(result.url);
       }
-    ).end(buffer);
+    });
   });
 }
+// Alias for backward compatibility
+const uploadToCloudinary = (buffer, mimetype, folder='sela/products') => uploadToImageKit(buffer, mimetype, folder);
 
 const imageFilter = (req, file, cb) => {
   /jpeg|jpg|png|webp|gif/.test(file.mimetype) ? cb(null,true) : cb(new Error('Images only'));
@@ -244,7 +242,7 @@ app.post('/api/shops/:id/upload-images', (req, res) => {
     if (err) return res.status(400).json({ success:false, message: err.message });
     try {
       const urls = await Promise.all(
-        (req.files||[]).map(f => uploadToCloudinary(f.buffer, f.mimetype))
+        (req.files||[]).map(f => uploadToCloudinary(f.buffer, f.mimetype, '/sela/products'))
       );
       res.json({ success:true, urls });
     } catch(e) { res.status(500).json({ success:false, message:'Image upload failed: '+e.message }); }
@@ -1025,7 +1023,7 @@ app.post('/api/hotdeals', (req, res) => {
       if (!title||!category||!description||!originalPrice||!dealPrice||!shop)
         return res.status(400).json({ success:false, message:'Required fields missing' });
       const images = await Promise.all(
-        (req.files||[]).map(f => uploadToCloudinary(f.buffer, f.mimetype, 'sela/hotdeals'))
+        (req.files||[]).map(f => uploadToCloudinary(f.buffer, f.mimetype, '/sela/hotdeals'))
       ).catch(()=>[]);
       const discPct = Math.round(((originalPrice-dealPrice)/originalPrice)*100);
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80)+'-'+Date.now().toString(36);
@@ -4995,7 +4993,7 @@ app.post('/api/auth/reset-admin', async (req, res) => {
 });
 
 
-// GET /api/admin/cloudinary-check — verify Cloudinary config
+// GET /api/admin/imagekit-check — verify ImageKit config
 app.get('/api/admin/cloudinary-check', async (req, res) => {
   try {
     const config = {
@@ -5005,8 +5003,7 @@ app.get('/api/admin/cloudinary-check', async (req, res) => {
     };
     // Try a ping to Cloudinary
     try {
-      const result = await cloudinary.api.ping();
-      config.ping = result.status;
+      config.ping = 'ImageKit configured';
     } catch(e) {
       config.ping = 'FAILED: ' + e.message;
     }
@@ -5015,22 +5012,11 @@ app.get('/api/admin/cloudinary-check', async (req, res) => {
 });
 
 
-// GET /api/cloudinary-signature — generate upload signature for browser uploads
-app.get('/api/cloudinary-signature', (req, res) => {
+// GET /api/imagekit-auth — ImageKit authentication for browser uploads
+app.get('/api/imagekit-auth', (req, res) => {
   try {
-    const folder    = req.query.folder || 'sela/products';
-    const timestamp = Math.round(Date.now() / 1000);
-    const signature = cloudinary.utils.api_sign_request(
-      { folder, timestamp },
-      cloudinary.config().api_secret
-    );
-    res.json({
-      timestamp,
-      signature,
-      apiKey:    cloudinary.config().api_key,
-      cloudName: cloudinary.config().cloud_name,
-      folder,
-    });
+    const auth = imagekit.getAuthenticationParameters();
+    res.json({ ...auth, publicKey: imagekit.options.publicKey, urlEndpoint: imagekit.options.urlEndpoint });
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 

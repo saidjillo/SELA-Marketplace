@@ -2469,32 +2469,28 @@ async function uploadImgFiles(files) {
   if (area) area.innerHTML = '<div style="padding:.5rem;font-size:.8rem;color:var(--text2)">⏳ Uploading images...</div>';
 
   try {
-    // Get signature from our server
-    const folder = 'sela/products';
-    const sigRes = await fetch(`${API}/cloudinary-signature?folder=${folder}`, {
-      headers: authHeaders()
-    });
-    const sigData = await sigRes.json();
-    if (!sigData.signature) throw new Error('Could not get upload signature');
+    // Get ImageKit auth params from server
+    const authRes = await fetch(`${API}/imagekit-auth`, { headers: authHeaders() });
+    const auth = await authRes.json();
+    if (!auth.token) throw new Error('Could not get upload auth');
 
-    const { timestamp, signature, apiKey, cloudName } = sigData;
-
-    // Upload each file directly to Cloudinary from browser
     const uploadPromises = toUpload.map(async (file) => {
       const fd = new FormData();
       fd.append('file', file);
-      fd.append('api_key', apiKey);
-      fd.append('timestamp', timestamp);
-      fd.append('signature', signature);
-      fd.append('folder', folder);
+      fd.append('fileName', Date.now() + '-' + file.name);
+      fd.append('publicKey', auth.publicKey);
+      fd.append('signature', auth.signature);
+      fd.append('expire', auth.expire);
+      fd.append('token', auth.token);
+      fd.append('folder', '/sela/products');
 
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      const res = await fetch('https://upload.imagekit.io/api/v1/files/upload', {
         method: 'POST',
         body: fd
       });
       const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
-      return data.secure_url;
+      if (data.message && !data.url) throw new Error(data.message);
+      return data.url;
     });
 
     const urls = await Promise.all(uploadPromises);
