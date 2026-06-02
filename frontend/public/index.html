@@ -244,7 +244,7 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
     /* ── Products ── */
     .products-section h2{font-family:var(--font-head);font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
     .count-badge{font-family:var(--font-body);font-size:.75rem;font-weight:500;background:var(--card2);color:var(--text3);padding:.2rem .6rem;border-radius:20px}
-    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,calc(50vw - 1rem)),1fr));gap:1.25rem}
 
     /* ── Product Card ── */
     .product-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .25s;cursor:pointer}
@@ -1856,6 +1856,24 @@ button, a, input, select, textarea, .btn, [onclick] {
   .hero { padding: 1rem .75rem !important; min-height: auto !important; }
   .hero h1 { font-size: 1.3rem !important; }
 }
+
+
+    /* ── Prevent horizontal overflow ── */
+    html, body { max-width: 100vw; overflow-x: hidden; }
+    * { max-width: 100%; }
+    img, video, canvas, svg { max-width: 100%; }
+    /* Fix product grid for small phones */
+    @media(max-width:480px) {
+      .products-grid { grid-template-columns: repeat(2,1fr) !important; gap:.5rem !important; }
+      .main-layout { padding: .75rem !important; }
+      .filter-bar { gap:.35rem !important; }
+      .filter-bar select { font-size:.75rem !important; padding:.3rem .4rem !important; }
+      .category-pills { gap:.3rem !important; }
+      .category-pills button { font-size:.7rem !important; padding:.3rem .6rem !important; white-space:nowrap; }
+    }
+    @media(max-width:360px) {
+      .products-grid { grid-template-columns: 1fr !important; }
+    }
 
 </style>
 <link rel="stylesheet" href="theme.css"/>
