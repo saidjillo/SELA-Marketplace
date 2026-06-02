@@ -192,18 +192,23 @@ console.log('Cloudinary cloud_name:', cloudinary.config().cloud_name || 'NOT SET
 console.log('Cloudinary api_key:', cloudinary.config().api_key ? 'SET' : 'NOT SET');
 
 // Upload buffer to Cloudinary, return secure URL
-async function uploadToCloudinary(buffer, mimetype) {
-  const cfg = cloudinary.config();
-  console.log('Cloudinary upload attempt:', {
-    cloud_name: cfg.cloud_name,
-    has_key: !!cfg.api_key,
-    has_secret: !!cfg.api_secret,
-    buffer_size: buffer?.length,
-    mimetype
-  });
+async function uploadToCloudinary(buffer, mimetype, folder='sela/general') {
   return new Promise((resolve, reject) => {
+    const timestamp = Math.round(Date.now() / 1000);
+    const signature = cloudinary.utils.api_sign_request(
+      { folder, timestamp },
+      cloudinary.config().api_secret
+    );
+    const uploadOptions = {
+      folder,
+      resource_type: 'image',
+      transformation: [{ width:1200, height:1200, crop:'limit', quality:'auto' }],
+      api_key:   cloudinary.config().api_key,
+      timestamp,
+      signature,
+    };
     const stream = cloudinary.uploader.upload_stream(
-      { folder:'sela', resource_type:'image', transformation:[{width:1200,height:1200,crop:'limit',quality:'auto'}] },
+      uploadOptions,
       (err, result) => {
         if (err) {
           console.error('Cloudinary error:', err.message, err.http_code);
@@ -1034,7 +1039,7 @@ app.post('/api/hotdeals', (req, res) => {
       if (!title||!category||!description||!originalPrice||!dealPrice||!shop)
         return res.status(400).json({ success:false, message:'Required fields missing' });
       const images = await Promise.all(
-        (req.files||[]).map(f => uploadToCloudinary(f.buffer, f.mimetype))
+        (req.files||[]).map(f => uploadToCloudinary(f.buffer, f.mimetype, 'sela/hotdeals'))
       ).catch(()=>[]);
       const discPct = Math.round(((originalPrice-dealPrice)/originalPrice)*100);
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80)+'-'+Date.now().toString(36);
