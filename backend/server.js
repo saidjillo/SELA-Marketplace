@@ -2214,7 +2214,9 @@ app.post('/api/shops/:id/products', checkProductLimit, async (req, res) => {
   try {
     const user = getShopUser(req);
     if (!user) return res.status(401).json({ success: false, message: 'Login required' });
-    const { name, description, price, salePrice, onSale, discountPct, images, sku, stock, unit, tags, featured, categoryId, categoryName, branchIds, active } = req.body;
+    let { name, description, price, salePrice, onSale, discountPct, images, sku, stock, unit, tags, featured, categoryId, categoryName, branchIds, active } = req.body;
+    branchIds = (branchIds||[]).filter(id => id && id !== 'undefined' && id !== 'null');
+    images = (images||[]).filter(img => img && typeof img === 'string');
     if (!name?.trim()) return res.status(400).json({ success: false, message: 'Product name required' });
     if (price === undefined) return res.status(400).json({ success: false, message: 'Price required' });
     // Auto-generate unique slug from product name
