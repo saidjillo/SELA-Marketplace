@@ -85,6 +85,7 @@ function fixImg(src){ if(!src)return''; if(src.startsWith('http'))return src; if
 /* Product mini card */
 .mh-prod{flex:0 0 168px;background:#131720;border:1px solid #1a2235;border-radius:12px;overflow:hidden;text-decoration:none;display:block;transition:all .2s;position:relative}
 .mh-prod:hover{border-color:rgba(0,212,255,.28);transform:translateY(-3px)}
+.mh-prod-img img{width:100%;height:100%;object-fit:cover;display:block}
 .mh-prod-img{height:120px;background:#0f1219;display:flex;align-items:center;justify-content:center;font-size:2.2rem;overflow:hidden}
 .mh-prod-img img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
 .mh-prod:hover .mh-prod-img img{transform:scale(1.06)}
