@@ -4981,6 +4981,19 @@ app.get('/api/admin/fix-image-urls', async (req, res) => {
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 
+
+// POST /api/auth/reset-admin — emergency admin password reset (uses env vars)
+app.post('/api/auth/reset-admin', async (req, res) => {
+  try {
+    const { secret } = req.body;
+    // Require a secret key to prevent abuse
+    if (secret !== process.env.JWT_SECRET) 
+      return res.status(403).json({ success:false, message:'Invalid secret' });
+    await seedAdminIfNeeded();
+    res.json({ success:true, message:'Admin password reset from env vars' });
+  } catch(err) { res.status(500).json({ success:false, message:err.message }); }
+});
+
 // ── Serve frontend static files (MUST be after all API routes) ──────────────
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
