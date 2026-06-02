@@ -180,8 +180,8 @@ const cloudinary = require('cloudinary').v2;
 // Configure Cloudinary with explicit values
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'selamarketplace',
-  api_key:    process.env.CLOUDINARY_API_KEY    || '637583396468171',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'L0LXyFUB27sTg9y4L76B5pe7lAM',
+  api_key:    process.env.CLOUDINARY_API_KEY    || '163258988543732',
+  api_secret: process.env.CLOUDINARY_API_SECRET || '_bJdW4oAPW0e7eqkUTkfO_za71Y',
   secure:     true,
 });
 const _cfg = cloudinary.config();
