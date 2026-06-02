@@ -2700,9 +2700,9 @@ async function loadCategoriesData(){
 
 function populateBranchSelect(){
   const sel = document.getElementById('uBranch');
-  if(sel) sel.innerHTML = branches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  if(sel) sel.innerHTML = branches.map(b=>`<option value="${b._id||b.id}">${b.name}</option>`).join('');
   const checks = document.getElementById('branchCheckboxes');
-  if(checks) checks.innerHTML = branches.map(b=>`<label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;font-weight:600;cursor:pointer;background:#ede9fe;padding:.2rem .6rem;border-radius:6px"><input type="checkbox" value="${b.id}" class="br-check"/> ${b.name}</label>`).join('');
+  if(checks) checks.innerHTML = branches.map(b=>`<label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem;font-weight:600;cursor:pointer;background:#ede9fe;padding:.2rem .6rem;border-radius:6px"><input type="checkbox" value="${b._id||b.id}" class="br-check"/> ${b.name}</label>`).join('');
 }
 function populateCatSelect(){
   const sel = document.getElementById('pCat');
@@ -2817,7 +2817,7 @@ async function saveProduct(){
   const catEl = document.getElementById('pCat');
   const catId = catEl?.value||null;
   const catName = catId ? catEl.options[catEl.selectedIndex].text : 'Uncategorised';
-  const branchIds = Array.from(document.querySelectorAll('.br-check:checked')).map(cb=>cb.value);
+  const branchIds = Array.from(document.querySelectorAll('.br-check:checked')).map(cb=>cb.value).filter(v => v && v !== 'undefined' && v !== 'null' && v.length > 0);
   const data = {
     name: document.getElementById('pName').value.trim(),
     description: document.getElementById('pDesc').value.trim(),

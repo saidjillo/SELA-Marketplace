@@ -2158,7 +2158,7 @@ app.get('/api/shops/:id/branches', async (req, res) => {
     if (!branches.length && mongoose.Types.ObjectId.isValid(id)) {
       branches = await Branch.find({ shopId: new mongoose.Types.ObjectId(id), active: true }).sort({ isMain: -1, createdAt: 1 }).lean();
     }
-    res.json({ success: true, data: branches });
+    res.json({ success: true, data: branches.map(b => ({ ...b, id: b._id?.toString() })) });
   } catch(err) { res.status(500).json({ success: false, message: err.message }); }
 });
 app.post('/api/shops/:id/branches', checkBranchLimit, async (req, res) => {
