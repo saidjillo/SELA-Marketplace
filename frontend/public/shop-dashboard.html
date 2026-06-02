@@ -2469,9 +2469,8 @@ async function uploadImgFiles(files) {
   if (area) area.innerHTML = '<div style="padding:.5rem;font-size:.8rem;color:var(--text2)">⏳ Uploading images...</div>';
 
   try {
-    const urls = [];
     for (const file of toUpload) {
-      // Get a FRESH auth token for each file
+      // Fresh auth token per file
       const authRes = await fetch(`${API}/imagekit-auth`, { headers: authHeaders() });
       const auth = await authRes.json();
       if (!auth.token) throw new Error('Could not get upload auth');
@@ -2486,19 +2485,17 @@ async function uploadImgFiles(files) {
       fd.append('folder', '/sela/products');
 
       const res = await fetch('https://upload.imagekit.io/api/v1/files/upload', {
-        method: 'POST',
-        body: fd
+        method: 'POST', body: fd
       });
       const data = await res.json();
       if (!data.url) throw new Error(data.message || 'Upload failed');
-      urls.push(data.url);
-    }
 
-    urls.forEach(url => {
-      if (_productImages.length < 6) _productImages.push({ url, isLocal: false });
-    });
+      if (_productImages.length < 6) {
+        _productImages.push({ url: data.url, fileId: data.fileId || '', isLocal: false });
+      }
+    }
     updateImgPreview();
-    toast(`✅ ${urls.length} image${urls.length!==1?'s':''} uploaded`);
+    toast(`✅ ${toUpload.length} image${toUpload.length!==1?'s':''} uploaded`);
   } catch(e) {
     console.error('Upload error:', e);
     toast('Image upload failed: ' + e.message, 'error');
@@ -2826,7 +2823,8 @@ async function saveProduct(){
     stock: parseInt(document.getElementById('pStock').value)||0,
     sku: document.getElementById('pSKU').value.trim(),
     tags: document.getElementById('pTags').value.split(',').map(t=>t.trim()).filter(Boolean),
-    images: _productImages.map(i => i.url).filter(Boolean),
+    images:     _productImages.map(i => i.url).filter(Boolean),
+    imageFiles: _productImages.filter(i => i.fileId).map(i => ({ url:i.url, fileId:i.fileId })),
     unit: document.getElementById('pUnit').value,
     onSale: document.getElementById('pOnSale').checked,
     featured: document.getElementById('pFeatured').checked,

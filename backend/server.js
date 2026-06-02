@@ -198,8 +198,8 @@ async function uploadToImageKit(buffer, mimetype, folder='/sela/general') {
         console.error('ImageKit error:', err.message || err);
         reject(err);
       } else {
-        console.log('ImageKit success:', result.url);
-        resolve(result.url);
+        console.log('ImageKit success:', result.url, '| fileId:', result.fileId);
+        resolve({ url: result.url, fileId: result.fileId });
       }
     });
   });
@@ -5019,6 +5019,49 @@ app.get('/api/imagekit-auth', (req, res) => {
   try {
     const auth = imagekit.getAuthenticationParameters();
     res.json({ ...auth, publicKey: imagekit.options.publicKey, urlEndpoint: imagekit.options.urlEndpoint });
+  } catch(err) { res.status(500).json({ success:false, message:err.message }); }
+});
+
+
+// GET /api/admin/imagekit-cleanup — find orphaned ImageKit files not in any product
+app.get('/api/admin/imagekit-cleanup', async (req, res) => {
+  try {
+    const auth = await resolveAuth(req).catch(()=>null);
+    if (!auth || auth.role !== 'admin')
+      return res.status(403).json({ success:false, message:'Admin only' });
+
+    // Get all fileIds stored in products
+    const products = await ShopProduct.find({ 'imageFiles.0': { $exists: true } }, 'imageFiles').lean();
+    const storedFileIds = new Set();
+    products.forEach(p => (p.imageFiles||[]).forEach(f => { if(f.fileId) storedFileIds.add(f.fileId); }));
+
+    // Get all files from ImageKit in sela folder
+    let ikFiles = [];
+    try {
+      ikFiles = await imagekit.listFiles({ path: '/sela', limit: 500 });
+    } catch(e) {
+      return res.json({ success:false, message:'ImageKit list failed: '+e.message });
+    }
+
+    const orphaned = ikFiles.filter(f => !storedFileIds.has(f.fileId));
+    const dryRun   = req.query.delete !== 'true';
+
+    if (!dryRun && orphaned.length) {
+      // Delete orphaned files
+      for (const f of orphaned) {
+        await imagekit.deleteFile(f.fileId).catch(e => console.warn('Delete failed:', f.fileId, e.message));
+      }
+    }
+
+    res.json({
+      success: true,
+      totalInImageKit: ikFiles.length,
+      referencedInDB:  storedFileIds.size,
+      orphaned:        orphaned.length,
+      deleted:         dryRun ? 0 : orphaned.length,
+      dryRun,
+      orphanedFiles:   orphaned.slice(0,20).map(f => ({ fileId:f.fileId, url:f.url, name:f.name })),
+    });
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 

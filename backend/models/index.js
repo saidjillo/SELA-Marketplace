@@ -14,7 +14,11 @@ const productSchema = new mongoose.Schema({
   shop:        { type: String, required: true, trim: true },
   description: { type: String, required: true, trim: true },
   image:       { type: String, default: null },          // primary image (backward compat)
-  images:      [{ type: String }],                       // up to 6 images
+  images:      [{ type: String }],                       // up to 6 image URLs
+  imageFiles:  [{                                          // ImageKit file metadata for cleanup
+    fileId: { type: String },
+    url:    { type: String },
+  }],
   whatsapp:    { type: String, default: '254740169448' },
   color:       { type: String, default: '' },
   rating:      { type: Number, default: 4.5, min: 0, max: 5 },
