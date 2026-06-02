@@ -176,10 +176,25 @@ cloudinary.config({
 
 // Upload buffer to Cloudinary, return secure URL
 async function uploadToCloudinary(buffer, mimetype) {
+  console.log('Cloudinary upload attempt:', {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    has_key: !!process.env.CLOUDINARY_API_KEY,
+    has_secret: !!process.env.CLOUDINARY_API_SECRET,
+    buffer_size: buffer?.length,
+    mimetype
+  });
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       { folder:'sela', resource_type:'image', transformation:[{width:1200,height:1200,crop:'limit',quality:'auto'}] },
-      (err, result) => err ? reject(err) : resolve(result.secure_url)
+      (err, result) => {
+        if (err) {
+          console.error('Cloudinary error:', err.message, err.http_code);
+          reject(err);
+        } else {
+          console.log('Cloudinary success:', result.secure_url);
+          resolve(result.secure_url);
+        }
+      }
     );
     stream.end(buffer);
   });
