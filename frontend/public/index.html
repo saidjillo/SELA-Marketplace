@@ -453,7 +453,7 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
     .section-label{display:inline-block;font-size:.72rem;font-weight:700;color:#f97316;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem}
     .section-title{font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;line-height:1.2}
     .section-sub{font-size:.93rem;color:var(--text2);margin-top:.75rem;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7}
-    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .values-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem}
     .value-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:all .3s;position:relative;overflow:hidden}
     .value-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--green));opacity:0;transition:opacity .3s}
     .value-card:hover{border-color:rgba(0,212,255,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
@@ -1720,6 +1720,142 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
 .prd-rf-submit{padding:.38rem .85rem;background:var(--accent);color:var(--bg);border:none;border-radius:7px;font-size:.73rem;font-weight:700;cursor:pointer;font-family:var(--font-head)}
 .prd-rf-cancel{padding:.38rem .7rem;background:none;border:1px solid var(--border);color:var(--text3);border-radius:7px;font-size:.73rem;cursor:pointer}
 .prd-empty-cmt{text-align:center;padding:2.5rem 1rem;color:var(--text3)}
+
+
+
+/* ═══════════════════════════════════════════════════════════
+   SELA — Universal Mobile Responsive Styles
+   Targets: Galaxy A/S/M, Redmi, Infinix, Tecno, Pixel, Itel
+   Breakpoints: 768px tablet, 480px phone, 360px small phone
+═══════════════════════════════════════════════════════════ */
+
+/* Global mobile base */
+html { -webkit-text-size-adjust: 100%; }
+body { overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+* { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+img { max-width: 100%; height: auto; }
+
+/* Touch targets - minimum 44px for all interactive elements */
+button, a, input, select, textarea, .btn, [onclick] {
+  min-height: 36px;
+  touch-action: manipulation;
+}
+
+@media (max-width: 768px) {
+  /* Typography */
+  h1 { font-size: clamp(1.4rem, 6vw, 2rem) !important; }
+  h2 { font-size: clamp(1.1rem, 5vw, 1.6rem) !important; }
+  h3 { font-size: clamp(.95rem, 4vw, 1.2rem) !important; }
+  p, li, td, th { font-size: clamp(.8rem, 3.5vw, .95rem) !important; }
+
+  /* Layout */
+  .container, .page, .section, .section-inner, .wrapper {
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+    max-width: 100% !important;
+  }
+  section { padding: 1.5rem .75rem !important; }
+
+  /* Grids → 2 cols on tablet/phone */
+  .products-grid, .product-grid, .deals-grid,
+  .features-grid, .pricing-grid, .shops-grid,
+  .grid, [class*="grid-"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: .6rem !important;
+  }
+
+  /* Flex rows → wrap */
+  .flex-row, .row, .hero-btns, .dir-bar,
+  .filter-bar, .market-filters, .stats-bar,
+  .action-row, .btn-row {
+    flex-wrap: wrap !important;
+    gap: .5rem !important;
+  }
+
+  /* Inputs full width */
+  input, select, textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 16px !important; /* prevents iOS zoom */
+  }
+
+  /* Cards */
+  .product-card, .deal-card, .shop-card,
+  .feature-card, .pricing-card {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Product images */
+  .product-card-img, .deal-card-img,
+  .product-image, .deal-image {
+    height: 150px !important;
+  }
+
+  /* Tables → scrollable */
+  table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+
+  /* Hide desktop-only elements */
+  .desktop-only, .hide-mobile { display: none !important; }
+
+  /* Show mobile-only elements */
+  .mobile-only { display: block !important; }
+
+  /* Sidebar hidden */
+  .sidebar, .side-panel { display: none !important; }
+  .main-with-sidebar, .content-with-sidebar {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Buttons full width on mobile */
+  .btn-full-mobile { width: 100% !important; }
+
+  /* Modal/dialog */
+  .modal, .dialog, .popup {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    margin: 1rem auto !important;
+    padding: 1rem !important;
+  }
+
+  /* Stats */
+  .stat-item { min-width: 45% !important; }
+  .stat-num { font-size: 1.5rem !important; }
+
+  /* Forms */
+  .form-row, .input-row {
+    flex-direction: column !important;
+    gap: .5rem !important;
+  }
+  .form-group { width: 100% !important; }
+
+  /* Nav pills/tabs */
+  .nav-pills, .tab-bar, .cat-pills {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: .25rem;
+  }
+  .nav-pills::-webkit-scrollbar { display: none; }
+}
+
+/* Small phones: Galaxy A03, Itel, Tecno Pop series */
+@media (max-width: 400px) {
+  .products-grid, .product-grid, .deals-grid,
+  .pricing-grid, .shops-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .product-card-img, .deal-card-img { height: 200px !important; }
+  .hero { padding: 2.5rem .75rem !important; }
+  .pricing-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Landscape phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { padding: 1rem .75rem !important; min-height: auto !important; }
+  .hero h1 { font-size: 1.3rem !important; }
+}
 
 </style>
 <link rel="stylesheet" href="theme.css"/>

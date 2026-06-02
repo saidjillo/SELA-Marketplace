@@ -161,7 +161,7 @@ window.SELA.saveLogin = function(token, user, isAdmin) {
 .ac-drawer-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
 .ac-drawer-sep{height:1px;background:#1e2435;margin:.4rem 1.25rem}
 .ac-drawer-footer{padding:1rem 1.25rem;border-top:1px solid #1e2435;font-size:.68rem;color:#4a5a78}
-@media(max-width:900px){.ac-nav,.ac-search{display:none!important}.ac-hamburger{display:flex}}
+@media(max-width:900px){.ac-nav,.ac-search{display:none!important}.ac-hamburger{display:flex}}.ac-logo{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}@media(max-width:400px){.ac-logo{max-width:100px;font-size:.9rem!important}}.ac-sell-btn{white-space:nowrap}@media(max-width:480px){.ac-sell-btn span{display:none}}
 @media(min-width:901px){.ac-drawer{display:none!important}}
   `;
 
