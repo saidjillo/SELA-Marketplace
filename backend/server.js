@@ -26,12 +26,21 @@ const PLANS = {
 
 async function getShopPlan(shopId) {
   try {
-    const sub = await SubscriptionPayment.findOne({ 
-      shopId, status:'paid', 
-      paidUntil:{ $gte: new Date() } 
+    // Check Shop.subscription first
+    const shop = await Shop.findById(shopId).lean();
+    if (shop?.subscription?.plan) {
+      const p = shop.subscription.plan;
+      // Map old plan names to new ones
+      if (p === 'basic' || p === 'free') return 'growth';
+      if (PLANS[p]) return p;
+    }
+    // Fallback: check SubscriptionPayment
+    const sub = await SubscriptionPayment.findOne({
+      shopId, status:'paid',
+      paidUntil:{ $gte: new Date() }
     }).lean();
-    return sub ? 'pro' : 'free';
-  } catch { return 'free'; }
+    return sub ? 'pro' : 'growth'; // default to growth for existing vendors
+  } catch { return 'growth'; }
 }
 
 async function checkProductLimit(req, res, next) {
@@ -4928,6 +4937,47 @@ app.delete('/api/me/addresses/:addrId', async (req, res) => {
     user.addresses = (user.addresses||[]).filter(a => a.id !== req.params.addrId);
     await user.save();
     res.json({ success:true, data: user.addresses });
+  } catch(err) { res.status(500).json({ success:false, message:err.message }); }
+});
+
+
+// GET /api/admin/fix-image-urls — migrate localhost image URLs to relative paths
+app.get('/api/admin/fix-image-urls', async (req, res) => {
+  try {
+    const auth = await resolveAuth(req).catch(()=>null);
+    if (!auth || auth.role !== 'admin') return res.status(403).json({ success:false, message:'Admin only' });
+
+    let fixed = 0;
+    // Fix ShopProducts
+    const products = await ShopProduct.find({ images: { $regex: 'localhost' } }).lean();
+    for (const p of products) {
+      const cleanImgs = p.images.map(img =>
+        img.replace(/https?:\/\/localhost:\d+/, '').replace(/https?:\/\/[^/]+(?=\/uploads)/, '')
+      );
+      await ShopProduct.updateOne({ _id: p._id }, { images: cleanImgs });
+      fixed++;
+    }
+    // Fix HotDeals
+    const deals = await HotDeal.find({ images: { $regex: 'localhost' } }).lean();
+    for (const d of deals) {
+      const cleanImgs = d.images.map(img =>
+        img.replace(/https?:\/\/localhost:\d+/, '').replace(/https?:\/\/[^/]+(?=\/uploads)/, '')
+      );
+      await HotDeal.updateOne({ _id: d._id }, { images: cleanImgs });
+      fixed++;
+    }
+    // Fix Shops (logo/banner)
+    const shops = await Shop.find({
+      $or: [{ logo: /localhost/ }, { banner: /localhost/ }]
+    }).lean();
+    for (const s of shops) {
+      const update = {};
+      if (s.logo)   update.logo   = s.logo.replace(/https?:\/\/localhost:\d+/, '');
+      if (s.banner) update.banner = s.banner.replace(/https?:\/\/localhost:\d+/, '');
+      await Shop.updateOne({ _id: s._id }, update);
+      fixed++;
+    }
+    res.json({ success:true, message:`Fixed ${fixed} records` });
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 
