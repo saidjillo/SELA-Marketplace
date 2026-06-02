@@ -177,19 +177,19 @@ app.use('/uploads', express.static(uploadsDir));
 
 // ── Cloudinary v2 + Multer (memory storage) ─────────────────────────────────
 const cloudinary = require('cloudinary').v2;
-// Support both CLOUDINARY_URL and individual vars
-if (process.env.CLOUDINARY_URL) {
-  // CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name
-  cloudinary.config(process.env.CLOUDINARY_URL);
-} else {
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key:    process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  });
-}
-console.log('Cloudinary cloud_name:', cloudinary.config().cloud_name || 'NOT SET');
-console.log('Cloudinary api_key:', cloudinary.config().api_key ? 'SET' : 'NOT SET');
+// Configure Cloudinary with explicit values
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'selamarketplace',
+  api_key:    process.env.CLOUDINARY_API_KEY    || '637583396468171',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'L0LXyFUB27sTg9y4L76B5pe7lAM',
+  secure:     true,
+});
+const _cfg = cloudinary.config();
+console.log('Cloudinary config:', {
+  cloud_name: _cfg.cloud_name,
+  api_key:    _cfg.api_key ? _cfg.api_key.substring(0,6)+'...' : 'NOT SET',
+  api_secret: _cfg.api_secret ? 'SET('+_cfg.api_secret.length+'chars)' : 'NOT SET',
+});
 
 // Upload buffer to Cloudinary, return secure URL
 async function uploadToCloudinary(buffer, mimetype, folder='sela/general') {
