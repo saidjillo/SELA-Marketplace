@@ -195,14 +195,15 @@ console.log('Cloudinary api_key:', cloudinary.config().api_key ? 'SET' : 'NOT SE
 async function uploadToCloudinary(buffer, mimetype, folder='sela/general') {
   return new Promise((resolve, reject) => {
     const timestamp = Math.round(Date.now() / 1000);
+    const eager = 'w_1200,h_1200,c_limit,q_auto';
     const signature = cloudinary.utils.api_sign_request(
-      { folder, timestamp },
+      { folder, timestamp, eager },
       cloudinary.config().api_secret
     );
     const uploadOptions = {
       folder,
       resource_type: 'image',
-      eager: 'w_1200,h_1200,c_limit,q_auto',
+      eager,
       api_key:   cloudinary.config().api_key,
       timestamp,
       signature,
