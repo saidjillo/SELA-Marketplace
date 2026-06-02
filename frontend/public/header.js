@@ -356,14 +356,19 @@ window.SELA.saveLogin = function(token, user, isAdmin) {
 
     if (!isLoggedIn()) return;
 
-    // Check if user has a store
     const tok = (window.SELA&&window.SELA.getToken)?window.SELA.getToken():(localStorage.getItem('ac_user_token')||localStorage.getItem('td_token')||'');
+
+    // Show loading state immediately
+    wrap.innerHTML = '<div style="padding:.75rem 1rem;font-size:.78rem;color:var(--ac-text2,#9aa0b0)">Loading…</div>';
+
+    // Check if user has a store
     let hasStore = false;
     try {
       const ctrl = new AbortController();
-      setTimeout(() => ctrl.abort(), 6000);
-      const r = await fetch(API+'/shops/mine', {
-        headers: { 'Content-Type':'application/json', 'Authorization': 'Bearer ' + tok }, signal: ctrl.signal
+      setTimeout(() => ctrl.abort(), 8000);
+      const r = await fetch((window.SELA_API||'/api').replace('/api','') + '/api/shops/mine', {
+        headers: { 'Content-Type':'application/json', 'Authorization': 'Bearer ' + tok },
+        signal: ctrl.signal
       });
       if (r && r.ok) {
         const j = await r.json().catch(()=>({}));
@@ -372,18 +377,19 @@ window.SELA.saveLogin = function(token, user, isAdmin) {
           const sid = j.data[0].id || (j.data[0]._id&&j.data[0]._id.toString()) || '';
           wrap.innerHTML =
             '<a class="ac-dd-item" href="shop-dashboard.html?id='+sid+'"><span class="ac-dd-icon">🏪</span> My Store Dashboard</a>' +
+            '<a class="ac-dd-item" href="wishlist.html"><span class="ac-dd-icon">❤️</span> My Wishlist</a>' +
             '<a class="ac-dd-item" href="user-settings.html"><span class="ac-dd-icon">⚙️</span> Settings & Profile</a>' +
             '<div class="ac-dd-sep"></div>' +
-            '<button class="ac-dd-item danger" onclick="window._acLogout()"><span class="ac-dd-icon">🚪</span> Logout</button>';
+            '<button class="ac-dd-item danger" onclick="window._acLogout()"><span class="ac-dd-icon">🚪</span> Sign Out</button>';
           return;
         }
       }
-    } catch {}
+    } catch(e) { console.warn('shops/mine failed:', e.message); }
 
-    // Check staff access before showing "no store" menu
+    // Check staff access
     let staffAccess = [];
     try {
-      const sa = await fetch(API+'/me/staff-access', {
+      const sa = await fetch((window.SELA_API||'/api').replace('/api','') + '/api/me/staff-access', {
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+tok},
         signal: AbortSignal.timeout(4000)
       });
@@ -394,9 +400,8 @@ window.SELA.saveLogin = function(token, user, isAdmin) {
     } catch {}
 
     if (staffAccess.length) {
-      // Staff member — show dashboard links for each shop
       const staffLinks = staffAccess.map(s =>
-        '<a class="ac-dd-item" href="shop-dashboard.html?id='+s.shopId+'"><span class="ac-dd-icon">🏪</span> '+s.shopName+' Dashboard <span style="font-size:.65rem;background:rgba(99,102,241,.2);color:#a5b4fc;padding:.1rem .35rem;border-radius:4px;margin-left:.3rem">'+s.role+'</span></a>'
+        '<a class="ac-dd-item" href="shop-dashboard.html?id='+s.shopId+'"><span class="ac-dd-icon">🏪</span> '+s.shopName+' Dashboard</a>'
       ).join('');
       wrap.innerHTML =
         staffLinks +
@@ -406,9 +411,10 @@ window.SELA.saveLogin = function(token, user, isAdmin) {
       return;
     }
 
-    // No store, no staff role
+    // No store found
     wrap.innerHTML =
       '<a class="ac-dd-item" href="shop-create.html"><span class="ac-dd-icon">✨</span> Create a Store</a>' +
+      '<a class="ac-dd-item" href="wishlist.html"><span class="ac-dd-icon">❤️</span> My Wishlist</a>' +
       '<a class="ac-dd-item" href="user-settings.html"><span class="ac-dd-icon">⚙️</span> Settings & Profile</a>' +
       '<div class="ac-dd-sep"></div>' +
       '<button class="ac-dd-item danger" onclick="window._acLogout()"><span class="ac-dd-icon">🚪</span> Sign Out</button>';
