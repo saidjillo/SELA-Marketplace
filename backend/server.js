@@ -202,7 +202,7 @@ async function uploadToCloudinary(buffer, mimetype, folder='sela/general') {
     const uploadOptions = {
       folder,
       resource_type: 'image',
-      transformation: [{ width:1200, height:1200, crop:'limit', quality:'auto' }],
+      eager: 'w_1200,h_1200,c_limit,q_auto',
       api_key:   cloudinary.config().api_key,
       timestamp,
       signature,
