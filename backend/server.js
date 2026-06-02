@@ -4994,6 +4994,26 @@ app.post('/api/auth/reset-admin', async (req, res) => {
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 
+
+// GET /api/admin/cloudinary-check — verify Cloudinary config
+app.get('/api/admin/cloudinary-check', async (req, res) => {
+  try {
+    const config = {
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'NOT SET',
+      api_key:    process.env.CLOUDINARY_API_KEY ? process.env.CLOUDINARY_API_KEY.substring(0,6)+'...' : 'NOT SET',
+      api_secret: process.env.CLOUDINARY_API_SECRET ? 'SET ('+process.env.CLOUDINARY_API_SECRET.length+' chars)' : 'NOT SET',
+    };
+    // Try a ping to Cloudinary
+    try {
+      const result = await cloudinary.api.ping();
+      config.ping = result.status;
+    } catch(e) {
+      config.ping = 'FAILED: ' + e.message;
+    }
+    res.json({ success:true, config });
+  } catch(err) { res.status(500).json({ success:false, message:err.message }); }
+});
+
 // ── Serve frontend static files (MUST be after all API routes) ──────────────
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
