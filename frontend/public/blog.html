@@ -12,7 +12,6 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='12'>📝</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 <style>
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;
@@ -22,8 +21,8 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
   --radius:14px;
   --font-head:'Montserrat',sans-serif;--font-body:'Roboto',sans-serif;
 }
-html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh}
+html{scroll-behavior:smooth;margin:0;padding:0;overflow-x:hidden;max-width:100vw}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;margin:0;padding:0;overflow-x:hidden;max-width:100vw}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:var(--font-body)}
@@ -80,11 +79,11 @@ header{background:rgba(11,14,20,.97);backdrop-filter:blur(20px);border-bottom:1p
 .filter-results{font-size:.72rem;color:var(--text3);white-space:nowrap}
 
 /* ── MAIN LAYOUT ── */
-.blog-main{max-width:1400px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:1fr 300px;gap:2rem;align-items:start}
+.blog-main{max-width:100%;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:1fr 300px;gap:2rem;align-items:start}
 @media(max-width:900px){.blog-main{grid-template-columns:1fr}.blog-sidebar{display:none}}
 
 /* ── BLOG CARD ── */
-.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:1.25rem}
 .blog-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .22s;display:flex;flex-direction:column;position:relative}
 .blog-card:hover{border-color:rgba(0,212,255,.3);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
 .blog-card.featured{border-color:rgba(0,212,255,.25);background:linear-gradient(135deg,var(--card),rgba(0,212,255,.04))}
@@ -296,49 +295,20 @@ button, a, input, select, textarea, .btn, [onclick] {
   .hero h1 { font-size: 1.3rem !important; }
 }
 
-
-/* ── Blog mobile fix ── */
-html{margin:0;padding:0;overflow-x:hidden;max-width:100vw}
-body{margin:0;padding:0;overflow-x:hidden;max-width:100vw}
-*, *::before, *::after{box-sizing:border-box}
+/* ── Blog mobile ── */
+*,*::before,*::after{box-sizing:border-box}
 img{max-width:100%}
-
 @media(max-width:900px){
-  .blog-main{
-    grid-template-columns:1fr !important;
-    padding:1rem !important;
-    gap:1rem !important;
-  }
+  .blog-main{grid-template-columns:1fr !important;padding:1rem !important}
   .blog-sidebar{display:none !important}
 }
-
 @media(max-width:600px){
   .blog-hero{padding:2rem .75rem !important}
-  .blog-hero h1, .blog-hero-title{font-size:1.4rem !important}
   .blog-main{padding:.75rem !important}
-  .blog-grid{
-    grid-template-columns:1fr !important;
-    gap:.75rem !important;
-  }
-  .blog-card{width:100% !important;max-width:100% !important}
-  .blog-filters, .blog-cats{
-    overflow-x:auto !important;
-    flex-wrap:nowrap !important;
-    scrollbar-width:none !important;
-    -webkit-overflow-scrolling:touch !important;
-  }
-  .blog-filters::-webkit-scrollbar,
-  .blog-cats::-webkit-scrollbar{display:none}
-  .blog-filter-btn, .blog-cat-btn, .cat-btn{
-    flex-shrink:0 !important;
-    white-space:nowrap !important;
-    min-height:unset !important;
-  }
-}
-
-@media(max-width:400px){
-  .blog-hero{padding:1.5rem .6rem !important}
-  .blog-main{padding:.5rem !important}
+  .blog-grid{grid-template-columns:1fr !important;gap:.75rem !important}
+  .blog-filters,.blog-cats{overflow-x:auto !important;flex-wrap:nowrap !important;scrollbar-width:none !important}
+  .blog-filters::-webkit-scrollbar,.blog-cats::-webkit-scrollbar{display:none}
+  .blog-filter-btn,.blog-cat-btn,.cat-btn{flex-shrink:0 !important;white-space:nowrap !important;min-height:unset !important}
 }
 
 </style>
