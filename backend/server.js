@@ -922,6 +922,19 @@ app.patch('/api/orders/:id/status', async (req, res) => {
     }
 
     res.json({ success:true, data:{ ...order.toObject(), id:order._id.toString() }, waUrl });
+
+    // ── Email customer on status change ───────────────────────────────
+    setImmediate(async () => {
+      try {
+        if (order.customer?.email) {
+          await sendEmail({
+            to: order.customer.email,
+            subject: `Order Update #${order.orderNo} — SELA`,
+            html: emailOrderStatusUpdate(order, status, order.customer.name),
+          });
+        }
+      } catch(e) { console.error('Status email error:', e.message); }
+    });
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 
@@ -5062,6 +5075,190 @@ app.get('/api/admin/imagekit-cleanup', async (req, res) => {
       dryRun,
       orphanedFiles:   orphaned.slice(0,20).map(f => ({ fileId:f.fileId, url:f.url, name:f.name })),
     });
+  } catch(err) { res.status(500).json({ success:false, message:err.message }); }
+});
+
+
+// ── Email (Nodemailer + Gmail) ────────────────────────────────────────
+const nodemailer = require('nodemailer');
+
+const _transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASS,
+  },
+});
+
+async function sendEmail({ to, subject, html }) {
+  if (!process.env.GMAIL_USER) return; // skip if not configured
+  try {
+    await _transporter.sendMail({
+      from: `"SELA Marketplace" <${process.env.GMAIL_USER}>`,
+      to,
+      subject,
+      html,
+    });
+    console.log('Email sent to:', to, '|', subject);
+  } catch (e) {
+    console.error('Email failed:', e.message);
+  }
+}
+
+// ── Email Templates ───────────────────────────────────────────────────
+function emailBase(content) {
+  return `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/>
+<style>
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f4f4;margin:0;padding:0}
+  .wrap{max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;margin-top:20px}
+  .header{background:linear-gradient(135deg,#0b0e14,#1a2030);padding:28px 32px;text-align:center}
+  .logo{font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px}
+  .logo span{color:#00d4ff}
+  .body{padding:32px}
+  .footer{background:#f8f8f8;padding:16px 32px;text-align:center;font-size:12px;color:#999;border-top:1px solid #eee}
+  .btn{display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#00d4ff,#0ea5e9);color:#fff;text-decoration:none;border-radius:8px;font-weight:700;margin:16px 0}
+  .info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
+  .info-row:last-child{border-bottom:none}
+  .label{color:#666}
+  .value{font-weight:600;color:#111}
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
+  .badge-green{background:#dcfce7;color:#16a34a}
+  .badge-blue{background:#dbeafe;color:#2563eb}
+  .badge-orange{background:#fff7ed;color:#ea580c}
+  h2{color:#111;margin-top:0}
+  p{color:#444;line-height:1.6;font-size:15px}
+</style></head>
+<body><div class="wrap">
+  <div class="header">
+    <div class="logo">SELA<span>.</span></div>
+    <div style="color:rgba(255,255,255,.6);font-size:12px;margin-top:4px">Kenya's Multi-Vendor Marketplace</div>
+  </div>
+  <div class="body">${content}</div>
+  <div class="footer">
+    © ${new Date().getFullYear()} SELA Marketplace · Kenya<br/>
+    <a href="https://sela-marketplace-production.up.railway.app" style="color:#00d4ff;text-decoration:none">Visit SELA</a>
+  </div>
+</div></body></html>`;
+}
+
+function emailOrderConfirmation(order, items) {
+  const itemRows = items.map(i =>
+    `<div class="info-row"><span class="label">${i.name} × ${i.qty}</span><span class="value">KES ${(i.total||i.unitPrice*i.qty).toLocaleString()}</span></div>`
+  ).join('');
+  return emailBase(`
+    <h2>🎉 Order Confirmed!</h2>
+    <p>Hi ${order.customerName || 'Customer'}, your order has been received and is being processed.</p>
+    <div class="info-row"><span class="label">Order No.</span><span class="value" style="color:#00d4ff">#${order.orderNo || order._id?.toString().slice(-6).toUpperCase()}</span></div>
+    ${itemRows}
+    <div class="info-row"><span class="label"><strong>Total</strong></span><span class="value" style="color:#00d4ff"><strong>KES ${order.total?.toLocaleString()}</strong></span></div>
+    <div class="info-row"><span class="label">Payment</span><span class="value">${order.paymentMethod?.toUpperCase() || 'M-PESA'}</span></div>
+    <div class="info-row"><span class="label">Status</span><span class="value"><span class="badge badge-orange">Pending</span></span></div>
+    <p style="margin-top:20px">You will receive a WhatsApp or call to confirm pickup/delivery details.</p>
+    <a href="https://sela-marketplace-production.up.railway.app/order-track.html?order=${order.orderNo}" class="btn">Track Your Order</a>
+  `);
+}
+
+function emailVendorNewOrder(order, items, shopName) {
+  const itemRows = items.map(i =>
+    `<div class="info-row"><span class="label">${i.name} × ${i.qty}</span><span class="value">KES ${(i.total||i.unitPrice*i.qty).toLocaleString()}</span></div>`
+  ).join('');
+  return emailBase(`
+    <h2>🛒 New Order Received!</h2>
+    <p>Your shop <strong>${shopName}</strong> has received a new order.</p>
+    <div class="info-row"><span class="label">Order No.</span><span class="value" style="color:#00d4ff">#${order.orderNo || order._id?.toString().slice(-6).toUpperCase()}</span></div>
+    <div class="info-row"><span class="label">Customer</span><span class="value">${order.customerName || '—'}</span></div>
+    <div class="info-row"><span class="label">Phone</span><span class="value">${order.customerPhone || '—'}</span></div>
+    ${itemRows}
+    <div class="info-row"><span class="label"><strong>Total</strong></span><span class="value"><strong>KES ${order.total?.toLocaleString()}</strong></span></div>
+    <div class="info-row"><span class="label">Payment</span><span class="value">${order.paymentMethod?.toUpperCase() || 'M-PESA'}</span></div>
+    <p style="margin-top:20px">Please confirm or process this order from your dashboard.</p>
+    <a href="https://sela-marketplace-production.up.railway.app/shop-dashboard.html" class="btn">Go to Dashboard</a>
+  `);
+}
+
+function emailOrderStatusUpdate(order, newStatus, customerName) {
+  const statusMap = {
+    confirmed:  { label: 'Confirmed ✅',   badge: 'badge-green',  msg: 'Your order has been confirmed and is being prepared.' },
+    ready:      { label: 'Ready 📦',        badge: 'badge-blue',   msg: 'Your order is ready for pickup/delivery.' },
+    dispatched: { label: 'On the Way 🚚',   badge: 'badge-blue',   msg: 'Your order is on its way to you.' },
+    delivered:  { label: 'Delivered 🎉',    badge: 'badge-green',  msg: 'Your order has been delivered. Thank you!' },
+    cancelled:  { label: 'Cancelled ❌',    badge: 'badge-orange', msg: 'Your order has been cancelled. Contact us for help.' },
+  };
+  const s = statusMap[newStatus] || { label: newStatus, badge: 'badge-blue', msg: 'Your order status has been updated.' };
+  return emailBase(`
+    <h2>📦 Order Update</h2>
+    <p>Hi ${customerName || 'Customer'}, here's an update on your order.</p>
+    <div class="info-row"><span class="label">Order No.</span><span class="value" style="color:#00d4ff">#${order.orderNo || order._id?.toString().slice(-6).toUpperCase()}</span></div>
+    <div class="info-row"><span class="label">New Status</span><span class="value"><span class="badge ${s.badge}">${s.label}</span></span></div>
+    <p style="margin-top:16px">${s.msg}</p>
+    <a href="https://sela-marketplace-production.up.railway.app/order-track.html?order=${order.orderNo}" class="btn">Track Order</a>
+  `);
+}
+
+function emailWelcome(name, email) {
+  return emailBase(`
+    <h2>🎉 Welcome to SELA!</h2>
+    <p>Hi ${name || 'there'}, your account has been created successfully.</p>
+    <div class="info-row"><span class="label">Email</span><span class="value">${email}</span></div>
+    <p>You can now browse products, place orders, and track deliveries across Kenya's growing marketplace.</p>
+    <a href="https://sela-marketplace-production.up.railway.app" class="btn">Start Shopping</a>
+    <p style="margin-top:16px;font-size:13px;color:#888">Want to sell on SELA? <a href="https://sela-marketplace-production.up.railway.app/shop-create.html" style="color:#00d4ff">Open your store free →</a></p>
+  `);
+}
+
+function emailPasswordReset(name, resetLink) {
+  return emailBase(`
+    <h2>🔐 Reset Your Password</h2>
+    <p>Hi ${name || 'there'}, we received a request to reset your SELA password.</p>
+    <p>Click the button below to set a new password. This link expires in <strong>1 hour</strong>.</p>
+    <a href="${resetLink}" class="btn">Reset Password</a>
+    <p style="margin-top:16px;font-size:13px;color:#888">If you didn't request this, ignore this email — your account is safe.</p>
+  `);
+}
+
+
+// ── POST /api/auth/forgot-password ────────────────────────────────────────────
+app.post('/api/auth/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body || {};
+    if (!email) return res.status(400).json({ success:false, message:'Email required' });
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user) return res.json({ success:true, message:'If that email exists, a reset link has been sent.' });
+
+    // Generate reset token
+    const token = require('crypto').randomBytes(32).toString('hex');
+    user.resetToken = token;
+    user.resetTokenExpiry = new Date(Date.now() + 3600000); // 1 hour
+    await user.save();
+
+    const resetLink = `https://sela-marketplace-production.up.railway.app/auth.html?reset=${token}`;
+    await sendEmail({
+      to: user.email,
+      subject: 'Reset your SELA password 🔐',
+      html: emailPasswordReset(user.firstName, resetLink),
+    });
+
+    res.json({ success:true, message:'Password reset email sent.' });
+  } catch(err) { res.status(500).json({ success:false, message:err.message }); }
+});
+
+// ── POST /api/auth/reset-password ─────────────────────────────────────────────
+app.post('/api/auth/reset-password', async (req, res) => {
+  try {
+    const { token, newPassword } = req.body || {};
+    if (!token || !newPassword) return res.status(400).json({ success:false, message:'Token and new password required' });
+    if (newPassword.length < 8) return res.status(400).json({ success:false, message:'Password must be at least 8 characters' });
+
+    const user = await User.findOne({ resetToken: token, resetTokenExpiry: { $gt: new Date() } });
+    if (!user) return res.status(400).json({ success:false, message:'Reset link is invalid or expired' });
+
+    user.password = await _bcrypt.hash(newPassword, 10);
+    user.resetToken = undefined;
+    user.resetTokenExpiry = undefined;
+    await user.save();
+
+    res.json({ success:true, message:'Password reset successfully. You can now log in.' });
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 
