@@ -295,34 +295,40 @@ button, a, input, select, textarea, .btn, [onclick] {
   .hero h1 { font-size: 1.3rem !important; }
 }
 
-/* ── Blog mobile ── */
+/* NUCLEAR overflow fix */
+html { overflow-x: hidden !important; }
+body { overflow-x: hidden !important; margin: 0 !important; }
+.blog-hero,
+.filter-bar,
+.blog-main,
+.blog-grid,
+.blog-card,
+.blog-card-body,
+.blog-card-title,
+.featured-hero-card,
+#featuredHero,
+#blogGrid { 
+  max-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+.filter-bar { padding: .5rem .75rem !important; }
+.blog-hero { padding: 2rem .75rem !important; }
+.blog-main { padding: .75rem !important; }
+
+
 @media(max-width:900px){
-  .blog-main{grid-template-columns:1fr !important;padding:.75rem !important;gap:.75rem !important}
+  .blog-main{grid-template-columns:1fr !important;gap:.75rem !important}
   .blog-sidebar{display:none !important}
 }
 @media(max-width:600px){
-  .blog-hero{padding:2rem .6rem !important}
-  h1,.blog-hero h1{font-size:1.4rem !important}
-  .filter-bar{padding:.5rem .6rem !important}
-  .filter-inner{gap:.35rem !important}
-  .filter-search{flex:1;min-width:0}
-  .filter-search input{width:100%;min-width:0}
-  .blog-main{padding:.6rem !important}
   .blog-grid{grid-template-columns:1fr !important;gap:.6rem !important}
-  .cat-pill{font-size:.7rem !important;padding:.25rem .6rem !important;min-height:unset !important;flex-shrink:0 !important}
-  #catPillsWrap{display:flex;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;gap:.35rem}
+  .filter-search{max-width:120px !important}
+  .filter-sort{max-width:110px !important}
+  #catPillsWrap{display:flex;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
   #catPillsWrap::-webkit-scrollbar{display:none}
-}
-@media(max-width:400px){
-  .blog-hero{padding:1.5rem .5rem !important}
-  .blog-main,.filter-bar{padding:.5rem !important}
-}
-
-@media(max-width:600px){
-  .filter-search{max-width:130px !important}
-  .filter-search input{width:100%;min-width:0;font-size:14px}
-  .filter-bar{padding:.4rem .6rem !important}
-  .filter-inner{gap:.3rem !important}
+  .cat-pill{flex-shrink:0;white-space:nowrap;min-height:unset !important}
 }
 
 </style>
