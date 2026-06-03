@@ -2240,19 +2240,188 @@ async function loadPOSDaySummary() {
   try {
     const r = await fetch(`${API}/shops/${shopId}/sales/today`, { headers: authHeaders() });
     const j = await r.json().catch(()=>({}));
-    if (j.success) {
-      const s = j.stats || {};
-      const fmt = n => 'KES ' + Number(n||0).toLocaleString('en-KE');
-      const setEl = (id,v) => { const el=document.getElementById(id);if(el)el.textContent=v; };
-      setEl('dayRevenue', fmt(s.revenue));
-      setEl('dayCount',   s.count||0);
-      setEl('dayCash',    fmt(s.cash));
-      setEl('dayMpesa',   fmt(s.mpesa));
-      const bar = document.getElementById('posDaySummary');
-      if (bar) bar.style.display = 'flex';
-    }
-  } catch {}
+    if (!j.success) return;
+
+    const s   = j.stats || {};
+    const fmt = n => 'KES ' + Number(n||0).toLocaleString('en-KE');
+    const pct = (a,b) => b ? Math.round(a/b*100) : 0;
+
+    // Update POS left panel quick stats
+    const setEl = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+    setEl('dayRevenue', fmt(s.revenue));
+    setEl('dayCount',   (s.count||0) + ' sales');
+    setEl('posLeftRevenue', fmt(s.revenue));
+    setEl('posLeftSales',   (s.count||0) + ' sales today');
+
+    // Store for modal
+    _daySummaryData = j;
+  } catch(e) { console.error('Day summary error:', e); }
 }
+
+// Full daily summary modal
+let _daySummaryData = null;
+
+async function showDailySummary() {
+  await loadPOSDaySummary();
+  const d = _daySummaryData;
+  if (!d) { toast('No data available', 'warn'); return; }
+
+  const s   = d.stats || {};
+  const fmt = n => 'KES ' + Number(n||0).toLocaleString('en-KE');
+  const pct = (a,b) => b ? Math.round(a/b*100) : 0;
+
+  // Build hourly chart (ASCII-style bar)
+  const maxHourRevenue = Math.max(...(d.hourly||[]).map(h=>h.revenue), 1);
+  const hourlyBars = (d.hourly||[]).map(h => {
+    const barW = Math.round(h.revenue/maxHourRevenue*100);
+    const timeLabel = h.hour < 12 ? `${h.hour||12}am` : h.hour===12 ? '12pm' : `${h.hour-12}pm`;
+    return `<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;font-size:.72rem">
+      <span style="color:var(--text3);width:32px;flex-shrink:0">${timeLabel}</span>
+      <div style="flex:1;background:var(--bg3);border-radius:4px;height:14px;overflow:hidden">
+        <div style="width:${barW}%;background:var(--accent);height:100%;border-radius:4px;transition:width .3s"></div>
+      </div>
+      <span style="color:var(--text2);width:60px;text-align:right;flex-shrink:0">${fmt(h.revenue)}</span>
+    </div>`;
+  }).join('') || '<div style="color:var(--text3);font-size:.75rem">No sales recorded yet today</div>';
+
+  // Build top products list
+  const topProds = (d.topProducts||[]).map((p,i) =>
+    `<div style="display:flex;align-items:center;gap:.65rem;padding:.5rem 0;border-bottom:1px solid var(--border)">
+      <div style="width:22px;height:22px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:var(--accent);flex-shrink:0">${i+1}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.78rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</div>
+        <div style="font-size:.68rem;color:var(--text3)">${p.qty} sold</div>
+      </div>
+      <div style="font-size:.78rem;font-weight:700;color:var(--accent);flex-shrink:0">${fmt(p.revenue)}</div>
+    </div>`
+  ).join('') || '<div style="color:var(--text3);font-size:.75rem;padding:.5rem 0">No sales yet</div>';
+
+  // Payment split
+  const cashPct  = pct(s.cash||0, s.revenue||1);
+  const mpesaPct = pct(s.mpesa||0, s.revenue||1);
+
+  // Build modal
+  let modal = document.getElementById('daySummaryModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'daySummaryModal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:4000;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:1rem';
+    document.body.appendChild(modal);
+  }
+
+  modal.style.display = 'flex';
+  modal.innerHTML = `
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:620px;margin:auto;overflow:hidden">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,var(--bg2),var(--bg3));padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.05rem">📊 Daily Sales Summary</div>
+        <div style="font-size:.72rem;color:var(--text3);margin-top:.2rem">${d.date || new Date().toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div>
+      </div>
+      <button onclick="document.getElementById('daySummaryModal').style.display='none'" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text2);padding:.4rem .75rem;cursor:pointer;font-size:.8rem">✕ Close</button>
+    </div>
+
+    <div style="padding:1.25rem;overflow-y:auto;max-height:80vh">
+
+      <!-- KPI cards -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:1.25rem">
+        <div style="background:linear-gradient(135deg,rgba(0,212,255,.1),rgba(0,212,255,.05));border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:.85rem;text-align:center">
+          <div style="font-size:.65rem;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.06em">Revenue</div>
+          <div style="font-size:1.1rem;font-weight:900;color:var(--accent);margin:.2rem 0">${fmt(s.revenue)}</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(22,163,74,.1),rgba(22,163,74,.05));border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:.85rem;text-align:center">
+          <div style="font-size:.65rem;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.06em">Sales</div>
+          <div style="font-size:1.1rem;font-weight:900;color:#16a34a;margin:.2rem 0">${s.count||0}</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(245,158,11,.05));border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:.85rem;text-align:center">
+          <div style="font-size:.65rem;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.06em">Avg Sale</div>
+          <div style="font-size:1.1rem;font-weight:900;color:#f59e0b;margin:.2rem 0">${fmt(s.avgSale)}</div>
+        </div>
+      </div>
+
+      <!-- Payment breakdown -->
+      <div style="background:var(--bg3);border-radius:10px;padding:1rem;margin-bottom:1.25rem">
+        <div style="font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:.75rem">💳 Payment Methods</div>
+        <div style="display:flex;gap:1rem;margin-bottom:.6rem">
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:.25rem">
+              <span style="color:var(--text2)">💵 Cash</span>
+              <span style="font-weight:700">${fmt(s.cash)} (${cashPct}%)</span>
+            </div>
+            <div style="background:var(--bg2);border-radius:4px;height:8px;overflow:hidden">
+              <div style="width:${cashPct}%;background:#f59e0b;height:100%;border-radius:4px"></div>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:.25rem">
+              <span style="color:var(--text2)">📱 M-Pesa</span>
+              <span style="font-weight:700">${fmt(s.mpesa)} (${mpesaPct}%)</span>
+            </div>
+            <div style="background:var(--bg2);border-radius:4px;height:8px;overflow:hidden">
+              <div style="width:${mpesaPct}%;background:#16a34a;height:100%;border-radius:4px"></div>
+            </div>
+          </div>
+        </div>
+        ${s.discount > 0 ? `<div style="font-size:.72rem;color:var(--text3);margin-top:.4rem">🏷️ Total discounts given: <strong style="color:#ef4444">${fmt(s.discount)}</strong></div>` : ''}
+      </div>
+
+      <!-- Top products -->
+      <div style="margin-bottom:1.25rem">
+        <div style="font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:.6rem">🏆 Top Products Today</div>
+        ${topProds}
+      </div>
+
+      <!-- Hourly chart -->
+      <div style="margin-bottom:1.25rem">
+        <div style="font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:.6rem">⏰ Sales by Hour</div>
+        ${hourlyBars}
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display:flex;gap:.65rem;padding-top:.5rem;border-top:1px solid var(--border)">
+        <button onclick="printDailySummary()" style="flex:1;padding:.65rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text2);cursor:pointer;font-size:.8rem;font-weight:600">🖨️ Print Report</button>
+        <button onclick="document.getElementById('daySummaryModal').style.display='none'" style="flex:1;padding:.65rem;background:var(--accent);color:#0b0e14;border:none;border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:700">✅ Done</button>
+      </div>
+
+    </div>
+  </div>`;
+
+  modal.onclick = e => { if(e.target===modal) modal.style.display='none'; };
+}
+
+function printDailySummary() {
+  const d = _daySummaryData;
+  if (!d) return;
+  const s = d.stats || {};
+  const fmt = n => 'KES ' + Number(n||0).toLocaleString('en-KE');
+  const win = window.open('','_blank','width=400,height=600');
+  win.document.write(`<!DOCTYPE html><html><head><title>Daily Report</title>
+  <style>body{font-family:monospace;font-size:12px;padding:10px;max-width:320px}
+  h2{text-align:center;font-size:14px;margin:5px 0}
+  .sep{border-top:1px dashed #999;margin:8px 0}
+  .row{display:flex;justify-content:space-between;margin:3px 0}
+  .total{font-weight:bold;font-size:14px}</style></head><body>
+  <h2>SELA Marketplace</h2>
+  <h2>${shop?.name || 'Daily Sales Report'}</h2>
+  <div style="text-align:center;font-size:11px;color:#666">${d.date}</div>
+  <div class="sep"></div>
+  <div class="row"><span>Total Revenue</span><span class="total">${fmt(s.revenue)}</span></div>
+  <div class="row"><span>Total Sales</span><span>${s.count||0}</span></div>
+  <div class="row"><span>Average Sale</span><span>${fmt(s.avgSale)}</span></div>
+  <div class="sep"></div>
+  <div class="row"><span>Cash</span><span>${fmt(s.cash)}</span></div>
+  <div class="row"><span>M-Pesa</span><span>${fmt(s.mpesa)}</span></div>
+  ${s.discount > 0 ? `<div class="row"><span>Discounts</span><span>-${fmt(s.discount)}</span></div>` : ''}
+  <div class="sep"></div>
+  <div style="font-weight:bold;margin:4px 0">Top Products:</div>
+  ${(d.topProducts||[]).map((p,i)=>`<div class="row"><span>${i+1}. ${p.name}</span><span>×${p.qty}</span></div>`).join('')}
+  <div class="sep"></div>
+  <div style="text-align:center;font-size:10px;color:#999">Printed: ${new Date().toLocaleString('en-KE')}</div>
+  </body></html>`);
+  win.document.close();
+  win.print();
+}
+
 
 function showSalesHistory() {
   showPanel('sales', document.getElementById('nav-sales'));
@@ -5423,6 +5592,8 @@ function toggleShortcutsHelp() {
   const el = document.getElementById('posShortcutsHelp');
   if (el) el.style.display = el.style.display === 'none' ? '' : 'none';
 }
+
+
 </script>
 
   <!-- ── SERVICES SECTION ───────────────────────────────────────────────── -->

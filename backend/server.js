@@ -3367,21 +3367,45 @@ app.get('/api/shops/:id/sales/today', async (req, res) => {
       ? new mongoose.Types.ObjectId(req.params.id) : req.params.id;
     const start = new Date(); start.setHours(0,0,0,0);
     const end   = new Date(); end.setHours(23,59,59,999);
-    const [agg, sales] = await Promise.all([
+    const [agg, topProducts, hourly, sales] = await Promise.all([
+      // Overall stats
       Sale.aggregate([
         { $match: { shopId, status:'completed', createdAt:{ $gte:start, $lte:end } } },
         { $group: { _id:null,
-          revenue:    { $sum:'$total' },
-          count:      { $sum:1 },
-          cash:       { $sum:'$cashPaid' },
-          mpesa:      { $sum:'$mpesaPaid' },
-          discount:   { $sum:'$discount' },
+          revenue:  { $sum:'$total' },
+          count:    { $sum:1 },
+          cash:     { $sum:'$cashPaid' },
+          mpesa:    { $sum:'$mpesaPaid' },
+          discount: { $sum:'$discount' },
+          avgSale:  { $avg:'$total' },
         }}
       ]),
-      Sale.find({ shopId, createdAt:{ $gte:start, $lte:end } }).sort({ createdAt:-1 }).limit(10).lean(),
+      // Top products
+      Sale.aggregate([
+        { $match: { shopId, status:'completed', createdAt:{ $gte:start, $lte:end } } },
+        { $unwind: '$items' },
+        { $group: { _id:'$items.name', qty:{ $sum:'$items.qty' }, revenue:{ $sum:{ $multiply:['$items.unitPrice','$items.qty'] } } } },
+        { $sort: { revenue:-1 } },
+        { $limit: 5 },
+      ]),
+      // Hourly breakdown
+      Sale.aggregate([
+        { $match: { shopId, status:'completed', createdAt:{ $gte:start, $lte:end } } },
+        { $group: { _id:{ $hour:'$createdAt' }, count:{ $sum:1 }, revenue:{ $sum:'$total' } } },
+        { $sort: { '_id':1 } },
+      ]),
+      // Recent sales
+      Sale.find({ shopId, createdAt:{ $gte:start, $lte:end } }).sort({ createdAt:-1 }).limit(15).lean(),
     ]);
-    const stats = agg[0] || { revenue:0, count:0, cash:0, mpesa:0, discount:0 };
-    res.json({ success:true, stats, recent: sales.map(s => ({ ...s, id:s._id?.toString() })) });
+    const stats = agg[0] || { revenue:0, count:0, cash:0, mpesa:0, discount:0, avgSale:0 };
+    res.json({
+      success: true,
+      stats,
+      topProducts: topProducts.map(p => ({ name:p._id, qty:p.qty, revenue:p.revenue })),
+      hourly: hourly.map(h => ({ hour:h._id, count:h.count, revenue:h.revenue })),
+      recent: sales.map(s => ({ ...s, id:s._id?.toString() })),
+      date: new Date().toLocaleDateString('en-KE', { weekday:'long', year:'numeric', month:'long', day:'numeric' }),
+    });
   } catch(err) { res.status(500).json({ success:false, message:err.message }); }
 });
 
