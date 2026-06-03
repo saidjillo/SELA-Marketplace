@@ -3276,9 +3276,17 @@ async function generateCatalogue(){
       <!-- LEFT: Search + Cart -->
       <div style="display:flex;flex-direction:column;gap:.75rem;overflow:hidden">
 
-        <!-- Search bar -->
+   <!-- Barcode & Shortcuts bar -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;font-size:.7rem;color:var(--text3)">
+            <span>📡 <strong style="color:var(--accent)">Barcode active</strong> — scan when no input focused</span>
+            <button onclick="toggleShortcutsHelp()" style="background:none;border:1px solid var(--border);border-radius:5px;color:var(--text3);padding:.1rem .4rem;font-size:.65rem;cursor:pointer">⌨️ Shortcuts</button>
+          </div>
+          <div id="posShortcutsHelp" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.5rem .75rem;margin-bottom:.4rem;font-size:.7rem;color:var(--text2);line-height:1.8">
+            <strong>F1</strong> Focus search &nbsp;|&nbsp; <strong>F2</strong> Hold &nbsp;|&nbsp; <strong>F3</strong> Checkout &nbsp;|&nbsp; <strong>F4</strong> Split &nbsp;|&nbsp; <strong>Esc</strong> Clear cart
+          </div>
+          <!-- Search bar -->
         <div style="display:flex;gap:.5rem">
-          <input id="posSearch" title="F1: Focus search | F2: Hold | F3: Checkout | F4: Split pay | Esc: Clear cart" type="text" placeholder="🔍 Search products or services…"
+          <input id="posSearch" title="F1: Focus search | F2: Hold | F3: Checkout | F4: Split pay | Esc: Clear cart" placeholder="🔍 Search products or scan barcode..." type="text" placeholder="🔍 Search products or services…"
             oninput="posSearchItems(this.value)"
             style="flex:1;padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.9rem"/>
           <select id="posBranch" style="padding:.65rem .75rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.82rem">
@@ -3334,7 +3342,7 @@ async function generateCatalogue(){
         <!-- Cash fields -->
         <div id="posCashFields" style="padding:.75rem 1rem;border-bottom:1px solid var(--border)">
           <label style="font-size:.75rem;font-weight:700;color:var(--text3);display:block;margin-bottom:.3rem">CASH RECEIVED</label>
-          <input id="posCashReceived" oninput="updateCashChange()" oninput="updateCashChange()" type="number" min="0" placeholder="0" oninput="calcChange()"
+          <input id="posCashReceived" type="number" min="0" placeholder="0" oninput="updateCashChange()"
             style="width:100%;padding:.55rem .75rem;border:1.5px solid var(--border);border-radius:7px;background:var(--bg2);color:var(--text);font-size:1rem;font-weight:700"/>
           <div style="display:flex;justify-content:space-between;margin-top:.4rem;font-size:.85rem">
             <span style="color:var(--text2)">Change</span>
@@ -3400,14 +3408,7 @@ async function generateCatalogue(){
         <!-- Held orders list -->
         <div id="posHeldList" style="padding:.25rem 1rem"></div>
 
-        <!-- Hold & Split buttons -->
-        <div style="padding:.5rem 1rem .25rem;display:flex;gap:.5rem">
-          <button onclick="holdOrder()" style="flex:1;padding:.5rem;background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer">
-            ⏸️ Hold <span id="posHeldBadge" style="display:none;background:#f59e0b;color:#0b0e14;border-radius:10px;padding:.05rem .35rem;font-size:.65rem">0</span>
-          </button>
-          <button onclick="openSplitPayment()" style="flex:1;padding:.5rem;background:rgba(99,102,241,.12);color:#a5b4fc;border:1px solid rgba(99,102,241,.25);border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer">⚡ Split</button>
-        </div>
-        <div id="posHeldList" style="padding:0 1rem .25rem"></div>
+
 
 
         <!-- Checkout button -->
@@ -3889,7 +3890,15 @@ async function exportInventoryPDF(){
       <!-- LEFT: Search + Cart -->
       <div style="display:flex;flex-direction:column;gap:.75rem;overflow:hidden">
 
-        <!-- Search bar -->
+   <!-- Barcode & Shortcuts bar -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;font-size:.7rem;color:var(--text3)">
+            <span>📡 <strong style="color:var(--accent)">Barcode active</strong> — scan when no input focused</span>
+            <button onclick="toggleShortcutsHelp()" style="background:none;border:1px solid var(--border);border-radius:5px;color:var(--text3);padding:.1rem .4rem;font-size:.65rem;cursor:pointer">⌨️ Shortcuts</button>
+          </div>
+          <div id="posShortcutsHelp" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.5rem .75rem;margin-bottom:.4rem;font-size:.7rem;color:var(--text2);line-height:1.8">
+            <strong>F1</strong> Focus search &nbsp;|&nbsp; <strong>F2</strong> Hold &nbsp;|&nbsp; <strong>F3</strong> Checkout &nbsp;|&nbsp; <strong>F4</strong> Split &nbsp;|&nbsp; <strong>Esc</strong> Clear cart
+          </div>
+          <!-- Search bar -->
         <div style="display:flex;gap:.5rem">
           <input id="posSearch" title="F1: Focus search | F2: Hold | F3: Checkout | F4: Split pay | Esc: Clear cart" type="text" placeholder="🔍 Search products or services…"
             oninput="posSearchItems(this.value)"
@@ -4000,161 +4009,6 @@ async function exportInventoryPDF(){
             style="width:100%;padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:7px;background:var(--bg2);color:var(--text);font-size:.82rem;min-height:60px;resize:none"></textarea>
         </div>
 
-        <!-- Hold & Split buttons -->
-        <div style="padding:.5rem 1rem .25rem;display:flex;gap:.5rem">
-          <button onclick="holdOrder()" style="flex:1;padding:.5rem;background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer">
-            ⏸️ Hold <span id="posHeldBadge" style="display:none;background:#f59e0b;color:#0b0e14;border-radius:10px;padding:.05rem .35rem;font-size:.65rem">0</span>
-          </button>
-          <button onclick="openSplitPayment()" style="flex:1;padding:.5rem;background:rgba(99,102,241,.12);color:#a5b4fc;border:1px solid rgba(99,102,241,.25);border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer">⚡ Split</button>
-        </div>
-
-        <!-- Held orders list -->
-        <div id="posHeldList" style="padding:.25rem 1rem"></div>
-
-        <!-- Checkout button -->
-        <div style="padding:.75rem 1rem">
-          <button onclick="posCheckout()" id="posCheckoutBtn"
-            style="width:100%;padding:.85rem;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:1rem;cursor:pointer;letter-spacing:.02em">
-            ✅ Complete Sale
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Today's summary bar -->
-    <div id="posDaySummary" style="display:none;margin-top:.75rem;padding:.65rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
-      <span style="font-size:.75rem;font-weight:700;color:var(--text3)">TODAY</span>
-      <span style="font-size:.85rem">💰 Revenue: <strong id="dayRevenue">KES 0</strong></span>
-      <span style="font-size:.85rem">🧾 Sales: <strong id="dayCount">0</strong></span>
-      <span style="font-size:.85rem">💵 Cash: <strong id="dayCash">KES 0</strong></span>
-      <span style="font-size:.85rem">📱 M-Pesa: <strong id="dayMpesa">KES 0</strong></span>
-    </div>
-  </div>
-
-  <!-- Receipt Modal -->
-  <div id="receiptOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;align-items:center;justify-content:center">
-    <div style="background:#fff;color:#111;border-radius:12px;padding:1.5rem;width:320px;max-height:90vh;overflow-y:auto;font-family:'Courier New',monospace">
-      <div id="receiptContent"></div>
-      <div style="display:flex;gap:.5rem;margin-top:1rem">
-        <button onclick="window.print()" style="flex:1;padding:.6rem;background:#111;color:#fff;border:none;border-radius:7px;cursor:pointer;font-weight:700">🖨️ Print</button>
-        <button onclick="closePOSReceipt()" style="flex:1;padding:.6rem;background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;border-radius:7px;cursor:pointer;font-weight:700">New Sale</button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- LEDGER PANEL -->
-  <div id="panel-ledger" class="panel">
-
-    <!-- Period selector -->
-    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap">
-      <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:800">📒 Financial Ledger</div>
-      <div style="display:flex;gap:.4rem;margin-left:auto">
-        <button onclick="setLedgerPeriod('today')"  class="ledger-period-btn" id="lp-today">Today</button>
-        <button onclick="setLedgerPeriod('week')"   class="ledger-period-btn" id="lp-week">7 Days</button>
-        <button onclick="setLedgerPeriod('month')"  class="ledger-period-btn active" id="lp-month">30 Days</button>
-        <button onclick="setLedgerPeriod('year')"   class="ledger-period-btn" id="lp-year">1 Year</button>
-        <button onclick="setLedgerPeriod('all')"    class="ledger-period-btn" id="lp-all">All Time</button>
-        <div style="display:flex;align-items:center;gap:.35rem;margin-left:.25rem">
-          <input type="date" id="lp-from" onchange="setLedgerCustom()"
-            style="padding:.32rem .5rem;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);font-size:.72rem;cursor:pointer"/>
-          <span style="font-size:.72rem;color:var(--text3)">→</span>
-          <input type="date" id="lp-to" onchange="setLedgerCustom()"
-            style="padding:.32rem .5rem;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);font-size:.72rem;cursor:pointer"/>
-        </div>
-      </div>
-    </div>
-
-    <!-- Summary cards -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-bottom:1.25rem" id="ledgerCards">
-      <div class="stat-card"><div class="stat-icon" style="background:#d1fae5">💰</div><div class="stat-value" id="lc-revenue">KES 0</div><div class="stat-label">Total Revenue</div></div>
-      <div class="stat-card"><div class="stat-icon" style="background:#dbeafe">🧾</div><div class="stat-value" id="lc-sales">0</div><div class="stat-label">Sales Made</div></div>
-      <div class="stat-card"><div class="stat-icon" style="background:#ede9fe">📊</div><div class="stat-value" id="lc-avg">KES 0</div><div class="stat-label">Avg Sale</div></div>
-      <div class="stat-card"><div class="stat-icon" style="background:#fef3c7">💵</div><div class="stat-value" id="lc-cash">KES 0</div><div class="stat-label">Cash</div></div>
-      <div class="stat-card"><div class="stat-icon" style="background:#fce7f3">📱</div><div class="stat-value" id="lc-mpesa">KES 0</div><div class="stat-label">M-Pesa</div></div>
-      <div class="stat-card"><div class="stat-icon" style="background:#fee2e2">🎁</div><div class="stat-value" id="lc-discount">KES 0</div><div class="stat-label">Discounts Given</div></div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
-
-      <!-- Daily revenue chart -->
-      <div class="main-card" style="padding:1rem">
-        <div style="font-weight:700;font-size:.85rem;margin-bottom:.75rem">📈 Daily Revenue</div>
-        <div id="ledgerChart" style="height:160px;display:flex;align-items:flex-end;gap:3px;overflow:hidden"></div>
-        <div id="ledgerChartDates" style="display:flex;justify-content:space-between;font-size:.62rem;color:var(--text3);margin-top:.25rem"></div>
-      </div>
-
-      <!-- Top items -->
-      <div class="main-card" style="padding:1rem">
-        <div style="font-weight:700;font-size:.85rem;margin-bottom:.75rem">🏆 Top Selling Items</div>
-        <div id="ledgerTopItems" style="font-size:.8rem;color:var(--text3)">Loading…</div>
-      </div>
-    </div>
-
-    <!-- Recent sales table -->
-    <div class="main-card">
-      <div class="table-head">
-        <div class="table-title">Recent Transactions</div>
-        <div style="font-size:.75rem;color:var(--text3)" id="ledgerSalesCount"></div>
-      </div>
-      <div style="overflow-x:auto">
-        <table class="data-table">
-          <thead><tr>
-            <th>Receipt</th><th>Date</th><th>Items</th>
-            <th>Payment</th><th>Total</th><th>Cashier</th>
-          </tr></thead>
-          <tbody id="ledgerSalesTbl"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text3)">No sales yet</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- CRM PANEL -->
-  <div id="panel-crm" class="panel">
-    <!-- Search + stats bar -->
-    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap">
-      <input id="crmSearch" type="text" placeholder="🔍 Search by name, phone or email…"
-        oninput="crmSearchDebounce(this.value)"
-        style="flex:1;min-width:200px;padding:.6rem 1rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.88rem"/>
-      <div style="display:flex;gap:.5rem;font-size:.8rem;color:var(--text2)">
-        <span>👥 <strong id="crmTotal">0</strong> customers</span>
-      </div>
-    </div>
-
-    <!-- Customer table -->
-    <div class="main-card" style="overflow:hidden">
-      <div style="overflow-x:auto">
-        <table class="data-table">
-          <thead><tr>
-            <th>Customer</th><th>Phone</th><th>Total Spent</th>
-            <th>Orders</th><th>Last Visit</th><th>Tags</th><th>Actions</th>
-          </tr></thead>
-          <tbody id="crmTableBody">
-            <tr><td colspan="7" style="text-align:center;padding:3rem;color:var(--text3)">
-              <div style="font-size:2rem;margin-bottom:.5rem">👥</div>
-              No customers yet — add one or link customers during POS checkout
-            </td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- Customer Form Modal -->
-  <div class="form-overlay" id="customerFormOverlay" onclick="if(event.target===this)closeCustomerForm()">
-    <div class="form-modal" style="max-width:480px">
-      <div class="form-modal-head">
-        <div class="form-modal-title" id="customerFormTitle">Add Customer</div>
-        <button class="form-modal-x" onclick="closeCustomerForm()">✕</button>
-      </div>
-      <div class="form-modal-body">
-        <input type="hidden" id="editCustomerId"/>
-        <div class="fg-row">
-          <div class="fg">
-            <label>Full Name *</label>
-            <input id="cName" placeholder="e.g. Amina Wanjiru"/>
-          </div>
           <div class="fg">
             <label>Phone</label>
             <input id="cPhone" placeholder="+254 7XX XXX XXX" type="tel"/>
@@ -5469,13 +5323,22 @@ function updateCashChange() {
   const total = Math.max(0, subtotal - discount);
   const cash = parseFloat(document.getElementById('posCashReceived')?.value||0)||0;
   const change = cash - total;
+  // Update existing Change row
+  const chEl = document.getElementById('posChange');
+  if (chEl) {
+    chEl.textContent = 'KES ' + Math.max(0, change).toLocaleString('en-KE');
+    chEl.style.color = change >= 0 ? '#16a34a' : '#ef4444';
+  }
+  // Update change hint below input
   const el = document.getElementById('posCashChange');
   if (el) {
     if (cash <= 0) { el.style.display = 'none'; return; }
     el.style.display = '';
+    el.style.padding = '.25rem 0';
+    el.style.fontWeight = '700';
     el.innerHTML = change >= 0
-      ? '<span style="color:#16a34a;font-weight:700">Change: KES ' + change.toLocaleString('en-KE') + '</span>'
-      : '<span style="color:#ef4444;font-weight:700">Short: KES ' + Math.abs(change).toLocaleString('en-KE') + '</span>';
+      ? '💚 Change due: <strong>KES ' + change.toLocaleString('en-KE') + '</strong>'
+      : '🔴 Short by: <strong style="color:#ef4444">KES ' + Math.abs(change).toLocaleString('en-KE') + '</strong>';
   }
 }
 
@@ -5555,6 +5418,11 @@ function initPOSKeyboard() {
   });
 }
 
+
+function toggleShortcutsHelp() {
+  const el = document.getElementById('posShortcutsHelp');
+  if (el) el.style.display = el.style.display === 'none' ? '' : 'none';
+}
 </script>
 
   <!-- ── SERVICES SECTION ───────────────────────────────────────────────── -->
@@ -5684,7 +5552,15 @@ function initPOSKeyboard() {
       <!-- LEFT: Search + Cart -->
       <div style="display:flex;flex-direction:column;gap:.75rem;overflow:hidden">
 
-        <!-- Search bar -->
+   <!-- Barcode & Shortcuts bar -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;font-size:.7rem;color:var(--text3)">
+            <span>📡 <strong style="color:var(--accent)">Barcode active</strong> — scan when no input focused</span>
+            <button onclick="toggleShortcutsHelp()" style="background:none;border:1px solid var(--border);border-radius:5px;color:var(--text3);padding:.1rem .4rem;font-size:.65rem;cursor:pointer">⌨️ Shortcuts</button>
+          </div>
+          <div id="posShortcutsHelp" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.5rem .75rem;margin-bottom:.4rem;font-size:.7rem;color:var(--text2);line-height:1.8">
+            <strong>F1</strong> Focus search &nbsp;|&nbsp; <strong>F2</strong> Hold &nbsp;|&nbsp; <strong>F3</strong> Checkout &nbsp;|&nbsp; <strong>F4</strong> Split &nbsp;|&nbsp; <strong>Esc</strong> Clear cart
+          </div>
+          <!-- Search bar -->
         <div style="display:flex;gap:.5rem">
           <input id="posSearch" title="F1: Focus search | F2: Hold | F3: Checkout | F4: Split pay | Esc: Clear cart" type="text" placeholder="🔍 Search products or services…"
             oninput="posSearchItems(this.value)"
