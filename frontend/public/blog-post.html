@@ -11,7 +11,6 @@ window.SELA_BASE=window.SELA_API.replace('/api','');
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0e14'/><text y='.9em' font-size='72' x='12'>📝</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 <style>
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0b0e14;--bg2:#111520;--bg3:#161b27;
@@ -451,6 +450,24 @@ img{max-width:100%}
   .comment-form, .prd-cf-wrap{padding:.75rem !important}
 }
 
+
+/* Footer */
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;padding:2.5rem 1.5rem 2rem;box-sizing:border-box;width:100%}
+.footer-brand{display:flex;flex-direction:column}
+.logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:900;color:#f97316;margin-bottom:.5rem}
+.logo-dot{color:#f97316}
+.footer-brand p{font-size:.8rem;color:#64748b;line-height:1.7;max-width:240px}
+.footer-social{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}
+.footer-social a{display:flex;align-items:center;justify-content:center;width:32px;height:32px;min-height:32px;border-radius:7px;background:#f1f5f9;color:#64748b;text-decoration:none}
+.footer-social a:hover{background:#f97316;color:#fff}
+.footer-col h4{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#f97316;margin-bottom:.85rem}
+.footer-col ul{list-style:none;margin:0;padding:0}
+.footer-col li{margin:0;padding:0}
+.footer-col a,.footer-col li a{display:block;font-size:.8rem;color:#64748b;text-decoration:none;margin-bottom:.45rem;min-height:unset}
+.footer-col a:hover,.footer-col li a:hover{color:#f97316}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:1rem 1.5rem;border-top:1px solid #fcd9b0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-size:.72rem;color:#94a3b8;box-sizing:border-box;width:100%}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr 1fr;gap:1.25rem;padding:1.5rem 1rem}.footer-bottom{flex-direction:column;text-align:center}}
+@media(max-width:480px){.footer-inner{grid-template-columns:1fr;padding:1.25rem .75rem}}
 </style>
 <link rel="stylesheet" href="theme.css"/>
 
@@ -933,6 +950,7 @@ let selectedIds    = new Set();
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 (async () => {
+try {
   // 1. Verify admin token first so isAdmin() works for comment form
   await verifyStoredToken();
 
@@ -946,7 +964,7 @@ let selectedIds    = new Set();
 
   // 4. Load metrics from DB
   try {
-    const r = await fetch(`${API}/blog/meta/${currentPost.id}`, { signal: AbortSignal.timeout(5000) });
+    const r = await fetch(`${API}/blog/meta/${currentPost.id}`, { signal: (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) ? AbortSignal.timeout(5000) : undefined });
     const j = await r.json();
     postMeta = j.success ? j.data : { views: currentPost.views||0, likes: currentPost.likes||0, voteScore:0, voteCount:0 };
   } catch {
@@ -963,6 +981,7 @@ let selectedIds    = new Set();
   // 7. Load comments and set up admin UI
   await loadComments();
   updateAdminUI();
+} catch(e) { console.error("Blog init error:", e); }
 })();
 
 // ── Avatar helpers ─────────────────────────────────────────────────────────────
