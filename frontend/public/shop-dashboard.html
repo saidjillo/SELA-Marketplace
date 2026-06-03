@@ -1870,6 +1870,9 @@ async function posSendStkPush() {
 }
 
 async function initPOS() {
+  initBarcodeScanner();
+  initPOSKeyboard();
+  renderHeldOrders();
   if (!shopId) return;
   // Load products + services for search
   try {
@@ -1963,7 +1966,7 @@ function posSearchItems(q) {
   `).join('');
 }
 
-function posAddItem(item) {
+function _origPosAddItemImpl(item) {
   const id = item.id || item._id || '';
   const existing = _posCart.find(c => c.refId === id && c.type === item._type);
   if (existing) {
@@ -2196,6 +2199,7 @@ function showPOSReceipt(sale) {
   content.innerHTML = `
     <div style="text-align:center;margin-bottom:.75rem;border-bottom:1px dashed #999;padding-bottom:.5rem">
       <div style="font-size:1.1rem;font-weight:bold">${shop?.name||'SELA Store'}</div>
+<div id="posCashChange" style="display:none;font-size:.78rem;padding:.25rem .5rem;margin-top:.25rem"></div>
       <div style="font-size:.75rem">${shop?.location||''}</div>
       <div style="font-size:.75rem">${shop?.phone||''}</div>
     </div>
@@ -3274,7 +3278,7 @@ async function generateCatalogue(){
 
         <!-- Search bar -->
         <div style="display:flex;gap:.5rem">
-          <input id="posSearch" type="text" placeholder="🔍 Search products or services…"
+          <input id="posSearch" title="F1: Focus search | F2: Hold | F3: Checkout | F4: Split pay | Esc: Clear cart" type="text" placeholder="🔍 Search products or services…"
             oninput="posSearchItems(this.value)"
             style="flex:1;padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.9rem"/>
           <select id="posBranch" style="padding:.65rem .75rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.82rem">
@@ -3330,7 +3334,7 @@ async function generateCatalogue(){
         <!-- Cash fields -->
         <div id="posCashFields" style="padding:.75rem 1rem;border-bottom:1px solid var(--border)">
           <label style="font-size:.75rem;font-weight:700;color:var(--text3);display:block;margin-bottom:.3rem">CASH RECEIVED</label>
-          <input id="posCashReceived" type="number" min="0" placeholder="0" oninput="calcChange()"
+          <input id="posCashReceived" oninput="updateCashChange()" oninput="updateCashChange()" type="number" min="0" placeholder="0" oninput="calcChange()"
             style="width:100%;padding:.55rem .75rem;border:1.5px solid var(--border);border-radius:7px;background:var(--bg2);color:var(--text);font-size:1rem;font-weight:700"/>
           <div style="display:flex;justify-content:space-between;margin-top:.4rem;font-size:.85rem">
             <span style="color:var(--text2)">Change</span>
@@ -3663,6 +3667,37 @@ async function generateCatalogue(){
 
 
   
+
+<!-- Split Payment Modal -->
+<div id="posSplitModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:3000;align-items:center;justify-content:center">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;width:340px;max-width:90vw">
+    <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;margin-bottom:1rem">⚡ Split Payment</div>
+    <div style="background:var(--bg3);border-radius:8px;padding:.6rem 1rem;margin-bottom:1rem;text-align:center">
+      <div style="font-size:.72rem;color:var(--text3)">Total Due</div>
+      <div id="splitTotal" style="font-size:1.3rem;font-weight:900;color:var(--accent)">KES 0</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
+      <div>
+        <label style="font-size:.72rem;color:var(--text2);font-weight:600">💵 Cash</label>
+        <input id="splitCashInput" type="number" placeholder="0" oninput="updateSplitBalance()" 
+          style="width:100%;padding:.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.88rem;margin-top:.2rem"/>
+      </div>
+      <div>
+        <label style="font-size:.72rem;color:var(--text2);font-weight:600">📱 M-Pesa</label>
+        <input id="splitMpesaInput" type="number" placeholder="0" oninput="updateSplitBalance()"
+          style="width:100%;padding:.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.88rem;margin-top:.2rem"/>
+      </div>
+    </div>
+    <div id="splitBalance" style="text-align:center;font-size:.88rem;margin-bottom:1rem;min-height:1.2rem"></div>
+    <div style="display:flex;gap:.5rem">
+      <button onclick="document.getElementById('posSplitModal').style.display='none'" 
+        style="flex:1;padding:.6rem;background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:8px;cursor:pointer">Cancel</button>
+      <button onclick="confirmSplitPayment()"
+        style="flex:1;padding:.6rem;background:var(--accent);color:#0b0e14;border:none;border-radius:8px;font-weight:700;cursor:pointer">✅ Confirm</button>
+    </div>
+  </div>
+</div>
+
 </body></html>`;
     const win=window.open('','_blank');
     win.document.write(html); win.document.close();
@@ -3834,7 +3869,7 @@ async function exportInventoryPDF(){
 
         <!-- Search bar -->
         <div style="display:flex;gap:.5rem">
-          <input id="posSearch" type="text" placeholder="🔍 Search products or services…"
+          <input id="posSearch" title="F1: Focus search | F2: Hold | F3: Checkout | F4: Split pay | Esc: Clear cart" type="text" placeholder="🔍 Search products or services…"
             oninput="posSearchItems(this.value)"
             style="flex:1;padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.9rem"/>
           <select id="posBranch" style="padding:.65rem .75rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.82rem">
@@ -3890,7 +3925,7 @@ async function exportInventoryPDF(){
         <!-- Cash fields -->
         <div id="posCashFields" style="padding:.75rem 1rem;border-bottom:1px solid var(--border)">
           <label style="font-size:.75rem;font-weight:700;color:var(--text3);display:block;margin-bottom:.3rem">CASH RECEIVED</label>
-          <input id="posCashReceived" type="number" min="0" placeholder="0" oninput="calcChange()"
+          <input id="posCashReceived" oninput="updateCashChange()" type="number" min="0" placeholder="0" oninput="calcChange()"
             style="width:100%;padding:.55rem .75rem;border:1.5px solid var(--border);border-radius:7px;background:var(--bg2);color:var(--text);font-size:1rem;font-weight:700"/>
           <div style="display:flex;justify-content:space-between;margin-top:.4rem;font-size:.85rem">
             <span style="color:var(--text2)">Change</span>
@@ -4218,6 +4253,37 @@ async function exportInventoryPDF(){
     </div>
   </div>
 
+
+
+<!-- Split Payment Modal -->
+<div id="posSplitModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:3000;align-items:center;justify-content:center">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;width:340px;max-width:90vw">
+    <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;margin-bottom:1rem">⚡ Split Payment</div>
+    <div style="background:var(--bg3);border-radius:8px;padding:.6rem 1rem;margin-bottom:1rem;text-align:center">
+      <div style="font-size:.72rem;color:var(--text3)">Total Due</div>
+      <div id="splitTotal" style="font-size:1.3rem;font-weight:900;color:var(--accent)">KES 0</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
+      <div>
+        <label style="font-size:.72rem;color:var(--text2);font-weight:600">💵 Cash</label>
+        <input id="splitCashInput" type="number" placeholder="0" oninput="updateSplitBalance()" 
+          style="width:100%;padding:.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.88rem;margin-top:.2rem"/>
+      </div>
+      <div>
+        <label style="font-size:.72rem;color:var(--text2);font-weight:600">📱 M-Pesa</label>
+        <input id="splitMpesaInput" type="number" placeholder="0" oninput="updateSplitBalance()"
+          style="width:100%;padding:.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.88rem;margin-top:.2rem"/>
+      </div>
+    </div>
+    <div id="splitBalance" style="text-align:center;font-size:.88rem;margin-bottom:1rem;min-height:1.2rem"></div>
+    <div style="display:flex;gap:.5rem">
+      <button onclick="document.getElementById('posSplitModal').style.display='none'" 
+        style="flex:1;padding:.6rem;background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:8px;cursor:pointer">Cancel</button>
+      <button onclick="confirmSplitPayment()"
+        style="flex:1;padding:.6rem;background:var(--accent);color:#0b0e14;border:none;border-radius:8px;font-weight:700;cursor:pointer">✅ Confirm</button>
+    </div>
+  </div>
+</div>
 
 </body></html>`;
     const win=window.open('','_blank');
@@ -5265,6 +5331,197 @@ function logoutVendor() {
   localStorage.removeItem('ac_user');
   window.location.href = 'index.html';
 }
+
+
+// ══════════════════════════════════════════════════════════════════════
+// POS ENHANCEMENTS
+// ══════════════════════════════════════════════════════════════════════
+
+// ── Hold Orders ──────────────────────────────────────────────────────
+let _heldOrders = JSON.parse(localStorage.getItem('pos_held_orders') || '[]');
+
+function holdOrder() {
+  if (!_posCart.length) { toast('Cart is empty', 'warn'); return; }
+  const name = prompt('Label this held order (e.g. Table 2, Customer name):', 'Order ' + (_heldOrders.length + 1));
+  if (!name) return;
+  _heldOrders.push({ id: Date.now(), name, cart: [..._posCart], time: new Date().toLocaleTimeString('en-KE') });
+  localStorage.setItem('pos_held_orders', JSON.stringify(_heldOrders));
+  _posCart = [];
+  renderPOSCart();
+  renderHeldOrders();
+  toast('Order held: ' + name);
+}
+
+function renderHeldOrders() {
+  const wrap = document.getElementById('posHeldList');
+  if (!wrap) return;
+  if (!_heldOrders.length) { wrap.innerHTML = '<div style="color:var(--text3);font-size:.75rem;padding:.5rem">No held orders</div>'; return; }
+  wrap.innerHTML = _heldOrders.map((o,i) =>
+    `<div style="display:flex;align-items:center;justify-content:space-between;padding:.4rem .6rem;background:var(--bg3);border-radius:7px;margin-bottom:.3rem;font-size:.78rem">
+      <div><strong>${o.name}</strong> <span style="color:var(--text3)">${o.cart.length} items · ${o.time}</span></div>
+      <div style="display:flex;gap:.3rem">
+        <button onclick="recallOrder(${i})" style="padding:.2rem .5rem;background:var(--accent);color:#0b0e14;border:none;border-radius:5px;font-size:.68rem;font-weight:700;cursor:pointer">↩ Recall</button>
+        <button onclick="deleteHeld(${i})" style="padding:.2rem .5rem;background:rgba(239,68,68,.15);color:#ef4444;border:none;border-radius:5px;font-size:.68rem;cursor:pointer">✕</button>
+      </div>
+    </div>`
+  ).join('');
+  const badge = document.getElementById('posHeldBadge');
+  if (badge) { badge.textContent = _heldOrders.length; badge.style.display = _heldOrders.length ? '' : 'none'; }
+}
+
+function recallOrder(idx) {
+  if (_posCart.length && !confirm('Replace current cart with held order?')) return;
+  _posCart = [..._heldOrders[idx].cart];
+  _heldOrders.splice(idx, 1);
+  localStorage.setItem('pos_held_orders', JSON.stringify(_heldOrders));
+  renderPOSCart();
+  renderHeldOrders();
+  toast('Order recalled');
+}
+
+function deleteHeld(idx) {
+  _heldOrders.splice(idx, 1);
+  localStorage.setItem('pos_held_orders', JSON.stringify(_heldOrders));
+  renderHeldOrders();
+}
+
+// ── Split Payment ─────────────────────────────────────────────────────
+let _splitCash = 0, _splitMpesa = 0;
+
+function openSplitPayment() {
+  const subtotal = _posCart.reduce((s,i)=>s+i.total,0);
+  const discount = parseFloat(document.getElementById('posDiscount')?.value||0)||0;
+  const total = Math.max(0, subtotal - discount);
+  const modal = document.getElementById('posSplitModal');
+  if (!modal) return;
+  document.getElementById('splitTotal').textContent = 'KES ' + total.toLocaleString('en-KE');
+  document.getElementById('splitCashInput').value = '';
+  document.getElementById('splitMpesaInput').value = '';
+  document.getElementById('splitBalance').textContent = 'KES ' + total.toLocaleString('en-KE');
+  modal.style.display = 'flex';
+}
+
+function updateSplitBalance() {
+  const subtotal = _posCart.reduce((s,i)=>s+i.total,0);
+  const discount = parseFloat(document.getElementById('posDiscount')?.value||0)||0;
+  const total = Math.max(0, subtotal - discount);
+  const cash = parseFloat(document.getElementById('splitCashInput')?.value||0)||0;
+  const mpesa = parseFloat(document.getElementById('splitMpesaInput')?.value||0)||0;
+  const balance = total - cash - mpesa;
+  const el = document.getElementById('splitBalance');
+  if (el) {
+    el.textContent = 'KES ' + Math.abs(balance).toLocaleString('en-KE') + (balance > 0 ? ' remaining' : balance < 0 ? ' change' : ' ✅ exact');
+    el.style.color = balance > 0 ? '#ef4444' : balance < 0 ? '#f59e0b' : '#16a34a';
+  }
+}
+
+function confirmSplitPayment() {
+  const cash = parseFloat(document.getElementById('splitCashInput')?.value||0)||0;
+  const mpesa = parseFloat(document.getElementById('splitMpesaInput')?.value||0)||0;
+  const subtotal = _posCart.reduce((s,i)=>s+i.total,0);
+  const discount = parseFloat(document.getElementById('posDiscount')?.value||0)||0;
+  const total = Math.max(0, subtotal - discount);
+  if (cash + mpesa < total) { toast('Payment amount less than total', 'warn'); return; }
+  _splitCash = cash;
+  _splitMpesa = mpesa;
+  _posPayMethod = 'split';
+  document.getElementById('posSplitModal').style.display = 'none';
+  toast('Split payment set: Cash KES ' + cash.toLocaleString('en-KE') + ' + M-Pesa KES ' + mpesa.toLocaleString('en-KE'));
+}
+
+// ── Cash Change Calculator ────────────────────────────────────────────
+function updateCashChange() {
+  const subtotal = _posCart.reduce((s,i)=>s+i.total,0);
+  const discount = parseFloat(document.getElementById('posDiscount')?.value||0)||0;
+  const total = Math.max(0, subtotal - discount);
+  const cash = parseFloat(document.getElementById('posCashReceived')?.value||0)||0;
+  const change = cash - total;
+  const el = document.getElementById('posCashChange');
+  if (el) {
+    if (cash <= 0) { el.style.display = 'none'; return; }
+    el.style.display = '';
+    el.innerHTML = change >= 0
+      ? '<span style="color:#16a34a;font-weight:700">Change: KES ' + change.toLocaleString('en-KE') + '</span>'
+      : '<span style="color:#ef4444;font-weight:700">Short: KES ' + Math.abs(change).toLocaleString('en-KE') + '</span>';
+  }
+}
+
+// ── Stock Warning ─────────────────────────────────────────────────────
+
+function posAddItem(item) {
+  // Stock warning
+  const existingQty = (_posCart.find(c => (c.refId === (item.id||item._id)) )?.qty || 0);
+  const stock = item.stock ?? item.qty ?? 999;
+  if (existingQty >= stock) {
+    toast('⚠️ Only ' + stock + ' in stock', 'warn');
+    return;
+  }
+  if (stock <= 3 && existingQty === 0) {
+    toast('⚠️ Low stock: only ' + stock + ' left', 'warn');
+  }
+  _origPosAddItemImpl(item);
+}
+
+// ── Barcode Scanner ───────────────────────────────────────────────────
+let _barcodeBuffer = '';
+let _barcodeTimer = null;
+
+function initBarcodeScanner() {
+  document.addEventListener('keypress', (e) => {
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+    clearTimeout(_barcodeTimer);
+    _barcodeBuffer += e.key;
+    _barcodeTimer = setTimeout(() => {
+      if (_barcodeBuffer.length >= 4) {
+        searchByBarcode(_barcodeBuffer);
+      }
+      _barcodeBuffer = '';
+    }, 100);
+  });
+}
+
+async function searchByBarcode(code) {
+  // Search products by SKU/barcode
+  const found = _posProducts.find(p => p.sku === code || p.barcode === code);
+  if (found) {
+    posAddItem(found);
+    toast('✅ ' + found.name + ' added');
+  } else {
+    // Try API search
+    const r = await fetch(`${API}/shops/${shopId}/products?search=${encodeURIComponent(code)}&limit=1`, { headers: authHeaders() });
+    const j = await r.json().catch(()=>({}));
+    if (j.data?.length) {
+      posAddItem(j.data[0]);
+      toast('✅ ' + j.data[0].name + ' added');
+    } else {
+      toast('Barcode not found: ' + code, 'warn');
+    }
+  }
+}
+
+// ── Keyboard Shortcuts ────────────────────────────────────────────────
+function initPOSKeyboard() {
+  document.addEventListener('keydown', (e) => {
+    const panel = document.getElementById('panel-pos');
+    if (!panel?.classList.contains('active')) return;
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+      if (e.key === 'Escape') document.activeElement.blur();
+      return;
+    }
+    switch(e.key) {
+      case 'F1': e.preventDefault(); document.getElementById('posSearch')?.focus(); break;
+      case 'F2': e.preventDefault(); holdOrder(); break;
+      case 'F3': e.preventDefault(); posCheckout(); break;
+      case 'F4': e.preventDefault(); openSplitPayment(); break;
+      case 'Escape': 
+        if (_posCart.length && confirm('Clear cart?')) {
+          _posCart = []; renderPOSCart();
+        }
+        break;
+    }
+  });
+}
+
 </script>
 
   <!-- ── SERVICES SECTION ───────────────────────────────────────────────── -->
@@ -5396,7 +5653,7 @@ function logoutVendor() {
 
         <!-- Search bar -->
         <div style="display:flex;gap:.5rem">
-          <input id="posSearch" type="text" placeholder="🔍 Search products or services…"
+          <input id="posSearch" title="F1: Focus search | F2: Hold | F3: Checkout | F4: Split pay | Esc: Clear cart" type="text" placeholder="🔍 Search products or services…"
             oninput="posSearchItems(this.value)"
             style="flex:1;padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.9rem"/>
           <select id="posBranch" style="padding:.65rem .75rem;border:1.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);font-size:.82rem">
@@ -5452,7 +5709,7 @@ function logoutVendor() {
         <!-- Cash fields -->
         <div id="posCashFields" style="padding:.75rem 1rem;border-bottom:1px solid var(--border)">
           <label style="font-size:.75rem;font-weight:700;color:var(--text3);display:block;margin-bottom:.3rem">CASH RECEIVED</label>
-          <input id="posCashReceived" type="number" min="0" placeholder="0" oninput="calcChange()"
+          <input id="posCashReceived" oninput="updateCashChange()" type="number" min="0" placeholder="0" oninput="calcChange()"
             style="width:100%;padding:.55rem .75rem;border:1.5px solid var(--border);border-radius:7px;background:var(--bg2);color:var(--text);font-size:1rem;font-weight:700"/>
           <div style="display:flex;justify-content:space-between;margin-top:.4rem;font-size:.85rem">
             <span style="color:var(--text2)">Change</span>
@@ -5780,6 +6037,37 @@ function logoutVendor() {
     </div>
   </div>
 
+
+
+<!-- Split Payment Modal -->
+<div id="posSplitModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:3000;align-items:center;justify-content:center">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;width:340px;max-width:90vw">
+    <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;margin-bottom:1rem">⚡ Split Payment</div>
+    <div style="background:var(--bg3);border-radius:8px;padding:.6rem 1rem;margin-bottom:1rem;text-align:center">
+      <div style="font-size:.72rem;color:var(--text3)">Total Due</div>
+      <div id="splitTotal" style="font-size:1.3rem;font-weight:900;color:var(--accent)">KES 0</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
+      <div>
+        <label style="font-size:.72rem;color:var(--text2);font-weight:600">💵 Cash</label>
+        <input id="splitCashInput" type="number" placeholder="0" oninput="updateSplitBalance()" 
+          style="width:100%;padding:.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.88rem;margin-top:.2rem"/>
+      </div>
+      <div>
+        <label style="font-size:.72rem;color:var(--text2);font-weight:600">📱 M-Pesa</label>
+        <input id="splitMpesaInput" type="number" placeholder="0" oninput="updateSplitBalance()"
+          style="width:100%;padding:.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.88rem;margin-top:.2rem"/>
+      </div>
+    </div>
+    <div id="splitBalance" style="text-align:center;font-size:.88rem;margin-bottom:1rem;min-height:1.2rem"></div>
+    <div style="display:flex;gap:.5rem">
+      <button onclick="document.getElementById('posSplitModal').style.display='none'" 
+        style="flex:1;padding:.6rem;background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:8px;cursor:pointer">Cancel</button>
+      <button onclick="confirmSplitPayment()"
+        style="flex:1;padding:.6rem;background:var(--accent);color:#0b0e14;border:none;border-radius:8px;font-weight:700;cursor:pointer">✅ Confirm</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
