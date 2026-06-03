@@ -700,11 +700,14 @@ function renderPost(p, meta) {
 
   // SEO
   document.title = `${p.title} — SELA`;
-  document.getElementById('pageTitle').textContent = `${p.title} — SELA`;
-  document.getElementById('metaDesc').content  = p.excerpt;
-  document.getElementById('ogTitle').content   = p.title;
-  document.getElementById('ogDesc').content    = p.excerpt;
-  document.getElementById('bcTitle').textContent = p.title.length > 40 ? p.title.substring(0,40)+'…' : p.title;
+  const _set = (id, prop, val) => { const el = document.getElementById(id); if(el) el[prop] = val; };
+  const _setMeta = (sel, val) => { const el = document.querySelector(sel); if(el) el.content = val; };
+  _set('pageTitle', 'textContent', `${p.title} — SELA`);
+  _set('metaDesc', 'content', p.excerpt);
+  _setMeta('meta[property="og:title"]', p.title);
+  _setMeta('meta[property="og:description"]', p.excerpt);
+  _setMeta('meta[name="description"]', p.excerpt);
+  _set('bcTitle', 'textContent', p.title.length > 40 ? p.title.substring(0,40)+'…' : p.title);
 
   // Hero
   const heroTop = document.getElementById('postHeroTop');
