@@ -153,7 +153,8 @@ tr:hover td{background:#f8fafc}
   <button class="nav-item" id="nav-subscription" onclick="showPanel('subscription')">💳 Subscription</button>
   <div class="nav-bottom">
     <button class="nav-item" onclick="viewStore()" style="padding:.5rem 0">👁️ View Store</button>
-    <button class="nav-item" onclick="window.location.href='shops.html'" style="padding:.5rem 0">← All Shops</button>
+    <button class="nav-item" onclick="window.location.href='index.html'" style="padding:.5rem 0">🏠 Back to SELA</button>
+    <button class="nav-item" onclick="logoutVendor()" style="padding:.5rem 0;color:#ef4444;margin-top:.25rem">🚪 Sign Out</button>
   </div>
 </nav>
 
@@ -5255,6 +5256,14 @@ function downloadInvoice(h) {
   const a    = document.createElement('a');
   a.href = url; a.download = 'SELA-Invoice-'+new Date(h.date).toISOString().slice(0,10)+'.txt';
   a.click(); URL.revokeObjectURL(url);
+}
+
+function logoutVendor() {
+  if (!confirm('Sign out of your vendor dashboard?')) return;
+  localStorage.removeItem('ac_user_token');
+  localStorage.removeItem('td_token');
+  localStorage.removeItem('ac_user');
+  window.location.href = 'index.html';
 }
 </script>
 
