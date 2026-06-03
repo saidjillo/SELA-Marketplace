@@ -406,6 +406,28 @@ button, a, input, select, textarea, .btn, [onclick] {
       <!-- FORGOT PASSWORD VIEW -->
       <div class="auth-view" id="view-forgot">
         <div class="auth-heading">Reset password</div>
+
+        <!-- Reset Password View -->
+        <div class="auth-view" id="view-reset">
+          <div class="auth-heading">Set New Password</div>
+          <div class="auth-sub">Enter your new password below</div>
+          <div class="auth-msg" id="resetMsg"></div>
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <div style="position:relative">
+              <input class="form-input" id="resetPwd" type="password" placeholder="Min 8 characters" style="padding-right:2.5rem"/>
+              <button type="button" onclick="togglePwd('resetPwd',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem">👁</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <input class="form-input" id="resetPwdConfirm" type="password" placeholder="Repeat new password"/>
+          </div>
+          <button class="auth-btn" id="resetBtn" onclick="submitReset()">🔐 Set New Password</button>
+        </div>
+
+
+
         <div class="auth-sub">Enter your email and we'll send a reset link</div>
         <div class="auth-msg" id="forgotMsg"></div>
         <div class="form-group">
@@ -622,7 +644,7 @@ async function submitForgot() {
   const btn   = document.getElementById('forgotBtn');
   if (!email) { showMsg('forgotMsg','Enter your email'); return; }
   if (btn) { btn.disabled=true; btn.textContent='⏳ Sending…'; }
-  const r = await apiFetch(`${API}/users/forgot-password`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+  const r = await apiFetch(`${API}/auth/forgot-password`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
   if (r) {
     const j = await r.json().catch(() => ({}));
     showMsg('forgotMsg', j.message || (j.success ? 'Reset link sent! Check your email.' : 'Failed'), j.success?'success':'error');
@@ -675,6 +697,39 @@ apiFetch(`${API}/products?limit=1`, {}, 2000).then(r => {
     if (banner) banner.style.display = 'block';
   }
 });
+
+// ── Password Reset ────────────────────────────────────────────────────────────
+let _resetToken = null;
+
+async function submitReset() {
+  const pwd     = document.getElementById('resetPwd')?.value;
+  const confirm = document.getElementById('resetPwdConfirm')?.value;
+  const btn     = document.getElementById('resetBtn');
+  if (!pwd || pwd.length < 8) { showMsg('resetMsg', 'Password must be at least 8 characters'); return; }
+  if (pwd !== confirm) { showMsg('resetMsg', 'Passwords do not match'); return; }
+  if (!_resetToken) { showMsg('resetMsg', 'Invalid reset link'); return; }
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Saving…'; }
+  const r = await apiFetch(`${API}/auth/reset-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: _resetToken, newPassword: pwd }),
+  });
+  const j = await r?.json().catch(()=>({}));
+  if (j?.success) {
+    showMsg('resetMsg', '✅ Password reset! Redirecting to login…', 'success');
+    setTimeout(() => { _resetToken=null; switchTab('login'); }, 2000);
+  } else {
+    showMsg('resetMsg', j?.message || 'Reset failed. Link may have expired.');
+  }
+  if (btn) { btn.disabled=false; btn.textContent='🔐 Set New Password'; }
+}
+
+// ── Check for reset token in URL ──────────────────────────────────────────────
+const _resetParam = new URLSearchParams(location.search).get('reset');
+if (_resetParam) {
+  _resetToken = _resetParam;
+  switchTab('reset');
+}
 </script>
 
   <script>
